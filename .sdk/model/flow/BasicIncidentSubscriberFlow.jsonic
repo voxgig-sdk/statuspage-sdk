@@ -1,0 +1,24 @@
+# BasicIncidentSubscriberFlow
+
+main: kit: flow: BasicIncidentSubscriberFlow:
+{
+  entity: "incident_subscriber",
+  kind: "basic",
+  name: "BasicIncidentSubscriberFlow",
+  step: [
+    {
+      input: {
+        ref: "incident_subscriber_ref01"
+      }
+
+      match: {
+        incident_id: "incident01",
+        page_id: "page01",
+        subscriber_id: "subscriber01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicIncidentSubscriberFlow"
+}

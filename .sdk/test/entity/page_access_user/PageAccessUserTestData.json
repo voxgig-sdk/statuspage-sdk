@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "page_access_user": {
+      "PAGE_ACCESS_USER00": {
+        "component_id": "COMPONENT01",
+        "created_at": "s65",
+        "email": "s66",
+        "external_login": "s67",
+        "id": "PAGE_ACCESS_USER00",
+        "metric_id": "METRIC01",
+        "page_access_group_id": "PAGE_ACCESS_GROUP01",
+        "page_access_user": {},
+        "page_id": "PAGE01",
+        "updated_at": "s6d"
+      },
+      "PAGE_ACCESS_USER01": {
+        "component_id": "COMPONENT01",
+        "created_at": "sc9",
+        "email": "sca",
+        "external_login": "scb",
+        "id": "PAGE_ACCESS_USER01",
+        "metric_id": "METRIC01",
+        "page_access_group_id": "PAGE_ACCESS_GROUP01",
+        "page_access_user": {},
+        "page_id": "PAGE01",
+        "updated_at": "sd1"
+      },
+      "PAGE_ACCESS_USER02": {
+        "component_id": "COMPONENT01",
+        "created_at": "s12d",
+        "email": "s12e",
+        "external_login": "s12f",
+        "id": "PAGE_ACCESS_USER02",
+        "metric_id": "METRIC01",
+        "page_access_group_id": "PAGE_ACCESS_GROUP01",
+        "page_access_user": {},
+        "page_id": "PAGE01",
+        "updated_at": "s135"
+      }
+    }
+  },
+  "new": {
+    "page_access_user": {
+      "page_access_user_ref01": {
+        "component_id": "COMPONENT01",
+        "created_at": "s191",
+        "email": "s192",
+        "external_login": "s193",
+        "metric_id": "METRIC01",
+        "page_access_group_id": "PAGE_ACCESS_GROUP01",
+        "page_access_user": {},
+        "page_id": "PAGE01",
+        "updated_at": "s199"
+      }
+    }
+  }
+}

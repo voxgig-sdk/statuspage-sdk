@@ -1,0 +1,53 @@
+{
+  "existing": {
+    "group_component": {
+      "GROUP_COMPONENT00": {
+        "component": "s5a",
+        "component_group": {},
+        "created_at": "s5c",
+        "description": "s5d",
+        "id": "GROUP_COMPONENT00",
+        "name": "s5f",
+        "page_id": "PAGE01",
+        "position": "s61",
+        "updated_at": "s62"
+      },
+      "GROUP_COMPONENT01": {
+        "component": "sb4",
+        "component_group": {},
+        "created_at": "sb6",
+        "description": "sb7",
+        "id": "GROUP_COMPONENT01",
+        "name": "sb9",
+        "page_id": "PAGE01",
+        "position": "sbb",
+        "updated_at": "sbc"
+      },
+      "GROUP_COMPONENT02": {
+        "component": "s10e",
+        "component_group": {},
+        "created_at": "s110",
+        "description": "s111",
+        "id": "GROUP_COMPONENT02",
+        "name": "s113",
+        "page_id": "PAGE01",
+        "position": "s115",
+        "updated_at": "s116"
+      }
+    }
+  },
+  "new": {
+    "group_component": {
+      "group_component_ref01": {
+        "component": "s168",
+        "component_group": {},
+        "created_at": "s16a",
+        "description": "s16b",
+        "name": "s16d",
+        "page_id": "PAGE01",
+        "position": "s16f",
+        "updated_at": "s170"
+      }
+    }
+  }
+}

@@ -1,0 +1,167 @@
+# Entity: incident_template
+
+main: kit: entity: incident_template: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "body"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "component"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "group_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "should_send_notification"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "should_tweet"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "template"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "title"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "update_status"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "incident_template"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/incident_templates"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incident_templates"
+          ]
+          select: {
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: 100
+                kind: "query"
+                name: "per_page"
+                orig: "per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/incident_templates"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incident_templates"
+          ]
+          select: {
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "page"
+      ]
+    ]
+  }
+
+
+
+}

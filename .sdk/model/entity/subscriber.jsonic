@@ -1,0 +1,918 @@
+# Entity: subscriber
+
+main: kit: entity: subscriber: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "component"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "component_id"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "created_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "display_phone_number"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "email"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "endpoint"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "integration_partner"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "mode"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "obfuscated_channel_name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "page_access_user_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "phone_country"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "phone_number"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "purge_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "quarantined_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "skip_confirmation_notification"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "skip_unsubscription_notification"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "slack"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "sms"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "state"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "subscriber"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "team"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "webhook"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "workspace_name"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "subscriber"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "subscriber_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "{id}"
+            "resend_confirmation"
+          ]
+          rename: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          select: {
+            "$action": "resend_confirmation"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/incidents/{incident_id}/subscribers"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "subscribers"
+          ]
+          select: {
+            exist: [
+              "incident_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/subscribers"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+          ]
+          select: {
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/subscribers/reactivate"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "reactivate"
+          ]
+          select: {
+            "$action": "reactivate"
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/subscribers/resend_confirmation"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "resend_confirmation"
+          ]
+          select: {
+            "$action": "resend_confirmation"
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/subscribers/unsubscribe"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "unsubscribe"
+          ]
+          select: {
+            "$action": "unsubscribe"
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "limit"
+                orig: "limit"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: 0
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "q"
+                orig: "q"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "asc"
+                kind: "query"
+                name: "sort_direction"
+                orig: "sort_direction"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "primary"
+                kind: "query"
+                name: "sort_field"
+                orig: "sort_field"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "active"
+                kind: "query"
+                name: "state"
+                orig: "state"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "type"
+                orig: "type"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/subscribers"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+          ]
+          select: {
+            exist: [
+              "limit"
+              "page"
+              "page_id"
+              "q"
+              "sort_direction"
+              "sort_field"
+              "state"
+              "type"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "per_page"
+                orig: "per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/incidents/{incident_id}/subscribers"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "subscribers"
+          ]
+          select: {
+            exist: [
+              "incident_id"
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "per_page"
+                orig: "per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/subscribers/unsubscribed"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "unsubscribed"
+          ]
+          select: {
+            "$action": "unsubscribed"
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "subscriber_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "subscribers"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "incident_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: "active"
+                kind: "query"
+                name: "state"
+                orig: "state"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "type"
+                orig: "type"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/subscribers/count"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "count"
+          ]
+          select: {
+            "$action": "count"
+            exist: [
+              "page_id"
+              "state"
+              "type"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "subscriber_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/subscribers/{subscriber_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/subscribers/histogram_by_state"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "histogram_by_state"
+          ]
+          select: {
+            "$action": "histogram_by_state"
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "subscriber_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "subscribers"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "incident_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "subscriber_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "skip_unsubscription_notification"
+                orig: "skip_unsubscription_notification"
+                reqd: false
+                type: "`$BOOLEAN`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/pages/{page_id}/subscribers/{subscriber_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+              "skip_unsubscription_notification"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "subscriber_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PATCH"
+          orig: "/pages/{page_id}/subscribers/{subscriber_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "subscribers"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "page"
+      ]
+      [
+        "page"
+        "incident"
+      ]
+    ]
+  }
+
+
+
+}

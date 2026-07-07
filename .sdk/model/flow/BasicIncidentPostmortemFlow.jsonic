@@ -1,0 +1,24 @@
+# BasicIncidentPostmortemFlow
+
+main: kit: flow: BasicIncidentPostmortemFlow:
+{
+  entity: "incident_postmortem",
+  kind: "basic",
+  name: "BasicIncidentPostmortemFlow",
+  step: [
+    {
+      input: {
+        ref: "incident_postmortem_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "incident_postmortem01",
+        page_id: "page01"
+      }
+
+      op: "remove"
+    }
+  ],
+  "key$": "BasicIncidentPostmortemFlow"
+}

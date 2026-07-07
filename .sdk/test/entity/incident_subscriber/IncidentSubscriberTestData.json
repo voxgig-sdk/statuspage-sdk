@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "incident_subscriber": {
+      "INCIDENT_SUBSCRIBER00": {
+        "incident_id": "INCIDENT01",
+        "page_id": "PAGE01",
+        "subscriber_id": "SUBSCRIBER01",
+        "id": "INCIDENT_SUBSCRIBER00"
+      },
+      "INCIDENT_SUBSCRIBER01": {
+        "incident_id": "INCIDENT01",
+        "page_id": "PAGE01",
+        "subscriber_id": "SUBSCRIBER01",
+        "id": "INCIDENT_SUBSCRIBER01"
+      },
+      "INCIDENT_SUBSCRIBER02": {
+        "incident_id": "INCIDENT01",
+        "page_id": "PAGE01",
+        "subscriber_id": "SUBSCRIBER01",
+        "id": "INCIDENT_SUBSCRIBER02"
+      }
+    }
+  },
+  "new": {
+    "incident_subscriber": {
+      "incident_subscriber_ref01": {}
+    }
+  }
+}

@@ -1,0 +1,790 @@
+# Entity: component
+
+main: kit: entity: component: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "automation_email"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "component"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "created_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "description"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "group"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "group_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "major_outage"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "only_show_if_degraded"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "page_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "partial_outage"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "position"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "range_end"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "range_start"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "related_event"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "showcase"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "start_date"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "status"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "uptime_percentage"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "warning"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "component"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "component_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/components/{component_id}/page_access_groups"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+            "{id}"
+            "page_access_groups"
+          ]
+          rename: {
+            param: {
+              component_id: "id"
+            }
+          }
+          select: {
+            "$action": "page_access_group"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "component_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/components/{component_id}/page_access_users"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+            "{id}"
+            "page_access_users"
+          ]
+          rename: {
+            param: {
+              component_id: "id"
+            }
+          }
+          select: {
+            "$action": "page_access_user"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/components"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+          ]
+          select: {
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_access_group_id"
+                orig: "page_access_group_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "per_page"
+                orig: "per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/page_access_groups/{page_access_group_id}/components"
+          parts: [
+            "pages"
+            "{page_id}"
+            "page_access_groups"
+            "{page_access_group_id}"
+            "components"
+          ]
+          select: {
+            exist: [
+              "page"
+              "page_access_group_id"
+              "page_id"
+              "per_page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_access_user_id"
+                orig: "page_access_user_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "per_page"
+                orig: "per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/components"
+          parts: [
+            "pages"
+            "{page_id}"
+            "page_access_users"
+            "{page_access_user_id}"
+            "components"
+          ]
+          select: {
+            exist: [
+              "page"
+              "page_access_user_id"
+              "page_id"
+              "per_page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "per_page"
+                orig: "per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/components"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+          ]
+          select: {
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "component_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "end"
+                orig: "end"
+                reqd: false
+                type: "Any"
+              }
+              {
+                kind: "query"
+                name: "skip_related_event"
+                orig: "skip_related_event"
+                reqd: false
+                type: "`$BOOLEAN`"
+              }
+              {
+                kind: "query"
+                name: "start"
+                orig: "start"
+                reqd: false
+                type: "Any"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/components/{component_id}/uptime"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+            "{id}"
+            "uptime"
+          ]
+          rename: {
+            param: {
+              component_id: "id"
+            }
+          }
+          select: {
+            "$action": "uptime"
+            exist: [
+              "end"
+              "id"
+              "page_id"
+              "skip_related_event"
+              "start"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "component_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/components/{component_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              component_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    patch: {
+      name: "patch"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "component_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PATCH"
+          orig: "/pages/{page_id}/components/{component_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              component_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "component_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/pages/{page_id}/components/{component_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              component_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "component_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/pages/{page_id}/components/{component_id}/page_access_groups"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+            "{id}"
+            "page_access_groups"
+          ]
+          rename: {
+            param: {
+              component_id: "id"
+            }
+          }
+          select: {
+            "$action": "page_access_group"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "component_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/pages/{page_id}/components/{component_id}/page_access_users"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+            "{id}"
+            "page_access_users"
+          ]
+          rename: {
+            param: {
+              component_id: "id"
+            }
+          }
+          select: {
+            "$action": "page_access_user"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "component_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/pages/{page_id}/components/{component_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "components"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              component_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "page"
+      ]
+      [
+        "page"
+        "page_access_group"
+      ]
+      [
+        "page"
+        "page_access_user"
+      ]
+    ]
+  }
+
+
+
+}

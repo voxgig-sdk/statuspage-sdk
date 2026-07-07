@@ -1,0 +1,49 @@
+{
+  "existing": {
+    "user": {
+      "USER00": {
+        "created_at": "s50",
+        "email": "s51",
+        "first_name": "s52",
+        "id": "USER00",
+        "last_name": "s54",
+        "organization_id": "ORGANIZATION01",
+        "updated_at": "s56",
+        "user": {}
+      },
+      "USER01": {
+        "created_at": "sa0",
+        "email": "sa1",
+        "first_name": "sa2",
+        "id": "USER01",
+        "last_name": "sa4",
+        "organization_id": "ORGANIZATION01",
+        "updated_at": "sa6",
+        "user": {}
+      },
+      "USER02": {
+        "created_at": "sf0",
+        "email": "sf1",
+        "first_name": "sf2",
+        "id": "USER02",
+        "last_name": "sf4",
+        "organization_id": "ORGANIZATION01",
+        "updated_at": "sf6",
+        "user": {}
+      }
+    }
+  },
+  "new": {
+    "user": {
+      "user_ref01": {
+        "created_at": "s140",
+        "email": "s141",
+        "first_name": "s142",
+        "last_name": "s144",
+        "organization_id": "ORGANIZATION01",
+        "updated_at": "s146",
+        "user": {}
+      }
+    }
+  }
+}

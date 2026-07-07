@@ -1,0 +1,76 @@
+{
+  "existing": {
+    "incident_update": {
+      "INCIDENT_UPDATE00": {
+        "affected_component": [],
+        "body": "s8d",
+        "created_at": "s8e",
+        "custom_tweet": "s8f",
+        "deliver_notification": true,
+        "display_at": "s91",
+        "id": "INCIDENT_UPDATE00",
+        "incident_id": "INCIDENT01",
+        "incident_update": {},
+        "status": "s95",
+        "tweet_id": "TWEET01",
+        "twitter_updated_at": "s97",
+        "updated_at": "s98",
+        "wants_twitter_update": false,
+        "page_id": "PAGE01"
+      },
+      "INCIDENT_UPDATE01": {
+        "affected_component": [],
+        "body": "s119",
+        "created_at": "s11a",
+        "custom_tweet": "s11b",
+        "deliver_notification": true,
+        "display_at": "s11d",
+        "id": "INCIDENT_UPDATE01",
+        "incident_id": "INCIDENT01",
+        "incident_update": {},
+        "status": "s121",
+        "tweet_id": "TWEET01",
+        "twitter_updated_at": "s123",
+        "updated_at": "s124",
+        "wants_twitter_update": false,
+        "page_id": "PAGE01"
+      },
+      "INCIDENT_UPDATE02": {
+        "affected_component": [],
+        "body": "s1a5",
+        "created_at": "s1a6",
+        "custom_tweet": "s1a7",
+        "deliver_notification": true,
+        "display_at": "s1a9",
+        "id": "INCIDENT_UPDATE02",
+        "incident_id": "INCIDENT01",
+        "incident_update": {},
+        "status": "s1ad",
+        "tweet_id": "TWEET01",
+        "twitter_updated_at": "s1af",
+        "updated_at": "s1b0",
+        "wants_twitter_update": false,
+        "page_id": "PAGE01"
+      }
+    }
+  },
+  "new": {
+    "incident_update": {
+      "incident_update_ref01": {
+        "affected_component": [],
+        "body": "s231",
+        "created_at": "s232",
+        "custom_tweet": "s233",
+        "deliver_notification": true,
+        "display_at": "s235",
+        "incident_id": "INCIDENT01",
+        "incident_update": {},
+        "status": "s239",
+        "tweet_id": "TWEET01",
+        "twitter_updated_at": "s23b",
+        "updated_at": "s23c",
+        "wants_twitter_update": false
+      }
+    }
+  }
+}

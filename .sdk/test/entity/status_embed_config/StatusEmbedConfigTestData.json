@@ -1,0 +1,49 @@
+{
+  "existing": {
+    "status_embed_config": {
+      "STATUS_EMBED_CONFIG00": {
+        "incident_background_color": "s46",
+        "incident_text_color": "s47",
+        "maintenance_background_color": "s48",
+        "maintenance_text_color": "s49",
+        "page_id": "PAGE01",
+        "position": "s4b",
+        "status_embed_config": {},
+        "id": "STATUS_EMBED_CONFIG00"
+      },
+      "STATUS_EMBED_CONFIG01": {
+        "incident_background_color": "s8c",
+        "incident_text_color": "s8d",
+        "maintenance_background_color": "s8e",
+        "maintenance_text_color": "s8f",
+        "page_id": "PAGE01",
+        "position": "s91",
+        "status_embed_config": {},
+        "id": "STATUS_EMBED_CONFIG01"
+      },
+      "STATUS_EMBED_CONFIG02": {
+        "incident_background_color": "sd2",
+        "incident_text_color": "sd3",
+        "maintenance_background_color": "sd4",
+        "maintenance_text_color": "sd5",
+        "page_id": "PAGE01",
+        "position": "sd7",
+        "status_embed_config": {},
+        "id": "STATUS_EMBED_CONFIG02"
+      }
+    }
+  },
+  "new": {
+    "status_embed_config": {
+      "status_embed_config_ref01": {
+        "incident_background_color": "s118",
+        "incident_text_color": "s119",
+        "maintenance_background_color": "s11a",
+        "maintenance_text_color": "s11b",
+        "page_id": "PAGE01",
+        "position": "s11d",
+        "status_embed_config": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "existing": {
+    "permission": {
+      "PERMISSION00": {
+        "data": {},
+        "page": {},
+        "organization_id": "ORGANIZATION01",
+        "id": "PERMISSION00"
+      },
+      "PERMISSION01": {
+        "data": {},
+        "page": {},
+        "organization_id": "ORGANIZATION01",
+        "id": "PERMISSION01"
+      },
+      "PERMISSION02": {
+        "data": {},
+        "page": {},
+        "organization_id": "ORGANIZATION01",
+        "id": "PERMISSION02"
+      }
+    }
+  },
+  "new": {
+    "permission": {
+      "permission_ref01": {
+        "data": {},
+        "page": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,242 @@
+package sdktest
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"runtime"
+	"strings"
+	"testing"
+	"time"
+
+	sdk "github.com/voxgig-sdk/statuspage-sdk/go"
+	"github.com/voxgig-sdk/statuspage-sdk/go/core"
+
+	vs "github.com/voxgig-sdk/statuspage-sdk/go/utility/struct"
+)
+
+func TestMetricEntity(t *testing.T) {
+	t.Run("instance", func(t *testing.T) {
+		testsdk := sdk.TestSDK(nil, nil)
+		ent := testsdk.Metric(nil)
+		if ent == nil {
+			t.Fatal("expected non-nil MetricEntity")
+		}
+	})
+
+	t.Run("basic", func(t *testing.T) {
+		setup := metricBasicSetup(nil)
+		// Per-op sdk-test-control.json skip — basic test exercises a flow
+		// with multiple ops; skipping any op skips the whole flow.
+		_mode := "unit"
+		if setup.live {
+			_mode = "live"
+		}
+		for _, _op := range []string{"create", "list", "update", "load", "remove"} {
+			if _shouldSkip, _reason := isControlSkipped("entityOp", "metric." + _op, _mode); _shouldSkip {
+				if _reason == "" {
+					_reason = "skipped via sdk-test-control.json"
+				}
+				t.Skip(_reason)
+				return
+			}
+		}
+		// The basic flow consumes synthetic IDs from the fixture. In live mode
+		// without an *_ENTID env override, those IDs hit the live API and 4xx.
+		if setup.syntheticOnly {
+			t.Skip("live entity test uses synthetic IDs from fixture — set STATUSPAGE_TEST_METRIC_ENTID JSON to run live")
+			return
+		}
+		client := setup.client
+
+		// CREATE
+		metricRef01Ent := client.Metric(nil)
+		metricRef01Data := core.ToMapAny(vs.GetProp(
+			vs.GetPath([]any{"new", "metric"}, setup.data), "metric_ref01"))
+		metricRef01Data["page_access_user_id"] = setup.idmap["page_access_user01"]
+		metricRef01Data["page_id"] = setup.idmap["page01"]
+
+		metricRef01DataResult, err := metricRef01Ent.Create(metricRef01Data, nil)
+		if err != nil {
+			t.Fatalf("create failed: %v", err)
+		}
+		metricRef01Data = core.ToMapAny(metricRef01DataResult)
+		if metricRef01Data == nil {
+			t.Fatal("expected create result to be a map")
+		}
+		if metricRef01Data["id"] == nil {
+			t.Fatal("expected created entity to have an id")
+		}
+
+		// LIST
+		metricRef01Match := map[string]any{
+			"page_access_user_id": setup.idmap["page_access_user01"],
+			"page_id": setup.idmap["page01"],
+		}
+
+		metricRef01ListResult, err := metricRef01Ent.List(metricRef01Match, nil)
+		if err != nil {
+			t.Fatalf("list failed: %v", err)
+		}
+		metricRef01List, metricRef01ListOk := metricRef01ListResult.([]any)
+		if !metricRef01ListOk {
+			t.Fatalf("expected list result to be an array, got %T", metricRef01ListResult)
+		}
+
+		foundItem := vs.Select(entityListToData(metricRef01List), map[string]any{"id": metricRef01Data["id"]})
+		if vs.IsEmpty(foundItem) {
+			t.Fatal("expected to find created entity in list")
+		}
+
+		// UPDATE
+		metricRef01DataUp0Up := map[string]any{
+			"id": metricRef01Data["id"],
+			"page_id": setup.idmap["page_id"],
+		}
+
+		metricRef01MarkdefUp0Name := "created_at"
+		metricRef01MarkdefUp0Value := fmt.Sprintf("Mark01-metric_ref01_%d", setup.now)
+		metricRef01DataUp0Up[metricRef01MarkdefUp0Name] = metricRef01MarkdefUp0Value
+
+		metricRef01ResdataUp0Result, err := metricRef01Ent.Update(metricRef01DataUp0Up, nil)
+		if err != nil {
+			t.Fatalf("update failed: %v", err)
+		}
+		metricRef01ResdataUp0 := core.ToMapAny(metricRef01ResdataUp0Result)
+		if metricRef01ResdataUp0 == nil {
+			t.Fatal("expected update result to be a map")
+		}
+		if metricRef01ResdataUp0["id"] != metricRef01DataUp0Up["id"] {
+			t.Fatal("expected update result id to match")
+		}
+		if metricRef01ResdataUp0[metricRef01MarkdefUp0Name] != metricRef01MarkdefUp0Value {
+			t.Fatalf("expected %s to be updated, got %v", metricRef01MarkdefUp0Name, metricRef01ResdataUp0[metricRef01MarkdefUp0Name])
+		}
+
+		// LOAD
+		metricRef01MatchDt0 := map[string]any{
+			"id": metricRef01Data["id"],
+		}
+		metricRef01DataDt0Loaded, err := metricRef01Ent.Load(metricRef01MatchDt0, nil)
+		if err != nil {
+			t.Fatalf("load failed: %v", err)
+		}
+		metricRef01DataDt0LoadResult := core.ToMapAny(metricRef01DataDt0Loaded)
+		if metricRef01DataDt0LoadResult == nil {
+			t.Fatal("expected load result to be a map")
+		}
+		if metricRef01DataDt0LoadResult["id"] != metricRef01Data["id"] {
+			t.Fatal("expected load result id to match")
+		}
+
+		// REMOVE
+		metricRef01MatchRm0 := map[string]any{
+			"id": metricRef01Data["id"],
+		}
+		_, err = metricRef01Ent.Remove(metricRef01MatchRm0, nil)
+		if err != nil {
+			t.Fatalf("remove failed: %v", err)
+		}
+
+		// LIST
+		metricRef01MatchRt0 := map[string]any{
+			"page_access_user_id": setup.idmap["page_access_user01"],
+			"page_id": setup.idmap["page01"],
+		}
+
+		metricRef01ListRt0Result, err := metricRef01Ent.List(metricRef01MatchRt0, nil)
+		if err != nil {
+			t.Fatalf("list failed: %v", err)
+		}
+		metricRef01ListRt0, metricRef01ListRt0Ok := metricRef01ListRt0Result.([]any)
+		if !metricRef01ListRt0Ok {
+			t.Fatalf("expected list result to be an array, got %T", metricRef01ListRt0Result)
+		}
+
+		notFoundItem := vs.Select(entityListToData(metricRef01ListRt0), map[string]any{"id": metricRef01Data["id"]})
+		if !vs.IsEmpty(notFoundItem) {
+			t.Fatal("expected removed entity to not be in list")
+		}
+
+	})
+}
+
+func metricBasicSetup(extra map[string]any) *entityTestSetup {
+	loadEnvLocal()
+
+	_, filename, _, _ := runtime.Caller(0)
+	dir := filepath.Dir(filename)
+
+	entityDataFile := filepath.Join(dir, "..", "..", ".sdk", "test", "entity", "metric", "MetricTestData.json")
+
+	entityDataSource, err := os.ReadFile(entityDataFile)
+	if err != nil {
+		panic("failed to read metric test data: " + err.Error())
+	}
+
+	var entityData map[string]any
+	if err := json.Unmarshal(entityDataSource, &entityData); err != nil {
+		panic("failed to parse metric test data: " + err.Error())
+	}
+
+	options := map[string]any{}
+	options["entity"] = entityData["existing"]
+
+	client := sdk.TestSDK(options, extra)
+
+	// Generate idmap via transform, matching TS pattern.
+	idmap := vs.Transform(
+		[]any{"metric01", "metric02", "metric03", "page01", "page02", "page03", "metrics_provider01", "metrics_provider02", "metrics_provider03", "page_access_user01", "page_access_user02", "page_access_user03"},
+		map[string]any{
+			"`$PACK`": []any{"", map[string]any{
+				"`$KEY`": "`$COPY`",
+				"`$VAL`": []any{"`$FORMAT`", "upper", "`$COPY`"},
+			}},
+		},
+	)
+
+	// Detect ENTID env override before envOverride consumes it. When live
+	// mode is on without a real override, the basic test runs against synthetic
+	// IDs from the fixture and 4xx's. Surface this so the test can skip.
+	entidEnvRaw := os.Getenv("STATUSPAGE_TEST_METRIC_ENTID")
+	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
+
+	env := envOverride(map[string]any{
+		"STATUSPAGE_TEST_METRIC_ENTID": idmap,
+		"STATUSPAGE_TEST_LIVE":      "FALSE",
+		"STATUSPAGE_TEST_EXPLAIN":   "FALSE",
+		"STATUSPAGE_APIKEY":         "NONE",
+	})
+
+	idmapResolved := core.ToMapAny(env["STATUSPAGE_TEST_METRIC_ENTID"])
+	if idmapResolved == nil {
+		idmapResolved = core.ToMapAny(idmap)
+	}
+	// Add page_id alias for update test.
+	if idmapResolved["page_id"] == nil {
+		idmapResolved["page_id"] = idmapResolved["page01"]
+	}
+
+	if env["STATUSPAGE_TEST_LIVE"] == "TRUE" {
+		mergedOpts := vs.Merge([]any{
+			map[string]any{
+				"apikey": env["STATUSPAGE_APIKEY"],
+			},
+			extra,
+		})
+		client = sdk.NewStatuspageSDK(core.ToMapAny(mergedOpts))
+	}
+
+	live := env["STATUSPAGE_TEST_LIVE"] == "TRUE"
+	return &entityTestSetup{
+		client:        client,
+		data:          entityData,
+		idmap:         idmapResolved,
+		env:           env,
+		explain:       env["STATUSPAGE_TEST_EXPLAIN"] == "TRUE",
+		live:          live,
+		syntheticOnly: live && !idmapOverridden,
+		now:           time.Now().UnixMilli(),
+	}
+}

@@ -1,0 +1,660 @@
+# Entity: metric
+
+main: kit: entity: metric: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "backfill_percentage"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "backfilled"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "created_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "data"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "decimal_place"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "display"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "last_fetched_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "metric"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "metric_identifier"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "metrics_provider_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "most_recent_data_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "reference_name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "suffix"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "tooltip_description"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "y_axis_hidden"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "y_axis_max"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "y_axis_min"
+      req: false
+      type: "`$NUMBER`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "metric"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "metric_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/metrics/{metric_id}/data"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics"
+            "{id}"
+            "data"
+          ]
+          rename: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          select: {
+            "$action": "data"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "metrics_provider_id"
+                orig: "metrics_provider_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics_providers"
+            "{metrics_provider_id}"
+            "metrics"
+          ]
+          select: {
+            exist: [
+              "metrics_provider_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/pages/{page_id}/metrics/data"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics"
+            "data"
+          ]
+          select: {
+            "$action": "data"
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_access_user_id"
+                orig: "page_access_user_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "per_page"
+                orig: "per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics"
+          parts: [
+            "pages"
+            "{page_id}"
+            "page_access_users"
+            "{page_access_user_id}"
+            "metrics"
+          ]
+          select: {
+            exist: [
+              "page"
+              "page_access_user_id"
+              "page_id"
+              "per_page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "metrics_provider_id"
+                orig: "metrics_provider_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "per_page"
+                orig: "per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics_providers"
+            "{metrics_provider_id}"
+            "metrics"
+          ]
+          select: {
+            exist: [
+              "metrics_provider_id"
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "per_page"
+                orig: "per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/metrics"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics"
+          ]
+          select: {
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "metric_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/metrics/{metric_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    patch: {
+      name: "patch"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "metric_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PATCH"
+          orig: "/pages/{page_id}/metrics/{metric_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "metric_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/pages/{page_id}/metrics/{metric_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "metric_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/pages/{page_id}/metrics/{metric_id}/data"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics"
+            "{id}"
+            "data"
+          ]
+          rename: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          select: {
+            "$action": "data"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "metric_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/pages/{page_id}/metrics/{metric_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "metrics"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "page"
+      ]
+      [
+        "page"
+        "metrics_provider"
+      ]
+      [
+        "page"
+        "page_access_user"
+      ]
+    ]
+  }
+
+
+
+}

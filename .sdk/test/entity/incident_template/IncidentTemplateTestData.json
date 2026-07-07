@@ -1,0 +1,60 @@
+{
+  "existing": {
+    "incident_template": {
+      "INCIDENT_TEMPLATE00": {
+        "body": "s64",
+        "component": [],
+        "group_id": "GROUP01",
+        "id": "INCIDENT_TEMPLATE00",
+        "name": "s68",
+        "should_send_notification": false,
+        "should_tweet": true,
+        "template": {},
+        "title": "s6c",
+        "update_status": "s6d",
+        "page_id": "PAGE01"
+      },
+      "INCIDENT_TEMPLATE01": {
+        "body": "sc8",
+        "component": [],
+        "group_id": "GROUP01",
+        "id": "INCIDENT_TEMPLATE01",
+        "name": "scc",
+        "should_send_notification": false,
+        "should_tweet": true,
+        "template": {},
+        "title": "sd0",
+        "update_status": "sd1",
+        "page_id": "PAGE01"
+      },
+      "INCIDENT_TEMPLATE02": {
+        "body": "s12c",
+        "component": [],
+        "group_id": "GROUP01",
+        "id": "INCIDENT_TEMPLATE02",
+        "name": "s130",
+        "should_send_notification": false,
+        "should_tweet": true,
+        "template": {},
+        "title": "s134",
+        "update_status": "s135",
+        "page_id": "PAGE01"
+      }
+    }
+  },
+  "new": {
+    "incident_template": {
+      "incident_template_ref01": {
+        "body": "s190",
+        "component": [],
+        "group_id": "GROUP01",
+        "name": "s194",
+        "should_send_notification": false,
+        "should_tweet": true,
+        "template": {},
+        "title": "s198",
+        "update_status": "s199"
+      }
+    }
+  }
+}

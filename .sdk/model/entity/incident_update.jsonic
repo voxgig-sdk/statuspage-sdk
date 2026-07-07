@@ -1,0 +1,216 @@
+# Entity: incident_update
+
+main: kit: entity: incident_update: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "affected_component"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "body"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "custom_tweet"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "deliver_notification"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "display_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_update"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "status"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "tweet_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "twitter_updated_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "wants_twitter_update"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "incident_update"
+  op: {
+    patch: {
+      name: "patch"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "incident_update_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PATCH"
+          orig: "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "incident_updates"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              incident_update_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "incident_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "incident_update_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "incident_updates"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              incident_update_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "incident_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "page"
+        "incident"
+      ]
+    ]
+  }
+
+
+
+}

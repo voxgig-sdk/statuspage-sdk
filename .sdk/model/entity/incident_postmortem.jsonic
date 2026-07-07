@@ -1,0 +1,70 @@
+# Entity: incident_postmortem
+
+main: kit: entity: incident_postmortem: {
+
+  alias: field: {}
+
+  name: "incident_postmortem"
+  op: {
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/pages/{page_id}/incidents/{incident_id}/postmortem"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{id}"
+            "postmortem"
+          ]
+          rename: {
+            param: {
+              incident_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "page"
+      ]
+    ]
+  }
+
+
+
+}

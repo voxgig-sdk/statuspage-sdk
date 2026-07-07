@@ -1,0 +1,53 @@
+{
+  "existing": {
+    "metrics_provider": {
+      "METRICS_PROVIDER00": {
+        "created_at": "s5a",
+        "disabled": false,
+        "id": "METRICS_PROVIDER00",
+        "last_revalidated_at": "s5d",
+        "metric_base_uri": "s5e",
+        "metrics_provider": {},
+        "page_id": "PAGE01",
+        "type": "s61",
+        "updated_at": "s62"
+      },
+      "METRICS_PROVIDER01": {
+        "created_at": "sb4",
+        "disabled": false,
+        "id": "METRICS_PROVIDER01",
+        "last_revalidated_at": "sb7",
+        "metric_base_uri": "sb8",
+        "metrics_provider": {},
+        "page_id": "PAGE01",
+        "type": "sbb",
+        "updated_at": "sbc"
+      },
+      "METRICS_PROVIDER02": {
+        "created_at": "s10e",
+        "disabled": false,
+        "id": "METRICS_PROVIDER02",
+        "last_revalidated_at": "s111",
+        "metric_base_uri": "s112",
+        "metrics_provider": {},
+        "page_id": "PAGE01",
+        "type": "s115",
+        "updated_at": "s116"
+      }
+    }
+  },
+  "new": {
+    "metrics_provider": {
+      "metrics_provider_ref01": {
+        "created_at": "s168",
+        "disabled": false,
+        "last_revalidated_at": "s16b",
+        "metric_base_uri": "s16c",
+        "metrics_provider": {},
+        "page_id": "PAGE01",
+        "type": "s16f",
+        "updated_at": "s170"
+      }
+    }
+  }
+}

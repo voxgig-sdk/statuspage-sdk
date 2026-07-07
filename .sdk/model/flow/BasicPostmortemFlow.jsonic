@@ -1,0 +1,56 @@
+# BasicPostmortemFlow
+
+main: kit: flow: BasicPostmortemFlow:
+{
+  entity: "postmortem",
+  kind: "basic",
+  name: "BasicPostmortemFlow",
+  step: [
+    {
+      data: {
+        page_id: "page01"
+      }
+
+      input: {
+        ref: "postmortem_ref01",
+        srcdatavar: "postmortem_ref01_data",
+        suffix: "_up0",
+        textfield: "body"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-postmortem_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "postmortem_ref01",
+        srcdatavar: "postmortem_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "postmortem01",
+        page_id: "page01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-postmortem_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPostmortemFlow"
+}

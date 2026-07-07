@@ -1,0 +1,120 @@
+# BasicComponentFlow
+
+main: kit: flow: BasicComponentFlow:
+{
+  entity: "component",
+  kind: "basic",
+  name: "BasicComponentFlow",
+  step: [
+    {
+      input: {
+        ref: "component_ref01"
+      }
+
+      match: {
+        page_access_group_id: "page_access_group01",
+        page_access_user_id: "page_access_user01",
+        page_id: "page01"
+      }
+
+      op: "create"
+    }
+
+    {
+      match: {
+        page_id: "page01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "component_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      data: {
+        page_id: "page01"
+      }
+
+      input: {
+        ref: "component_ref01",
+        srcdatavar: "component_ref01_data",
+        suffix: "_up0",
+        textfield: "automation_email"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-component_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "component_ref01",
+        srcdatavar: "component_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "component01",
+        page_id: "page01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-component_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "component_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "component01",
+        page_id: "page01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      match: {
+        page_id: "page01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "component_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicComponentFlow"
+}

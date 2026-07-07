@@ -1,0 +1,34 @@
+# BasicIncidentUpdateFlow
+
+main: kit: flow: BasicIncidentUpdateFlow:
+{
+  entity: "incident_update",
+  kind: "basic",
+  name: "BasicIncidentUpdateFlow",
+  step: [
+    {
+      data: {
+        incident_id: "incident01",
+        page_id: "page01"
+      }
+
+      input: {
+        ref: "incident_update_ref01",
+        srcdatavar: "incident_update_ref01_data",
+        suffix: "_up0",
+        textfield: "body"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-incident_update_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentUpdateFlow"
+}

@@ -1,0 +1,103 @@
+{
+  "existing": {
+    "metric": {
+      "METRIC00": {
+        "backfill_percentage": "sc8",
+        "backfilled": false,
+        "created_at": "sca",
+        "data": {},
+        "decimal_place": "scc",
+        "display": false,
+        "id": "METRIC00",
+        "last_fetched_at": "scf",
+        "metric": {},
+        "metric_identifier": "sd1",
+        "metrics_provider_id": "METRICS_PROVIDER01",
+        "most_recent_data_at": "sd3",
+        "name": "sd4",
+        "reference_name": "sd5",
+        "suffix": "sd6",
+        "tooltip_description": "sd7",
+        "updated_at": "sd8",
+        "y_axis_hidden": false,
+        "y_axis_max": 218,
+        "y_axis_min": 219,
+        "page_id": "PAGE01",
+        "page_access_user_id": "PAGE_ACCESS_USER01"
+      },
+      "METRIC01": {
+        "backfill_percentage": "s190",
+        "backfilled": false,
+        "created_at": "s192",
+        "data": {},
+        "decimal_place": "s194",
+        "display": false,
+        "id": "METRIC01",
+        "last_fetched_at": "s197",
+        "metric": {},
+        "metric_identifier": "s199",
+        "metrics_provider_id": "METRICS_PROVIDER01",
+        "most_recent_data_at": "s19b",
+        "name": "s19c",
+        "reference_name": "s19d",
+        "suffix": "s19e",
+        "tooltip_description": "s19f",
+        "updated_at": "s1a0",
+        "y_axis_hidden": false,
+        "y_axis_max": 418,
+        "y_axis_min": 419,
+        "page_id": "PAGE01",
+        "page_access_user_id": "PAGE_ACCESS_USER01"
+      },
+      "METRIC02": {
+        "backfill_percentage": "s258",
+        "backfilled": false,
+        "created_at": "s25a",
+        "data": {},
+        "decimal_place": "s25c",
+        "display": false,
+        "id": "METRIC02",
+        "last_fetched_at": "s25f",
+        "metric": {},
+        "metric_identifier": "s261",
+        "metrics_provider_id": "METRICS_PROVIDER01",
+        "most_recent_data_at": "s263",
+        "name": "s264",
+        "reference_name": "s265",
+        "suffix": "s266",
+        "tooltip_description": "s267",
+        "updated_at": "s268",
+        "y_axis_hidden": false,
+        "y_axis_max": 618,
+        "y_axis_min": 619,
+        "page_id": "PAGE01",
+        "page_access_user_id": "PAGE_ACCESS_USER01"
+      }
+    }
+  },
+  "new": {
+    "metric": {
+      "metric_ref01": {
+        "backfill_percentage": "s320",
+        "backfilled": false,
+        "created_at": "s322",
+        "data": {},
+        "decimal_place": "s324",
+        "display": false,
+        "last_fetched_at": "s327",
+        "metric": {},
+        "metric_identifier": "s329",
+        "metrics_provider_id": "METRICS_PROVIDER01",
+        "most_recent_data_at": "s32b",
+        "name": "s32c",
+        "reference_name": "s32d",
+        "suffix": "s32e",
+        "tooltip_description": "s32f",
+        "updated_at": "s330",
+        "y_axis_hidden": false,
+        "y_axis_max": 818,
+        "y_axis_min": 819
+      }
+    }
+  }
+}

@@ -1,0 +1,183 @@
+{
+  point: "warning"
+  when: 1783435470411
+  err: {
+    name: "AontuError"
+    message: `\u001b[91m[aontu/multisource_not_found]:\u001b[0m source not found: @voxgig/apidef/model/guide.jsonic
+  \u001b[34m-->\u001b[0m /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/guide.jsonic:3:1
+\u001b[34m  1 | \u001b[0m# Guide
+\u001b[34m  2 | \u001b[0m
+\u001b[34m  3 | \u001b[0m@"@voxgig/apidef/model/guide.jsonic"
+      \u001b[34m^ source not found: @voxgig/apidef/model/guide.jsonic\u001b[0m
+\u001b[34m  4 | \u001b[0m
+\u001b[34m  5 | \u001b[0m@"base-guide.jsonic"
+
+  The source path @voxgig/apidef/model/guide.jsonic was not found.
+  
+  Search paths:
+  
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/node_modules/@voxgig/apidef/model/guide.jsonic
+  @voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/bin/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.aontu
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.json
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.aon
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.js
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.aontu
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.json
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.aon
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.js
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.aontu
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.json
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/bin/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.aon
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.js
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide.jsonic
+  /Users/richard/Projects/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/model/guide.jsonic
+  /Users/richard/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/model/guide.jsonic
+  /node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/model/guide.jsonic
+  @voxgig/apidef/model/guide.jsonic
+  /Users/richard/model/guide.jsonic
+  /Users/model/guide.jsonic
+  /model/guide.jsonic`
+    stack: `AontuError: \u001b[91m[aontu/multisource_not_found]:\u001b[0m source not found: @voxgig/apidef/model/guide.jsonic
+  \u001b[34m-->\u001b[0m /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/guide.jsonic:3:1
+\u001b[34m  1 | \u001b[0m# Guide
+\u001b[34m  2 | \u001b[0m
+\u001b[34m  3 | \u001b[0m@"@voxgig/apidef/model/guide.jsonic"
+      \u001b[34m^ source not found: @voxgig/apidef/model/guide.jsonic\u001b[0m
+\u001b[34m  4 | \u001b[0m
+\u001b[34m  5 | \u001b[0m@"base-guide.jsonic"
+
+  The source path @voxgig/apidef/model/guide.jsonic was not found.
+  
+  Search paths:
+  
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/node_modules/@voxgig/apidef/model/guide.jsonic
+  @voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/bin/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.aontu
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.json
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.aon
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.js
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.aontu
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.json
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.aon
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.js
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.aontu
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.json
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/bin/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.aon
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.js
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide.jsonic
+  /Users/richard/Projects/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/model/guide.jsonic
+  /Users/richard/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/model/guide.jsonic
+  /node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/model/guide.jsonic
+  @voxgig/apidef/model/guide.jsonic
+  /Users/richard/model/guide.jsonic
+  /Users/model/guide.jsonic
+  /model/guide.jsonic
+    at buildGuide (/Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/apidef/dist/guide/guide.js:48:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Object.generate (/Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/apidef/dist/apidef.js:168:32)
+    at async Object.build [as action] (/Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/apidef/dist/apidef.js:311:16)
+    at async Object.local_producer [as build] (/Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/dist/producer/local.js:60:24)
+    at async BuildImpl.run (/Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/dist/build.js:54:30)
+    at async Watch.run (/Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/dist/watch.js:168:22)`
+    aontu: true
+    name: "AontuError"
+    errs: null
+  }
+
+  note: `!! BUILD FAILED !! \u001b[91m[aontu/multisource_not_found]:\u001b[0m source not found: @voxgig/apidef/model/guide.jsonic
+  \u001b[34m-->\u001b[0m /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/guide.jsonic:3:1
+\u001b[34m  1 | \u001b[0m# Guide
+\u001b[34m  2 | \u001b[0m
+\u001b[34m  3 | \u001b[0m@"@voxgig/apidef/model/guide.jsonic"
+      \u001b[34m^ source not found: @voxgig/apidef/model/guide.jsonic\u001b[0m
+\u001b[34m  4 | \u001b[0m
+\u001b[34m  5 | \u001b[0m@"base-guide.jsonic"
+
+  The source path @voxgig/apidef/model/guide.jsonic was not found.
+  
+  Search paths:
+  
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/node_modules/@voxgig/apidef/model/guide.jsonic
+  @voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/bin/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.aontu
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.json
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.aon
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.guide.jsonic.js
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.aontu
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.json
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.aon
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic/index.js
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.aontu
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.json
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/bin/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.aon
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide/@voxgig/apidef/model/guide.jsonic.js
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/node_modules/@voxgig/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/.sdk/model/guide.jsonic
+  /Users/richard/Projects/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/statuspage-sdk/model/guide.jsonic
+  /Users/richard/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/voxgig-sdk/model/guide.jsonic
+  /node_modules/@voxgig/apidef/model/guide.jsonic
+  /Users/richard/Projects/model/guide.jsonic
+  @voxgig/apidef/model/guide.jsonic
+  /Users/richard/model/guide.jsonic
+  /Users/model/guide.jsonic
+  /model/guide.jsonic`
+}

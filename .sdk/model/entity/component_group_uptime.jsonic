@@ -1,0 +1,144 @@
+# Entity: component_group_uptime
+
+main: kit: entity: component_group_uptime: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "major_outage"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "partial_outage"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "range_end"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "range_start"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "related_event"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "uptime_percentage"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "warning"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "component_group_uptime"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "end"
+                orig: "end"
+                reqd: false
+                type: "Any"
+              }
+              {
+                kind: "query"
+                name: "skip_related_event"
+                orig: "skip_related_event"
+                reqd: false
+                type: "`$BOOLEAN`"
+              }
+              {
+                kind: "query"
+                name: "start"
+                orig: "start"
+                reqd: false
+                type: "Any"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/component-groups/{id}/uptime"
+          parts: [
+            "pages"
+            "{page_id}"
+            "component-groups"
+            "{id}"
+            "uptime"
+          ]
+          select: {
+            exist: [
+              "end"
+              "id"
+              "page_id"
+              "skip_related_event"
+              "start"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "page"
+      ]
+    ]
+  }
+
+
+
+}

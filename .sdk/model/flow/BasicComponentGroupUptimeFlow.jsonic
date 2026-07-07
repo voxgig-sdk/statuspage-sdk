@@ -1,0 +1,33 @@
+# BasicComponentGroupUptimeFlow
+
+main: kit: flow: BasicComponentGroupUptimeFlow:
+{
+  entity: "component_group_uptime",
+  kind: "basic",
+  name: "BasicComponentGroupUptimeFlow",
+  step: [
+    {
+      input: {
+        ref: "component_group_uptime_ref01",
+        srcdatavar: "component_group_uptime_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "component_group_uptime01",
+        page_id: "page01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-component_group_uptime_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicComponentGroupUptimeFlow"
+}

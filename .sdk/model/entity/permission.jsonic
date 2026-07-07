@@ -1,0 +1,130 @@
+# Entity: permission
+
+main: kit: entity: permission: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "data"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "page"
+      req: false
+      type: "`$OBJECT`"
+    }
+  ]
+
+  name: "permission"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "user_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "organization_id"
+                orig: "organization_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/organizations/{organization_id}/permissions/{user_id}"
+          parts: [
+            "organizations"
+            "{organization_id}"
+            "permissions"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              user_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "organization_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "user_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "organization_id"
+                orig: "organization_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/organizations/{organization_id}/permissions/{user_id}"
+          parts: [
+            "organizations"
+            "{organization_id}"
+            "permissions"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              user_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "organization_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "organization"
+      ]
+    ]
+  }
+
+
+
+}

@@ -1,0 +1,56 @@
+{
+  "existing": {
+    "component_group_uptime": {
+      "COMPONENT_GROUP_UPTIME00": {
+        "id": "COMPONENT_GROUP_UPTIME00",
+        "major_outage": "s5b",
+        "name": "s5c",
+        "partial_outage": "s5d",
+        "range_end": "s5e",
+        "range_start": "s5f",
+        "related_event": {},
+        "uptime_percentage": 97,
+        "warning": "s62",
+        "page_id": "PAGE01"
+      },
+      "COMPONENT_GROUP_UPTIME01": {
+        "id": "COMPONENT_GROUP_UPTIME01",
+        "major_outage": "sb5",
+        "name": "sb6",
+        "partial_outage": "sb7",
+        "range_end": "sb8",
+        "range_start": "sb9",
+        "related_event": {},
+        "uptime_percentage": 187,
+        "warning": "sbc",
+        "page_id": "PAGE01"
+      },
+      "COMPONENT_GROUP_UPTIME02": {
+        "id": "COMPONENT_GROUP_UPTIME02",
+        "major_outage": "s10f",
+        "name": "s110",
+        "partial_outage": "s111",
+        "range_end": "s112",
+        "range_start": "s113",
+        "related_event": {},
+        "uptime_percentage": 277,
+        "warning": "s116",
+        "page_id": "PAGE01"
+      }
+    }
+  },
+  "new": {
+    "component_group_uptime": {
+      "component_group_uptime_ref01": {
+        "major_outage": "s169",
+        "name": "s16a",
+        "partial_outage": "s16b",
+        "range_end": "s16c",
+        "range_start": "s16d",
+        "related_event": {},
+        "uptime_percentage": 367,
+        "warning": "s170"
+      }
+    }
+  }
+}

@@ -1,0 +1,261 @@
+# Entity: postmortem
+
+main: kit: entity: postmortem: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "body"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "body_draft"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "body_draft_updated_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "body_updated_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "custom_tweet"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "notify_subscriber"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "notify_twitter"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "postmortem"
+      op: {
+        update: {
+          req: false
+          type: "`$OBJECT`"
+        }
+      }
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "preview_key"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "published_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "postmortem"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/incidents/{incident_id}/postmortem"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "postmortem"
+          ]
+          select: {
+            exist: [
+              "incident_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/pages/{page_id}/incidents/{incident_id}/postmortem"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "postmortem"
+          ]
+          select: {
+            exist: [
+              "incident_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/pages/{page_id}/incidents/{incident_id}/postmortem/publish"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "postmortem"
+            "publish"
+          ]
+          select: {
+            "$action": "publish"
+            exist: [
+              "incident_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/pages/{page_id}/incidents/{incident_id}/postmortem/revert"
+          parts: [
+            "pages"
+            "{page_id}"
+            "incidents"
+            "{incident_id}"
+            "postmortem"
+            "revert"
+          ]
+          select: {
+            "$action": "revert"
+            exist: [
+              "incident_id"
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "page"
+        "incident"
+      ]
+    ]
+  }
+
+
+
+}

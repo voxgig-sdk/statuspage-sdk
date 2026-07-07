@@ -1,0 +1,161 @@
+# Entity: status_embed_config
+
+main: kit: entity: status_embed_config: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "incident_background_color"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_text_color"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "maintenance_background_color"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "maintenance_text_color"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "page_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "position"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "status_embed_config"
+      req: false
+      type: "`$OBJECT`"
+    }
+  ]
+
+  name: "status_embed_config"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/pages/{page_id}/status_embed_config"
+          parts: [
+            "pages"
+            "{page_id}"
+            "status_embed_config"
+          ]
+          select: {
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    patch: {
+      name: "patch"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PATCH"
+          orig: "/pages/{page_id}/status_embed_config"
+          parts: [
+            "pages"
+            "{page_id}"
+            "status_embed_config"
+          ]
+          select: {
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "page_id"
+                orig: "page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/pages/{page_id}/status_embed_config"
+          parts: [
+            "pages"
+            "{page_id}"
+            "status_embed_config"
+          ]
+          select: {
+            exist: [
+              "page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "page"
+      ]
+    ]
+  }
+
+
+
+}
