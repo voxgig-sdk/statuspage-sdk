@@ -10,6 +10,7 @@
 # Publication state (from the model):
 #   go       tag-only
 #   py       pypi (publish pending: deploy publishes the git tag only) https://pypi.org
+#   rb       rubygems (publish pending: deploy publishes the git tag only) https://rubygems.org
 #   ts       npm (publish pending: deploy publishes the git tag only) https://registry.npmjs.org
 #
 #   make deploy               list per-target deploy commands
@@ -28,13 +29,14 @@ SHELL := /bin/bash
 
 GITHUB_ALIAS ?= github
 PYPI_ALIAS ?= pypi
+RUBYGEMS_ALIAS ?= gem
 NPM_ALIAS ?= npm
 
 # Lockstep SDK version, read from the canonical ts manifest.
 VERSION := $(shell node -p "require('./ts/package.json').version" 2>/dev/null || echo 0.0.0)
 AQL_DRY_RUN_FILLER := AQL-DRY-RUN-FILLER-NOT-A-REAL-SECRET
 
-TARGETS := go py ts
+TARGETS := go py rb ts
 
 .PHONY: deploy deploy-dry \
   $(addprefix deploy-,$(TARGETS)) $(addprefix deploy-dry-,$(TARGETS)) \
@@ -46,6 +48,7 @@ deploy:
 	@echo "Registry state is set in the model (.sdk/model/target/<t>.jsonic):"
 	@echo "  deploy-go       tag-only"
 	@echo "  deploy-py       pypi publish pending (deploy = git tag only)"
+	@echo "  deploy-rb       rubygems publish pending (deploy = git tag only)"
 	@echo "  deploy-ts       npm publish pending (deploy = git tag only)"
 	@echo "Rehearse everything safely first: make deploy-dry"
 
@@ -78,6 +81,27 @@ tag-push-py:
 	hdr="AUTHORIZATION: basic $$(printf 'x-access-token:%s' "$$token" | base64 | tr -d '\n')"; \
 	git -c http.extraheader="$$hdr" push "$$url" "$$tag"; \
 	echo "pushed $$tag (pypi publication pending — tag-only deploy)"
+
+deploy-rb:
+	@echo "deploy-rb: rubygems publication is pending — publishing the git tag only."
+	aql vault exec --for=github=$(GITHUB_ALIAS) -- $(MAKE) tag-push-rb
+
+deploy-dry-rb:
+	aql vault exec --dry-run --for=github=$(GITHUB_ALIAS) -- $(MAKE) tag-push-rb
+
+tag-push-rb:
+	@set -e; tag="rb/v$(VERSION)"; \
+	token="$${GITHUB_TOKEN:-$$GH_TOKEN}"; \
+	if [ "$$token" = "$(AQL_DRY_RUN_FILLER)" ]; then \
+	  echo "[dry-run] aql filler token detected: would create (if missing) and push tag $$tag; nothing pushed."; exit 0; fi; \
+	if [ -z "$$token" ]; then echo "tag-push-rb: no GITHUB_TOKEN in env — run via make deploy-rb (aql vault exec)"; exit 1; fi; \
+	if git rev-parse -q --verify "refs/tags/$$tag" >/dev/null; then \
+	  echo "tag $$tag already exists — pushing existing tag"; \
+	else git tag -a "$$tag" -m "Release $$tag"; fi; \
+	url=$$(git remote get-url origin | sed -E 's#^git@github.com:#https://github.com/#'); \
+	hdr="AUTHORIZATION: basic $$(printf 'x-access-token:%s' "$$token" | base64 | tr -d '\n')"; \
+	git -c http.extraheader="$$hdr" push "$$url" "$$tag"; \
+	echo "pushed $$tag (rubygems publication pending — tag-only deploy)"
 
 deploy-ts:
 	@echo "deploy-ts: npm publication is pending — publishing the git tag only."

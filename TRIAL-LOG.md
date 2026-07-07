@@ -575,11 +575,40 @@ the first time, parametrically from the spec. Changes (all local clones):
 - sdkgen docs (tutorial/how-tos) already used `npm run build && npm run
   generate` — still correct, untouched.
 
-### All-language example mirrors + Ruby verification
-- js/rb/php/lua example components: same `opRequestShape`
-  single-source-of-truth pattern as ts/py/go (agent-applied; see below).
-- Verification: add `rb` target to this project and reach green tests
-  first-time (below).
+### All-language example mirrors
+- js/rb/php/lua example components (20 files): same `opRequestShape`
+  single-source-of-truth pattern as ts/py/go — full required match args,
+  create keeps required ids, `relations.ancestors` nested branches,
+  plural list variables, per-language literal helpers extended with
+  placeholders. Notable extra fix: **lua create examples used `field =
+  nil` placeholders, which a Lua table literal silently DROPS** — the
+  executed doc example documented required fields while sending an empty
+  payload; now real typed literals.
+- sdkgen suite after all mirrors: **86/86 green**; create-sdkgen 12/12;
+  apidef 380/380.
+
+### Verification 1 — Ruby added to this project (first-time green)
+- `npm run add-target ts py go rb` (space form — exercising the CLI fix):
+  all four registered, index idempotent. `npm run generate`: clean.
+- rb SDK: parametric `"prefix" => "OAuth"` ✓; full-match doc examples ✓.
+- 🔴 **Found+fixed en route: the rb Makefile template's `test:` ran ONLY
+  `test/exists_test.rb`** (1 test) while 40 test files exist — the same
+  "green while testing nothing" class as the ts CI job. Template now runs
+  the whole suite via a glob require; AGENTS.md's rb line (`ruby -Itest
+  test/*_test.rb`, which executes only the first file) corrected to
+  `make test`.
+- **Full rb suite: 178 runs, 552 assertions, 0 failures** — including the
+  readme-examples gate executing all 130 documented rb examples (3 root +
+  48 README + 79 REFERENCE). ts/py/go regression: 200/200, 192/192, ok.
+
+### Verification 2 — fresh scaffold, local toolchain end-to-end
+Scaffolded a brand-new project in a scratch dir with the local
+create-sdkgen, linked local sdkgen+apidef, `add-target ts rb` (space
+form), `npm run generate`:
+- Zero errors first-time (no guide ref failure, no missing-build failure).
+- `Config.ts` / `config.rb`: `prefix: 'OAuth'` — **parametric from the
+  spec with an untouched scaffold config**.
+- Fresh ts suite: **200/200**; fresh rb suite: **178/178**. First time.
 
 **For the live-API phase:** get a Statuspage API key + a test page;
 step zero is verifying the `OAuth` header against a real endpoint; then
