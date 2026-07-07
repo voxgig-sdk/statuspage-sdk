@@ -331,8 +331,7 @@ class Config {
                     "name": "id",
                     "orig": "component_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -340,8 +339,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -851,8 +849,7 @@ class Config {
                     "name": "id",
                     "orig": "component_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -860,8 +857,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -902,8 +898,7 @@ class Config {
                     "name": "id",
                     "orig": "component_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -911,8 +906,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -1918,8 +1912,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ],
                 "query": [
@@ -1975,8 +1968,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ],
                 "query": [
@@ -2032,8 +2024,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ],
                 "query": [
@@ -2089,8 +2080,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ],
                 "query": [
@@ -3110,8 +3100,7 @@ class Config {
                     "name": "id",
                     "orig": "metric_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -3119,8 +3108,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -3206,8 +3194,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -3597,8 +3584,7 @@ class Config {
                     "name": "id",
                     "orig": "metric_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -3606,8 +3592,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -4673,8 +4658,7 @@ class Config {
                     "name": "id",
                     "orig": "page_access_group_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -4682,8 +4666,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -5103,8 +5086,7 @@ class Config {
                     "name": "id",
                     "orig": "page_access_group_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -5112,8 +5094,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -5210,8 +5191,7 @@ class Config {
                     "name": "id",
                     "orig": "page_access_group_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -5219,8 +5199,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -5356,8 +5335,7 @@ class Config {
                     "name": "id",
                     "orig": "page_access_user_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -5365,8 +5343,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -5407,8 +5384,7 @@ class Config {
                     "name": "id",
                     "orig": "page_access_user_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -5416,8 +5392,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -5956,8 +5931,7 @@ class Config {
                     "name": "id",
                     "orig": "page_access_user_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -5965,8 +5939,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -6007,8 +5980,7 @@ class Config {
                     "name": "id",
                     "orig": "page_access_user_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -6016,8 +5988,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -6114,8 +6085,7 @@ class Config {
                     "name": "id",
                     "orig": "page_access_user_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -6123,8 +6093,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -6165,8 +6134,7 @@ class Config {
                     "name": "id",
                     "orig": "page_access_user_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -6174,8 +6142,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -6572,8 +6539,7 @@ class Config {
                     "name": "incident_id",
                     "orig": "incident_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -6581,8 +6547,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -6619,8 +6584,7 @@ class Config {
                     "name": "incident_id",
                     "orig": "incident_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -6628,8 +6592,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -7051,8 +7014,7 @@ class Config {
                     "name": "id",
                     "orig": "subscriber_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
                     "active": true,
@@ -7060,8 +7022,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -7180,8 +7141,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -7215,8 +7175,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -7250,8 +7209,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -7459,8 +7417,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ],
                 "query": [
@@ -7582,8 +7539,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ],
                 "query": [
@@ -7687,8 +7643,7 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ]
               },

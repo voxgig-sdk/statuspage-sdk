@@ -46,14 +46,16 @@ class ComponentLoadMatch(TypedDict):
     page_id: str
 
 
-class ComponentListMatch(TypedDict):
-    page_access_group_id: str
+class ComponentListMatchRequired(TypedDict):
     page_id: str
+
+
+class ComponentListMatch(ComponentListMatchRequired, total=False):
+    page_access_group_id: str
     page_access_user_id: str
 
 
 class ComponentCreateData(TypedDict):
-    id: str
     page_id: str
 
 
@@ -276,9 +278,12 @@ class Metric(MetricRequired, total=False):
     y_axis_min: float
 
 
-class MetricLoadMatch(TypedDict):
-    metrics_provider_id: str
+class MetricLoadMatchRequired(TypedDict):
     page_id: str
+
+
+class MetricLoadMatch(MetricLoadMatchRequired, total=False):
+    metrics_provider_id: str
     id: str
 
 
@@ -288,9 +293,8 @@ class MetricListMatch(TypedDict):
 
 
 class MetricCreateData(TypedDict):
-    id: str
-    page_id: str
     metrics_provider_id: str
+    page_id: str
 
 
 class MetricUpdateData(TypedDict):
@@ -468,7 +472,6 @@ class PageAccessGroupListMatch(TypedDict):
 
 class PageAccessGroupCreateData(TypedDict):
     id: str
-    page_id: str
 
 
 class PageAccessGroupUpdateData(TypedDict):
@@ -476,10 +479,13 @@ class PageAccessGroupUpdateData(TypedDict):
     page_id: str
 
 
-class PageAccessGroupRemoveMatch(TypedDict):
-    component_id: str
+class PageAccessGroupRemoveMatchRequired(TypedDict):
     id: str
     page_id: str
+
+
+class PageAccessGroupRemoveMatch(PageAccessGroupRemoveMatchRequired, total=False):
+    component_id: str
 
 
 class PageAccessUserRequired(TypedDict):
@@ -509,7 +515,6 @@ class PageAccessUserListMatch(TypedDict):
 
 class PageAccessUserCreateData(TypedDict):
     id: str
-    page_id: str
 
 
 class PageAccessUserUpdateData(TypedDict):
@@ -517,10 +522,13 @@ class PageAccessUserUpdateData(TypedDict):
     page_id: str
 
 
-class PageAccessUserRemoveMatch(TypedDict):
-    component_id: str
+class PageAccessUserRemoveMatchRequired(TypedDict):
     id: str
     page_id: str
+
+
+class PageAccessUserRemoveMatch(PageAccessUserRemoveMatchRequired, total=False):
+    component_id: str
     metric_id: str
 
 
@@ -613,20 +621,28 @@ class Subscriber(TypedDict, total=False):
     workspace_name: str
 
 
-class SubscriberLoadMatch(TypedDict):
+class SubscriberLoadMatchRequired(TypedDict):
     id: str
-    incident_id: str
     page_id: str
 
 
-class SubscriberListMatch(TypedDict):
-    page_id: str
+class SubscriberLoadMatch(SubscriberLoadMatchRequired, total=False):
     incident_id: str
 
 
-class SubscriberCreateData(TypedDict):
-    id: str
+class SubscriberListMatchRequired(TypedDict):
     page_id: str
+
+
+class SubscriberListMatch(SubscriberListMatchRequired, total=False):
+    incident_id: str
+
+
+class SubscriberCreateDataRequired(TypedDict):
+    page_id: str
+
+
+class SubscriberCreateData(SubscriberCreateDataRequired, total=False):
     incident_id: str
 
 
@@ -635,10 +651,13 @@ class SubscriberUpdateData(TypedDict):
     page_id: str
 
 
-class SubscriberRemoveMatch(TypedDict):
+class SubscriberRemoveMatchRequired(TypedDict):
     id: str
-    incident_id: str
     page_id: str
+
+
+class SubscriberRemoveMatch(SubscriberRemoveMatchRequired, total=False):
+    incident_id: str
 
 
 class UserRequired(TypedDict):

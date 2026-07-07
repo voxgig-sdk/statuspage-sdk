@@ -49,11 +49,15 @@ for (const component of components) {
 
 ### 3. Load a component
 
+Component is nested under page, so provide the `page_id`.
 `load()` returns the entity directly and throws on failure:
 
 ```ts
 try {
-  const component = await client.Component().load({ id: 'example_id' })
+  const component = await client.Component().load({
+    page_id: 'example_page_id',
+    id: 'example_id',
+  })
   console.log(component)
 } catch (err) {
   console.error('load failed:', err)
@@ -77,6 +81,7 @@ const updated = await client.Component().update({
 // Remove
 await client.Component().remove({
   id: created.id!,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -799,7 +804,7 @@ Create an instance: `const component = client.Component()`
 #### Example: Load
 
 ```ts
-const component = await client.Component().load({ id: 'component_id' })
+const component = await client.Component().load({ id: 'component_id', page_id: 'page_id' })
 ```
 
 #### Example: List
@@ -812,6 +817,7 @@ const components = await client.Component().list()
 
 ```ts
 const component = await client.Component().create({
+  page_id: /* string */,
 })
 ```
 
@@ -843,7 +849,7 @@ Create an instance: `const component_group_uptime = client.ComponentGroupUptime(
 #### Example: Load
 
 ```ts
-const component_group_uptime = await client.ComponentGroupUptime().load({ id: 'component_group_uptime_id' })
+const component_group_uptime = await client.ComponentGroupUptime().load({ id: 'component_group_uptime_id', page_id: 'page_id' })
 ```
 
 
@@ -878,7 +884,7 @@ Create an instance: `const group_component = client.GroupComponent()`
 #### Example: Load
 
 ```ts
-const group_component = await client.GroupComponent().load({ id: 'group_component_id' })
+const group_component = await client.GroupComponent().load({ id: 'group_component_id', page_id: 'page_id' })
 ```
 
 #### Example: List
@@ -891,7 +897,7 @@ const group_components = await client.GroupComponent().list()
 
 ```ts
 const group_component = await client.GroupComponent().create({
-  component_group: /* Record<string, any> */,
+  page_id: /* string */,
 })
 ```
 
@@ -951,7 +957,7 @@ Create an instance: `const incident = client.Incident()`
 #### Example: Load
 
 ```ts
-const incident = await client.Incident().load({ id: 'incident_id' })
+const incident = await client.Incident().load({ id: 'incident_id', page_id: 'page_id' })
 ```
 
 #### Example: List
@@ -964,7 +970,7 @@ const incidents = await client.Incident().list()
 
 ```ts
 const incident = await client.Incident().create({
-  incident: /* Record<string, any> */,
+  page_id: /* string */,
 })
 ```
 
@@ -994,6 +1000,9 @@ Create an instance: `const incident_subscriber = client.IncidentSubscriber()`
 
 ```ts
 const incident_subscriber = await client.IncidentSubscriber().create({
+  incident_id: /* string */,
+  page_id: /* string */,
+  subscriber_id: /* string */,
 })
 ```
 
@@ -1034,7 +1043,7 @@ const incident_templates = await client.IncidentTemplate().list()
 
 ```ts
 const incident_template = await client.IncidentTemplate().create({
-  template: /* Record<string, any> */,
+  page_id: /* string */,
 })
 ```
 
@@ -1111,7 +1120,7 @@ Create an instance: `const metric = client.Metric()`
 #### Example: Load
 
 ```ts
-const metric = await client.Metric().load({ id: 'metric_id' })
+const metric = await client.Metric().load({ id: 'metric_id', page_id: 'page_id' })
 ```
 
 #### Example: List
@@ -1124,7 +1133,8 @@ const metrics = await client.Metric().list()
 
 ```ts
 const metric = await client.Metric().create({
-  data: /* Record<string, any> */,
+  metrics_provider_id: /* string */,
+  page_id: /* string */,
 })
 ```
 
@@ -1160,7 +1170,7 @@ Create an instance: `const metrics_provider = client.MetricsProvider()`
 #### Example: Load
 
 ```ts
-const metrics_provider = await client.MetricsProvider().load({ id: 'metrics_provider_id' })
+const metrics_provider = await client.MetricsProvider().load({ id: 'metrics_provider_id', page_id: 'page_id' })
 ```
 
 #### Example: List
@@ -1173,6 +1183,7 @@ const metrics_providers = await client.MetricsProvider().list()
 
 ```ts
 const metrics_provider = await client.MetricsProvider().create({
+  page_id: /* string */,
 })
 ```
 
@@ -1285,7 +1296,7 @@ Create an instance: `const page_access_group = client.PageAccessGroup()`
 #### Example: Load
 
 ```ts
-const page_access_group = await client.PageAccessGroup().load({ id: 'page_access_group_id' })
+const page_access_group = await client.PageAccessGroup().load({ id: 'page_access_group_id', page_id: 'page_id' })
 ```
 
 #### Example: List
@@ -1298,6 +1309,7 @@ const page_access_groups = await client.PageAccessGroup().list()
 
 ```ts
 const page_access_group = await client.PageAccessGroup().create({
+  id: /* string */,
 })
 ```
 
@@ -1334,7 +1346,7 @@ Create an instance: `const page_access_user = client.PageAccessUser()`
 #### Example: Load
 
 ```ts
-const page_access_user = await client.PageAccessUser().load({ id: 'page_access_user_id' })
+const page_access_user = await client.PageAccessUser().load({ id: 'page_access_user_id', page_id: 'page_id' })
 ```
 
 #### Example: List
@@ -1347,8 +1359,7 @@ const page_access_users = await client.PageAccessUser().list()
 
 ```ts
 const page_access_user = await client.PageAccessUser().create({
-  component_id: /* any[] */,
-  metric_id: /* any[] */,
+  id: /* string */,
 })
 ```
 
@@ -1374,7 +1385,7 @@ Create an instance: `const permission = client.Permission()`
 #### Example: Load
 
 ```ts
-const permission = await client.Permission().load({ id: 'permission_id' })
+const permission = await client.Permission().load({ id: 'permission_id', organization_id: 'organization_id' })
 ```
 
 
@@ -1409,7 +1420,7 @@ Create an instance: `const postmortem = client.Postmortem()`
 #### Example: Load
 
 ```ts
-const postmortem = await client.Postmortem().load()
+const postmortem = await client.Postmortem().load({ incident_id: 'incident_id', page_id: 'page_id' })
 ```
 
 
@@ -1439,7 +1450,7 @@ Create an instance: `const status_embed_config = client.StatusEmbedConfig()`
 #### Example: Load
 
 ```ts
-const status_embed_config = await client.StatusEmbedConfig().load()
+const status_embed_config = await client.StatusEmbedConfig().load({ page_id: 'page_id' })
 ```
 
 
@@ -1490,7 +1501,7 @@ Create an instance: `const subscriber = client.Subscriber()`
 #### Example: Load
 
 ```ts
-const subscriber = await client.Subscriber().load({ id: 'subscriber_id' })
+const subscriber = await client.Subscriber().load({ id: 'subscriber_id', page_id: 'page_id' })
 ```
 
 #### Example: List
@@ -1503,6 +1514,7 @@ const subscribers = await client.Subscriber().list()
 
 ```ts
 const subscriber = await client.Subscriber().create({
+  page_id: /* string */,
 })
 ```
 
@@ -1542,7 +1554,7 @@ const users = await client.User().list()
 
 ```ts
 const user = await client.User().create({
-  user: /* Record<string, any> */,
+  organization_id: /* string */,
 })
 ```
 

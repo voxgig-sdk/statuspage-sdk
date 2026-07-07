@@ -36,13 +36,12 @@ export interface ComponentLoadMatch {
 }
 
 export interface ComponentListMatch {
-  page_access_group_id: string
+  page_access_group_id?: string
   page_id: string
-  page_access_user_id: string
+  page_access_user_id?: string
 }
 
 export interface ComponentCreateData {
-  id: string
   page_id: string
 }
 
@@ -252,9 +251,9 @@ export interface Metric {
 }
 
 export interface MetricLoadMatch {
-  metrics_provider_id: string
+  metrics_provider_id?: string
   page_id: string
-  id: string
+  id?: string
 }
 
 export interface MetricListMatch {
@@ -263,9 +262,8 @@ export interface MetricListMatch {
 }
 
 export interface MetricCreateData {
-  id: string
-  page_id: string
   metrics_provider_id: string
+  page_id: string
 }
 
 export interface MetricUpdateData {
@@ -443,7 +441,6 @@ export interface PageAccessGroupListMatch {
 
 export interface PageAccessGroupCreateData {
   id: string
-  page_id: string
 }
 
 export interface PageAccessGroupUpdateData {
@@ -452,7 +449,7 @@ export interface PageAccessGroupUpdateData {
 }
 
 export interface PageAccessGroupRemoveMatch {
-  component_id: string
+  component_id?: string
   id: string
   page_id: string
 }
@@ -481,7 +478,6 @@ export interface PageAccessUserListMatch {
 
 export interface PageAccessUserCreateData {
   id: string
-  page_id: string
 }
 
 export interface PageAccessUserUpdateData {
@@ -490,10 +486,10 @@ export interface PageAccessUserUpdateData {
 }
 
 export interface PageAccessUserRemoveMatch {
-  component_id: string
+  component_id?: string
   id: string
   page_id: string
-  metric_id: string
+  metric_id?: string
 }
 
 export interface Permission {
@@ -584,19 +580,18 @@ export interface Subscriber {
 
 export interface SubscriberLoadMatch {
   id: string
-  incident_id: string
+  incident_id?: string
   page_id: string
 }
 
 export interface SubscriberListMatch {
   page_id: string
-  incident_id: string
+  incident_id?: string
 }
 
 export interface SubscriberCreateData {
-  id: string
+  incident_id?: string
   page_id: string
-  incident_id: string
 }
 
 export interface SubscriberUpdateData {
@@ -606,7 +601,7 @@ export interface SubscriberUpdateData {
 
 export interface SubscriberRemoveMatch {
   id: string
-  incident_id: string
+  incident_id?: string
   page_id: string
 }
 

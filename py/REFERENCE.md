@@ -187,6 +187,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Component().create({
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -205,7 +206,7 @@ for component in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Component().load({"id": "component_id"})
+result = client.Component().load({"id": "component_id", "page_id": "page_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -213,7 +214,7 @@ result = client.Component().load({"id": "component_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.Component().remove({"id": "component_id"})
+result = client.Component().remove({"id": "component_id", "page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -223,6 +224,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 ```python
 result = client.Component().update({
     "id": "component_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -283,7 +285,7 @@ component_group_uptime = client.ComponentGroupUptime()
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.ComponentGroupUptime().load({"id": "component_group_uptime_id"})
+result = client.ComponentGroupUptime().load({"id": "component_group_uptime_id", "page_id": "page_id"})
 ```
 
 ### Common Methods
@@ -343,7 +345,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.GroupComponent().create({
-    "component_group": {},  # dict
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -362,7 +364,7 @@ for group_component in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.GroupComponent().load({"id": "group_component_id"})
+result = client.GroupComponent().load({"id": "group_component_id", "page_id": "page_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -370,7 +372,7 @@ result = client.GroupComponent().load({"id": "group_component_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.GroupComponent().remove({"id": "group_component_id"})
+result = client.GroupComponent().remove({"id": "group_component_id", "page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -380,6 +382,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 ```python
 result = client.GroupComponent().update({
     "id": "group_component_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -503,7 +506,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Incident().create({
-    "incident": {},  # dict
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -522,7 +525,7 @@ for incident in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Incident().load({"id": "incident_id"})
+result = client.Incident().load({"id": "incident_id", "page_id": "page_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -530,7 +533,7 @@ result = client.Incident().load({"id": "incident_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.Incident().remove({"id": "incident_id"})
+result = client.Incident().remove({"id": "incident_id", "page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -540,6 +543,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 ```python
 result = client.Incident().update({
     "id": "incident_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -586,7 +590,7 @@ incident_postmortem = client.IncidentPostmortem()
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.IncidentPostmortem().remove()
+result = client.IncidentPostmortem().remove({"id": "id", "page_id": "page_id"})
 ```
 
 ### Common Methods
@@ -632,6 +636,9 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.IncidentSubscriber().create({
+    "incident_id": "example_incident_id",  # str
+    "page_id": "example_page_id",  # str
+    "subscriber_id": "example_subscriber_id",  # str
 })
 ```
 
@@ -693,7 +700,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.IncidentTemplate().create({
-    "template": {},  # dict
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -769,6 +776,9 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 
 ```python
 result = client.IncidentUpdate().update({
+    "id": "id",
+    "incident_id": "incident_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -841,7 +851,8 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Metric().create({
-    "data": {},  # dict
+    "metrics_provider_id": "example_metrics_provider_id",  # str
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -860,7 +871,7 @@ for metric in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Metric().load({"id": "metric_id"})
+result = client.Metric().load({"id": "metric_id", "page_id": "page_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -868,7 +879,7 @@ result = client.Metric().load({"id": "metric_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.Metric().remove({"id": "metric_id"})
+result = client.Metric().remove({"id": "metric_id", "page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -878,6 +889,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 ```python
 result = client.Metric().update({
     "id": "metric_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -939,6 +951,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.MetricsProvider().create({
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -957,7 +970,7 @@ for metrics_provider in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.MetricsProvider().load({"id": "metrics_provider_id"})
+result = client.MetricsProvider().load({"id": "metrics_provider_id", "page_id": "page_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -965,7 +978,7 @@ result = client.MetricsProvider().load({"id": "metrics_provider_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.MetricsProvider().remove({"id": "metrics_provider_id"})
+result = client.MetricsProvider().remove({"id": "metrics_provider_id", "page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -975,6 +988,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 ```python
 result = client.MetricsProvider().update({
     "id": "metrics_provider_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -1169,6 +1183,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.PageAccessGroup().create({
+    "id": "example_id",  # str
 })
 ```
 
@@ -1187,7 +1202,7 @@ for page_access_group in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.PageAccessGroup().load({"id": "page_access_group_id"})
+result = client.PageAccessGroup().load({"id": "page_access_group_id", "page_id": "page_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -1195,7 +1210,7 @@ result = client.PageAccessGroup().load({"id": "page_access_group_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.PageAccessGroup().remove({"id": "page_access_group_id"})
+result = client.PageAccessGroup().remove({"id": "page_access_group_id", "page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -1205,6 +1220,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 ```python
 result = client.PageAccessGroup().update({
     "id": "page_access_group_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -1267,8 +1283,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.PageAccessUser().create({
-    "component_id": [],  # list
-    "metric_id": [],  # list
+    "id": "example_id",  # str
 })
 ```
 
@@ -1287,7 +1302,7 @@ for page_access_user in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.PageAccessUser().load({"id": "page_access_user_id"})
+result = client.PageAccessUser().load({"id": "page_access_user_id", "page_id": "page_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -1295,7 +1310,7 @@ result = client.PageAccessUser().load({"id": "page_access_user_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.PageAccessUser().remove({"id": "page_access_user_id"})
+result = client.PageAccessUser().remove({"id": "page_access_user_id", "page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -1305,6 +1320,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 ```python
 result = client.PageAccessUser().update({
     "id": "page_access_user_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -1358,7 +1374,7 @@ permission = client.Permission()
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Permission().load({"id": "permission_id"})
+result = client.Permission().load({"id": "permission_id", "organization_id": "organization_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -1368,6 +1384,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 ```python
 result = client.Permission().update({
     "id": "permission_id",
+    "organization_id": "organization_id",
     # Fields to update
 })
 ```
@@ -1448,7 +1465,7 @@ postmortem = client.Postmortem()
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Postmortem().load()
+result = client.Postmortem().load({"incident_id": "incident_id", "page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -1457,6 +1474,8 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 
 ```python
 result = client.Postmortem().update({
+    "incident_id": "incident_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -1515,7 +1534,7 @@ status_embed_config = client.StatusEmbedConfig()
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.StatusEmbedConfig().load()
+result = client.StatusEmbedConfig().load({"page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -1524,6 +1543,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 
 ```python
 result = client.StatusEmbedConfig().update({
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -1631,6 +1651,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Subscriber().create({
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -1649,7 +1670,7 @@ for subscriber in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Subscriber().load({"id": "subscriber_id"})
+result = client.Subscriber().load({"id": "subscriber_id", "page_id": "page_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -1657,7 +1678,7 @@ result = client.Subscriber().load({"id": "subscriber_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.Subscriber().remove({"id": "subscriber_id"})
+result = client.Subscriber().remove({"id": "subscriber_id", "page_id": "page_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -1667,6 +1688,7 @@ Update an existing entity. The data must include the entity `id`. Returns the up
 ```python
 result = client.Subscriber().update({
     "id": "subscriber_id",
+    "page_id": "page_id",
     # Fields to update
 })
 ```
@@ -1727,7 +1749,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.User().create({
-    "user": {},  # dict
+    "organization_id": "example_organization_id",  # str
 })
 ```
 
@@ -1746,7 +1768,7 @@ for user in results:
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.User().remove()
+result = client.User().remove({"id": "id", "organization_id": "organization_id"})
 ```
 
 ### Common Methods

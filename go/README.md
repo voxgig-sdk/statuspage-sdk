@@ -63,28 +63,28 @@ func main() {
     }
 
     // Load a single component — the value is the loaded record.
-    component, err := client.Component(nil).Load(map[string]any{"id": "example"}, nil)
+    component, err := client.Component(nil).Load(map[string]any{"id": "example_id", "page_id": "example_page_id"}, nil)
     if err != nil {
         panic(err)
     }
     fmt.Println(component)
 
     // Create a component.
-    created, err := client.Component(nil).Create(map[string]any{"page_id": "example"}, nil)
+    created, err := client.Component(nil).Create(map[string]any{"page_id": "example_page_id"}, nil)
     if err != nil {
         panic(err)
     }
     fmt.Println(created)
 
     // Update a component.
-    updated, err := client.Component(nil).Update(map[string]any{"id": "example", "page_id": "example"}, nil)
+    updated, err := client.Component(nil).Update(map[string]any{"id": "example_id", "page_id": "example_page_id"}, nil)
     if err != nil {
         panic(err)
     }
     fmt.Println(updated)
 
     // Remove a component.
-    removed, err := client.Component(nil).Remove(map[string]any{"id": "example"}, nil)
+    removed, err := client.Component(nil).Remove(map[string]any{"id": "example_id", "page_id": "example_page_id"}, nil)
     if err != nil {
         panic(err)
     }
@@ -732,11 +732,11 @@ Create an instance: `component := client.Component(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
-| `Remove(match, ctrl)` | Remove the matching entity. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
@@ -768,7 +768,7 @@ Create an instance: `component := client.Component(nil)`
 #### Example: Load
 
 ```go
-component, err := client.Component(nil).Load(map[string]any{"id": "component_id"}, nil)
+component, err := client.Component(nil).Load(map[string]any{"id": "component_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -789,13 +789,18 @@ fmt.Println(components) // the array of records
 
 ```go
 result, err := client.Component(nil).Create(map[string]any{
+    "page_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
 ### ComponentGroupUptime
 
-Create an instance: `component_group_uptime := client.ComponentGroupUptime(nil)`
+Create an instance: `componentGroupUptime := client.ComponentGroupUptime(nil)`
 
 #### Operations
 
@@ -820,27 +825,27 @@ Create an instance: `component_group_uptime := client.ComponentGroupUptime(nil)`
 #### Example: Load
 
 ```go
-component_group_uptime, err := client.ComponentGroupUptime(nil).Load(map[string]any{"id": "component_group_uptime_id"}, nil)
+componentGroupUptime, err := client.ComponentGroupUptime(nil).Load(map[string]any{"id": "component_group_uptime_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(component_group_uptime) // the loaded record
+fmt.Println(componentGroupUptime) // the loaded record
 ```
 
 
 ### GroupComponent
 
-Create an instance: `group_component := client.GroupComponent(nil)`
+Create an instance: `groupComponent := client.GroupComponent(nil)`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
-| `Remove(match, ctrl)` | Remove the matching entity. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
@@ -859,29 +864,33 @@ Create an instance: `group_component := client.GroupComponent(nil)`
 #### Example: Load
 
 ```go
-group_component, err := client.GroupComponent(nil).Load(map[string]any{"id": "group_component_id"}, nil)
+groupComponent, err := client.GroupComponent(nil).Load(map[string]any{"id": "group_component_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(group_component) // the loaded record
+fmt.Println(groupComponent) // the loaded record
 ```
 
 #### Example: List
 
 ```go
-group_components, err := client.GroupComponent(nil).List(nil, nil)
+groupComponents, err := client.GroupComponent(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(group_components) // the array of records
+fmt.Println(groupComponents) // the array of records
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.GroupComponent(nil).Create(map[string]any{
-    "component_group": /* map[string]any */,
+    "page_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -893,11 +902,11 @@ Create an instance: `incident := client.Incident(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
-| `Remove(match, ctrl)` | Remove the matching entity. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
@@ -940,7 +949,7 @@ Create an instance: `incident := client.Incident(nil)`
 #### Example: Load
 
 ```go
-incident, err := client.Incident(nil).Load(map[string]any{"id": "incident_id"}, nil)
+incident, err := client.Incident(nil).Load(map[string]any{"id": "incident_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -961,14 +970,18 @@ fmt.Println(incidents) // the array of records
 
 ```go
 result, err := client.Incident(nil).Create(map[string]any{
-    "incident": /* map[string]any */,
+    "page_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
 ### IncidentPostmortem
 
-Create an instance: `incident_postmortem := client.IncidentPostmortem(nil)`
+Create an instance: `incidentPostmortem := client.IncidentPostmortem(nil)`
 
 #### Operations
 
@@ -979,7 +992,7 @@ Create an instance: `incident_postmortem := client.IncidentPostmortem(nil)`
 
 ### IncidentSubscriber
 
-Create an instance: `incident_subscriber := client.IncidentSubscriber(nil)`
+Create an instance: `incidentSubscriber := client.IncidentSubscriber(nil)`
 
 #### Operations
 
@@ -991,20 +1004,27 @@ Create an instance: `incident_subscriber := client.IncidentSubscriber(nil)`
 
 ```go
 result, err := client.IncidentSubscriber(nil).Create(map[string]any{
+    "incident_id": /* string */,
+    "page_id": /* string */,
+    "subscriber_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
 ### IncidentTemplate
 
-Create an instance: `incident_template := client.IncidentTemplate(nil)`
+Create an instance: `incidentTemplate := client.IncidentTemplate(nil)`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 
 #### Fields
 
@@ -1024,25 +1044,29 @@ Create an instance: `incident_template := client.IncidentTemplate(nil)`
 #### Example: List
 
 ```go
-incident_templates, err := client.IncidentTemplate(nil).List(nil, nil)
+incidentTemplates, err := client.IncidentTemplate(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incident_templates) // the array of records
+fmt.Println(incidentTemplates) // the array of records
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.IncidentTemplate(nil).Create(map[string]any{
-    "template": /* map[string]any */,
+    "page_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
 ### IncidentUpdate
 
-Create an instance: `incident_update := client.IncidentUpdate(nil)`
+Create an instance: `incidentUpdate := client.IncidentUpdate(nil)`
 
 #### Operations
 
@@ -1078,11 +1102,11 @@ Create an instance: `metric := client.Metric(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
-| `Remove(match, ctrl)` | Remove the matching entity. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
@@ -1112,7 +1136,7 @@ Create an instance: `metric := client.Metric(nil)`
 #### Example: Load
 
 ```go
-metric, err := client.Metric(nil).Load(map[string]any{"id": "metric_id"}, nil)
+metric, err := client.Metric(nil).Load(map[string]any{"id": "metric_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -1133,24 +1157,29 @@ fmt.Println(metrics) // the array of records
 
 ```go
 result, err := client.Metric(nil).Create(map[string]any{
-    "data": /* map[string]any */,
+    "metrics_provider_id": /* string */,
+    "page_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
 ### MetricsProvider
 
-Create an instance: `metrics_provider := client.MetricsProvider(nil)`
+Create an instance: `metricsProvider := client.MetricsProvider(nil)`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
-| `Remove(match, ctrl)` | Remove the matching entity. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
@@ -1169,28 +1198,33 @@ Create an instance: `metrics_provider := client.MetricsProvider(nil)`
 #### Example: Load
 
 ```go
-metrics_provider, err := client.MetricsProvider(nil).Load(map[string]any{"id": "metrics_provider_id"}, nil)
+metricsProvider, err := client.MetricsProvider(nil).Load(map[string]any{"id": "metrics_provider_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(metrics_provider) // the loaded record
+fmt.Println(metricsProvider) // the loaded record
 ```
 
 #### Example: List
 
 ```go
-metrics_providers, err := client.MetricsProvider(nil).List(nil, nil)
+metricsProviders, err := client.MetricsProvider(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(metrics_providers) // the array of records
+fmt.Println(metricsProviders) // the array of records
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.MetricsProvider(nil).Create(map[string]any{
+    "page_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -1280,17 +1314,17 @@ fmt.Println(pages) // the array of records
 
 ### PageAccessGroup
 
-Create an instance: `page_access_group := client.PageAccessGroup(nil)`
+Create an instance: `pageAccessGroup := client.PageAccessGroup(nil)`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
-| `Remove(match, ctrl)` | Remove the matching entity. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
@@ -1310,44 +1344,49 @@ Create an instance: `page_access_group := client.PageAccessGroup(nil)`
 #### Example: Load
 
 ```go
-page_access_group, err := client.PageAccessGroup(nil).Load(map[string]any{"id": "page_access_group_id"}, nil)
+pageAccessGroup, err := client.PageAccessGroup(nil).Load(map[string]any{"id": "page_access_group_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(page_access_group) // the loaded record
+fmt.Println(pageAccessGroup) // the loaded record
 ```
 
 #### Example: List
 
 ```go
-page_access_groups, err := client.PageAccessGroup(nil).List(nil, nil)
+pageAccessGroups, err := client.PageAccessGroup(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(page_access_groups) // the array of records
+fmt.Println(pageAccessGroups) // the array of records
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.PageAccessGroup(nil).Create(map[string]any{
+    "id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
 ### PageAccessUser
 
-Create an instance: `page_access_user := client.PageAccessUser(nil)`
+Create an instance: `pageAccessUser := client.PageAccessUser(nil)`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
-| `Remove(match, ctrl)` | Remove the matching entity. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
@@ -1367,30 +1406,33 @@ Create an instance: `page_access_user := client.PageAccessUser(nil)`
 #### Example: Load
 
 ```go
-page_access_user, err := client.PageAccessUser(nil).Load(map[string]any{"id": "page_access_user_id"}, nil)
+pageAccessUser, err := client.PageAccessUser(nil).Load(map[string]any{"id": "page_access_user_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(page_access_user) // the loaded record
+fmt.Println(pageAccessUser) // the loaded record
 ```
 
 #### Example: List
 
 ```go
-page_access_users, err := client.PageAccessUser(nil).List(nil, nil)
+pageAccessUsers, err := client.PageAccessUser(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(page_access_users) // the array of records
+fmt.Println(pageAccessUsers) // the array of records
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.PageAccessUser(nil).Create(map[string]any{
-    "component_id": /* []any */,
-    "metric_id": /* []any */,
+    "id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -1415,7 +1457,7 @@ Create an instance: `permission := client.Permission(nil)`
 #### Example: Load
 
 ```go
-permission, err := client.Permission(nil).Load(map[string]any{"id": "permission_id"}, nil)
+permission, err := client.Permission(nil).Load(map[string]any{"id": "permission_id", "organization_id": "organization_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -1454,7 +1496,7 @@ Create an instance: `postmortem := client.Postmortem(nil)`
 #### Example: Load
 
 ```go
-postmortem, err := client.Postmortem(nil).Load(nil, nil)
+postmortem, err := client.Postmortem(nil).Load(map[string]any{"incident_id": "incident_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -1464,7 +1506,7 @@ fmt.Println(postmortem) // the loaded record
 
 ### StatusEmbedConfig
 
-Create an instance: `status_embed_config := client.StatusEmbedConfig(nil)`
+Create an instance: `statusEmbedConfig := client.StatusEmbedConfig(nil)`
 
 #### Operations
 
@@ -1488,11 +1530,11 @@ Create an instance: `status_embed_config := client.StatusEmbedConfig(nil)`
 #### Example: Load
 
 ```go
-status_embed_config, err := client.StatusEmbedConfig(nil).Load(nil, nil)
+statusEmbedConfig, err := client.StatusEmbedConfig(nil).Load(map[string]any{"page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(status_embed_config) // the loaded record
+fmt.Println(statusEmbedConfig) // the loaded record
 ```
 
 
@@ -1504,11 +1546,11 @@ Create an instance: `subscriber := client.Subscriber(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
-| `Remove(match, ctrl)` | Remove the matching entity. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
@@ -1543,7 +1585,7 @@ Create an instance: `subscriber := client.Subscriber(nil)`
 #### Example: Load
 
 ```go
-subscriber, err := client.Subscriber(nil).Load(map[string]any{"id": "subscriber_id"}, nil)
+subscriber, err := client.Subscriber(nil).Load(map[string]any{"id": "subscriber_id", "page_id": "page_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -1564,7 +1606,12 @@ fmt.Println(subscribers) // the array of records
 
 ```go
 result, err := client.Subscriber(nil).Create(map[string]any{
+    "page_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -1576,8 +1623,8 @@ Create an instance: `user := client.User(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
@@ -1607,8 +1654,12 @@ fmt.Println(users) // the array of records
 
 ```go
 result, err := client.User(nil).Create(map[string]any{
-    "user": /* map[string]any */,
+    "organization_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 

@@ -42,14 +42,13 @@ type ComponentLoadMatch struct {
 
 // ComponentListMatch is the typed request payload for Component.ListTyped.
 type ComponentListMatch struct {
-	PageAccessGroupId string `json:"page_access_group_id"`
+	PageAccessGroupId *string `json:"page_access_group_id,omitempty"`
 	PageId string `json:"page_id"`
-	PageAccessUserId string `json:"page_access_user_id"`
+	PageAccessUserId *string `json:"page_access_user_id,omitempty"`
 }
 
 // ComponentCreateData is the typed request payload for Component.CreateTyped.
 type ComponentCreateData struct {
-	Id string `json:"id"`
 	PageId string `json:"page_id"`
 }
 
@@ -286,9 +285,9 @@ type Metric struct {
 
 // MetricLoadMatch is the typed request payload for Metric.LoadTyped.
 type MetricLoadMatch struct {
-	MetricsProviderId string `json:"metrics_provider_id"`
+	MetricsProviderId *string `json:"metrics_provider_id,omitempty"`
 	PageId string `json:"page_id"`
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 }
 
 // MetricListMatch is the typed request payload for Metric.ListTyped.
@@ -299,9 +298,8 @@ type MetricListMatch struct {
 
 // MetricCreateData is the typed request payload for Metric.CreateTyped.
 type MetricCreateData struct {
-	Id string `json:"id"`
-	PageId string `json:"page_id"`
 	MetricsProviderId string `json:"metrics_provider_id"`
+	PageId string `json:"page_id"`
 }
 
 // MetricUpdateData is the typed request payload for Metric.UpdateTyped.
@@ -495,7 +493,6 @@ type PageAccessGroupListMatch struct {
 // PageAccessGroupCreateData is the typed request payload for PageAccessGroup.CreateTyped.
 type PageAccessGroupCreateData struct {
 	Id string `json:"id"`
-	PageId string `json:"page_id"`
 }
 
 // PageAccessGroupUpdateData is the typed request payload for PageAccessGroup.UpdateTyped.
@@ -506,7 +503,7 @@ type PageAccessGroupUpdateData struct {
 
 // PageAccessGroupRemoveMatch is the typed request payload for PageAccessGroup.RemoveTyped.
 type PageAccessGroupRemoveMatch struct {
-	ComponentId string `json:"component_id"`
+	ComponentId *string `json:"component_id,omitempty"`
 	Id string `json:"id"`
 	PageId string `json:"page_id"`
 }
@@ -539,7 +536,6 @@ type PageAccessUserListMatch struct {
 // PageAccessUserCreateData is the typed request payload for PageAccessUser.CreateTyped.
 type PageAccessUserCreateData struct {
 	Id string `json:"id"`
-	PageId string `json:"page_id"`
 }
 
 // PageAccessUserUpdateData is the typed request payload for PageAccessUser.UpdateTyped.
@@ -550,10 +546,10 @@ type PageAccessUserUpdateData struct {
 
 // PageAccessUserRemoveMatch is the typed request payload for PageAccessUser.RemoveTyped.
 type PageAccessUserRemoveMatch struct {
-	ComponentId string `json:"component_id"`
+	ComponentId *string `json:"component_id,omitempty"`
 	Id string `json:"id"`
 	PageId string `json:"page_id"`
-	MetricId string `json:"metric_id"`
+	MetricId *string `json:"metric_id,omitempty"`
 }
 
 // Permission is the typed data model for the permission entity.
@@ -655,21 +651,20 @@ type Subscriber struct {
 // SubscriberLoadMatch is the typed request payload for Subscriber.LoadTyped.
 type SubscriberLoadMatch struct {
 	Id string `json:"id"`
-	IncidentId string `json:"incident_id"`
+	IncidentId *string `json:"incident_id,omitempty"`
 	PageId string `json:"page_id"`
 }
 
 // SubscriberListMatch is the typed request payload for Subscriber.ListTyped.
 type SubscriberListMatch struct {
 	PageId string `json:"page_id"`
-	IncidentId string `json:"incident_id"`
+	IncidentId *string `json:"incident_id,omitempty"`
 }
 
 // SubscriberCreateData is the typed request payload for Subscriber.CreateTyped.
 type SubscriberCreateData struct {
-	Id string `json:"id"`
+	IncidentId *string `json:"incident_id,omitempty"`
 	PageId string `json:"page_id"`
-	IncidentId string `json:"incident_id"`
 }
 
 // SubscriberUpdateData is the typed request payload for Subscriber.UpdateTyped.
@@ -681,7 +676,7 @@ type SubscriberUpdateData struct {
 // SubscriberRemoveMatch is the typed request payload for Subscriber.RemoveTyped.
 type SubscriberRemoveMatch struct {
 	Id string `json:"id"`
-	IncidentId string `json:"incident_id"`
+	IncidentId *string `json:"incident_id,omitempty"`
 	PageId string `json:"page_id"`
 }
 

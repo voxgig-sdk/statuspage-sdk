@@ -352,6 +352,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Component().create({
+  page_id: /* string */,
 })
 ```
 
@@ -368,7 +369,7 @@ const results = await client.Component().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Component().load({ id: 'component_id' })
+const result = await client.Component().load({ id: 'component_id', page_id: 'page_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -376,7 +377,7 @@ const result = await client.Component().load({ id: 'component_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Component().remove({ id: 'component_id' })
+const result = await client.Component().remove({ id: 'component_id', page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -386,6 +387,7 @@ Update an existing entity. The data must include the entity `id`.
 ```ts
 const result = await client.Component().update({
   id: 'component_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -445,7 +447,7 @@ const component_group_uptime = client.ComponentGroupUptime()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.ComponentGroupUptime().load({ id: 'component_group_uptime_id' })
+const result = await client.ComponentGroupUptime().load({ id: 'component_group_uptime_id', page_id: 'page_id' })
 ```
 
 ### Common Methods
@@ -504,7 +506,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.GroupComponent().create({
-  component_group: /* Record<string, any> */,
+  page_id: /* string */,
 })
 ```
 
@@ -521,7 +523,7 @@ const results = await client.GroupComponent().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.GroupComponent().load({ id: 'group_component_id' })
+const result = await client.GroupComponent().load({ id: 'group_component_id', page_id: 'page_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -529,7 +531,7 @@ const result = await client.GroupComponent().load({ id: 'group_component_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.GroupComponent().remove({ id: 'group_component_id' })
+const result = await client.GroupComponent().remove({ id: 'group_component_id', page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -539,6 +541,7 @@ Update an existing entity. The data must include the entity `id`.
 ```ts
 const result = await client.GroupComponent().update({
   id: 'group_component_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -661,7 +664,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Incident().create({
-  incident: /* Record<string, any> */,
+  page_id: /* string */,
 })
 ```
 
@@ -678,7 +681,7 @@ const results = await client.Incident().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Incident().load({ id: 'incident_id' })
+const result = await client.Incident().load({ id: 'incident_id', page_id: 'page_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -686,7 +689,7 @@ const result = await client.Incident().load({ id: 'incident_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Incident().remove({ id: 'incident_id' })
+const result = await client.Incident().remove({ id: 'incident_id', page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -696,6 +699,7 @@ Update an existing entity. The data must include the entity `id`.
 ```ts
 const result = await client.Incident().update({
   id: 'incident_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -741,7 +745,7 @@ const incident_postmortem = client.IncidentPostmortem()
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.IncidentPostmortem().remove()
+const result = await client.IncidentPostmortem().remove({ id: 'id', page_id: 'page_id' })
 ```
 
 ### Common Methods
@@ -786,6 +790,9 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.IncidentSubscriber().create({
+  incident_id: /* string */,
+  page_id: /* string */,
+  subscriber_id: /* string */,
 })
 ```
 
@@ -846,7 +853,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.IncidentTemplate().create({
-  template: /* Record<string, any> */,
+  page_id: /* string */,
 })
 ```
 
@@ -919,6 +926,9 @@ Update an existing entity. The data must include the entity `id`.
 
 ```ts
 const result = await client.IncidentUpdate().update({
+  id: 'id',
+  incident_id: 'incident_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -990,7 +1000,8 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Metric().create({
-  data: /* Record<string, any> */,
+  metrics_provider_id: /* string */,
+  page_id: /* string */,
 })
 ```
 
@@ -1007,7 +1018,7 @@ const results = await client.Metric().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Metric().load({ id: 'metric_id' })
+const result = await client.Metric().load({ id: 'metric_id', page_id: 'page_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -1015,7 +1026,7 @@ const result = await client.Metric().load({ id: 'metric_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Metric().remove({ id: 'metric_id' })
+const result = await client.Metric().remove({ id: 'metric_id', page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -1025,6 +1036,7 @@ Update an existing entity. The data must include the entity `id`.
 ```ts
 const result = await client.Metric().update({
   id: 'metric_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -1085,6 +1097,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.MetricsProvider().create({
+  page_id: /* string */,
 })
 ```
 
@@ -1101,7 +1114,7 @@ const results = await client.MetricsProvider().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.MetricsProvider().load({ id: 'metrics_provider_id' })
+const result = await client.MetricsProvider().load({ id: 'metrics_provider_id', page_id: 'page_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -1109,7 +1122,7 @@ const result = await client.MetricsProvider().load({ id: 'metrics_provider_id' }
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.MetricsProvider().remove({ id: 'metrics_provider_id' })
+const result = await client.MetricsProvider().remove({ id: 'metrics_provider_id', page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -1119,6 +1132,7 @@ Update an existing entity. The data must include the entity `id`.
 ```ts
 const result = await client.MetricsProvider().update({
   id: 'metrics_provider_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -1309,6 +1323,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.PageAccessGroup().create({
+  id: /* string */,
 })
 ```
 
@@ -1325,7 +1340,7 @@ const results = await client.PageAccessGroup().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.PageAccessGroup().load({ id: 'page_access_group_id' })
+const result = await client.PageAccessGroup().load({ id: 'page_access_group_id', page_id: 'page_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -1333,7 +1348,7 @@ const result = await client.PageAccessGroup().load({ id: 'page_access_group_id' 
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.PageAccessGroup().remove({ id: 'page_access_group_id' })
+const result = await client.PageAccessGroup().remove({ id: 'page_access_group_id', page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -1343,6 +1358,7 @@ Update an existing entity. The data must include the entity `id`.
 ```ts
 const result = await client.PageAccessGroup().update({
   id: 'page_access_group_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -1404,8 +1420,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.PageAccessUser().create({
-  component_id: /* any[] */,
-  metric_id: /* any[] */,
+  id: /* string */,
 })
 ```
 
@@ -1422,7 +1437,7 @@ const results = await client.PageAccessUser().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.PageAccessUser().load({ id: 'page_access_user_id' })
+const result = await client.PageAccessUser().load({ id: 'page_access_user_id', page_id: 'page_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -1430,7 +1445,7 @@ const result = await client.PageAccessUser().load({ id: 'page_access_user_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.PageAccessUser().remove({ id: 'page_access_user_id' })
+const result = await client.PageAccessUser().remove({ id: 'page_access_user_id', page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -1440,6 +1455,7 @@ Update an existing entity. The data must include the entity `id`.
 ```ts
 const result = await client.PageAccessUser().update({
   id: 'page_access_user_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -1492,7 +1508,7 @@ const permission = client.Permission()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Permission().load({ id: 'permission_id' })
+const result = await client.Permission().load({ id: 'permission_id', organization_id: 'organization_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -1502,6 +1518,7 @@ Update an existing entity. The data must include the entity `id`.
 ```ts
 const result = await client.Permission().update({
   id: 'permission_id',
+  organization_id: 'organization_id',
   // Fields to update
 })
 ```
@@ -1581,7 +1598,7 @@ const postmortem = client.Postmortem()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Postmortem().load()
+const result = await client.Postmortem().load({ incident_id: 'incident_id', page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -1590,6 +1607,8 @@ Update an existing entity. The data must include the entity `id`.
 
 ```ts
 const result = await client.Postmortem().update({
+  incident_id: 'incident_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -1647,7 +1666,7 @@ const status_embed_config = client.StatusEmbedConfig()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.StatusEmbedConfig().load()
+const result = await client.StatusEmbedConfig().load({ page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -1656,6 +1675,7 @@ Update an existing entity. The data must include the entity `id`.
 
 ```ts
 const result = await client.StatusEmbedConfig().update({
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -1762,6 +1782,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Subscriber().create({
+  page_id: /* string */,
 })
 ```
 
@@ -1778,7 +1799,7 @@ const results = await client.Subscriber().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Subscriber().load({ id: 'subscriber_id' })
+const result = await client.Subscriber().load({ id: 'subscriber_id', page_id: 'page_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -1786,7 +1807,7 @@ const result = await client.Subscriber().load({ id: 'subscriber_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Subscriber().remove({ id: 'subscriber_id' })
+const result = await client.Subscriber().remove({ id: 'subscriber_id', page_id: 'page_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -1796,6 +1817,7 @@ Update an existing entity. The data must include the entity `id`.
 ```ts
 const result = await client.Subscriber().update({
   id: 'subscriber_id',
+  page_id: 'page_id',
   // Fields to update
 })
 ```
@@ -1855,7 +1877,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.User().create({
-  user: /* Record<string, any> */,
+  organization_id: /* string */,
 })
 ```
 
@@ -1872,7 +1894,7 @@ const results = await client.User().list()
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.User().remove()
+const result = await client.User().remove({ id: 'id', organization_id: 'organization_id' })
 ```
 
 ### Common Methods

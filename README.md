@@ -45,6 +45,13 @@ const components = await client.Component().list()
 for (const component of components) {
   console.log(component)
 }
+
+// Load a specific component (returns a Component)
+const component = await client.Component().load({
+  page_id: 'example_page_id',
+  id: 'example_id',
+})
+console.log(component)
 ```
 
 See the [TypeScript README](ts/README.md) for the full guide.
@@ -101,7 +108,7 @@ for component in components:
     print(component)
 
 # Load a specific component (returns the record, raises on error)
-component = client.Component().load({"id": "example_id"})
+component = client.Component().load({"id": "example_id", "page_id": "example_page_id"})
 print(component)
 ```
 
@@ -116,7 +123,19 @@ client := sdk.NewStatuspageSDK(map[string]any{
 
 // List all components
 components, err := client.Component(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
 fmt.Println(components)
+
+// Load a specific component
+component, err := client.Component(nil).Load(
+    map[string]any{"page_id": "example_page_id", "id": "example_id"}, nil,
+)
+if err != nil {
+    panic(err)
+}
+fmt.Println(component)
 ```
 
 ## Unit testing in offline mode
@@ -128,17 +147,17 @@ in-memory mock, so unit tests run offline.
 
 ```ts
 const client = StatuspageSDK.test()
-const component = await client.Component().list()
-// component is a bare Component populated with mock data
-console.log(component)
+const components = await client.Component().list()
+// components is an array of bare Component records populated with mock data
+console.log(components)
 ```
 
 ### Python
 
 ```python
 client = StatuspageSDK.test()
-component = client.Component().list()
-print(component)
+components = client.Component().list()
+print(components)
 ```
 
 ### Golang
@@ -195,6 +214,10 @@ result, err := client.Direct(map[string]any{
     "method": "GET",
     "params": map[string]any{"id": "example"},
 })
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ## Advanced

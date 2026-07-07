@@ -29,7 +29,7 @@ class Config {
 
 
   options = {
-    base: '$$main.kit.info.servers.0.url$$',
+    base: 'https://api.statuspage.io/v1',
 
     'AUTHBLOCK'headers: 'HEADERS',
 

@@ -55,11 +55,12 @@ except Exception as err:
 
 ### 3. Load a component
 
+Component is nested under page, so provide the `page_id`.
 `load()` returns the bare record (a `dict`) and raises on error.
 
 ```python
 try:
-    component = client.Component().load({"id": "example_id"})
+    component = client.Component().load({"page_id": "example_page_id", "id": "example_id"})
     print(component)
 except Exception as err:
     print(f"load failed: {err}")
@@ -69,13 +70,13 @@ except Exception as err:
 
 ```python
 # Create — returns the bare created record (a dict)
-created = client.Component().create({"page_id": "example"})
+created = client.Component().create({"page_id": "example_page_id"})
 
 # Update — the created record's id is a plain dict key
-client.Component().update({"id": created["id"], "page_id": "example"})
+client.Component().update({"id": created["id"], "page_id": "example_page_id"})
 
 # Remove
-client.Component().remove({"id": created["id"]})
+client.Component().remove({"id": created["id"], "page_id": "example_page_id"})
 ```
 
 
@@ -746,7 +747,7 @@ Create an instance: `component = client.Component()`
 #### Example: Load
 
 ```python
-component = client.Component().load({"id": "component_id"})
+component = client.Component().load({"id": "component_id", "page_id": "page_id"})
 ```
 
 #### Example: List
@@ -759,6 +760,7 @@ components = client.Component().list()
 
 ```python
 component = client.Component().create({
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -790,7 +792,7 @@ Create an instance: `component_group_uptime = client.ComponentGroupUptime()`
 #### Example: Load
 
 ```python
-component_group_uptime = client.ComponentGroupUptime().load({"id": "component_group_uptime_id"})
+component_group_uptime = client.ComponentGroupUptime().load({"id": "component_group_uptime_id", "page_id": "page_id"})
 ```
 
 
@@ -825,7 +827,7 @@ Create an instance: `group_component = client.GroupComponent()`
 #### Example: Load
 
 ```python
-group_component = client.GroupComponent().load({"id": "group_component_id"})
+group_component = client.GroupComponent().load({"id": "group_component_id", "page_id": "page_id"})
 ```
 
 #### Example: List
@@ -838,7 +840,7 @@ group_components = client.GroupComponent().list()
 
 ```python
 group_component = client.GroupComponent().create({
-    "component_group": {},  # dict
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -898,7 +900,7 @@ Create an instance: `incident = client.Incident()`
 #### Example: Load
 
 ```python
-incident = client.Incident().load({"id": "incident_id"})
+incident = client.Incident().load({"id": "incident_id", "page_id": "page_id"})
 ```
 
 #### Example: List
@@ -911,7 +913,7 @@ incidents = client.Incident().list()
 
 ```python
 incident = client.Incident().create({
-    "incident": {},  # dict
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -941,6 +943,9 @@ Create an instance: `incident_subscriber = client.IncidentSubscriber()`
 
 ```python
 incident_subscriber = client.IncidentSubscriber().create({
+    "incident_id": "example_incident_id",  # str
+    "page_id": "example_page_id",  # str
+    "subscriber_id": "example_subscriber_id",  # str
 })
 ```
 
@@ -981,7 +986,7 @@ incident_templates = client.IncidentTemplate().list()
 
 ```python
 incident_template = client.IncidentTemplate().create({
-    "template": {},  # dict
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -1058,7 +1063,7 @@ Create an instance: `metric = client.Metric()`
 #### Example: Load
 
 ```python
-metric = client.Metric().load({"id": "metric_id"})
+metric = client.Metric().load({"id": "metric_id", "page_id": "page_id"})
 ```
 
 #### Example: List
@@ -1071,7 +1076,8 @@ metrics = client.Metric().list()
 
 ```python
 metric = client.Metric().create({
-    "data": {},  # dict
+    "metrics_provider_id": "example_metrics_provider_id",  # str
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -1107,7 +1113,7 @@ Create an instance: `metrics_provider = client.MetricsProvider()`
 #### Example: Load
 
 ```python
-metrics_provider = client.MetricsProvider().load({"id": "metrics_provider_id"})
+metrics_provider = client.MetricsProvider().load({"id": "metrics_provider_id", "page_id": "page_id"})
 ```
 
 #### Example: List
@@ -1120,6 +1126,7 @@ metrics_providers = client.MetricsProvider().list()
 
 ```python
 metrics_provider = client.MetricsProvider().create({
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -1232,7 +1239,7 @@ Create an instance: `page_access_group = client.PageAccessGroup()`
 #### Example: Load
 
 ```python
-page_access_group = client.PageAccessGroup().load({"id": "page_access_group_id"})
+page_access_group = client.PageAccessGroup().load({"id": "page_access_group_id", "page_id": "page_id"})
 ```
 
 #### Example: List
@@ -1245,6 +1252,7 @@ page_access_groups = client.PageAccessGroup().list()
 
 ```python
 page_access_group = client.PageAccessGroup().create({
+    "id": "example_id",  # str
 })
 ```
 
@@ -1281,7 +1289,7 @@ Create an instance: `page_access_user = client.PageAccessUser()`
 #### Example: Load
 
 ```python
-page_access_user = client.PageAccessUser().load({"id": "page_access_user_id"})
+page_access_user = client.PageAccessUser().load({"id": "page_access_user_id", "page_id": "page_id"})
 ```
 
 #### Example: List
@@ -1294,8 +1302,7 @@ page_access_users = client.PageAccessUser().list()
 
 ```python
 page_access_user = client.PageAccessUser().create({
-    "component_id": [],  # list
-    "metric_id": [],  # list
+    "id": "example_id",  # str
 })
 ```
 
@@ -1321,7 +1328,7 @@ Create an instance: `permission = client.Permission()`
 #### Example: Load
 
 ```python
-permission = client.Permission().load({"id": "permission_id"})
+permission = client.Permission().load({"id": "permission_id", "organization_id": "organization_id"})
 ```
 
 
@@ -1356,7 +1363,7 @@ Create an instance: `postmortem = client.Postmortem()`
 #### Example: Load
 
 ```python
-postmortem = client.Postmortem().load()
+postmortem = client.Postmortem().load({"incident_id": "incident_id", "page_id": "page_id"})
 ```
 
 
@@ -1386,7 +1393,7 @@ Create an instance: `status_embed_config = client.StatusEmbedConfig()`
 #### Example: Load
 
 ```python
-status_embed_config = client.StatusEmbedConfig().load()
+status_embed_config = client.StatusEmbedConfig().load({"page_id": "page_id"})
 ```
 
 
@@ -1437,7 +1444,7 @@ Create an instance: `subscriber = client.Subscriber()`
 #### Example: Load
 
 ```python
-subscriber = client.Subscriber().load({"id": "subscriber_id"})
+subscriber = client.Subscriber().load({"id": "subscriber_id", "page_id": "page_id"})
 ```
 
 #### Example: List
@@ -1450,6 +1457,7 @@ subscribers = client.Subscriber().list()
 
 ```python
 subscriber = client.Subscriber().create({
+    "page_id": "example_page_id",  # str
 })
 ```
 
@@ -1489,7 +1497,7 @@ users = client.User().list()
 
 ```python
 user = client.User().create({
-    "user": {},  # dict
+    "organization_id": "example_organization_id",  # str
 })
 ```
 

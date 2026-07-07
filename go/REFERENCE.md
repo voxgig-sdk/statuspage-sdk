@@ -160,6 +160,7 @@ same parameters as `Direct()`.
 
 ```go
 component := client.Component(nil)
+fmt.Println(component.GetName()) // "component"
 ```
 
 ### Fields
@@ -191,21 +192,16 @@ component := client.Component(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Component(nil).Create(map[string]any{
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Component(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -213,15 +209,25 @@ results, err := client.Component(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Component(nil).Load(map[string]any{"id": "component_id"}, nil)
+result, err := client.Component(nil).Load(map[string]any{"id": "component_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Remove the entity matching the given criteria.
+Create a new entity with the given data.
 
 ```go
-result, err := client.Component(nil).Remove(map[string]any{"id": "component_id"}, nil)
+result, err := client.Component(nil).Create(map[string]any{
+    "page_id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -231,8 +237,25 @@ Update an existing entity. The data must include the entity `id`.
 ```go
 result, err := client.Component(nil).Update(map[string]any{
     "id": "component_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.Component(nil).Remove(map[string]any{"id": "component_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -262,7 +285,8 @@ Return the entity name.
 ## ComponentGroupUptimeEntity
 
 ```go
-component_group_uptime := client.ComponentGroupUptime(nil)
+componentGroupUptime := client.ComponentGroupUptime(nil)
+fmt.Println(componentGroupUptime.GetName()) // "component_group_uptime"
 ```
 
 ### Fields
@@ -286,7 +310,11 @@ component_group_uptime := client.ComponentGroupUptime(nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.ComponentGroupUptime(nil).Load(map[string]any{"id": "component_group_uptime_id"}, nil)
+result, err := client.ComponentGroupUptime(nil).Load(map[string]any{"id": "component_group_uptime_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -316,7 +344,8 @@ Return the entity name.
 ## GroupComponentEntity
 
 ```go
-group_component := client.GroupComponent(nil)
+groupComponent := client.GroupComponent(nil)
+fmt.Println(groupComponent.GetName()) // "group_component"
 ```
 
 ### Fields
@@ -335,22 +364,16 @@ group_component := client.GroupComponent(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.GroupComponent(nil).Create(map[string]any{
-    "component_group": /* map[string]any */,
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.GroupComponent(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -358,15 +381,25 @@ results, err := client.GroupComponent(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.GroupComponent(nil).Load(map[string]any{"id": "group_component_id"}, nil)
+result, err := client.GroupComponent(nil).Load(map[string]any{"id": "group_component_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Remove the entity matching the given criteria.
+Create a new entity with the given data.
 
 ```go
-result, err := client.GroupComponent(nil).Remove(map[string]any{"id": "group_component_id"}, nil)
+result, err := client.GroupComponent(nil).Create(map[string]any{
+    "page_id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -376,8 +409,25 @@ Update an existing entity. The data must include the entity `id`.
 ```go
 result, err := client.GroupComponent(nil).Update(map[string]any{
     "id": "group_component_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.GroupComponent(nil).Remove(map[string]any{"id": "group_component_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -408,6 +458,7 @@ Return the entity name.
 
 ```go
 incident := client.Incident(nil)
+fmt.Println(incident.GetName()) // "incident"
 ```
 
 ### Fields
@@ -488,22 +539,16 @@ incident := client.Incident(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Incident(nil).Create(map[string]any{
-    "incident": /* map[string]any */,
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Incident(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -511,15 +556,25 @@ results, err := client.Incident(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Incident(nil).Load(map[string]any{"id": "incident_id"}, nil)
+result, err := client.Incident(nil).Load(map[string]any{"id": "incident_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Remove the entity matching the given criteria.
+Create a new entity with the given data.
 
 ```go
-result, err := client.Incident(nil).Remove(map[string]any{"id": "incident_id"}, nil)
+result, err := client.Incident(nil).Create(map[string]any{
+    "page_id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -529,8 +584,25 @@ Update an existing entity. The data must include the entity `id`.
 ```go
 result, err := client.Incident(nil).Update(map[string]any{
     "id": "incident_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.Incident(nil).Remove(map[string]any{"id": "incident_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -560,7 +632,8 @@ Return the entity name.
 ## IncidentPostmortemEntity
 
 ```go
-incident_postmortem := client.IncidentPostmortem(nil)
+incidentPostmortem := client.IncidentPostmortem(nil)
+fmt.Println(incidentPostmortem.GetName()) // "incident_postmortem"
 ```
 
 ### Operations
@@ -570,7 +643,11 @@ incident_postmortem := client.IncidentPostmortem(nil)
 Remove the entity matching the given criteria.
 
 ```go
-result, err := client.IncidentPostmortem(nil).Remove(nil, nil)
+result, err := client.IncidentPostmortem(nil).Remove(map[string]any{"id": "id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -600,7 +677,8 @@ Return the entity name.
 ## IncidentSubscriberEntity
 
 ```go
-incident_subscriber := client.IncidentSubscriber(nil)
+incidentSubscriber := client.IncidentSubscriber(nil)
+fmt.Println(incidentSubscriber.GetName()) // "incident_subscriber"
 ```
 
 ### Operations
@@ -611,7 +689,14 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.IncidentSubscriber(nil).Create(map[string]any{
+    "incident_id": /* string */,
+    "page_id": /* string */,
+    "subscriber_id": /* string */,
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -641,7 +726,8 @@ Return the entity name.
 ## IncidentTemplateEntity
 
 ```go
-incident_template := client.IncidentTemplate(nil)
+incidentTemplate := client.IncidentTemplate(nil)
+fmt.Println(incidentTemplate.GetName()) // "incident_template"
 ```
 
 ### Fields
@@ -661,22 +747,30 @@ incident_template := client.IncidentTemplate(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.IncidentTemplate(nil).Create(map[string]any{
-    "template": /* map[string]any */,
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.IncidentTemplate(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.IncidentTemplate(nil).Create(map[string]any{
+    "page_id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -706,7 +800,8 @@ Return the entity name.
 ## IncidentUpdateEntity
 
 ```go
-incident_update := client.IncidentUpdate(nil)
+incidentUpdate := client.IncidentUpdate(nil)
+fmt.Println(incidentUpdate.GetName()) // "incident_update"
 ```
 
 ### Fields
@@ -736,8 +831,15 @@ Update an existing entity. The data must include the entity `id`.
 
 ```go
 result, err := client.IncidentUpdate(nil).Update(map[string]any{
+    "id": "id",
+    "incident_id": "incident_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -768,6 +870,7 @@ Return the entity name.
 
 ```go
 metric := client.Metric(nil)
+fmt.Println(metric.GetName()) // "metric"
 ```
 
 ### Fields
@@ -797,22 +900,16 @@ metric := client.Metric(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Metric(nil).Create(map[string]any{
-    "data": /* map[string]any */,
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Metric(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -820,15 +917,26 @@ results, err := client.Metric(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Metric(nil).Load(map[string]any{"id": "metric_id"}, nil)
+result, err := client.Metric(nil).Load(map[string]any{"id": "metric_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Remove the entity matching the given criteria.
+Create a new entity with the given data.
 
 ```go
-result, err := client.Metric(nil).Remove(map[string]any{"id": "metric_id"}, nil)
+result, err := client.Metric(nil).Create(map[string]any{
+    "metrics_provider_id": /* string */,
+    "page_id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -838,8 +946,25 @@ Update an existing entity. The data must include the entity `id`.
 ```go
 result, err := client.Metric(nil).Update(map[string]any{
     "id": "metric_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.Metric(nil).Remove(map[string]any{"id": "metric_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -869,7 +994,8 @@ Return the entity name.
 ## MetricsProviderEntity
 
 ```go
-metrics_provider := client.MetricsProvider(nil)
+metricsProvider := client.MetricsProvider(nil)
+fmt.Println(metricsProvider.GetName()) // "metrics_provider"
 ```
 
 ### Fields
@@ -888,21 +1014,16 @@ metrics_provider := client.MetricsProvider(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.MetricsProvider(nil).Create(map[string]any{
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.MetricsProvider(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -910,15 +1031,25 @@ results, err := client.MetricsProvider(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.MetricsProvider(nil).Load(map[string]any{"id": "metrics_provider_id"}, nil)
+result, err := client.MetricsProvider(nil).Load(map[string]any{"id": "metrics_provider_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Remove the entity matching the given criteria.
+Create a new entity with the given data.
 
 ```go
-result, err := client.MetricsProvider(nil).Remove(map[string]any{"id": "metrics_provider_id"}, nil)
+result, err := client.MetricsProvider(nil).Create(map[string]any{
+    "page_id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -928,8 +1059,25 @@ Update an existing entity. The data must include the entity `id`.
 ```go
 result, err := client.MetricsProvider(nil).Update(map[string]any{
     "id": "metrics_provider_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.MetricsProvider(nil).Remove(map[string]any{"id": "metrics_provider_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -960,6 +1108,7 @@ Return the entity name.
 
 ```go
 page := client.Page(nil)
+fmt.Println(page.GetName()) // "page"
 ```
 
 ### Fields
@@ -1021,6 +1170,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Page(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -1029,6 +1182,10 @@ Load a single entity matching the given criteria.
 
 ```go
 result, err := client.Page(nil).Load(map[string]any{"id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -1040,6 +1197,10 @@ result, err := client.Page(nil).Update(map[string]any{
     "id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -1069,7 +1230,8 @@ Return the entity name.
 ## PageAccessGroupEntity
 
 ```go
-page_access_group := client.PageAccessGroup(nil)
+pageAccessGroup := client.PageAccessGroup(nil)
+fmt.Println(pageAccessGroup.GetName()) // "page_access_group"
 ```
 
 ### Fields
@@ -1104,21 +1266,16 @@ page_access_group := client.PageAccessGroup(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.PageAccessGroup(nil).Create(map[string]any{
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.PageAccessGroup(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -1126,15 +1283,25 @@ results, err := client.PageAccessGroup(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.PageAccessGroup(nil).Load(map[string]any{"id": "page_access_group_id"}, nil)
+result, err := client.PageAccessGroup(nil).Load(map[string]any{"id": "page_access_group_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Remove the entity matching the given criteria.
+Create a new entity with the given data.
 
 ```go
-result, err := client.PageAccessGroup(nil).Remove(map[string]any{"id": "page_access_group_id"}, nil)
+result, err := client.PageAccessGroup(nil).Create(map[string]any{
+    "id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -1144,8 +1311,25 @@ Update an existing entity. The data must include the entity `id`.
 ```go
 result, err := client.PageAccessGroup(nil).Update(map[string]any{
     "id": "page_access_group_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.PageAccessGroup(nil).Remove(map[string]any{"id": "page_access_group_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -1175,7 +1359,8 @@ Return the entity name.
 ## PageAccessUserEntity
 
 ```go
-page_access_user := client.PageAccessUser(nil)
+pageAccessUser := client.PageAccessUser(nil)
+fmt.Println(pageAccessUser.GetName()) // "page_access_user"
 ```
 
 ### Fields
@@ -1195,23 +1380,16 @@ page_access_user := client.PageAccessUser(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.PageAccessUser(nil).Create(map[string]any{
-    "component_id": /* []any */,
-    "metric_id": /* []any */,
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.PageAccessUser(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -1219,15 +1397,25 @@ results, err := client.PageAccessUser(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.PageAccessUser(nil).Load(map[string]any{"id": "page_access_user_id"}, nil)
+result, err := client.PageAccessUser(nil).Load(map[string]any{"id": "page_access_user_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Remove the entity matching the given criteria.
+Create a new entity with the given data.
 
 ```go
-result, err := client.PageAccessUser(nil).Remove(map[string]any{"id": "page_access_user_id"}, nil)
+result, err := client.PageAccessUser(nil).Create(map[string]any{
+    "id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -1237,8 +1425,25 @@ Update an existing entity. The data must include the entity `id`.
 ```go
 result, err := client.PageAccessUser(nil).Update(map[string]any{
     "id": "page_access_user_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.PageAccessUser(nil).Remove(map[string]any{"id": "page_access_user_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -1269,6 +1474,7 @@ Return the entity name.
 
 ```go
 permission := client.Permission(nil)
+fmt.Println(permission.GetName()) // "permission"
 ```
 
 ### Fields
@@ -1285,7 +1491,11 @@ permission := client.Permission(nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Permission(nil).Load(map[string]any{"id": "permission_id"}, nil)
+result, err := client.Permission(nil).Load(map[string]any{"id": "permission_id", "organization_id": "organization_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -1295,8 +1505,13 @@ Update an existing entity. The data must include the entity `id`.
 ```go
 result, err := client.Permission(nil).Update(map[string]any{
     "id": "permission_id",
+    "organization_id": "organization_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -1327,6 +1542,7 @@ Return the entity name.
 
 ```go
 postmortem := client.Postmortem(nil)
+fmt.Println(postmortem.GetName()) // "postmortem"
 ```
 
 ### Fields
@@ -1370,7 +1586,11 @@ postmortem := client.Postmortem(nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Postmortem(nil).Load(nil, nil)
+result, err := client.Postmortem(nil).Load(map[string]any{"incident_id": "incident_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -1379,8 +1599,14 @@ Update an existing entity. The data must include the entity `id`.
 
 ```go
 result, err := client.Postmortem(nil).Update(map[string]any{
+    "incident_id": "incident_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -1410,7 +1636,8 @@ Return the entity name.
 ## StatusEmbedConfigEntity
 
 ```go
-status_embed_config := client.StatusEmbedConfig(nil)
+statusEmbedConfig := client.StatusEmbedConfig(nil)
+fmt.Println(statusEmbedConfig.GetName()) // "status_embed_config"
 ```
 
 ### Fields
@@ -1432,7 +1659,11 @@ status_embed_config := client.StatusEmbedConfig(nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.StatusEmbedConfig(nil).Load(nil, nil)
+result, err := client.StatusEmbedConfig(nil).Load(map[string]any{"page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -1441,8 +1672,13 @@ Update an existing entity. The data must include the entity `id`.
 
 ```go
 result, err := client.StatusEmbedConfig(nil).Update(map[string]any{
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -1473,6 +1709,7 @@ Return the entity name.
 
 ```go
 subscriber := client.Subscriber(nil)
+fmt.Println(subscriber.GetName()) // "subscriber"
 ```
 
 ### Fields
@@ -1537,21 +1774,16 @@ subscriber := client.Subscriber(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Subscriber(nil).Create(map[string]any{
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Subscriber(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -1559,15 +1791,25 @@ results, err := client.Subscriber(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Subscriber(nil).Load(map[string]any{"id": "subscriber_id"}, nil)
+result, err := client.Subscriber(nil).Load(map[string]any{"id": "subscriber_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Remove the entity matching the given criteria.
+Create a new entity with the given data.
 
 ```go
-result, err := client.Subscriber(nil).Remove(map[string]any{"id": "subscriber_id"}, nil)
+result, err := client.Subscriber(nil).Create(map[string]any{
+    "page_id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -1577,8 +1819,25 @@ Update an existing entity. The data must include the entity `id`.
 ```go
 result, err := client.Subscriber(nil).Update(map[string]any{
     "id": "subscriber_id",
+    "page_id": "page_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.Subscriber(nil).Remove(map[string]any{"id": "subscriber_id", "page_id": "page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -1609,6 +1868,7 @@ Return the entity name.
 
 ```go
 user := client.User(nil)
+fmt.Println(user.GetName()) // "user"
 ```
 
 ### Fields
@@ -1626,22 +1886,30 @@ user := client.User(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.User(nil).Create(map[string]any{
-    "user": /* map[string]any */,
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.User(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.User(nil).Create(map[string]any{
+    "organization_id": /* string */,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Remove(reqmatch, ctrl map[string]any) (any, error)`
@@ -1649,7 +1917,11 @@ results, err := client.User(nil).List(nil, nil)
 Remove the entity matching the given criteria.
 
 ```go
-result, err := client.User(nil).Remove(nil, nil)
+result, err := client.User(nil).Remove(map[string]any{"id": "id", "organization_id": "organization_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
