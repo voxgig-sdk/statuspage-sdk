@@ -2,12 +2,11 @@
 
 main: kit: config: {
 
-  ## TODO: crate in apidef and put servers here
-  
-  # Authorization header token value prefix.
-  # Statuspage documents `Authorization: OAuth <api_key>` (see the spec's
-  # securityScheme description) — the scaffold default 'Bearer' would 401.
-  auth: prefix: 'OAuth'
+  # The Authorization credential prefix is derived from the OpenAPI
+  # security scheme (see api/api-info.jsonic: main.kit.info.security,
+  # set by apidef) and defaults to 'Bearer' when the spec gives no
+  # signal. Uncomment to override per-SDK:
+  # auth: prefix: 'Bearer'
 
 
   headers: {

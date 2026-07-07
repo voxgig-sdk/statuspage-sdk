@@ -522,6 +522,65 @@ unified onto `opRequestShape`, Go doc-gate `-gcflags=-e` + progress-based
 repair loop (77/77 tests green); create-sdkgen — `guide.aontu` template
 fix, `generate`-builds-first script.
 
+## Phase 7 — Toolchain hardening: correct-first-time generation (goal follow-up)
+
+Goal: no per-project custom fixes — the toolchain must generate correctly
+the first time, parametrically from the spec. Changes (all local clones):
+
+### Parametric auth (replaces this project's OAuth override)
+- **apidef** (`transform/top.ts` + `model/apidef.aontu`, mirrored): the top
+  transform now resolves the spec's PRIMARY security scheme into model
+  facts `main.kit.info.security = {scheme, type, in, name, prefix}`.
+  Prefix rules: `http basic/bearer` → `Basic`/`Bearer`; `oauth2`/OIDC →
+  `Bearer`; `apiKey` in an `Authorization` header → prefix extracted from
+  the scheme/info prose (`Authorization: OAuth 89a2…` → `OAuth`) with a
+  credential-shaped-tail regex (placeholders and bare keys don't match),
+  falling back to `Bearer`; `apiKey` in any other header/query → `''`
+  (raw credential). 10 new unit tests; apidef 380/380 green.
+- **sdkgen** (`utility.ts`): new `resolveAuthPrefix(model)` —
+  `config.auth.prefix` (user override) → `info.security.prefix`
+  (spec-derived) → `'Bearer'`. All SEVEN language Config components
+  (ts/js/py/go/rb/php/lua) now use it. This also fixed a latent
+  inconsistency: py/go/rb/php/lua Configs defaulted to an EMPTY prefix
+  when `config.auth.prefix` was absent (masked until now by the scaffold's
+  hardcoded value). 5 new unit tests.
+- **create-sdkgen** template `config.jsonic`: hardcoded `auth: prefix:
+  'Bearer'` removed — replaced by a comment documenting the derivation and
+  the override syntax. This project's `config.jsonic` reverted to match.
+- ✅ **Verified end-to-end**: with zero project-local auth config,
+  regeneration produces `prefix: 'OAuth'` in ts/py/go Configs, sourced
+  from `api-info.jsonic`'s new `security` block. All suites green
+  (ts 200/200, py 192/192, go ok).
+- 📝 Release note: apidef (emit), sdkgen (consume), create-sdkgen
+  (no hardcode) must ship together — the old sdkgen + new template would
+  produce empty prefixes in py/go/rb/php/lua.
+
+### First-run CLI + docs correctness
+- 🔴 **Fixed (sdkgen): `voxgig-sdkgen target add ts py go` silently added
+  only `ts`** — the cmd handler read `args[2]` alone, dropping extra
+  positionals; create-sdkgen's own README quickstart used exactly that
+  form. Both `target add` and `feature add` now parse every positional,
+  comma- or space-separated, via a shared tested helper (`parseAddNames`).
+- **create-sdkgen AGENTS.md** (checked out from origin, edited locally):
+  step 3 / edit-loop / checklist now say `npm run generate` (which builds
+  `.sdk` sources first) instead of the raw `npx voxgig-model` that fails
+  on a fresh scaffold.
+- **create-sdkgen README quickstart**: same generate fix + added the
+  missing `npm run build` to the ts verify line.
+- **create-sdkgen `--help`**: `-t/--target` documented (was parsed but
+  absent from help).
+- **CI template ts job**: builds before `npm test` (was permanently green
+  running zero tests — `dist-test/` is gitignored and an empty test glob
+  exits 0), with a comment explaining why.
+- sdkgen docs (tutorial/how-tos) already used `npm run build && npm run
+  generate` — still correct, untouched.
+
+### All-language example mirrors + Ruby verification
+- js/rb/php/lua example components: same `opRequestShape`
+  single-source-of-truth pattern as ts/py/go (agent-applied; see below).
+- Verification: add `rb` target to this project and reach green tests
+  first-time (below).
+
 **For the live-API phase:** get a Statuspage API key + a test page;
 step zero is verifying the `OAuth` header against a real endpoint; then
 reads via `direct()` (until point dispatch is fixed) and writes via entity

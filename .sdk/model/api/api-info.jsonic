@@ -66,6 +66,13 @@ if required.  Some examples of how to convert things are below:
 # Authentication
 
 <!-- ReDoc-Inject: <security-definitions> -->`
+      security: {
+        in: "header"
+        name: "Authorization"
+        prefix: "OAuth"
+        scheme: "api_key"
+        type: "apiKey"
+      }
       servers: [
         {
           url: "https://api.statuspage.io/v1"
