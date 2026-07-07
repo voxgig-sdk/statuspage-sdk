@@ -16,7 +16,7 @@ def make_config():
         "options": {
             "base": "https://api.statuspage.io/v1",
             "auth": {
-                "prefix": "Bearer",
+                "prefix": "OAuth",
             },
             "headers": {
         "content-type": "application/json",

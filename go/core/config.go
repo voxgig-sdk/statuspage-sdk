@@ -15,7 +15,7 @@ func MakeConfig() map[string]any {
 		"options": map[string]any{
 			"base": "https://api.statuspage.io/v1",
 			"auth": map[string]any{
-				"prefix": "Bearer",
+				"prefix": "OAuth",
 			},
 			"headers": map[string]any{
 				"content-type": "application/json",

@@ -16,7 +16,7 @@
     "kit": {
       "config": {
         "auth": {
-          "prefix": "Bearer"
+          "prefix": "OAuth"
         },
         "docs_order": [
           "ts",

@@ -4,8 +4,10 @@ main: kit: config: {
 
   ## TODO: crate in apidef and put servers here
   
-  # Authorization header token value prefix
-  auth: prefix: 'Bearer'
+  # Authorization header token value prefix.
+  # Statuspage documents `Authorization: OAuth <api_key>` (see the spec's
+  # securityScheme description) — the scaffold default 'Bearer' would 401.
+  auth: prefix: 'OAuth'
 
 
   headers: {

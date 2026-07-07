@@ -4,6 +4,37 @@ Trial of `@voxgig/create-sdkgen` (npm) to build a statuspage.com SDK in
 TypeScript, Python, and Go. Goal: reach the unit-testable state, review the
 generated artifacts and docs, and record DX issues and bugs along the way.
 
+## Executive summary
+
+**Outcome: reached the fully-green unit-testable state** — TS 200/200,
+Python 192/192 (mypy doc gate armed and passing), Go all ok — for an
+18-entity SDK generated from the Statuspage OpenAPI spec (54 paths, 112
+methods, all mapped 1:1 with zero drops). Getting there required **3
+blocking fixes** (multi-target index regression, stale `guide.jsonic`
+template ref, missing build step in the documented flow) and a **generator
+patch series** in the local clones (op-shape requiredness policy + example
+generators unified onto one source of truth) that turned 52 failing TS doc
+snippets and a non-converging Go doc gate green *by construction*.
+
+**Headline positives:** the offline test suites and doc-example
+completeness gates are a genuinely differentiating idea (they caught real
+generator bugs during this trial, exactly as designed); scaffold → generate
+→ test is minutes-fast; project collateral (deploy tooling, gitignore
+hygiene, version lockstep, disclaimers) is unusually thoughtful for
+generated output.
+
+**Headline risks (before testing against the real API):** the scaffold
+default `Authorization: Bearer` contradicts Statuspage's documented `OAuth`
+scheme (fixed in this project's model — generator should source it from the
+spec's securityScheme); `list()` returns entity wrappers typed as plain
+data in all three languages (silent wrong data); wrapped request bodies
+(`{"component": {...}}`) don't flow into typed create/update; runtime point
+dispatch can silently pick the wrong route; thrown errors embed the raw API
+key (redaction is a commented-out stub); Python's wheel installs 8 generic
+top-level packages; Go is not goroutine-safe and has no context/timeouts;
+the generated CI's ts job is green while running zero tests. Full detail in
+Phases 4 and 6; 60+ findings logged with file:line evidence.
+
 - **Date:** 2026-07-07
 - **Environment:** macOS (darwin 25.2.0), Node v24.16.0, npm 11.13.0, Python 3.14.6, go 1.26.3 (arm64)
 - **Working repo:** `~/Projects/voxgig-sdk/statuspage-sdk` (fresh repo, initial commit only)
@@ -332,3 +363,170 @@ Additional bugs found and fixed during propagation:
   caught what TS caught.
 
 ---
+
+## Phase 6 — Artifact & documentation review (6-agent workflow)
+
+Six parallel reviewers (ts code, py code, go code, docs, API fidelity,
+project scaffold) over the final regenerated artifacts. Condensed below,
+severity-ordered; full evidence with file:line in the review output
+(`tasks/wf0pcts1q.output` in the session scratchpad). Items already logged
+in Phase 4 were excluded by the review brief.
+
+### Cross-cutting (all three languages)
+
+- 🔴 **Auth scheme: scaffold default `Bearer` vs Statuspage's documented
+  `OAuth <api_key>`** — every live call would 401, and no generated doc
+  even mentions the header format. **Fixed in this project**
+  (`.sdk/model/config.jsonic` → `auth: prefix: 'OAuth'`, regenerated, all
+  suites still green). Generator fix: source the prefix from the spec's
+  `securityScheme` instead of a hardcoded scaffold default. *This is
+  verify-step-zero when we get a real API key.*
+- 🔴 **`list()` returns entity-wrapper instances typed as plain data.**
+  `item.id === undefined`, `item.name` returns the internal entity name
+  (`'component'`), real fields only via `item.data()` — silent wrong data
+  that type-checks, in TS, py, and go alike (`load()`/`create()` return
+  plain records; `list()` alone wraps). The wrapper's `name/id` shadowing
+  API fields is the killer.
+- 🔴 **Thrown errors embed the raw API key** — `CleanUtility`/`clean()` is
+  a commented-out stub in all three runtimes; a consumer who logs a caught
+  error (the READMEs' own recommended pattern) ships their key to their
+  logs.
+- 🟠 Missing required path params are sent as literal `{page_id}` URLs (no
+  client-side validation; `reqd: true` is recorded in the model but nothing
+  consumes it), and every method's match/data parameter is optional, so the
+  required-field types don't actually force anything.
+- 🟠 Wire pollution: match keys are duplicated into the query string
+  (`DELETE …/subscribers/S?id=S&page_id=P`), `$action` leaks as
+  `%24action=`, and create/update bodies carry `page_id`/`id`. Tolerated by
+  the Rails backend today, but spurious.
+- 🟠 `patch` is advertised in READMEs/entity tables but generated nowhere —
+  every PATCH endpoint is modeled-but-unreachable (Statuspage's canonical
+  update verb!).
+- 🟡 Default User-Agent masquerades as a Mozilla browser string.
+
+### TypeScript specifics
+
+- 🔴 Entity methods call a nonexistent `utility.error` — any step-level
+  failure crashes with `TypeError: error is not a function` instead of the
+  intended typed error.
+- 🔴 The documented `extend` middleware option is rejected by option
+  validation (`Unexpected keys at field <root>: extend`), and the README's
+  `{hooks: {...}}` feature shape would never fire anyway (hooks are read as
+  flat methods).
+- 🟠 `StatuspageError`/`Control` not exported from the package root (no
+  `instanceof` contract); package.json lacks `files`/`exports`/`engines`;
+  CJS-only, Node-only build.
+- 🟢 Praised: strict option validation with actionable messages, zero
+  runtime deps, `ctrl.explain` debug channel, offline test mode DX.
+
+### Python specifics
+
+- 🔴 **Packaging: the wheel installs 8 generic top-level packages/modules**
+  (`config`, `core`, `entity`, `feature`, `features`, `utility`, …) —
+  guaranteed site-packages collisions. Needs a single `statuspage_sdk/`
+  namespace package (which would also fix PEP 561 delivery, currently
+  broken for ~90% of the surface).
+- 🔴 No HTTP timeout, no retries, no connection reuse (stdlib urllib, fresh
+  connection per call) — and the declared `requests>=2.33` dependency is
+  never imported (the SDK is stdlib-only; that's a selling point being
+  wasted as a phantom dep).
+- 🟠 Pipeline feature hooks are never fired (generator emitted placeholder
+  comments instead of calls); the Log feature exists but is unreachable via
+  config; flat exception design (no `status_code`, no subclasses).
+- 🟡 Booleans serialize as `str(True)` → `'True'` in query params; SDK
+  doesn't pass its own mypy; live-test env loading resolves `../../.env.local`
+  outside the repo under the documented invocation.
+
+### Go specifics
+
+- 🔴 **Not goroutine-safe** — 14 confirmed data races on shared
+  root-context maps under concurrent entity calls (can fatally panic).
+- 🔴 **`ListTyped` silently returns all-nil structs** (total data loss on
+  the flagship typed path — the depluralized field names mean the JSON
+  never maps).
+- 🟠 No `context.Context` anywhere; bare `http.DefaultClient` (no timeout,
+  no injection); `Direct()` returns `nil` error with the real error buried
+  in the map; `go.mod` says 1.20 but code uses `log/slog` (1.21+);
+  un-idiomatic error type (no `Unwrap`, embeds full ctx incl. API key);
+  67/100 files fail gofmt.
+
+### Documentation
+
+- 🟠 Zero Statuspage-specific onboarding: nothing explains how to get an
+  API key, what `page_id` is or where to find it, or the 1 req/s rate limit
+  — all of which the spec's `info.description` supplies verbatim. The spec
+  content is *right there* and unused.
+- 🟠 Docs advertise never-generated surfaces: "an interactive REPL" (root),
+  "the CLI, and MCP server" (all three per-language READMEs).
+- 🟠 Every field-description column in all six doc files is empty though
+  the spec supplies descriptions and enums (component status enum appears
+  nowhere); the entity table's "API path" column shows arbitrary
+  sub-resource/action paths as canonical.
+- 🟠 Broken/misleading links: `SECURITY.md` referenced but not emitted;
+  "Upstream API" → Atlassian's contact form instead of
+  developer.statuspage.io.
+- 🟡 ts/README documents every entity twice (~800 duplicated lines);
+  `remove()` return value documented three different ways.
+
+### API fidelity (the "can we test the real thing" assessment)
+
+- **4.5 of 5 core Statuspage workflows are expressible**, and the write
+  path (create/resolve incident, set component status, subscribe) emits
+  requests the real API would very likely accept — the user hand-builds the
+  `{incident: {...}}` envelope (typed-Data gap forces `as any`, already
+  logged) and the passthrough body does the right thing.
+- 🔴 The most common **read** call is silently wrong:
+  `Incident().list({page_id})` dispatches to `/incidents/upcoming` (the
+  `select.exist` optional-params bug from Phase 4, now confirmed at
+  runtime with traced URLs).
+- Recommended live-test order: (0) verify OAuth prefix with a real key,
+  (1) drive reads via `direct()` until point-dispatch is fixed, (2) writes
+  via entity ops with hand-built envelopes.
+
+### Project scaffold / CI
+
+- 🔴 **The generated CI's ts job is green while running zero tests**: no
+  build step before `npm test`, `dist-test/` is gitignored, and
+  `node --test` with an empty glob exits 0. (go and py jobs verified to
+  genuinely pass on fresh checkout.) Fix: run `make -C ts test` + a
+  zero-tests guard.
+- 🟠 `.sdk/apidef-warnings.txt` committed a hard `BUILD FAILED` (the
+  guide.jsonic bug from Phase 2) as a "warning", full of machine-local
+  absolute paths — and successful re-runs never clear it, so it's stale
+  evidence of a fixed bug. Should be surfaced loudly at create time,
+  gitignored, and refreshed per run.
+- 🟠 Five permanently no-op CI jobs for targets never generated (go-cli,
+  go-mcp, rb, php, lua), one leaking private-infra commentary
+  (`GOSUMDB=off` for a private repo).
+- 🟠 ts npm tarball contents are accidental (no `files` whitelist; 310
+  files, 2.1 MB, dist/ included only via an npm ignore-fallback quirk).
+- 🟡 LICENSE holder differs root vs per-language; root `make` lands on
+  deploy help (no `make test`); `VERSION` silently falls back to 0.0.0;
+  spec committed twice (root + `.sdk/def/`); `npm install` instead of
+  `npm ci` in CI.
+- 🟢 Praised: layered gitignore hygiene verified clean, `.env.local`
+  secrets pattern safe, per-target deploy tooling with dry-run rehearsal
+  and tag-last ordering, truthful "publish pending" packages table,
+  unofficial-SDK disclaimers everywhere, README examples actually
+  test-covered in all three languages.
+
+---
+
+## State of play & next steps
+
+**Repo state:** scaffolded project + three regenerated SDKs, all test
+suites green, auth prefix corrected to `OAuth`, spec + trial log committed.
+**Local clone state (unpushed, for upstream PRs):** sdkgen — target-index
+fix, opShape requiredness policy (+3 tests), 12 example/doc components
+unified onto `opRequestShape`, Go doc-gate `-gcflags=-e` + progress-based
+repair loop (77/77 tests green); create-sdkgen — `guide.aontu` template
+fix, `generate`-builds-first script.
+
+**For the live-API phase:** get a Statuspage API key + a test page;
+step zero is verifying the `OAuth` header against a real endpoint; then
+reads via `direct()` (until point dispatch is fixed) and writes via entity
+ops with hand-built `{entity: {...}}` envelopes. The generator-side
+blockers to fix first for a real SDK release: securityScheme-sourced auth,
+list() wrapper/typing, request-body envelopes into CreateData + runtime
+wrapping, point-dispatch `select.exist`, error redaction, py packaging
+namespace, go concurrency/context.
