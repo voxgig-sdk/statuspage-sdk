@@ -626,6 +626,34 @@ refs to the renamed base models (`apidef.aontu`, `guide.aontu`,
 - Final check: **0 stale cross-package `.jsonic` refs** anywhere under
   `~/Projects/voxgig` and `~/Projects/voxgig-sdk`.
 
+### Extension canonicalization: ALL model files are `.aontu`
+Follow-up decision: model files are written in the aontu language, so the
+`.jsonic` extension is legacy everywhere — including editable files.
+Coordinated rename across five repos (4 parallel agents + integration):
+- **apidef**: writers/readers renamed (`guide.aontu`, `base-guide.aontu`,
+  `api-info.aontu`, `entity/*.aontu`, indexes), TS + Go ports, 43 fixture
+  files, `.gitattributes`; 380/380 TS + Go suites green.
+- **apidef-validate**: 1,942 corpus files renamed; scripts/tests updated.
+  (Its pinned published apidef TS/Go deps still emit `.jsonic` — suites
+  align on the next apidef release.)
+- **sdkgen**: scaffold model files (9 targets + features), `target add`/
+  `feature add` copy+index code, Deploy prose, docs; 86/86 green.
+- **create-sdkgen**: 51 template files (model + test trees), scaffold
+  emits `sdk.aontu`, package.json scripts, AGENTS.md; 12/12 green.
+- **@voxgig/model**: `model-config.aontu` hardcodes (TS + Go), init
+  scaffolding, 15 fixtures, docs; 36/36 + Go green. Go watch keeps
+  `.jsonic` as a legacy-accepted extension (canonical is `.aontu`).
+- **This project + petstore-sdk migrated**: every `.sdk` model/test file
+  renamed, `@"…"` include refs rewritten (both quote styles), scripts
+  updated; local `@voxgig/model` linked (its model-config is now
+  cross-referenced as `.aontu`). All four suites green post-migration
+  (ts 200/200, py 192/192, go ok, rb 178/178).
+- **Fresh-scaffold verification**: scaffold emits `.aontu` throughout;
+  with the three local packages linked: clean generate, parametric OAuth,
+  rb 178/178. 📝 Confirmed coupling: a fresh scaffold's *install-time*
+  add-target crashes against PUBLISHED sdkgen (reads `target-index.jsonic`)
+  — apidef, sdkgen, create-sdkgen, and @voxgig/model must release together.
+
 ### Verification 2 — fresh scaffold, local toolchain end-to-end
 Scaffolded a brand-new project in a scratch dir with the local
 create-sdkgen, linked local sdkgen+apidef, `add-target ts rb` (space

@@ -1,7 +1,0 @@
-# SDK Targets.
-
-
-@"go.jsonic"
-@"ts.jsonic"
-@"py.jsonic"
-@"rb.jsonic"
