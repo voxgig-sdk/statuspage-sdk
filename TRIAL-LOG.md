@@ -142,3 +142,156 @@ npm create @voxgig/sdkgen@latest -- statuspage \
   `pyproject.toml` / `go.mod`). Root README.md and Makefile also generated.
 
 ---
+
+## Phase 3 — Unit tests (the "unit testable state")
+
+| Target | Command | Result |
+| --- | --- | --- |
+| **py** | `python3 -m venv .venv && pip install pytest requests; pytest test/` | 🟢 **191 passed, 1 skipped** (mypy gate skips when mypy absent) |
+| **ts** | `npm install && npm run build && npm test` | 🔶 **198/200 pass; 2 fail** — both doc-example completeness gates (35 snippet type errors) |
+| **go** | `go test ./...` | 🔶 all pass except `TestReadmeGoSnippets` (2 snippets don't compile) |
+
+The failures are all in the **doc-example gates** — the generator's own
+"every documented example is tested" guarantee catching real generator
+defects. The runtime/unit layers (entity ops, pipeline, struct utilities,
+mock transport) are green across all three languages: ~190 tests each.
+
+- 🔴 **BUG 4 (sdkgen ts examples): generated examples don't satisfy the
+  generated types for nested entities.** Statuspage nests everything under
+  `/pages/{page_id}/…`, so e.g. `ComponentLoadMatch = {id: string, page_id:
+  string}` (both required). But the generated README shows
+  `client.Component().load({ id: 'example_id' })` — no `page_id` → TS2345.
+  Inconsistently, the **update** example DOES include both
+  (`update({id, page_id})`). load/remove/create examples disagree with the
+  type generator; ~22 of the 35 errors are this class, across essentially
+  every nested entity (component, incident, subscriber, metric,
+  group_component, page_access_*, …).
+- 🔴 **BUG 5 (sdkgen ts examples): `create({})` / partial-create examples
+  vs required CreateData fields** — e.g. `create({ page_id })` fails because
+  `ComponentCreateData` also requires `id`. (Requiring `id` in a *create*
+  payload is itself a modeling smell — see Phase 4.)
+- 🔴 **BUG 6 (sdkgen ts docs/test-harness): illustration blocks type-checked
+  as code.** ~13 errors (TS1005/TS1109/TS2693) come from field-type tables /
+  `{...}`-placeholder blocks fenced as ` ```ts ` (e.g. a block using bare
+  `boolean` / `number` / `any` as values). The readme test has a "known
+  illustration" exemption, but these blocks don't qualify for it — either
+  the generator should fence them as non-`ts` or emit them in the
+  illustration-recognizable shape.
+- 🔴 **BUG 7 (sdkgen go examples): two snippets fail `go vet`-level checks**
+  — `declared and not used: err` (snip98) and unused variable
+  `status_embed_config` (snip99) in README/REFERENCE snippets.
+- 🟡 **DX: cross-language test rigor is uneven, and it matters.** Python's
+  doc gate *executes* snippets (nice design: seeded offline mode, programming
+  errors fail, only 404-class tolerated) but its static gate silently skips
+  when mypy isn't installed — so py/README.md contains the **identical**
+  `load({"id"})`-without-`page_id` flaw as TS and still reports 191-green.
+  The TS suite catches statically what py can't. Consider shipping mypy in
+  the py dev extras (or failing, not skipping, when it's absent).
+- 📝 Diagnosis of bugs 4–7 root causes fanned out to a 4-agent workflow
+  (ts snippets, go snippets, sdkgen example-generation internals, apidef
+  modeling audit) — results in Phase 4.
+
+---
+
+## Phase 4 — Root-cause diagnosis (4-agent workflow) and fixes
+
+Corrected counts: **52** failing TS snippets (17 README + 35 REFERENCE), not
+35; all TS2345 argument mismatches. The Go failure is not "2 bad snippets":
+**142** unused-variable errors across ~70 REFERENCE blocks are silently
+auto-repaired by the test's fix-loop, which falls exactly one round short
+(Go caps at 10 reported errors/round; the 15-attempt budget < 142/10 + final
+rebuild). The two names that surface (snip98/99) are just the
+lexicographically-last fragments.
+
+### Root causes (sdkgen)
+
+- 🔴 **BUG 4 root cause — two generators, two sources of truth.** The
+  Match/Data *types* are generated from `opRequestShape()` (op params across
+  points), but the README/REFERENCE *examples* are generated from only the
+  entity's id field (`entityIdField`). Every entity nested under
+  `/pages/{page_id}/…` (14 of 18 here) gets examples that can't type-check.
+  The update example agreed with its type **only by accident** (its "sample
+  patch fields" happened to include `page_id`).
+- 🔴 **BUG 4a — dead code.** `ReadmeQuick_ts.ts` has a nested-entity branch
+  that would have added the parent param — it checks `e.ancestors`, but the
+  model stores `relations.ancestors`, so it can never fire. (The repo's own
+  `buildIdNames` helper reads the correct path.)
+- 🔴 **BUG 5 root cause — union-required op shapes.** `opShape.ts#opParams`
+  merges params across ALL points of an op, first-seen `reqd` wins — so
+  params required by *any* route become required for the whole op, and
+  `$action` sub-resource routes (POST `…/components/{id}/page_access_groups`
+  folded into `create`) inject a required `id` into `CreateData`. Worse than
+  cosmetic: the union types steer callers into passing key sets that flip
+  the runtime point-dispatch onto the wrong route.
+- 🔴 **BUG 7 root cause — Go examples aren't idiomatic.** REFERENCE op
+  examples emit `result, err := …` and never consume either (and accessor
+  examples bind snake_case variables like `status_embed_config`). The
+  auto-repair gate hides 140 of 142 of these.
+
+### Fixes applied (local clones, all sdkgen tests green: 77/77)
+
+| Fix | Where |
+| --- | --- |
+| `opParams`: exclude `$action` points from canonical shapes; requiredness = intersection across alternative points (+3 new unit tests pinning this) | `sdkgen/ts/src/helpers/opShape.ts`, `test/opshape.test.ts` |
+| Example args derived from `opRequestShape` — the SAME source as the types (load/remove/update/create; id-first ordering; required-id no longer dropped from create) | `sdkgen/…/cmp/ts/ReadmeQuick_ts.ts`, `ReadmeRef_ts.ts`, `ReadmeEntity_ts.ts` |
+| Dead nested-entity branch fixed (`relations.ancestors`), selection requires an active load + required parent param; prose names the actual parent | `ReadmeQuick_ts.ts` |
+| Same policy mirrored to Python + Go components; Go examples made idiomatic (`if err != nil { panic(err) }` + consume values, camelCase vars); Go repair loop: `-gcflags=-e` + progress-based bound | `cmp/py/*`, `cmp/go/*` (agents) |
+| `generate` script builds `.sdk` sources first (`tsc --build src && voxgig-model …`) so the AGENTS.md sequence works as documented | `create-sdkgen` template + this project |
+
+After the `opParams` fix the statuspage shapes become sane:
+`ComponentCreateData {page_id}` (no phantom `id`), `ComponentListMatch`
+`{page_id}` required + group/user ids optional, `ComponentLoadMatch`
+`{id, page_id}` — and examples agree with them by construction.
+
+### Deeper findings logged for upstream (NOT fixed in this trial)
+
+**apidef modeling (affects correctness of any nested/wrapped API):**
+1. 🔴 **Wrapped request bodies never reach create/update.** Statuspage wraps
+   every payload (`{"component": {...}}`). apidef records only path params on
+   op points; the body schema's inner fields don't flow into `CreateData`,
+   and the runtime sends `reqdata` verbatim — so a type-correct `create()`
+   cannot produce a valid Statuspage API call. This is the single biggest
+   blocker for using the generated SDK against the real API.
+2. 🔴 **Point dispatch can silently pick the wrong route**: `select.exist`
+   includes optional query params (`page`, `per_page`), so
+   `list({page_id, page_access_group_id})` matches nothing and falls through
+   to the *last* point (`GET /pages/{p}/components`) — wrong data, no error.
+3. 🟠 `required:[...]` on a *nested* schema is misread as "this property is
+   required" (`!!fielddef.required`), e.g. `Incident.incident` wrongly
+   required.
+4. 🟠 Field names are depluralized away from the wire format with an empty
+   alias map (`components` → `component?: any[]`) — generated types
+   mis-describe actual response JSON; no `orig` retained to map back.
+5. 🟠 `$action` response schemas pollute entity fields (Component gains
+   uptime-report fields; Subscriber gains count-by-type integers).
+6. 🟠 Guide heuristic renames `page_id → id` on `page_access_*` collection
+   routes via a `startsWith(parent + '_')` string coincidence — `id` means
+   *page* id in list/create but *group/user* id in load/remove.
+7. 🟠 One resource split across two entities: `postmortem` (GET/PUT) vs
+   `incident_postmortem` (DELETE-only, empty interface) because DELETE→204
+   has no response schema to key entity resolution on.
+8. 🟡 `POST /subscribers/unsubscribe` (bulk delete) is modeled as
+   `subscriber.create($action)` — a create() that deletes; deep-nested
+   `resend_confirmation` mints a fake field-less `incident_subscriber`
+   entity.
+9. 🟡 `GET /pages/{p}/metrics` says "Get a list" but declares a non-array
+   response, so it's classified `load` not `list` (spec quirk; heuristic
+   could use plural-segment/paging-param counter-signals).
+10. 🟡 Census: all 54 paths/112 methods map 1:1 (nothing dropped — good);
+    `Permission` keeps an un-unwrapped `data` envelope; model `patch` ops
+    generate no method at all (modeled but unreachable).
+11. 🟡 gofmt non-compliance across 66 generated Go files (`go vet` is clean);
+    a `format.Source` post-pass would fix it.
+
+**Test-harness observations:**
+- The TS illustration allowlist (`?:`, `/*`, type-table shape) is
+  content-sniffed; it correctly exempted all 16 pseudo-code blocks but also
+  *masks* 6 create examples that carry the real missing-param bug (they ride
+  the `/* type */` placeholders). An explicit marker would be more honest.
+- The Go auto-repair loop (`_ = name` insertion) actively hides unidiomatic
+  examples — 140 of 142 defects invisible until the budget ran out.
+- The Python execute-gate tolerance for 404-class errors is what lets
+  missing-required-param examples pass; with mypy present it would have
+  caught what TS caught.
+
+---

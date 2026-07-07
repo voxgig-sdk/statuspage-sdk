@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "Statuspage SDK Project",
   "scripts": {
-    "generate": "voxgig-model model/sdk.jsonic",
+    "generate": "tsc --build src && voxgig-model model/sdk.jsonic",
     "watch-generate": "voxgig-model -w model/sdk.jsonic",
-    "dry-generate": "voxgig-model -y model/sdk.jsonic",
+    "dry-generate": "tsc --build src && voxgig-model -y model/sdk.jsonic",
     "watch-dry-generate": "voxgig-model -w -y model/sdk.jsonic",
     "test-model": "voxgig-model test/test.jsonic",
     "watch-test-model": "voxgig-model -w test/test.jsonic",
