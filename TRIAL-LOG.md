@@ -601,6 +601,31 @@ the first time, parametrically from the spec. Changes (all local clones):
   readme-examples gate executing all 130 documented rb examples (3 root +
   48 README + 79 REFERENCE). ts/py/go regression: 200/200, 192/192, ok.
 
+### Sweep: remaining `.jsonic` → `.aontu` model references
+Full-content sweep of all clones + sibling SDK projects for cross-package
+refs to the renamed base models (`apidef.aontu`, `guide.aontu`,
+`sdkgen.aontu`):
+- apidef / sdkgen / create-sdkgen / model clones: **clean** (the
+  create-sdkgen guide template was the only one; fixed in Phase 2).
+- **apidef-validate**: 19 corpus guide snapshots (`v1/guide/*-guide.jsonic`)
+  plus, more importantly, **9 live producers** — 7 `v1/scripts/*.js`
+  harness scripts and `v1/test/{main.test,bench}.ts` (+2 compiled
+  dist-test copies) that *write fresh* guide files with the stale
+  `@"@voxgig/apidef/model/guide.jsonic"` line. Harmless to the Go validate
+  suite (the Go port writes `base-guide.jsonic` and never unifies the
+  include — verified by running a guide-case), but any TS-pipeline run
+  breaks at unification. All fixed to `.aontu` (30 one-line changes).
+- **`~/Projects/voxgig-sdk/petstore-sdk`** (earlier multi-language trial):
+  `sdk.jsonic` still referenced `apidef.jsonic`/`sdkgen.jsonic` and
+  `guide/guide.jsonic` the old guide — it could not generate against
+  current tooling. Fixed (3 lines).
+- Intentionally untouched: `TRIAL-LOG.md` (historical record) and this
+  project's `.sdk/apidef-warnings.txt` (stale error log from the original
+  failure — the never-cleared-on-success behaviour is already logged as a
+  tool bug).
+- Final check: **0 stale cross-package `.jsonic` refs** anywhere under
+  `~/Projects/voxgig` and `~/Projects/voxgig-sdk`.
+
 ### Verification 2 — fresh scaffold, local toolchain end-to-end
 Scaffolded a brand-new project in a scratch dir with the local
 create-sdkgen, linked local sdkgen+apidef, `add-target ts rb` (space
