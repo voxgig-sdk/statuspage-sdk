@@ -283,6 +283,43 @@ After the `opParams` fix the statuspage shapes become sane:
 11. 🟡 gofmt non-compliance across 66 generated Go files (`go vet` is clean);
     a `format.Source` post-pass would fix it.
 
+## Phase 5 — Fix propagation and the fully-green state
+
+Propagation flow (matches the documented `edit → add-target → generate`
+loop): linked the local sdkgen into `.sdk` (`npm link ../../../voxgig/sdkgen/ts`),
+re-ran `npm run add-target ts,py,go` — the **multi-target index bug fix
+verified end-to-end** (all three registered, idempotent re-add, no dupes) —
+then `npm run generate` (now builds first) and all three test suites.
+
+**Result: everything green, including gates that were previously dormant.**
+
+| Target | Before fixes | After fixes |
+| --- | --- | --- |
+| ts | 198/200 (35+17 snippet type errors) | **200/200** |
+| py | 191 pass, 1 skip (mypy gate dormant) | **192/192, no skips** (mypy installed AND passing) |
+| go | FAIL (readme snippets non-converged) | **ok** (0 repair rounds needed for op examples) |
+
+Additional bugs found and fixed during propagation:
+- 🔴 The dead-`ancestors` branch existed in **three more components** —
+  `ReadmeTopQuick_ts/py/go` (root README quickstart) — and the ts/go
+  variants *also* gated the nested entity's `load` on the example entity's
+  ops (wrong entity). All fixed to the `relations.ancestors` +
+  own-active-load + required-parent-param selection.
+- 🔴 **Armed mypy gate immediately caught a fresh bug class:** the root
+  README "test mode" block binds `component = client.Component().list()` —
+  a singular variable rebound from `Component` to `list[Component]` across
+  concatenated blocks (mypy assignment error), and misleading in any case.
+  Fixed `ReadmeTopTest_ts/py` to pluralize list results and derive match
+  args from the op shape. (This validates the "fail, don't skip, when mypy
+  is absent" recommendation — the gate finds real things.)
+- 🟡 Go constructor/feature doc blocks still declare an unused `client` and
+  lean on the harness's `_ = client` auto-repair (kept deliberately — making
+  constructor docs "self-consuming" would pollute them; one repair round
+  handles it under the new progress-based loop).
+- 🟡 Cosmetic, not fixed: the per-language "Use test mode" how-to section
+  still names a `list()` result with a singular variable (compiles fine —
+  each ts block checks separately; flagged for the maintainer).
+
 **Test-harness observations:**
 - The TS illustration allowlist (`?:`, `/*`, type-table shape) is
   content-sniffed; it correctly exempted all 16 pseudo-code blocks but also
