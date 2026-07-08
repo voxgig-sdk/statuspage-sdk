@@ -78,8 +78,10 @@ if required.  Some examples of how to convert things are below:
           url: "https://api.statuspage.io/v1"
         }
       ]
+      summary: "Please don't abuse the API, and please report all feature requests and issues to https://support.atlassian.com/contact"
       title: "Statuspage API"
       version: "1.0.0"
+      website: "https://statuspage.io"
       "x-logo": {
         url: "https://d1ykxpo828xni0.cloudfront.net/Statuspage-logo-padding.svg"
       }

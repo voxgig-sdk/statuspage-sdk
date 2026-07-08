@@ -1,15 +1,6 @@
 {
-  "NAME": "STATUSPAGE",
-  "Name": "Statuspage",
   "def": "statuspage-openapi3.json",
   "main": {
-    "api": {
-      "entity": {},
-      "guide": {}
-    },
-    "custom": {
-      "plurals": {}
-    },
     "def": {
       "desc": ""
     },
@@ -9138,8 +9129,10 @@
             "url": "https://api.statuspage.io/v1"
           }
         ],
+        "summary": "Please don't abuse the API, and please report all feature requests and issues to https://support.atlassian.com/contact",
         "title": "Statuspage API",
         "version": "1.0.0",
+        "website": "https://statuspage.io",
         "x-logo": {
           "url": "https://d1ykxpo828xni0.cloudfront.net/Statuspage-logo-padding.svg"
         }
@@ -9331,8 +9324,5 @@
     }
   },
   "name": "statuspage",
-  "name-": "statuspage",
-  "name_": "statuspage",
-  "name__orig": "statuspage",
   "origin": "voxgig-sdk"
 }
