@@ -663,6 +663,36 @@ form), `npm run generate`:
   spec with an untouched scaffold config**.
 - Fresh ts suite: **200/200**; fresh rb suite: **178/178**. First time.
 
+## Phase 8 — Lockstep release and registry-only verification
+
+Patch releases published (via `aql vault exec --for=npm=vxg:npm` injecting
+`npm_config_//registry.npmjs.org/:_authToken`; one interactive passphrase
+entry, then `repo-bump` + `repo-publish-quick` per repo — build + full test
+suite run before every publish):
+
+| Package | Version | Tag |
+| --- | --- | --- |
+| @voxgig/apidef | **6.3.2** | v6.3.2 |
+| @voxgig/model | **9.2.2** | v9.2.2 |
+| @voxgig/sdkgen | **1.3.2** | v1.3.2 |
+| @voxgig/create-sdkgen | **0.16.1** | v0.16.1 |
+
+**Registry-only end-to-end (the original trial scenario, re-run with zero
+local links):** `npm create @voxgig/sdkgen@0.16.1 -- statuspage -d <spec>
+-o statuspage-sdk -t ts -t rb -f test` →
+- scaffold + install pulled apidef 6.3.2 / sdkgen 1.3.2 / model 9.2.2 from
+  the registry; install-time `target add` registered BOTH targets in
+  `target-index.aontu` (the Phase-1 silent-loss bug is dead in the
+  published packages);
+- `npm run generate` succeeded **first time, zero errors** (no guide-ref
+  failure, no missing-build failure, all-`.aontu` model);
+- `Authorization: OAuth` derived parametrically from the spec;
+- **rb: 178/178 · ts: 200/200 — green on the first run.**
+
+Where the Phase-0 trial needed 3 fixes just to generate and produced
+failing doc gates, the published toolchain now goes spec → scaffold →
+generate → green tests with no intervention. 🎉
+
 **For the live-API phase:** get a Statuspage API key + a test page;
 step zero is verifying the `OAuth` header against a real endpoint; then
 reads via `direct()` (until point dispatch is fixed) and writes via entity
