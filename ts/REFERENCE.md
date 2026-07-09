@@ -352,7 +352,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Component().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -506,7 +506,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.GroupComponent().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -664,7 +664,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Incident().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -790,9 +790,9 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.IncidentSubscriber().create({
-  incident_id: /* string */,
-  page_id: /* string */,
-  subscriber_id: /* string */,
+  incident_id: 'example_incident_id',
+  page_id: 'example_page_id',
+  subscriber_id: 'example_subscriber_id',
 })
 ```
 
@@ -853,7 +853,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.IncidentTemplate().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -1000,8 +1000,8 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Metric().create({
-  metrics_provider_id: /* string */,
-  page_id: /* string */,
+  metrics_provider_id: 'example_metrics_provider_id',
+  page_id: 'example_page_id',
 })
 ```
 
@@ -1097,7 +1097,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.MetricsProvider().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -1323,7 +1323,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.PageAccessGroup().create({
-  id: /* string */,
+  id: 'example_id',
 })
 ```
 
@@ -1420,7 +1420,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.PageAccessUser().create({
-  id: /* string */,
+  id: 'example_id',
 })
 ```
 
@@ -1782,7 +1782,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Subscriber().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -1877,7 +1877,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.User().create({
-  organization_id: /* string */,
+  organization_id: 'example_organization_id',
 })
 ```
 

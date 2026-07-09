@@ -817,7 +817,7 @@ const components = await client.Component().list()
 
 ```ts
 const component = await client.Component().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -897,7 +897,7 @@ const group_components = await client.GroupComponent().list()
 
 ```ts
 const group_component = await client.GroupComponent().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -970,7 +970,7 @@ const incidents = await client.Incident().list()
 
 ```ts
 const incident = await client.Incident().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -1000,9 +1000,9 @@ Create an instance: `const incident_subscriber = client.IncidentSubscriber()`
 
 ```ts
 const incident_subscriber = await client.IncidentSubscriber().create({
-  incident_id: /* string */,
-  page_id: /* string */,
-  subscriber_id: /* string */,
+  incident_id: 'example_incident_id',
+  page_id: 'example_page_id',
+  subscriber_id: 'example_subscriber_id',
 })
 ```
 
@@ -1043,7 +1043,7 @@ const incident_templates = await client.IncidentTemplate().list()
 
 ```ts
 const incident_template = await client.IncidentTemplate().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -1133,8 +1133,8 @@ const metrics = await client.Metric().list()
 
 ```ts
 const metric = await client.Metric().create({
-  metrics_provider_id: /* string */,
-  page_id: /* string */,
+  metrics_provider_id: 'example_metrics_provider_id',
+  page_id: 'example_page_id',
 })
 ```
 
@@ -1183,7 +1183,7 @@ const metrics_providers = await client.MetricsProvider().list()
 
 ```ts
 const metrics_provider = await client.MetricsProvider().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -1309,7 +1309,7 @@ const page_access_groups = await client.PageAccessGroup().list()
 
 ```ts
 const page_access_group = await client.PageAccessGroup().create({
-  id: /* string */,
+  id: 'example_id',
 })
 ```
 
@@ -1359,7 +1359,7 @@ const page_access_users = await client.PageAccessUser().list()
 
 ```ts
 const page_access_user = await client.PageAccessUser().create({
-  id: /* string */,
+  id: 'example_id',
 })
 ```
 
@@ -1514,7 +1514,7 @@ const subscribers = await client.Subscriber().list()
 
 ```ts
 const subscriber = await client.Subscriber().create({
-  page_id: /* string */,
+  page_id: 'example_page_id',
 })
 ```
 
@@ -1554,7 +1554,7 @@ const users = await client.User().list()
 
 ```ts
 const user = await client.User().create({
-  organization_id: /* string */,
+  organization_id: 'example_organization_id',
 })
 ```
 

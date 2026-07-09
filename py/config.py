@@ -3037,6 +3037,7 @@ def make_config():
                       "orig": "metric_id",
                       "reqd": True,
                       "type": "`$STRING`",
+                      "index$": 0,
                     },
                     {
                       "active": True,
@@ -3045,6 +3046,7 @@ def make_config():
                       "orig": "page_id",
                       "reqd": True,
                       "type": "`$STRING`",
+                      "index$": 1,
                     },
                   ],
                 },
@@ -4595,6 +4597,7 @@ def make_config():
                       "orig": "page_access_group_id",
                       "reqd": True,
                       "type": "`$STRING`",
+                      "index$": 0,
                     },
                     {
                       "active": True,
@@ -4603,6 +4606,7 @@ def make_config():
                       "orig": "page_id",
                       "reqd": True,
                       "type": "`$STRING`",
+                      "index$": 1,
                     },
                   ],
                 },
@@ -5272,6 +5276,7 @@ def make_config():
                       "orig": "page_access_user_id",
                       "reqd": True,
                       "type": "`$STRING`",
+                      "index$": 0,
                     },
                     {
                       "active": True,
@@ -5280,6 +5285,7 @@ def make_config():
                       "orig": "page_id",
                       "reqd": True,
                       "type": "`$STRING`",
+                      "index$": 1,
                     },
                   ],
                 },
@@ -6951,6 +6957,7 @@ def make_config():
                       "orig": "subscriber_id",
                       "reqd": True,
                       "type": "`$STRING`",
+                      "index$": 0,
                     },
                     {
                       "active": True,
@@ -6959,6 +6966,7 @@ def make_config():
                       "orig": "page_id",
                       "reqd": True,
                       "type": "`$STRING`",
+                      "index$": 1,
                     },
                   ],
                 },

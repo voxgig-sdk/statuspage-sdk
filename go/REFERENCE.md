@@ -222,7 +222,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.Component(nil).Create(map[string]any{
-    "page_id": /* string */,
+    "page_id": "example_page_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -394,7 +394,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.GroupComponent(nil).Create(map[string]any{
-    "page_id": /* string */,
+    "page_id": "example_page_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -569,7 +569,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.Incident(nil).Create(map[string]any{
-    "page_id": /* string */,
+    "page_id": "example_page_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -689,9 +689,9 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.IncidentSubscriber(nil).Create(map[string]any{
-    "incident_id": /* string */,
-    "page_id": /* string */,
-    "subscriber_id": /* string */,
+    "incident_id": "example_incident_id",
+    "page_id": "example_page_id",
+    "subscriber_id": "example_subscriber_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -765,7 +765,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.IncidentTemplate(nil).Create(map[string]any{
-    "page_id": /* string */,
+    "page_id": "example_page_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -930,8 +930,8 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.Metric(nil).Create(map[string]any{
-    "metrics_provider_id": /* string */,
-    "page_id": /* string */,
+    "metrics_provider_id": "example_metrics_provider_id",
+    "page_id": "example_page_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -1044,7 +1044,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.MetricsProvider(nil).Create(map[string]any{
-    "page_id": /* string */,
+    "page_id": "example_page_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -1296,7 +1296,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.PageAccessGroup(nil).Create(map[string]any{
-    "id": /* string */,
+    "id": "example_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -1410,7 +1410,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.PageAccessUser(nil).Create(map[string]any{
-    "id": /* string */,
+    "id": "example_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -1804,7 +1804,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.Subscriber(nil).Create(map[string]any{
-    "page_id": /* string */,
+    "page_id": "example_page_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -1904,7 +1904,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.User(nil).Create(map[string]any{
-    "organization_id": /* string */,
+    "organization_id": "example_organization_id",
 }, nil)
 if err != nil {
     panic(err)

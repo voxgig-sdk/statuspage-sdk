@@ -3100,7 +3100,8 @@ class Config {
                     "name": "id",
                     "orig": "metric_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -3108,7 +3109,8 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },
@@ -4658,7 +4660,8 @@ class Config {
                     "name": "id",
                     "orig": "page_access_group_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -4666,7 +4669,8 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },
@@ -5335,7 +5339,8 @@ class Config {
                     "name": "id",
                     "orig": "page_access_user_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -5343,7 +5348,8 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },
@@ -7014,7 +7020,8 @@ class Config {
                     "name": "id",
                     "orig": "subscriber_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -7022,7 +7029,8 @@ class Config {
                     "name": "page_id",
                     "orig": "page_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },

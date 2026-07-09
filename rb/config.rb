@@ -3037,6 +3037,7 @@ module StatuspageConfig
                         "orig" => "metric_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 0,
                       },
                       {
                         "active" => true,
@@ -3045,6 +3046,7 @@ module StatuspageConfig
                         "orig" => "page_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 1,
                       },
                     ],
                   },
@@ -4595,6 +4597,7 @@ module StatuspageConfig
                         "orig" => "page_access_group_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 0,
                       },
                       {
                         "active" => true,
@@ -4603,6 +4606,7 @@ module StatuspageConfig
                         "orig" => "page_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 1,
                       },
                     ],
                   },
@@ -5272,6 +5276,7 @@ module StatuspageConfig
                         "orig" => "page_access_user_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 0,
                       },
                       {
                         "active" => true,
@@ -5280,6 +5285,7 @@ module StatuspageConfig
                         "orig" => "page_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 1,
                       },
                     ],
                   },
@@ -6951,6 +6957,7 @@ module StatuspageConfig
                         "orig" => "subscriber_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 0,
                       },
                       {
                         "active" => true,
@@ -6959,6 +6966,7 @@ module StatuspageConfig
                         "orig" => "page_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 1,
                       },
                     ],
                   },

@@ -1,6 +1,15 @@
 {
+  "NAME": "STATUSPAGE",
+  "Name": "Statuspage",
   "def": "statuspage-openapi3.json",
   "main": {
+    "api": {
+      "entity": {},
+      "guide": {}
+    },
+    "custom": {
+      "plurals": {}
+    },
     "def": {
       "desc": ""
     },
@@ -9324,5 +9333,8 @@
     }
   },
   "name": "statuspage",
+  "name-": "statuspage",
+  "name_": "statuspage",
+  "name__orig": "statuspage",
   "origin": "voxgig-sdk"
 }
