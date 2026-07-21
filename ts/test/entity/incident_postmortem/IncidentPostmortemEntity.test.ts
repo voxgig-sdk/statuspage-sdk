@@ -39,7 +39,7 @@ describe('IncidentPostmortemEntity', async () => {
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.STATUSPAGE_TEST_LIVE
-    for (const op of ['remove']) {
+    for (const op of []) {
       if (maybeSkipControl(t, 'entityOp', 'incident_postmortem.' + op, live)) return
     }
 
@@ -58,12 +58,6 @@ describe('IncidentPostmortemEntity', async () => {
     const select = struct.select
 
     let incident_postmortem_ref01_data = Object.values(setup.data.existing.incident_postmortem)[0] as any
-
-    // REMOVE
-    const incident_postmortem_ref01_ent = client.IncidentPostmortem()
-    const incident_postmortem_ref01_match_rm0: any = { id: incident_postmortem_ref01_data.id }
-    await incident_postmortem_ref01_ent.remove(incident_postmortem_ref01_match_rm0)
-  
 
   })
 })

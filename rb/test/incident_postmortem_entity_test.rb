@@ -16,7 +16,7 @@ class IncidentPostmortemEntityTest < Minitest::Test
     setup = incident_postmortem_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["remove"].each do |_op|
+    [].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "incident_postmortem." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")
@@ -38,13 +38,6 @@ class IncidentPostmortemEntityTest < Minitest::Test
     if incident_postmortem_ref01_data_raw.length > 0
       incident_postmortem_ref01_data = Helpers.to_map(incident_postmortem_ref01_data_raw[0][1])
     end
-
-    # REMOVE
-    incident_postmortem_ref01_ent = client.IncidentPostmortem(nil)
-    incident_postmortem_ref01_match_rm0 = {
-      "id" => incident_postmortem_ref01_data["id"],
-    }
-    incident_postmortem_ref01_ent.remove(incident_postmortem_ref01_match_rm0, nil)
 
   end
 end

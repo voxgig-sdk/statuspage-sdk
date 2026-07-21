@@ -32,7 +32,7 @@ func TestIncidentPostmortemEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"remove"} {
+		for _, _op := range []string{} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "incident_postmortem." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -47,8 +47,6 @@ func TestIncidentPostmortemEntity(t *testing.T) {
 			t.Skip("live entity test uses synthetic IDs from fixture — set STATUSPAGE_TEST_INCIDENT_POSTMORTEM_ENTID JSON to run live")
 			return
 		}
-		client := setup.client
-
 		// Bootstrap entity data from existing test data (no create step in flow).
 		incidentPostmortemRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath("existing.incident_postmortem", setup.data)))
 		var incidentPostmortemRef01Data map[string]any
@@ -58,16 +56,6 @@ func TestIncidentPostmortemEntity(t *testing.T) {
 		// Discard guards against Go's unused-var check when the flow's steps
 		// happen not to consume the bootstrap data (e.g. list-only flows).
 		_ = incidentPostmortemRef01Data
-
-		// REMOVE
-		incidentPostmortemRef01Ent := client.IncidentPostmortem(nil)
-		incidentPostmortemRef01MatchRm0 := map[string]any{
-			"id": incidentPostmortemRef01Data["id"],
-		}
-		_, err := incidentPostmortemRef01Ent.Remove(incidentPostmortemRef01MatchRm0, nil)
-		if err != nil {
-			t.Fatalf("remove failed: %v", err)
-		}
 
 	})
 }

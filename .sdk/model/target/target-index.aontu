@@ -2,6 +2,10 @@
 
 
 @"go.aontu"
-@"ts.aontu"
+@"go-cli.aontu"
+@"go-mcp.aontu"
+@"lua.aontu"
+@"php.aontu"
 @"py.aontu"
 @"rb.aontu"
+@"ts.aontu"
