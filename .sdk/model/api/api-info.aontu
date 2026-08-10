@@ -49,7 +49,7 @@ Content-Type header matches the body structure or the server gremlins will be an
 All examples are provided in JSON format, however they can easily be converted to form encoding
 if required.  Some examples of how to convert things are below:
 
-  // JSON
+  # JSON
   {
     "incident": {
       "name": "test incident",
@@ -57,7 +57,7 @@ if required.  Some examples of how to convert things are below:
     }
   }
 
-  // Form Encoded (using curl as an example):
+  # Form Encoded (using curl as an example):
   curl -X POST https://api.statuspage.io/v1/example \\
     -d "incident[name]=test incident" \\
     -d "incident[components][]=8kbf7d35c070" \\
