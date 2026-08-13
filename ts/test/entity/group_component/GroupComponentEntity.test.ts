@@ -63,7 +63,7 @@ describe('GroupComponentEntity', async () => {
     let group_component_ref01_data = setup.data.new.group_component['group_component_ref01']
     group_component_ref01_data['page_id'] = setup.idmap['page01']
 
-    group_component_ref01_data = await group_component_ref01_ent.create(group_component_ref01_data)
+    group_component_ref01_data = (await group_component_ref01_ent.create(group_component_ref01_data)).data()
     assert(null != group_component_ref01_data.id)
 
 
@@ -71,7 +71,7 @@ describe('GroupComponentEntity', async () => {
     const group_component_ref01_match: any = {}
     group_component_ref01_match['page_id'] = setup.idmap['page01']
 
-    const group_component_ref01_list = await group_component_ref01_ent.list(group_component_ref01_match)
+    const group_component_ref01_list = (await group_component_ref01_ent.list(group_component_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(group_component_ref01_list, { id: group_component_ref01_data.id })))
 
@@ -81,10 +81,10 @@ describe('GroupComponentEntity', async () => {
     group_component_ref01_data_up0.id = group_component_ref01_data.id
     group_component_ref01_data_up0 ['page_id'] = setup.idmap['page_id']
 
-    const group_component_ref01_markdef_up0 = { name: 'component', value: 'Mark01-group_component_ref01_' + setup.now }
+    const group_component_ref01_markdef_up0 = { name: 'components', value: 'Mark01-group_component_ref01_' + setup.now }
     ;(group_component_ref01_data_up0 as any)[group_component_ref01_markdef_up0.name] = group_component_ref01_markdef_up0.value
 
-    const group_component_ref01_resdata_up0 = await group_component_ref01_ent.update(group_component_ref01_data_up0)
+    const group_component_ref01_resdata_up0 = (await group_component_ref01_ent.update(group_component_ref01_data_up0)).data()
     assert(group_component_ref01_resdata_up0.id === group_component_ref01_data_up0.id)
 
     assert((group_component_ref01_resdata_up0 as any)[group_component_ref01_markdef_up0.name] === group_component_ref01_markdef_up0.value)
@@ -93,7 +93,7 @@ describe('GroupComponentEntity', async () => {
     // LOAD
     const group_component_ref01_match_dt0: any = {}
     group_component_ref01_match_dt0.id = group_component_ref01_data.id
-    const group_component_ref01_data_dt0 = await group_component_ref01_ent.load(group_component_ref01_match_dt0)
+    const group_component_ref01_data_dt0 = (await group_component_ref01_ent.load(group_component_ref01_match_dt0)).data()
     assert(group_component_ref01_data_dt0.id === group_component_ref01_data.id)
 
 
@@ -106,7 +106,7 @@ describe('GroupComponentEntity', async () => {
     const group_component_ref01_match_rt0: any = {}
     group_component_ref01_match_rt0['page_id'] = setup.idmap['page01']
 
-    const group_component_ref01_list_rt0 = await group_component_ref01_ent.list(group_component_ref01_match_rt0)
+    const group_component_ref01_list_rt0 = (await group_component_ref01_ent.list(group_component_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(group_component_ref01_list_rt0, { id: group_component_ref01_data.id })))
 

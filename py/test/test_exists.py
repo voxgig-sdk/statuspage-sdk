@@ -1,4 +1,4 @@
-# ProjectName SDK exists test
+# Statuspage SDK exists test
 
 import pytest
 from statuspage_sdk import StatuspageSDK

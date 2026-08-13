@@ -75,7 +75,7 @@ class MetricEntityTest < Minitest::Test
     metric_ref01_data["page_id"] = setup[:idmap]["page01"]
 
     metric_ref01_data_result = metric_ref01_ent.create(metric_ref01_data, nil)
-    metric_ref01_data = Helpers.to_map(metric_ref01_data_result)
+    metric_ref01_data = Helpers.to_map(metric_ref01_data_result.respond_to?(:data_get) ? metric_ref01_data_result.data_get : metric_ref01_data_result)
     assert !metric_ref01_data.nil?
     assert !metric_ref01_data["id"].nil?
 
@@ -104,7 +104,7 @@ class MetricEntityTest < Minitest::Test
     metric_ref01_data_up0_up[metric_ref01_markdef_up0_name] = metric_ref01_markdef_up0_value
 
     metric_ref01_resdata_up0_result = metric_ref01_ent.update(metric_ref01_data_up0_up, nil)
-    metric_ref01_resdata_up0 = Helpers.to_map(metric_ref01_resdata_up0_result)
+    metric_ref01_resdata_up0 = Helpers.to_map(metric_ref01_resdata_up0_result.respond_to?(:data_get) ? metric_ref01_resdata_up0_result.data_get : metric_ref01_resdata_up0_result)
     assert !metric_ref01_resdata_up0.nil?
     assert_equal metric_ref01_resdata_up0["id"], metric_ref01_data_up0_up["id"]
     assert_equal metric_ref01_resdata_up0[metric_ref01_markdef_up0_name], metric_ref01_markdef_up0_value
@@ -114,7 +114,7 @@ class MetricEntityTest < Minitest::Test
       "id" => metric_ref01_data["id"],
     }
     metric_ref01_data_dt0_loaded = metric_ref01_ent.load(metric_ref01_match_dt0, nil)
-    metric_ref01_data_dt0_load_result = Helpers.to_map(metric_ref01_data_dt0_loaded)
+    metric_ref01_data_dt0_load_result = Helpers.to_map(metric_ref01_data_dt0_loaded.respond_to?(:data_get) ? metric_ref01_data_dt0_loaded.data_get : metric_ref01_data_dt0_loaded)
     assert !metric_ref01_data_dt0_load_result.nil?
     assert_equal metric_ref01_data_dt0_load_result["id"], metric_ref01_data["id"]
 

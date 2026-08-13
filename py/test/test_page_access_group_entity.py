@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -42,7 +42,7 @@ class TestPageAccessGroupEntity:
         assert len(seen) == 3
 
         # Inbound: streaming active -> yields each item from the feature.
-        from config import make_config
+        from statuspage_sdk.config import make_config
         cfg = make_config()
         if isinstance(cfg.get("feature"), dict) and "streaming" in cfg["feature"]:
             sdk = StatuspageSDK.test(
@@ -79,7 +79,7 @@ class TestPageAccessGroupEntity:
             vs.getpath(setup["data"], "new.page_access_group"), "page_access_group_ref01"))
         page_access_group_ref01_data["page_id"] = setup["idmap"]["page01"]
 
-        page_access_group_ref01_data = helpers.to_map(page_access_group_ref01_ent.create(page_access_group_ref01_data, None))
+        page_access_group_ref01_data = helpers.to_map(runner.entity_data(page_access_group_ref01_ent.create(page_access_group_ref01_data, None)))
         assert page_access_group_ref01_data is not None
         assert page_access_group_ref01_data["id"] is not None
 
@@ -106,7 +106,7 @@ class TestPageAccessGroupEntity:
         page_access_group_ref01_markdef_up0_value = "Mark01-page_access_group_ref01_" + str(setup["now"])
         page_access_group_ref01_data_up0_up[page_access_group_ref01_markdef_up0_name] = page_access_group_ref01_markdef_up0_value
 
-        page_access_group_ref01_resdata_up0 = helpers.to_map(page_access_group_ref01_ent.update(page_access_group_ref01_data_up0_up, None))
+        page_access_group_ref01_resdata_up0 = helpers.to_map(runner.entity_data(page_access_group_ref01_ent.update(page_access_group_ref01_data_up0_up, None)))
         assert page_access_group_ref01_resdata_up0 is not None
         assert page_access_group_ref01_resdata_up0["id"] == page_access_group_ref01_data_up0_up["id"]
         assert page_access_group_ref01_resdata_up0[page_access_group_ref01_markdef_up0_name] == page_access_group_ref01_markdef_up0_value
@@ -116,7 +116,7 @@ class TestPageAccessGroupEntity:
             "id": page_access_group_ref01_data["id"],
         }
         page_access_group_ref01_data_dt0_loaded = page_access_group_ref01_ent.load(page_access_group_ref01_match_dt0, None)
-        page_access_group_ref01_data_dt0_load_result = helpers.to_map(page_access_group_ref01_data_dt0_loaded)
+        page_access_group_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(page_access_group_ref01_data_dt0_loaded))
         assert page_access_group_ref01_data_dt0_load_result is not None
         assert page_access_group_ref01_data_dt0_load_result["id"] == page_access_group_ref01_data["id"]
 

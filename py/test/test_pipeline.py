@@ -16,11 +16,11 @@
 import pytest
 
 from statuspage_sdk import StatuspageSDK
-from core.error import StatuspageError
-from core.result import StatuspageResult
-from core.response import StatuspageResponse
-from core.spec import StatuspageSpec
-from feature.base_feature import StatuspageBaseFeature
+from statuspage_sdk.core.error import StatuspageError
+from statuspage_sdk.core.result import StatuspageResult
+from statuspage_sdk.core.response import StatuspageResponse
+from statuspage_sdk.core.spec import StatuspageSpec
+from statuspage_sdk.feature.base_feature import StatuspageBaseFeature
 
 
 def _client():

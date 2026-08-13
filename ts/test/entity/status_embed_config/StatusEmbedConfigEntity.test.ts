@@ -66,7 +66,7 @@ describe('StatusEmbedConfigEntity', async () => {
     const status_embed_config_ref01_markdef_up0 = { name: 'incident_background_color', value: 'Mark01-status_embed_config_ref01_' + setup.now }
     ;(status_embed_config_ref01_data_up0 as any)[status_embed_config_ref01_markdef_up0.name] = status_embed_config_ref01_markdef_up0.value
 
-    const status_embed_config_ref01_resdata_up0 = await status_embed_config_ref01_ent.update(status_embed_config_ref01_data_up0)
+    const status_embed_config_ref01_resdata_up0 = (await status_embed_config_ref01_ent.update(status_embed_config_ref01_data_up0)).data()
     assert(null != status_embed_config_ref01_resdata_up0)
 
     assert((status_embed_config_ref01_resdata_up0 as any)[status_embed_config_ref01_markdef_up0.name] === status_embed_config_ref01_markdef_up0.value)

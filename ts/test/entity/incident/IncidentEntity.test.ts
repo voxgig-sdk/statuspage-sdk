@@ -63,7 +63,7 @@ describe('IncidentEntity', async () => {
     let incident_ref01_data = setup.data.new.incident['incident_ref01']
     incident_ref01_data['page_id'] = setup.idmap['page01']
 
-    incident_ref01_data = await incident_ref01_ent.create(incident_ref01_data)
+    incident_ref01_data = (await incident_ref01_ent.create(incident_ref01_data)).data()
     assert(null != incident_ref01_data.id)
 
 
@@ -71,7 +71,7 @@ describe('IncidentEntity', async () => {
     const incident_ref01_match: any = {}
     incident_ref01_match['page_id'] = setup.idmap['page01']
 
-    const incident_ref01_list = await incident_ref01_ent.list(incident_ref01_match)
+    const incident_ref01_list = (await incident_ref01_ent.list(incident_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(incident_ref01_list, { id: incident_ref01_data.id })))
 
@@ -84,7 +84,7 @@ describe('IncidentEntity', async () => {
     const incident_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-incident_ref01_' + setup.now }
     ;(incident_ref01_data_up0 as any)[incident_ref01_markdef_up0.name] = incident_ref01_markdef_up0.value
 
-    const incident_ref01_resdata_up0 = await incident_ref01_ent.update(incident_ref01_data_up0)
+    const incident_ref01_resdata_up0 = (await incident_ref01_ent.update(incident_ref01_data_up0)).data()
     assert(incident_ref01_resdata_up0.id === incident_ref01_data_up0.id)
 
     assert((incident_ref01_resdata_up0 as any)[incident_ref01_markdef_up0.name] === incident_ref01_markdef_up0.value)
@@ -93,7 +93,7 @@ describe('IncidentEntity', async () => {
     // LOAD
     const incident_ref01_match_dt0: any = {}
     incident_ref01_match_dt0.id = incident_ref01_data.id
-    const incident_ref01_data_dt0 = await incident_ref01_ent.load(incident_ref01_match_dt0)
+    const incident_ref01_data_dt0 = (await incident_ref01_ent.load(incident_ref01_match_dt0)).data()
     assert(incident_ref01_data_dt0.id === incident_ref01_data.id)
 
 
@@ -106,7 +106,7 @@ describe('IncidentEntity', async () => {
     const incident_ref01_match_rt0: any = {}
     incident_ref01_match_rt0['page_id'] = setup.idmap['page01']
 
-    const incident_ref01_list_rt0 = await incident_ref01_ent.list(incident_ref01_match_rt0)
+    const incident_ref01_list_rt0 = (await incident_ref01_ent.list(incident_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(incident_ref01_list_rt0, { id: incident_ref01_data.id })))
 

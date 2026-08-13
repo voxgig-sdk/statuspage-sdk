@@ -107,7 +107,7 @@ func TestIncidentTemplateEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		incidentTemplateRef01Data = core.ToMapAny(incidentTemplateRef01DataResult)
+		incidentTemplateRef01Data = core.ToMapAny(entityData(incidentTemplateRef01DataResult))
 		if incidentTemplateRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}

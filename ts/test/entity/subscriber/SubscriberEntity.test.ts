@@ -64,7 +64,7 @@ describe('SubscriberEntity', async () => {
     subscriber_ref01_data['incident_id'] = setup.idmap['incident01']
     subscriber_ref01_data['page_id'] = setup.idmap['page01']
 
-    subscriber_ref01_data = await subscriber_ref01_ent.create(subscriber_ref01_data)
+    subscriber_ref01_data = (await subscriber_ref01_ent.create(subscriber_ref01_data)).data()
     assert(null != subscriber_ref01_data.id)
 
 
@@ -72,7 +72,7 @@ describe('SubscriberEntity', async () => {
     const subscriber_ref01_match: any = {}
     subscriber_ref01_match['page_id'] = setup.idmap['page01']
 
-    const subscriber_ref01_list = await subscriber_ref01_ent.list(subscriber_ref01_match)
+    const subscriber_ref01_list = (await subscriber_ref01_ent.list(subscriber_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(subscriber_ref01_list, { id: subscriber_ref01_data.id })))
 
@@ -82,10 +82,10 @@ describe('SubscriberEntity', async () => {
     subscriber_ref01_data_up0.id = subscriber_ref01_data.id
     subscriber_ref01_data_up0 ['page_id'] = setup.idmap['page_id']
 
-    const subscriber_ref01_markdef_up0 = { name: 'component', value: 'Mark01-subscriber_ref01_' + setup.now }
+    const subscriber_ref01_markdef_up0 = { name: 'components', value: 'Mark01-subscriber_ref01_' + setup.now }
     ;(subscriber_ref01_data_up0 as any)[subscriber_ref01_markdef_up0.name] = subscriber_ref01_markdef_up0.value
 
-    const subscriber_ref01_resdata_up0 = await subscriber_ref01_ent.update(subscriber_ref01_data_up0)
+    const subscriber_ref01_resdata_up0 = (await subscriber_ref01_ent.update(subscriber_ref01_data_up0)).data()
     assert(subscriber_ref01_resdata_up0.id === subscriber_ref01_data_up0.id)
 
     assert((subscriber_ref01_resdata_up0 as any)[subscriber_ref01_markdef_up0.name] === subscriber_ref01_markdef_up0.value)
@@ -94,7 +94,7 @@ describe('SubscriberEntity', async () => {
     // LOAD
     const subscriber_ref01_match_dt0: any = {}
     subscriber_ref01_match_dt0.id = subscriber_ref01_data.id
-    const subscriber_ref01_data_dt0 = await subscriber_ref01_ent.load(subscriber_ref01_match_dt0)
+    const subscriber_ref01_data_dt0 = (await subscriber_ref01_ent.load(subscriber_ref01_match_dt0)).data()
     assert(subscriber_ref01_data_dt0.id === subscriber_ref01_data.id)
 
 
@@ -107,7 +107,7 @@ describe('SubscriberEntity', async () => {
     const subscriber_ref01_match_rt0: any = {}
     subscriber_ref01_match_rt0['page_id'] = setup.idmap['page01']
 
-    const subscriber_ref01_list_rt0 = await subscriber_ref01_ent.list(subscriber_ref01_match_rt0)
+    const subscriber_ref01_list_rt0 = (await subscriber_ref01_ent.list(subscriber_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(subscriber_ref01_list_rt0, { id: subscriber_ref01_data.id })))
 

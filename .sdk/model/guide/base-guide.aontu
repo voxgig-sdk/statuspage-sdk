@@ -8,14 +8,17 @@ guide: {
   entity: component: {
     path: "/pages/{page_id}/components": {
       op: create: method: *POST
+      op: create: transform: req: "component": *("`reqdata`")|top
       op: list: method: *GET
     }
     path: "/pages/{page_id}/components/{component_id}": {
       rename: param: "component_id": *"id"
       op: load: method: *GET
       op: patch: method: *PATCH
+      op: patch: transform: req: "component": *("`reqdata`")|top
       op: remove: method: *DELETE
       op: update: method: *PUT
+      op: update: transform: req: "component": *("`reqdata`")|top
     }
     path: "/pages/{page_id}/components/{component_id}/page_access_groups": {
       action: "page_access_group": {}
@@ -33,6 +36,7 @@ guide: {
       action: "uptime": {}
       rename: param: "component_id": *"id"
       op: load: method: *GET
+      op: load: transform: res: *("`body.related_events`")|top
     }
     path: "/pages/{page_id}/page_access_groups/{page_access_group_id}/components": {
       op: list: method: *GET
@@ -45,6 +49,7 @@ guide: {
   entity: component_group_uptime: {
     path: "/pages/{page_id}/component-groups/{id}/uptime": {
       op: load: method: *GET
+      op: load: transform: res: *("`body.related_events`")|top
     }
   }
 
@@ -64,6 +69,7 @@ guide: {
   entity: incident: {
     path: "/pages/{page_id}/incidents": {
       op: create: method: *POST
+      op: create: transform: req: "incident": *("`reqdata`")|top
       op: list: method: *GET
     }
     path: "/pages/{page_id}/incidents/active_maintenance": {
@@ -86,8 +92,10 @@ guide: {
       rename: param: "incident_id": *"id"
       op: load: method: *GET
       op: patch: method: *PATCH
+      op: patch: transform: req: "incident": *("`reqdata`")|top
       op: remove: method: *DELETE
       op: update: method: *PUT
+      op: update: transform: req: "incident": *("`reqdata`")|top
     }
   }
 
@@ -115,7 +123,9 @@ guide: {
     path: "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}": {
       rename: param: "incident_update_id": *"id"
       op: patch: method: *PATCH
+      op: patch: transform: req: "incident_update": *("`reqdata`")|top
       op: update: method: *PUT
+      op: update: transform: req: "incident_update": *("`reqdata`")|top
     }
   }
 
@@ -131,17 +141,21 @@ guide: {
       rename: param: "metric_id": *"id"
       op: load: method: *GET
       op: patch: method: *PATCH
+      op: patch: transform: req: "metric": *("`reqdata`")|top
       op: remove: method: *DELETE
       op: update: method: *PUT
+      op: update: transform: req: "metric": *("`reqdata`")|top
     }
     path: "/pages/{page_id}/metrics/{metric_id}/data": {
       action: "data": {}
       rename: param: "metric_id": *"id"
       op: create: method: *POST
+      op: create: transform: res: *("`body.data`")|top
       op: remove: method: *DELETE
     }
     path: "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics": {
       op: create: method: *POST
+      op: create: transform: req: "metric": *("`reqdata`")|top
       op: load: method: *GET
     }
     path: "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics": {
@@ -152,14 +166,17 @@ guide: {
   entity: metrics_provider: {
     path: "/pages/{page_id}/metrics_providers": {
       op: create: method: *POST
+      op: create: transform: req: "metrics_provider": *("`reqdata`")|top
       op: list: method: *GET
     }
     path: "/pages/{page_id}/metrics_providers/{metrics_provider_id}": {
       rename: param: "metrics_provider_id": *"id"
       op: load: method: *GET
       op: patch: method: *PATCH
+      op: patch: transform: req: "metrics_provider": *("`reqdata`")|top
       op: remove: method: *DELETE
       op: update: method: *PUT
+      op: update: transform: req: "metrics_provider": *("`reqdata`")|top
     }
   }
 
@@ -171,7 +188,9 @@ guide: {
       rename: param: "page_id": *"id"
       op: load: method: *GET
       op: patch: method: *PATCH
+      op: patch: transform: req: "page": *("`reqdata`")|top
       op: update: method: *PUT
+      op: update: transform: req: "page": *("`reqdata`")|top
     }
   }
 
@@ -179,14 +198,17 @@ guide: {
     path: "/pages/{page_id}/page_access_groups": {
       rename: param: "page_id": *"id"
       op: create: method: *POST
+      op: create: transform: req: "page_access_group": *("`reqdata`")|top
       op: list: method: *GET
     }
     path: "/pages/{page_id}/page_access_groups/{page_access_group_id}": {
       rename: param: "page_access_group_id": *"id"
       op: load: method: *GET
       op: patch: method: *PATCH
+      op: patch: transform: req: "page_access_group": *("`reqdata`")|top
       op: remove: method: *DELETE
       op: update: method: *PUT
+      op: update: transform: req: "page_access_group": *("`reqdata`")|top
     }
     path: "/pages/{page_id}/page_access_groups/{page_access_group_id}/components": {
       action: "component": {}
@@ -206,6 +228,7 @@ guide: {
     path: "/pages/{page_id}/page_access_users": {
       rename: param: "page_id": *"id"
       op: create: method: *POST
+      op: create: transform: req: "page_access_user": *("`reqdata`")|top
       op: list: method: *GET
     }
     path: "/pages/{page_id}/page_access_users/{page_access_user_id}": {
@@ -245,7 +268,9 @@ guide: {
     path: "/organizations/{organization_id}/permissions/{user_id}": {
       rename: param: "user_id": *"id"
       op: load: method: *GET
+      op: load: transform: res: *("`body.data`")|top
       op: update: method: *PUT
+      op: update: transform: res: *("`body.data`")|top
     }
   }
 
@@ -253,10 +278,12 @@ guide: {
     path: "/pages/{page_id}/incidents/{incident_id}/postmortem": {
       op: load: method: *GET
       op: update: method: *PUT
+      op: update: transform: req: "postmortem": *("`reqdata`")|top
     }
     path: "/pages/{page_id}/incidents/{incident_id}/postmortem/publish": {
       action: "publish": {}
       op: update: method: *PUT
+      op: update: transform: req: "postmortem": *("`reqdata`")|top
     }
     path: "/pages/{page_id}/incidents/{incident_id}/postmortem/revert": {
       action: "revert": {}
@@ -268,13 +295,16 @@ guide: {
     path: "/pages/{page_id}/status_embed_config": {
       op: load: method: *GET
       op: patch: method: *PATCH
+      op: patch: transform: req: "status_embed_config": *("`reqdata`")|top
       op: update: method: *PUT
+      op: update: transform: req: "status_embed_config": *("`reqdata`")|top
     }
   }
 
   entity: subscriber: {
     path: "/pages/{page_id}/incidents/{incident_id}/subscribers": {
       op: create: method: *POST
+      op: create: transform: req: "subscriber": *("`reqdata`")|top
       op: list: method: *GET
     }
     path: "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}": {
@@ -284,6 +314,7 @@ guide: {
     }
     path: "/pages/{page_id}/subscribers": {
       op: create: method: *POST
+      op: create: transform: req: "subscriber": *("`reqdata`")|top
       op: list: method: *GET
     }
     path: "/pages/{page_id}/subscribers/count": {
@@ -326,6 +357,7 @@ guide: {
   entity: user: {
     path: "/organizations/{organization_id}/users": {
       op: create: method: *POST
+      op: create: transform: req: "user": *("`reqdata`")|top
       op: list: method: *GET
     }
     path: "/organizations/{organization_id}/users/{user_id}": {

@@ -95,108 +95,59 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "major_outage",
-            ["req"] = false,
-            ["type"] = "`$INTEGER`",
-            ["index$"] = 7,
-          },
-          {
-            ["active"] = true,
             ["name"] = "name",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 8,
+            ["index$"] = 7,
           },
           {
             ["active"] = true,
             ["name"] = "only_show_if_degraded",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
-            ["index$"] = 9,
+            ["index$"] = 8,
           },
           {
             ["active"] = true,
             ["name"] = "page_id",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 10,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "partial_outage",
-            ["req"] = false,
-            ["type"] = "`$INTEGER`",
-            ["index$"] = 11,
+            ["index$"] = 9,
           },
           {
             ["active"] = true,
             ["name"] = "position",
             ["req"] = false,
             ["type"] = "`$INTEGER`",
-            ["index$"] = 12,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "range_end",
-            ["req"] = false,
-            ["type"] = "`$STRING`",
-            ["index$"] = 13,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "range_start",
-            ["req"] = false,
-            ["type"] = "`$STRING`",
-            ["index$"] = 14,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "related_event",
-            ["req"] = false,
-            ["type"] = "`$OBJECT`",
-            ["index$"] = 15,
+            ["index$"] = 10,
           },
           {
             ["active"] = true,
             ["name"] = "showcase",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
-            ["index$"] = 16,
+            ["index$"] = 11,
           },
           {
             ["active"] = true,
             ["name"] = "start_date",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 17,
+            ["index$"] = 12,
           },
           {
             ["active"] = true,
             ["name"] = "status",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 18,
+            ["index$"] = 13,
           },
           {
             ["active"] = true,
             ["name"] = "updated_at",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 19,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "uptime_percentage",
-            ["req"] = false,
-            ["type"] = "`$NUMBER`",
-            ["index$"] = 20,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "warning",
-            ["req"] = false,
-            ["type"] = "`$STRING`",
-            ["index$"] = 21,
+            ["index$"] = 14,
           },
         },
         ["name"] = "component",
@@ -229,6 +180,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/page_access_groups",
                 ["parts"] = {
@@ -278,6 +230,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/page_access_users",
                 ["parts"] = {
@@ -320,6 +273,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/components",
                 ["parts"] = {
@@ -333,7 +287,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["component"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 2,
@@ -387,6 +343,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                 ["parts"] = {
@@ -452,6 +409,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                 ["parts"] = {
@@ -508,6 +466,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/components",
                 ["parts"] = {
@@ -570,14 +529,6 @@ local function make_config()
                     {
                       ["active"] = true,
                       ["kind"] = "query",
-                      ["name"] = "skip_related_event",
-                      ["orig"] = "skip_related_event",
-                      ["reqd"] = false,
-                      ["type"] = "`$BOOLEAN`",
-                    },
-                    {
-                      ["active"] = true,
-                      ["kind"] = "query",
                       ["name"] = "start",
                       ["orig"] = "start",
                       ["reqd"] = false,
@@ -585,6 +536,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/uptime",
                 ["parts"] = {
@@ -605,13 +557,12 @@ local function make_config()
                     "end",
                     "id",
                     "page_id",
-                    "skip_related_event",
                     "start",
                   },
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.related_events`",
                 },
                 ["index$"] = 0,
               },
@@ -639,6 +590,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/components/{component_id}",
                 ["parts"] = {
@@ -693,6 +645,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/components/{component_id}",
                 ["parts"] = {
@@ -713,7 +666,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["component"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -749,6 +704,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/components/{component_id}",
                 ["parts"] = {
@@ -796,6 +752,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/page_access_groups",
                 ["parts"] = {
@@ -845,6 +802,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/page_access_users",
                 ["parts"] = {
@@ -903,6 +861,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/components/{component_id}",
                 ["parts"] = {
@@ -923,7 +882,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["component"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -952,66 +913,17 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "id",
+            ["name"] = "component_id",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 0,
           },
           {
             ["active"] = true,
-            ["name"] = "major_outage",
-            ["req"] = false,
-            ["type"] = "`$INTEGER`",
-            ["index$"] = 1,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "name",
-            ["req"] = false,
-            ["type"] = "`$STRING`",
-            ["index$"] = 2,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "partial_outage",
-            ["req"] = false,
-            ["type"] = "`$INTEGER`",
-            ["index$"] = 3,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "range_end",
-            ["req"] = false,
-            ["type"] = "`$STRING`",
-            ["index$"] = 4,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "range_start",
-            ["req"] = false,
-            ["type"] = "`$STRING`",
-            ["index$"] = 5,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "related_event",
+            ["name"] = "incidents",
             ["req"] = false,
             ["type"] = "`$OBJECT`",
-            ["index$"] = 6,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "uptime_percentage",
-            ["req"] = false,
-            ["type"] = "`$NUMBER`",
-            ["index$"] = 7,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "warning",
-            ["req"] = false,
-            ["type"] = "`$STRING`",
-            ["index$"] = 8,
+            ["index$"] = 1,
           },
         },
         ["name"] = "component_group_uptime",
@@ -1055,14 +967,6 @@ local function make_config()
                     {
                       ["active"] = true,
                       ["kind"] = "query",
-                      ["name"] = "skip_related_event",
-                      ["orig"] = "skip_related_event",
-                      ["reqd"] = false,
-                      ["type"] = "`$BOOLEAN`",
-                    },
-                    {
-                      ["active"] = true,
-                      ["kind"] = "query",
                       ["name"] = "start",
                       ["orig"] = "start",
                       ["reqd"] = false,
@@ -1070,6 +974,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}/uptime",
                 ["parts"] = {
@@ -1084,13 +989,12 @@ local function make_config()
                     "end",
                     "id",
                     "page_id",
-                    "skip_related_event",
                     "start",
                   },
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.related_events`",
                 },
                 ["index$"] = 0,
               },
@@ -1110,16 +1014,16 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "component",
-            ["req"] = false,
-            ["type"] = "`$STRING`",
+            ["name"] = "component_group",
+            ["req"] = true,
+            ["type"] = "`$OBJECT`",
             ["index$"] = 0,
           },
           {
             ["active"] = true,
-            ["name"] = "component_group",
-            ["req"] = true,
-            ["type"] = "`$OBJECT`",
+            ["name"] = "components",
+            ["req"] = false,
+            ["type"] = "`$STRING`",
             ["index$"] = 1,
           },
           {
@@ -1193,6 +1097,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/component-groups",
                 ["parts"] = {
@@ -1251,6 +1156,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/component-groups",
                 ["parts"] = {
@@ -1302,6 +1208,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}",
                 ["parts"] = {
@@ -1351,6 +1258,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}",
                 ["parts"] = {
@@ -1402,6 +1310,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}",
                 ["parts"] = {
@@ -1453,6 +1362,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}",
                 ["parts"] = {
@@ -1517,7 +1427,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "component",
+            ["name"] = "components",
             ["req"] = false,
             ["type"] = "`$ARRAY`",
             ["index$"] = 4,
@@ -1569,164 +1479,157 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "incident_impact",
+            ["name"] = "incident_updates",
             ["req"] = false,
             ["type"] = "`$ARRAY`",
             ["index$"] = 10,
           },
           {
             ["active"] = true,
-            ["name"] = "incident_update",
-            ["req"] = false,
-            ["type"] = "`$ARRAY`",
-            ["index$"] = 11,
-          },
-          {
-            ["active"] = true,
             ["name"] = "metadata",
             ["req"] = false,
             ["type"] = "`$OBJECT`",
-            ["index$"] = 12,
+            ["index$"] = 11,
           },
           {
             ["active"] = true,
             ["name"] = "monitoring_at",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 13,
+            ["index$"] = 12,
           },
           {
             ["active"] = true,
             ["name"] = "name",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 14,
+            ["index$"] = 13,
           },
           {
             ["active"] = true,
             ["name"] = "page_id",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 15,
+            ["index$"] = 14,
           },
           {
             ["active"] = true,
             ["name"] = "postmortem_body",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 16,
+            ["index$"] = 15,
           },
           {
             ["active"] = true,
             ["name"] = "postmortem_body_last_updated_at",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 17,
+            ["index$"] = 16,
           },
           {
             ["active"] = true,
             ["name"] = "postmortem_ignored",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
-            ["index$"] = 18,
+            ["index$"] = 17,
           },
           {
             ["active"] = true,
-            ["name"] = "postmortem_notified_subscriber",
+            ["name"] = "postmortem_notified_subscribers",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
-            ["index$"] = 19,
+            ["index$"] = 18,
           },
           {
             ["active"] = true,
             ["name"] = "postmortem_notified_twitter",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
-            ["index$"] = 20,
+            ["index$"] = 19,
           },
           {
             ["active"] = true,
             ["name"] = "postmortem_published_at",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
-            ["index$"] = 21,
+            ["index$"] = 20,
           },
           {
             ["active"] = true,
-            ["name"] = "reminder_interval",
+            ["name"] = "reminder_intervals",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 22,
+            ["index$"] = 21,
           },
           {
             ["active"] = true,
             ["name"] = "resolved_at",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 23,
+            ["index$"] = 22,
           },
           {
             ["active"] = true,
             ["name"] = "scheduled_auto_completed",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
-            ["index$"] = 24,
+            ["index$"] = 23,
           },
           {
             ["active"] = true,
             ["name"] = "scheduled_auto_in_progress",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
-            ["index$"] = 25,
+            ["index$"] = 24,
           },
           {
             ["active"] = true,
             ["name"] = "scheduled_for",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 26,
+            ["index$"] = 25,
           },
           {
             ["active"] = true,
             ["name"] = "scheduled_remind_prior",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
-            ["index$"] = 27,
+            ["index$"] = 26,
           },
           {
             ["active"] = true,
             ["name"] = "scheduled_reminded_at",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 28,
+            ["index$"] = 27,
           },
           {
             ["active"] = true,
             ["name"] = "scheduled_until",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 29,
+            ["index$"] = 28,
           },
           {
             ["active"] = true,
             ["name"] = "shortlink",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 30,
+            ["index$"] = 29,
           },
           {
             ["active"] = true,
             ["name"] = "status",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 31,
+            ["index$"] = 30,
           },
           {
             ["active"] = true,
             ["name"] = "updated_at",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 32,
+            ["index$"] = 31,
           },
         },
         ["name"] = "incident",
@@ -1750,6 +1653,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/incidents",
                 ["parts"] = {
@@ -1763,7 +1667,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["incident"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -1816,6 +1722,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents",
                 ["parts"] = {
@@ -1871,6 +1778,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/active_maintenance",
                 ["parts"] = {
@@ -1927,6 +1835,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/scheduled",
                 ["parts"] = {
@@ -1983,6 +1892,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/unresolved",
                 ["parts"] = {
@@ -2039,6 +1949,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/upcoming",
                 ["parts"] = {
@@ -2092,6 +2003,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}",
                 ["parts"] = {
@@ -2146,6 +2058,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}",
                 ["parts"] = {
@@ -2166,7 +2079,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["incident"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -2202,6 +2117,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}",
                 ["parts"] = {
@@ -2258,6 +2174,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}",
                 ["parts"] = {
@@ -2278,7 +2195,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["incident"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -2327,6 +2246,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem",
                 ["parts"] = {
@@ -2406,6 +2326,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation",
                 ["parts"] = {
@@ -2455,7 +2376,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "component",
+            ["name"] = "components",
             ["req"] = false,
             ["type"] = "`$ARRAY`",
             ["index$"] = 1,
@@ -2483,7 +2404,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "should_send_notification",
+            ["name"] = "should_send_notifications",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 5,
@@ -2538,6 +2459,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/incident_templates",
                 ["parts"] = {
@@ -2598,6 +2520,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incident_templates",
                 ["parts"] = {
@@ -2634,7 +2557,7 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "affected_component",
+            ["name"] = "affected_components",
             ["req"] = false,
             ["type"] = "`$ARRAY`",
             ["index$"] = 0,
@@ -2662,7 +2585,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "deliver_notification",
+            ["name"] = "deliver_notifications",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 4,
@@ -2767,6 +2690,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
                 ["parts"] = {
@@ -2790,7 +2714,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["incident_update"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -2835,6 +2761,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
                 ["parts"] = {
@@ -2858,7 +2785,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["incident_update"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -2908,7 +2837,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "decimal_place",
+            ["name"] = "decimal_places",
             ["req"] = false,
             ["type"] = "`$INTEGER`",
             ["index$"] = 4,
@@ -3049,6 +2978,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}/data",
                 ["parts"] = {
@@ -3072,7 +3002,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.data`",
                 },
                 ["index$"] = 0,
               },
@@ -3100,6 +3030,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
                 ["parts"] = {
@@ -3116,7 +3047,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["metric"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 1,
@@ -3132,9 +3065,11 @@ local function make_config()
                       ["orig"] = "page_id",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 0,
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/metrics/data",
                 ["parts"] = {
@@ -3204,6 +3139,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                 ["parts"] = {
@@ -3276,6 +3212,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
                 ["parts"] = {
@@ -3332,6 +3269,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics",
                 ["parts"] = {
@@ -3376,6 +3314,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}",
                 ["parts"] = {
@@ -3430,6 +3369,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}",
                 ["parts"] = {
@@ -3450,7 +3390,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["metric"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -3486,6 +3428,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}",
                 ["parts"] = {
@@ -3533,6 +3476,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}/data",
                 ["parts"] = {
@@ -3591,6 +3535,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}",
                 ["parts"] = {
@@ -3611,7 +3556,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["metric"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -3723,6 +3670,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/metrics_providers",
                 ["parts"] = {
@@ -3736,7 +3684,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["metrics_provider"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -3763,6 +3713,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics_providers",
                 ["parts"] = {
@@ -3812,6 +3763,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
                 ["parts"] = {
@@ -3866,6 +3818,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
                 ["parts"] = {
@@ -3886,7 +3839,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["metrics_provider"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -3922,6 +3877,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
                 ["parts"] = {
@@ -3978,6 +3934,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
                 ["parts"] = {
@@ -3998,7 +3955,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["metrics_provider"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -4026,42 +3985,42 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "allow_email_subscriber",
+            ["name"] = "allow_email_subscribers",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 1,
           },
           {
             ["active"] = true,
-            ["name"] = "allow_incident_subscriber",
+            ["name"] = "allow_incident_subscribers",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 2,
           },
           {
             ["active"] = true,
-            ["name"] = "allow_page_subscriber",
+            ["name"] = "allow_page_subscribers",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 3,
           },
           {
             ["active"] = true,
-            ["name"] = "allow_rss_atom_feed",
+            ["name"] = "allow_rss_atom_feeds",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 4,
           },
           {
             ["active"] = true,
-            ["name"] = "allow_sms_subscriber",
+            ["name"] = "allow_sms_subscribers",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 5,
           },
           {
             ["active"] = true,
-            ["name"] = "allow_webhook_subscriber",
+            ["name"] = "allow_webhook_subscribers",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 6,
@@ -4096,7 +4055,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "css_blue",
+            ["name"] = "css_blues",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 11,
@@ -4131,7 +4090,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "css_green",
+            ["name"] = "css_greens",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 16,
@@ -4159,21 +4118,21 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "css_orange",
+            ["name"] = "css_oranges",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 20,
           },
           {
             ["active"] = true,
-            ["name"] = "css_red",
+            ["name"] = "css_reds",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 21,
           },
           {
             ["active"] = true,
-            ["name"] = "css_yellow",
+            ["name"] = "css_yellows",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 22,
@@ -4229,7 +4188,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "ip_restriction",
+            ["name"] = "ip_restrictions",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 30,
@@ -4334,7 +4293,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "viewers_must_be_team_member",
+            ["name"] = "viewers_must_be_team_members",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 45,
@@ -4349,6 +4308,7 @@ local function make_config()
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages",
                 ["parts"] = {
@@ -4383,6 +4343,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}",
                 ["parts"] = {
@@ -4426,6 +4387,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}",
                 ["parts"] = {
@@ -4443,7 +4405,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["page"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -4470,6 +4434,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}",
                 ["parts"] = {
@@ -4487,7 +4452,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["page"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -4504,7 +4471,7 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "component_id",
+            ["name"] = "component_ids",
             ["op"] = {
               ["create"] = {
                 ["req"] = true,
@@ -4538,7 +4505,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "metric_id",
+            ["name"] = "metric_ids",
             ["req"] = false,
             ["type"] = "`$ARRAY`",
             ["index$"] = 4,
@@ -4559,7 +4526,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "page_access_user_id",
+            ["name"] = "page_access_user_ids",
             ["req"] = false,
             ["type"] = "`$ARRAY`",
             ["index$"] = 7,
@@ -4609,6 +4576,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                 ["parts"] = {
@@ -4651,6 +4619,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_groups",
                 ["parts"] = {
@@ -4669,7 +4638,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["page_access_group"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 1,
@@ -4714,6 +4685,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_groups",
                 ["parts"] = {
@@ -4770,6 +4742,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}",
                 ["parts"] = {
@@ -4824,6 +4797,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}",
                 ["parts"] = {
@@ -4844,7 +4818,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["page_access_group"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -4871,6 +4847,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                 ["parts"] = {
@@ -4938,6 +4915,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components/{component_id}",
                 ["parts"] = {
@@ -4990,6 +4968,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}",
                 ["parts"] = {
@@ -5037,6 +5016,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                 ["parts"] = {
@@ -5095,6 +5075,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}",
                 ["parts"] = {
@@ -5115,7 +5096,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["page_access_group"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -5142,6 +5125,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                 ["parts"] = {
@@ -5189,7 +5173,7 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "component_id",
+            ["name"] = "component_ids",
             ["req"] = true,
             ["type"] = "`$ARRAY`",
             ["index$"] = 0,
@@ -5224,7 +5208,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "metric_id",
+            ["name"] = "metric_ids",
             ["req"] = true,
             ["type"] = "`$ARRAY`",
             ["index$"] = 5,
@@ -5238,24 +5222,31 @@ local function make_config()
           },
           {
             ["active"] = true,
+            ["name"] = "page_access_group_ids",
+            ["req"] = false,
+            ["type"] = "`$STRING`",
+            ["index$"] = 7,
+          },
+          {
+            ["active"] = true,
             ["name"] = "page_access_user",
             ["req"] = false,
             ["type"] = "`$OBJECT`",
-            ["index$"] = 7,
+            ["index$"] = 8,
           },
           {
             ["active"] = true,
             ["name"] = "page_id",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 8,
+            ["index$"] = 9,
           },
           {
             ["active"] = true,
             ["name"] = "updated_at",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 9,
+            ["index$"] = 10,
           },
         },
         ["name"] = "page_access_user",
@@ -5288,6 +5279,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                 ["parts"] = {
@@ -5326,6 +5318,7 @@ local function make_config()
                       ["orig"] = "page_access_user_id",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 0,
                     },
                     {
                       ["active"] = true,
@@ -5334,9 +5327,11 @@ local function make_config()
                       ["orig"] = "page_id",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 1,
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                 ["parts"] = {
@@ -5379,6 +5374,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_users",
                 ["parts"] = {
@@ -5397,7 +5393,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["page_access_user"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 2,
@@ -5450,6 +5448,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_users",
                 ["parts"] = {
@@ -5507,6 +5506,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}",
                 ["parts"] = {
@@ -5561,6 +5561,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}",
                 ["parts"] = {
@@ -5608,6 +5609,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                 ["parts"] = {
@@ -5657,6 +5659,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                 ["parts"] = {
@@ -5724,6 +5727,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components/{component_id}",
                 ["parts"] = {
@@ -5785,6 +5789,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics/{metric_id}",
                 ["parts"] = {
@@ -5837,6 +5842,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}",
                 ["parts"] = {
@@ -5884,6 +5890,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                 ["parts"] = {
@@ -5933,6 +5940,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                 ["parts"] = {
@@ -5991,6 +5999,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}",
                 ["parts"] = {
@@ -6038,6 +6047,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                 ["parts"] = {
@@ -6087,6 +6097,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                 ["parts"] = {
@@ -6138,16 +6149,16 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "data",
+            ["name"] = "pages",
             ["req"] = false,
             ["type"] = "`$OBJECT`",
             ["index$"] = 0,
           },
           {
             ["active"] = true,
-            ["name"] = "page",
+            ["name"] = "user_id",
             ["req"] = false,
-            ["type"] = "`$OBJECT`",
+            ["type"] = "`$STRING`",
             ["index$"] = 1,
           },
         },
@@ -6181,6 +6192,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/organizations/{organization_id}/permissions/{user_id}",
                 ["parts"] = {
@@ -6202,7 +6214,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.data`",
                 },
                 ["index$"] = 0,
               },
@@ -6237,6 +6249,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/organizations/{organization_id}/permissions/{user_id}",
                 ["parts"] = {
@@ -6258,7 +6271,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.data`",
                 },
                 ["index$"] = 0,
               },
@@ -6320,7 +6333,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "notify_subscriber",
+            ["name"] = "notify_subscribers",
             ["req"] = false,
             ["type"] = "`$BOOLEAN`",
             ["index$"] = 6,
@@ -6397,6 +6410,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem",
                 ["parts"] = {
@@ -6449,6 +6463,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem",
                 ["parts"] = {
@@ -6465,7 +6480,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["postmortem"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -6492,6 +6509,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem/publish",
                 ["parts"] = {
@@ -6510,7 +6528,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["postmortem"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 1,
@@ -6537,6 +6557,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem/revert",
                 ["parts"] = {
@@ -6646,6 +6667,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/status_embed_config",
                 ["parts"] = {
@@ -6685,6 +6707,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/status_embed_config",
                 ["parts"] = {
@@ -6698,7 +6721,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["status_embed_config"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -6725,6 +6750,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/status_embed_config",
                 ["parts"] = {
@@ -6738,7 +6764,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["status_embed_config"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -6759,16 +6787,16 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "component",
+            ["name"] = "component_ids",
             ["req"] = false,
-            ["type"] = "`$STRING`",
+            ["type"] = "`$ARRAY`",
             ["index$"] = 0,
           },
           {
             ["active"] = true,
-            ["name"] = "component_id",
+            ["name"] = "components",
             ["req"] = false,
-            ["type"] = "`$ARRAY`",
+            ["type"] = "`$STRING`",
             ["index$"] = 1,
           },
           {
@@ -6900,43 +6928,44 @@ local function make_config()
           {
             ["active"] = true,
             ["name"] = "subscriber",
-            ["op"] = {
-              ["create"] = {
-                ["req"] = true,
-                ["type"] = "`$STRING`",
-              },
-            },
             ["req"] = false,
             ["type"] = "`$OBJECT`",
             ["index$"] = 20,
           },
           {
             ["active"] = true,
-            ["name"] = "team",
+            ["name"] = "subscribers",
+            ["req"] = true,
+            ["type"] = "`$STRING`",
+            ["index$"] = 21,
+          },
+          {
+            ["active"] = true,
+            ["name"] = "teams",
             ["req"] = false,
             ["type"] = "`$INTEGER`",
-            ["index$"] = 21,
+            ["index$"] = 22,
           },
           {
             ["active"] = true,
             ["name"] = "type",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 22,
+            ["index$"] = 23,
           },
           {
             ["active"] = true,
             ["name"] = "webhook",
             ["req"] = false,
             ["type"] = "`$INTEGER`",
-            ["index$"] = 23,
+            ["index$"] = 24,
           },
           {
             ["active"] = true,
             ["name"] = "workspace_name",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 24,
+            ["index$"] = 25,
           },
         },
         ["name"] = "subscriber",
@@ -6969,6 +6998,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation",
                 ["parts"] = {
@@ -7020,6 +7050,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers",
                 ["parts"] = {
@@ -7036,7 +7067,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["subscriber"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 1,
@@ -7056,6 +7089,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers",
                 ["parts"] = {
@@ -7069,7 +7103,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["subscriber"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 2,
@@ -7085,9 +7121,11 @@ local function make_config()
                       ["orig"] = "page_id",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 0,
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers/reactivate",
                 ["parts"] = {
@@ -7119,9 +7157,11 @@ local function make_config()
                       ["orig"] = "page_id",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 0,
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers/resend_confirmation",
                 ["parts"] = {
@@ -7153,9 +7193,11 @@ local function make_config()
                       ["orig"] = "page_id",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 0,
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers/unsubscribe",
                 ["parts"] = {
@@ -7260,6 +7302,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers",
                 ["parts"] = {
@@ -7327,6 +7370,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers",
                 ["parts"] = {
@@ -7382,6 +7426,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers/unsubscribed",
                 ["parts"] = {
@@ -7444,6 +7489,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
                 ["parts"] = {
@@ -7505,6 +7551,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers/count",
                 ["parts"] = {
@@ -7551,6 +7598,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers/{subscriber_id}",
                 ["parts"] = {
@@ -7590,6 +7638,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers/histogram_by_state",
                 ["parts"] = {
@@ -7650,6 +7699,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
                 ["parts"] = {
@@ -7712,6 +7762,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/subscribers/{subscriber_id}",
                 ["parts"] = {
@@ -7769,6 +7820,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/subscribers/{subscriber_id}",
                 ["parts"] = {
@@ -7890,6 +7942,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/organizations/{organization_id}/users",
                 ["parts"] = {
@@ -7903,7 +7956,9 @@ local function make_config()
                   },
                 },
                 ["transform"] = {
-                  ["req"] = "`reqdata`",
+                  ["req"] = {
+                    ["user"] = "`reqdata`",
+                  },
                   ["res"] = "`body`",
                 },
                 ["index$"] = 0,
@@ -7948,6 +8003,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/organizations/{organization_id}/users",
                 ["parts"] = {
@@ -7999,6 +8055,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/organizations/{organization_id}/users/{user_id}",
                 ["parts"] = {

@@ -21,7 +21,7 @@ support (`list`, `load`, `create`, `update`, `remove`, `patch`):
 
 ```ts
 const client = new StatuspageSDK()
-const items = await client.Component().list()
+const items = await client.Component().list({ page_id: "example" })
 ```
 
 Thinking in entities keeps the mental model small — for people and AI agents alike —
@@ -36,18 +36,27 @@ network, and no credentials:
 ### TypeScript
 
 ```ts
-const client = StatuspageSDK.test()
-const components = await client.Component().list()
-// components is an array of bare Component records populated with mock data
-console.log(components)
+// The offline mock starts EMPTY — seed it with the records the test needs.
+// Shape: { entity: { <entity-name>: { <id>: <record> } } }
+const client = StatuspageSDK.test({
+  entity: {
+    postmortem: {
+      test01: { id: 'test01' },
+    },
+  },
+})
+const postmortem = await client.Postmortem().load({ incident_id: 'example_incident_id', page_id: 'example_page_id' })
+// postmortem is the Postmortem entity, populated with mock data
+// — call postmortem.data() for the record itself
+console.log(postmortem)
 ```
 
 ### Python
 
 ```python
 client = StatuspageSDK.test()
-components = client.Component().list()
-print(components)
+postmortem = client.Postmortem().load({"incident_id": "example", "page_id": "example"})
+print(postmortem)
 ```
 
 ### PHP
@@ -55,16 +64,16 @@ print(components)
 ```php
 // Seed fixture data so offline calls resolve without a live server.
 $client = StatuspageSDK::test([
-    "entity" => ["component" => ["test01" => ["id" => "test01"]]],
+    "entity" => ["postmortem" => ["test01" => []]],
 ]);
-$components = $client->Component()->list();
+$postmortem = $client->Postmortem()->load(["incident_id" => "example", "page_id" => "example"]);
 ```
 
 ### Golang
 
 ```go
 client := sdk.Test()
-result, err := client.Component(nil).List(
+result, err := client.Postmortem(nil).Load(
     nil, nil,
 )
 ```
@@ -74,16 +83,16 @@ result, err := client.Component(nil).List(
 ```ruby
 # Seed fixture data so offline calls resolve without a live server.
 client = StatuspageSDK.test({
-  "entity" => { "component" => { "test01" => { "id" => "test01" } } },
+  "entity" => { "postmortem" => { "test01" => {} } },
 })
-components = client.Component.list()
+postmortem = client.Postmortem.load({ "incident_id" => "example", "page_id" => "example" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local results, err = client:Component():list()
+local result, err = client:Postmortem():load({ incident_id = "example", page_id = "example" })
 ```
 
 ## Packages
@@ -110,8 +119,8 @@ const client = new StatuspageSDK({
   apikey: process.env.STATUSPAGE_APIKEY,
 })
 
-// List all components (returns Component[])
-const components = await client.Component().list()
+// List all components (returns ComponentEntity[] — .data() for the record)
+const components = await client.Component().list({ page_id: "example" })
 for (const component of components) {
   console.log(component)
 }
@@ -162,7 +171,7 @@ The API exposes 18 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Component** | The Component entity (create, list, load, patch, remove, update). | `/pages/{page_id}/components/{component_id}/page_access_groups` |
+| **Component** | The Component entity (create, list, load, patch, remove, update). | `/pages/{page_id}/page_access_groups/{page_access_group_id}/components` |
 | **ComponentGroupUptime** | The ComponentGroupUptime entity (load). | `/pages/{page_id}/component-groups/{id}/uptime` |
 | **GroupComponent** | The GroupComponent entity (create, list, load, patch, remove, update). | `/pages/{page_id}/component-groups` |
 | **Incident** | The Incident entity (create, list, load, patch, remove, update). | `/pages/{page_id}/incidents` |
@@ -170,15 +179,15 @@ The API exposes 18 entities:
 | **IncidentSubscriber** | The IncidentSubscriber entity (create). | `/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation` |
 | **IncidentTemplate** | The IncidentTemplate entity (create, list). | `/pages/{page_id}/incident_templates` |
 | **IncidentUpdate** | The IncidentUpdate entity (patch, update). | `/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}` |
-| **Metric** | The Metric entity (create, list, load, patch, remove, update). | `/pages/{page_id}/metrics/{metric_id}/data` |
+| **Metric** | The Metric entity (create, list, load, patch, remove, update). | `/pages/{page_id}/page_access_users/{page_access_user_id}/metrics` |
 | **MetricsProvider** | The MetricsProvider entity (create, list, load, patch, remove, update). | `/pages/{page_id}/metrics_providers` |
 | **Page** | The Page entity (list, load, patch, update). | `/pages` |
-| **PageAccessGroup** | The PageAccessGroup entity (create, list, load, patch, remove, update). | `/pages/{page_id}/page_access_groups/{page_access_group_id}/components` |
-| **PageAccessUser** | The PageAccessUser entity (create, list, load, patch, remove, update). | `/pages/{page_id}/page_access_users/{page_access_user_id}/components` |
+| **PageAccessGroup** | The PageAccessGroup entity (create, list, load, patch, remove, update). | `/pages/{page_id}/page_access_groups` |
+| **PageAccessUser** | The PageAccessUser entity (create, list, load, patch, remove, update). | `/pages/{page_id}/page_access_users` |
 | **Permission** | The Permission entity (load, update). | `/organizations/{organization_id}/permissions/{user_id}` |
 | **Postmortem** | The Postmortem entity (load, update). | `/pages/{page_id}/incidents/{incident_id}/postmortem` |
 | **StatusEmbedConfig** | The StatusEmbedConfig entity (load, patch, update). | `/pages/{page_id}/status_embed_config` |
-| **Subscriber** | The Subscriber entity (create, list, load, remove, update). | `/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation` |
+| **Subscriber** | The Subscriber entity (create, list, load, remove, update). | `/pages/{page_id}/subscribers` |
 | **User** | The User entity (create, list, remove). | `/organizations/{organization_id}/users` |
 
 The operations available across these entities are **load**, **list**, **create**, **update**, **remove** — see each entity's
@@ -197,7 +206,7 @@ client = StatuspageSDK({
 })
 
 # List all components (returns a list, raises on error)
-components = client.Component().list()
+components = client.Component().list({"page_id": "example"})
 for component in components:
     print(component)
 
@@ -220,7 +229,7 @@ $client = new StatuspageSDK([
 $components = $client->Component()->list();
 print_r($components);
 
-// Load a specific component (returns the bare record; throws on error)
+// Load a specific component (returns the ENTITY; call data_get() for the record; throws on error)
 $component = $client->Component()->load(["id" => "example_id", "page_id" => "example_page_id"]);
 print_r($component);
 ```
@@ -264,7 +273,7 @@ client = StatuspageSDK.new({
 components = client.Component.list
 puts components
 
-# Load a specific component (returns the bare record; raises on error)
+# Load a specific component (returns the ENTITY; call data_get for the record)
 component = client.Component.load({ "id" => "example_id", "page_id" => "example_page_id" })
 puts component
 ```
@@ -403,6 +412,9 @@ Pass custom features via the `extend` option at construction time.
 
 This SDK is generated from the upstream OpenAPI specification. It is an
 unofficial client and is not affiliated with the API provider.
+
+The OpenAPI spec(s) this SDK was generated from are kept in the
+[`.sdk/def/`](.sdk/def/) folder.
 
 - Upstream API: [https://support.atlassian.com/contact](https://support.atlassian.com/contact)
 

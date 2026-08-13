@@ -67,10 +67,10 @@ local created, err = client:Component():create({ page_id = "example_page_id" })
 if err then error(err) end
 
 -- Update
-client:Component():update({ id = created["id"], page_id = "example_page_id" })
+client:Component():update({ id = created:data_get()["id"], page_id = "example_page_id", automation_email = "example_automation_email" })
 
 -- Remove
-client:Component():remove({ id = created["id"], page_id = "example_page_id" })
+client:Component():remove({ id = created:data_get()["id"], page_id = "example_page_id" })
 ```
 
 
@@ -80,7 +80,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local components, err = client:Component():list()
+local postmortem, err = client:Postmortem():load({ incident_id = "example", page_id = "example" })
 if err then error(err) end
 ```
 
@@ -138,7 +138,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Component():list()
+local result, err = client:Postmortem():load({ incident_id = "example", page_id = "example" })
 -- result is the returned data; err is set on failure
 ```
 
@@ -288,21 +288,14 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 | `group` |  |
 | `group_id` |  |
 | `id` |  |
-| `major_outage` |  |
 | `name` |  |
 | `only_show_if_degraded` |  |
 | `page_id` |  |
-| `partial_outage` |  |
 | `position` |  |
-| `range_end` |  |
-| `range_start` |  |
-| `related_event` |  |
 | `showcase` |  |
 | `start_date` |  |
 | `status` |  |
 | `updated_at` |  |
-| `uptime_percentage` |  |
-| `warning` |  |
 
 Operations: Create, List, Load, Patch, Remove, Update.
 
@@ -312,15 +305,8 @@ API path: `/pages/{page_id}/components/{component_id}/page_access_groups`
 
 | Field | Description |
 | --- | --- |
-| `id` |  |
-| `major_outage` |  |
-| `name` |  |
-| `partial_outage` |  |
-| `range_end` |  |
-| `range_start` |  |
-| `related_event` |  |
-| `uptime_percentage` |  |
-| `warning` |  |
+| `component_id` |  |
+| `incidents` |  |
 
 Operations: Load.
 
@@ -330,8 +316,8 @@ API path: `/pages/{page_id}/component-groups/{id}/uptime`
 
 | Field | Description |
 | --- | --- |
-| `component` |  |
 | `component_group` |  |
+| `components` |  |
 | `created_at` |  |
 | `description` |  |
 | `id` |  |
@@ -352,14 +338,13 @@ API path: `/pages/{page_id}/component-groups`
 | `auto_transition_deliver_notifications_at_start` |  |
 | `auto_transition_to_maintenance_state` |  |
 | `auto_transition_to_operational_state` |  |
-| `component` |  |
+| `components` |  |
 | `created_at` |  |
 | `id` |  |
 | `impact` |  |
 | `impact_override` |  |
 | `incident` |  |
-| `incident_impact` |  |
-| `incident_update` |  |
+| `incident_updates` |  |
 | `metadata` |  |
 | `monitoring_at` |  |
 | `name` |  |
@@ -367,10 +352,10 @@ API path: `/pages/{page_id}/component-groups`
 | `postmortem_body` |  |
 | `postmortem_body_last_updated_at` |  |
 | `postmortem_ignored` |  |
-| `postmortem_notified_subscriber` |  |
+| `postmortem_notified_subscribers` |  |
 | `postmortem_notified_twitter` |  |
 | `postmortem_published_at` |  |
-| `reminder_interval` |  |
+| `reminder_intervals` |  |
 | `resolved_at` |  |
 | `scheduled_auto_completed` |  |
 | `scheduled_auto_in_progress` |  |
@@ -409,11 +394,11 @@ API path: `/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/
 | Field | Description |
 | --- | --- |
 | `body` |  |
-| `component` |  |
+| `components` |  |
 | `group_id` |  |
 | `id` |  |
 | `name` |  |
-| `should_send_notification` |  |
+| `should_send_notifications` |  |
 | `should_tweet` |  |
 | `template` |  |
 | `title` |  |
@@ -427,11 +412,11 @@ API path: `/pages/{page_id}/incident_templates`
 
 | Field | Description |
 | --- | --- |
-| `affected_component` |  |
+| `affected_components` |  |
 | `body` |  |
 | `created_at` |  |
 | `custom_tweet` |  |
-| `deliver_notification` |  |
+| `deliver_notifications` |  |
 | `display_at` |  |
 | `id` |  |
 | `incident_id` |  |
@@ -454,7 +439,7 @@ API path: `/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_u
 | `backfilled` |  |
 | `created_at` |  |
 | `data` |  |
-| `decimal_place` |  |
+| `decimal_places` |  |
 | `display` |  |
 | `id` |  |
 | `last_fetched_at` |  |
@@ -498,28 +483,28 @@ API path: `/pages/{page_id}/metrics_providers`
 | Field | Description |
 | --- | --- |
 | `activity_score` |  |
-| `allow_email_subscriber` |  |
-| `allow_incident_subscriber` |  |
-| `allow_page_subscriber` |  |
-| `allow_rss_atom_feed` |  |
-| `allow_sms_subscriber` |  |
-| `allow_webhook_subscriber` |  |
+| `allow_email_subscribers` |  |
+| `allow_incident_subscribers` |  |
+| `allow_page_subscribers` |  |
+| `allow_rss_atom_feeds` |  |
+| `allow_sms_subscribers` |  |
+| `allow_webhook_subscribers` |  |
 | `branding` |  |
 | `city` |  |
 | `country` |  |
 | `created_at` |  |
-| `css_blue` |  |
+| `css_blues` |  |
 | `css_body_background_color` |  |
 | `css_border_color` |  |
 | `css_font_color` |  |
 | `css_graph_color` |  |
-| `css_green` |  |
+| `css_greens` |  |
 | `css_light_font_color` |  |
 | `css_link_color` |  |
 | `css_no_data` |  |
-| `css_orange` |  |
-| `css_red` |  |
-| `css_yellow` |  |
+| `css_oranges` |  |
+| `css_reds` |  |
+| `css_yellows` |  |
 | `domain` |  |
 | `email_logo` |  |
 | `favicon_logo` |  |
@@ -527,7 +512,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `hero_cover` |  |
 | `hidden_from_search` |  |
 | `id` |  |
-| `ip_restriction` |  |
+| `ip_restrictions` |  |
 | `name` |  |
 | `notifications_email_footer` |  |
 | `notifications_from_email` |  |
@@ -542,7 +527,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `twitter_username` |  |
 | `updated_at` |  |
 | `url` |  |
-| `viewers_must_be_team_member` |  |
+| `viewers_must_be_team_members` |  |
 
 Operations: List, Load, Patch, Update.
 
@@ -552,14 +537,14 @@ API path: `/pages`
 
 | Field | Description |
 | --- | --- |
-| `component_id` |  |
+| `component_ids` |  |
 | `created_at` |  |
 | `external_identifier` |  |
 | `id` |  |
-| `metric_id` |  |
+| `metric_ids` |  |
 | `name` |  |
 | `page_access_group` |  |
-| `page_access_user_id` |  |
+| `page_access_user_ids` |  |
 | `page_id` |  |
 | `updated_at` |  |
 
@@ -571,13 +556,14 @@ API path: `/pages/{page_id}/page_access_groups/{page_access_group_id}/components
 
 | Field | Description |
 | --- | --- |
-| `component_id` |  |
+| `component_ids` |  |
 | `created_at` |  |
 | `email` |  |
 | `external_login` |  |
 | `id` |  |
-| `metric_id` |  |
+| `metric_ids` |  |
 | `page_access_group_id` |  |
+| `page_access_group_ids` |  |
 | `page_access_user` |  |
 | `page_id` |  |
 | `updated_at` |  |
@@ -590,8 +576,8 @@ API path: `/pages/{page_id}/page_access_users/{page_access_user_id}/components`
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `page` |  |
+| `pages` |  |
+| `user_id` |  |
 
 Operations: Load, Update.
 
@@ -607,7 +593,7 @@ API path: `/organizations/{organization_id}/permissions/{user_id}`
 | `body_updated_at` |  |
 | `created_at` |  |
 | `custom_tweet` |  |
-| `notify_subscriber` |  |
+| `notify_subscribers` |  |
 | `notify_twitter` |  |
 | `postmortem` |  |
 | `preview_key` |  |
@@ -638,8 +624,8 @@ API path: `/pages/{page_id}/status_embed_config`
 
 | Field | Description |
 | --- | --- |
-| `component` |  |
-| `component_id` |  |
+| `component_ids` |  |
+| `components` |  |
 | `created_at` |  |
 | `display_phone_number` |  |
 | `email` |  |
@@ -659,7 +645,8 @@ API path: `/pages/{page_id}/status_embed_config`
 | `sms` |  |
 | `state` |  |
 | `subscriber` |  |
-| `team` |  |
+| `subscribers` |  |
+| `teams` |  |
 | `type` |  |
 | `webhook` |  |
 | `workspace_name` |  |
@@ -715,21 +702,14 @@ Create an instance: `local component = client:Component(nil)`
 | `group` | `boolean` |  |
 | `group_id` | `string` |  |
 | `id` | `string` |  |
-| `major_outage` | `number` |  |
 | `name` | `string` |  |
 | `only_show_if_degraded` | `boolean` |  |
 | `page_id` | `string` |  |
-| `partial_outage` | `number` |  |
 | `position` | `number` |  |
-| `range_end` | `string` |  |
-| `range_start` | `string` |  |
-| `related_event` | `table` |  |
 | `showcase` | `boolean` |  |
 | `start_date` | `string` |  |
 | `status` | `string` |  |
 | `updated_at` | `string` |  |
-| `uptime_percentage` | `number` |  |
-| `warning` | `string` |  |
 
 #### Example: Load
 
@@ -766,15 +746,8 @@ Create an instance: `local component_group_uptime = client:ComponentGroupUptime(
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` |  |
-| `major_outage` | `number` |  |
-| `name` | `string` |  |
-| `partial_outage` | `number` |  |
-| `range_end` | `string` |  |
-| `range_start` | `string` |  |
-| `related_event` | `table` |  |
-| `uptime_percentage` | `number` |  |
-| `warning` | `string` |  |
+| `component_id` | `string` |  |
+| `incidents` | `table` |  |
 
 #### Example: Load
 
@@ -801,8 +774,8 @@ Create an instance: `local group_component = client:GroupComponent(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `string` |  |
 | `component_group` | `table` |  |
+| `components` | `string` |  |
 | `created_at` | `string` |  |
 | `description` | `string` |  |
 | `id` | `string` |  |
@@ -828,6 +801,7 @@ local group_components, err = client:GroupComponent():list()
 ```lua
 local group_component, err = client:GroupComponent():create({
   page_id = "example_page_id", -- string
+  component_group = {}, -- table
 })
 ```
 
@@ -854,14 +828,13 @@ Create an instance: `local incident = client:Incident(nil)`
 | `auto_transition_deliver_notifications_at_start` | `boolean` |  |
 | `auto_transition_to_maintenance_state` | `boolean` |  |
 | `auto_transition_to_operational_state` | `boolean` |  |
-| `component` | `table` |  |
+| `components` | `table` |  |
 | `created_at` | `string` |  |
 | `id` | `string` |  |
 | `impact` | `string` |  |
 | `impact_override` | `string` |  |
 | `incident` | `table` |  |
-| `incident_impact` | `table` |  |
-| `incident_update` | `table` |  |
+| `incident_updates` | `table` |  |
 | `metadata` | `table` |  |
 | `monitoring_at` | `string` |  |
 | `name` | `string` |  |
@@ -869,10 +842,10 @@ Create an instance: `local incident = client:Incident(nil)`
 | `postmortem_body` | `string` |  |
 | `postmortem_body_last_updated_at` | `string` |  |
 | `postmortem_ignored` | `boolean` |  |
-| `postmortem_notified_subscriber` | `boolean` |  |
+| `postmortem_notified_subscribers` | `boolean` |  |
 | `postmortem_notified_twitter` | `boolean` |  |
 | `postmortem_published_at` | `boolean` |  |
-| `reminder_interval` | `string` |  |
+| `reminder_intervals` | `string` |  |
 | `resolved_at` | `string` |  |
 | `scheduled_auto_completed` | `boolean` |  |
 | `scheduled_auto_in_progress` | `boolean` |  |
@@ -901,6 +874,7 @@ local incidents, err = client:Incident():list()
 ```lua
 local incident, err = client:Incident():create({
   page_id = "example_page_id", -- string
+  incident = {}, -- table
 })
 ```
 
@@ -953,11 +927,11 @@ Create an instance: `local incident_template = client:IncidentTemplate(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `body` | `string` |  |
-| `component` | `table` |  |
+| `components` | `table` |  |
 | `group_id` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
-| `should_send_notification` | `boolean` |  |
+| `should_send_notifications` | `boolean` |  |
 | `should_tweet` | `boolean` |  |
 | `template` | `table` |  |
 | `title` | `string` |  |
@@ -974,6 +948,7 @@ local incident_templates, err = client:IncidentTemplate():list()
 ```lua
 local incident_template, err = client:IncidentTemplate():create({
   page_id = "example_page_id", -- string
+  template = {}, -- table
 })
 ```
 
@@ -992,11 +967,11 @@ Create an instance: `local incident_update = client:IncidentUpdate(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `affected_component` | `table` |  |
+| `affected_components` | `table` |  |
 | `body` | `string` |  |
 | `created_at` | `string` |  |
 | `custom_tweet` | `string` |  |
-| `deliver_notification` | `boolean` |  |
+| `deliver_notifications` | `boolean` |  |
 | `display_at` | `string` |  |
 | `id` | `string` |  |
 | `incident_id` | `string` |  |
@@ -1030,7 +1005,7 @@ Create an instance: `local metric = client:Metric(nil)`
 | `backfilled` | `boolean` |  |
 | `created_at` | `string` |  |
 | `data` | `table` |  |
-| `decimal_place` | `number` |  |
+| `decimal_places` | `number` |  |
 | `display` | `boolean` |  |
 | `id` | `string` |  |
 | `last_fetched_at` | `string` |  |
@@ -1065,6 +1040,7 @@ local metrics, err = client:Metric():list()
 local metric, err = client:Metric():create({
   metrics_provider_id = "example_metrics_provider_id", -- string
   page_id = "example_page_id", -- string
+  data = {}, -- table
 })
 ```
 
@@ -1135,28 +1111,28 @@ Create an instance: `local page = client:Page(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `activity_score` | `number` |  |
-| `allow_email_subscriber` | `boolean` |  |
-| `allow_incident_subscriber` | `boolean` |  |
-| `allow_page_subscriber` | `boolean` |  |
-| `allow_rss_atom_feed` | `boolean` |  |
-| `allow_sms_subscriber` | `boolean` |  |
-| `allow_webhook_subscriber` | `boolean` |  |
+| `allow_email_subscribers` | `boolean` |  |
+| `allow_incident_subscribers` | `boolean` |  |
+| `allow_page_subscribers` | `boolean` |  |
+| `allow_rss_atom_feeds` | `boolean` |  |
+| `allow_sms_subscribers` | `boolean` |  |
+| `allow_webhook_subscribers` | `boolean` |  |
 | `branding` | `string` |  |
 | `city` | `string` |  |
 | `country` | `string` |  |
 | `created_at` | `string` |  |
-| `css_blue` | `string` |  |
+| `css_blues` | `string` |  |
 | `css_body_background_color` | `string` |  |
 | `css_border_color` | `string` |  |
 | `css_font_color` | `string` |  |
 | `css_graph_color` | `string` |  |
-| `css_green` | `string` |  |
+| `css_greens` | `string` |  |
 | `css_light_font_color` | `string` |  |
 | `css_link_color` | `string` |  |
 | `css_no_data` | `string` |  |
-| `css_orange` | `string` |  |
-| `css_red` | `string` |  |
-| `css_yellow` | `string` |  |
+| `css_oranges` | `string` |  |
+| `css_reds` | `string` |  |
+| `css_yellows` | `string` |  |
 | `domain` | `string` |  |
 | `email_logo` | `string` |  |
 | `favicon_logo` | `string` |  |
@@ -1164,7 +1140,7 @@ Create an instance: `local page = client:Page(nil)`
 | `hero_cover` | `string` |  |
 | `hidden_from_search` | `boolean` |  |
 | `id` | `string` |  |
-| `ip_restriction` | `string` |  |
+| `ip_restrictions` | `string` |  |
 | `name` | `string` |  |
 | `notifications_email_footer` | `string` |  |
 | `notifications_from_email` | `string` |  |
@@ -1179,7 +1155,7 @@ Create an instance: `local page = client:Page(nil)`
 | `twitter_username` | `string` |  |
 | `updated_at` | `string` |  |
 | `url` | `string` |  |
-| `viewers_must_be_team_member` | `boolean` |  |
+| `viewers_must_be_team_members` | `boolean` |  |
 
 #### Example: Load
 
@@ -1212,14 +1188,14 @@ Create an instance: `local page_access_group = client:PageAccessGroup(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `table` |  |
+| `component_ids` | `table` |  |
 | `created_at` | `string` |  |
 | `external_identifier` | `string` |  |
 | `id` | `string` |  |
-| `metric_id` | `table` |  |
+| `metric_ids` | `table` |  |
 | `name` | `string` |  |
 | `page_access_group` | `table` |  |
-| `page_access_user_id` | `table` |  |
+| `page_access_user_ids` | `table` |  |
 | `page_id` | `string` |  |
 | `updated_at` | `string` |  |
 
@@ -1262,13 +1238,14 @@ Create an instance: `local page_access_user = client:PageAccessUser(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `table` |  |
+| `component_ids` | `table` |  |
 | `created_at` | `string` |  |
 | `email` | `string` |  |
 | `external_login` | `string` |  |
 | `id` | `string` |  |
-| `metric_id` | `table` |  |
+| `metric_ids` | `table` |  |
 | `page_access_group_id` | `string` |  |
+| `page_access_group_ids` | `string` |  |
 | `page_access_user` | `table` |  |
 | `page_id` | `string` |  |
 | `updated_at` | `string` |  |
@@ -1290,6 +1267,8 @@ local page_access_users, err = client:PageAccessUser():list()
 ```lua
 local page_access_user, err = client:PageAccessUser():create({
   id = "example_id", -- string
+  component_ids = {}, -- table
+  metric_ids = {}, -- table
 })
 ```
 
@@ -1309,8 +1288,8 @@ Create an instance: `local permission = client:Permission(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `table` |  |
-| `page` | `table` |  |
+| `pages` | `table` |  |
+| `user_id` | `string` |  |
 
 #### Example: Load
 
@@ -1340,7 +1319,7 @@ Create an instance: `local postmortem = client:Postmortem(nil)`
 | `body_updated_at` | `string` |  |
 | `created_at` | `string` |  |
 | `custom_tweet` | `string` |  |
-| `notify_subscriber` | `boolean` |  |
+| `notify_subscribers` | `boolean` |  |
 | `notify_twitter` | `boolean` |  |
 | `postmortem` | `table` |  |
 | `preview_key` | `string` |  |
@@ -1402,8 +1381,8 @@ Create an instance: `local subscriber = client:Subscriber(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `string` |  |
-| `component_id` | `table` |  |
+| `component_ids` | `table` |  |
+| `components` | `string` |  |
 | `created_at` | `string` |  |
 | `display_phone_number` | `string` |  |
 | `email` | `string` |  |
@@ -1423,7 +1402,8 @@ Create an instance: `local subscriber = client:Subscriber(nil)`
 | `sms` | `number` |  |
 | `state` | `string` |  |
 | `subscriber` | `table` |  |
-| `team` | `number` |  |
+| `subscribers` | `string` |  |
+| `teams` | `number` |  |
 | `type` | `string` |  |
 | `webhook` | `number` |  |
 | `workspace_name` | `string` |  |
@@ -1445,6 +1425,7 @@ local subscribers, err = client:Subscriber():list()
 ```lua
 local subscriber, err = client:Subscriber():create({
   page_id = "example_page_id", -- string
+  subscribers = "example_subscribers", -- string
 })
 ```
 
@@ -1485,6 +1466,7 @@ local users, err = client:User():list()
 ```lua
 local user, err = client:User():create({
   organization_id = "example_organization_id", -- string
+  user = {}, -- table
 })
 ```
 
@@ -1561,15 +1543,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local component = client:Component()
-component:list()
+local postmortem = client:Postmortem()
+postmortem:load({ incident_id = "example", page_id = "example" })
 
--- component:data_get() now returns the component data from the last list
--- component:match_get() returns the last match criteria
+-- postmortem:data_get() now returns the postmortem data from the last load
+-- postmortem:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

@@ -74,7 +74,7 @@ class IncidentTemplateEntityTest < Minitest::Test
     incident_template_ref01_data["page_id"] = setup[:idmap]["page01"]
 
     incident_template_ref01_data_result = incident_template_ref01_ent.create(incident_template_ref01_data, nil)
-    incident_template_ref01_data = Helpers.to_map(incident_template_ref01_data_result)
+    incident_template_ref01_data = Helpers.to_map(incident_template_ref01_data_result.respond_to?(:data_get) ? incident_template_ref01_data_result.data_get : incident_template_ref01_data_result)
     assert !incident_template_ref01_data.nil?
     assert !incident_template_ref01_data["id"].nil?
 

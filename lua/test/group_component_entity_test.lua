@@ -83,7 +83,7 @@ describe("GroupComponentEntity", function()
 
     local group_component_ref01_data_result, err = group_component_ref01_ent:create(group_component_ref01_data, nil)
     assert.is_nil(err)
-    group_component_ref01_data = helpers.to_map(group_component_ref01_data_result)
+    group_component_ref01_data = helpers.to_map(type(group_component_ref01_data_result) == 'table' and group_component_ref01_data_result.data_get and group_component_ref01_data_result:data_get() or group_component_ref01_data_result)
     assert.is_not_nil(group_component_ref01_data)
     assert.is_not_nil(group_component_ref01_data["id"])
 
@@ -107,13 +107,13 @@ describe("GroupComponentEntity", function()
       ["page_id"] = setup.idmap["page_id"],
     }
 
-    local group_component_ref01_markdef_up0_name = "component"
+    local group_component_ref01_markdef_up0_name = "components"
     local group_component_ref01_markdef_up0_value = "Mark01-group_component_ref01_" .. tostring(setup.now)
     group_component_ref01_data_up0_up[group_component_ref01_markdef_up0_name] = group_component_ref01_markdef_up0_value
 
     local group_component_ref01_resdata_up0_result, err = group_component_ref01_ent:update(group_component_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local group_component_ref01_resdata_up0 = helpers.to_map(group_component_ref01_resdata_up0_result)
+    local group_component_ref01_resdata_up0 = helpers.to_map(type(group_component_ref01_resdata_up0_result) == 'table' and group_component_ref01_resdata_up0_result.data_get and group_component_ref01_resdata_up0_result:data_get() or group_component_ref01_resdata_up0_result)
     assert.is_not_nil(group_component_ref01_resdata_up0)
     assert.are.equal(group_component_ref01_resdata_up0["id"], group_component_ref01_data_up0_up["id"])
     assert.are.equal(group_component_ref01_resdata_up0[group_component_ref01_markdef_up0_name], group_component_ref01_markdef_up0_value)
@@ -124,7 +124,7 @@ describe("GroupComponentEntity", function()
     }
     local group_component_ref01_data_dt0_loaded, err = group_component_ref01_ent:load(group_component_ref01_match_dt0, nil)
     assert.is_nil(err)
-    local group_component_ref01_data_dt0_load_result = helpers.to_map(group_component_ref01_data_dt0_loaded)
+    local group_component_ref01_data_dt0_load_result = helpers.to_map(type(group_component_ref01_data_dt0_loaded) == 'table' and group_component_ref01_data_dt0_loaded.data_get and group_component_ref01_data_dt0_loaded:data_get() or group_component_ref01_data_dt0_loaded)
     assert.is_not_nil(group_component_ref01_data_dt0_load_result)
     assert.are.equal(group_component_ref01_data_dt0_load_result["id"], group_component_ref01_data["id"])
 

@@ -328,21 +328,38 @@ const component = client.Component()
 | `group` | `boolean` | No |  |
 | `group_id` | `string` | No |  |
 | `id` | `string` | No |  |
-| `major_outage` | `number` | No |  |
 | `name` | `string` | No |  |
 | `only_show_if_degraded` | `boolean` | No |  |
 | `page_id` | `string` | No |  |
-| `partial_outage` | `number` | No |  |
 | `position` | `number` | No |  |
-| `range_end` | `string` | No |  |
-| `range_start` | `string` | No |  |
-| `related_event` | `Record<string, any>` | No |  |
 | `showcase` | `boolean` | No |  |
 | `start_date` | `string` | No |  |
 | `status` | `string` | No |  |
 | `updated_at` | `string` | No |  |
-| `uptime_percentage` | `number` | No |  |
-| `warning` | `string` | No |  |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `page_access_group` | `/pages/{page_id}/components/{component_id}/page_access_groups` | `client.Component().create({ $action: 'page_access_group', ... })` |
+| `page_access_user` | `/pages/{page_id}/components/{component_id}/page_access_users` | `client.Component().create({ $action: 'page_access_user', ... })` |
+| `uptime` | `/pages/{page_id}/components/{component_id}/uptime` | `client.Component().load({ $action: 'uptime', ... })` |
+| `page_access_group` | `/pages/{page_id}/components/{component_id}/page_access_groups` | `client.Component().remove({ $action: 'page_access_group', ... })` |
+| `page_access_user` | `/pages/{page_id}/components/{component_id}/page_access_users` | `client.Component().remove({ $action: 'page_access_user', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Component record — check the API definition for its shape.
+
+```ts
+const result = await client.Component().create({
+  $action: 'page_access_group',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -361,7 +378,7 @@ const result = await client.Component().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Component().list()
+const results = await client.Component().list({ page_id: "example" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -430,15 +447,8 @@ const component_group_uptime = client.ComponentGroupUptime()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `string` | No |  |
-| `major_outage` | `number` | No |  |
-| `name` | `string` | No |  |
-| `partial_outage` | `number` | No |  |
-| `range_end` | `string` | No |  |
-| `range_start` | `string` | No |  |
-| `related_event` | `Record<string, any>` | No |  |
-| `uptime_percentage` | `number` | No |  |
-| `warning` | `string` | No |  |
+| `component_id` | `string` | No |  |
+| `incidents` | `Record<string, any>` | No |  |
 
 ### Operations
 
@@ -488,8 +498,8 @@ const group_component = client.GroupComponent()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `string` | No |  |
 | `component_group` | `Record<string, any>` | Yes |  |
+| `components` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `description` | `string` | No |  |
 | `id` | `string` | No |  |
@@ -507,6 +517,7 @@ Create a new entity with the given data.
 ```ts
 const result = await client.GroupComponent().create({
   page_id: 'example_page_id',
+  component_group: {},
 })
 ```
 
@@ -515,7 +526,7 @@ const result = await client.GroupComponent().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.GroupComponent().list()
+const results = await client.GroupComponent().list({ page_id: "example" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -588,14 +599,13 @@ const incident = client.Incident()
 | `auto_transition_deliver_notifications_at_start` | `boolean` | No |  |
 | `auto_transition_to_maintenance_state` | `boolean` | No |  |
 | `auto_transition_to_operational_state` | `boolean` | No |  |
-| `component` | `any[]` | No |  |
+| `components` | `any[]` | No |  |
 | `created_at` | `string` | No |  |
 | `id` | `string` | No |  |
 | `impact` | `string` | No |  |
 | `impact_override` | `string` | No |  |
 | `incident` | `Record<string, any>` | Yes |  |
-| `incident_impact` | `any[]` | No |  |
-| `incident_update` | `any[]` | No |  |
+| `incident_updates` | `any[]` | No |  |
 | `metadata` | `Record<string, any>` | No |  |
 | `monitoring_at` | `string` | No |  |
 | `name` | `string` | No |  |
@@ -603,10 +613,10 @@ const incident = client.Incident()
 | `postmortem_body` | `string` | No |  |
 | `postmortem_body_last_updated_at` | `string` | No |  |
 | `postmortem_ignored` | `boolean` | No |  |
-| `postmortem_notified_subscriber` | `boolean` | No |  |
+| `postmortem_notified_subscribers` | `boolean` | No |  |
 | `postmortem_notified_twitter` | `boolean` | No |  |
 | `postmortem_published_at` | `boolean` | No |  |
-| `reminder_interval` | `string` | No |  |
+| `reminder_intervals` | `string` | No |  |
 | `resolved_at` | `string` | No |  |
 | `scheduled_auto_completed` | `boolean` | No |  |
 | `scheduled_auto_in_progress` | `boolean` | No |  |
@@ -626,14 +636,13 @@ const incident = client.Incident()
 | `auto_transition_deliver_notifications_at_start` | - | - | - | - | - |
 | `auto_transition_to_maintenance_state` | - | - | - | - | - |
 | `auto_transition_to_operational_state` | - | - | - | - | - |
-| `component` | - | - | - | - | - |
+| `components` | - | - | - | - | - |
 | `created_at` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `impact` | - | - | - | - | - |
 | `impact_override` | - | - | - | - | - |
 | `incident` | - | - | - | Yes | - |
-| `incident_impact` | - | - | - | - | - |
-| `incident_update` | - | - | - | - | - |
+| `incident_updates` | - | - | - | - | - |
 | `metadata` | - | - | - | - | - |
 | `monitoring_at` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
@@ -641,10 +650,10 @@ const incident = client.Incident()
 | `postmortem_body` | - | - | - | - | - |
 | `postmortem_body_last_updated_at` | - | - | - | - | - |
 | `postmortem_ignored` | - | - | - | - | - |
-| `postmortem_notified_subscriber` | - | - | - | - | - |
+| `postmortem_notified_subscribers` | - | - | - | - | - |
 | `postmortem_notified_twitter` | - | - | - | - | - |
 | `postmortem_published_at` | - | - | - | - | - |
-| `reminder_interval` | - | - | - | - | - |
+| `reminder_intervals` | - | - | - | - | - |
 | `resolved_at` | - | - | - | - | - |
 | `scheduled_auto_completed` | - | - | - | - | - |
 | `scheduled_auto_in_progress` | - | - | - | - | - |
@@ -656,6 +665,29 @@ const incident = client.Incident()
 | `status` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `active_maintenance` | `/pages/{page_id}/incidents/active_maintenance` | `client.Incident().list({ $action: 'active_maintenance', ... })` |
+| `scheduled` | `/pages/{page_id}/incidents/scheduled` | `client.Incident().list({ $action: 'scheduled', ... })` |
+| `unresolved` | `/pages/{page_id}/incidents/unresolved` | `client.Incident().list({ $action: 'unresolved', ... })` |
+| `upcoming` | `/pages/{page_id}/incidents/upcoming` | `client.Incident().list({ $action: 'upcoming', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Incident record — check the API definition for its shape.
+
+```ts
+const result = await client.Incident().list({
+  $action: 'active_maintenance',
+  /* ...the action's own arguments */
+})
+```
+
 ### Operations
 
 #### `create(data: object, ctrl?: object)`
@@ -665,6 +697,7 @@ Create a new entity with the given data.
 ```ts
 const result = await client.Incident().create({
   page_id: 'example_page_id',
+  incident: {},
 })
 ```
 
@@ -673,7 +706,7 @@ const result = await client.Incident().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Incident().list()
+const results = await client.Incident().list({ page_id: "example" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -835,11 +868,11 @@ const incident_template = client.IncidentTemplate()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `body` | `string` | No |  |
-| `component` | `any[]` | No |  |
+| `components` | `any[]` | No |  |
 | `group_id` | `string` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
-| `should_send_notification` | `boolean` | No |  |
+| `should_send_notifications` | `boolean` | No |  |
 | `should_tweet` | `boolean` | No |  |
 | `template` | `Record<string, any>` | Yes |  |
 | `title` | `string` | No |  |
@@ -854,6 +887,7 @@ Create a new entity with the given data.
 ```ts
 const result = await client.IncidentTemplate().create({
   page_id: 'example_page_id',
+  template: {},
 })
 ```
 
@@ -862,7 +896,7 @@ const result = await client.IncidentTemplate().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.IncidentTemplate().list()
+const results = await client.IncidentTemplate().list({ page_id: "example" })
 ```
 
 ### Common Methods
@@ -903,11 +937,11 @@ const incident_update = client.IncidentUpdate()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `affected_component` | `any[]` | No |  |
+| `affected_components` | `any[]` | No |  |
 | `body` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `custom_tweet` | `string` | No |  |
-| `deliver_notification` | `boolean` | No |  |
+| `deliver_notifications` | `boolean` | No |  |
 | `display_at` | `string` | No |  |
 | `id` | `string` | No |  |
 | `incident_id` | `string` | No |  |
@@ -975,7 +1009,7 @@ const metric = client.Metric()
 | `backfilled` | `boolean` | No |  |
 | `created_at` | `string` | No |  |
 | `data` | `Record<string, any>` | Yes |  |
-| `decimal_place` | `number` | No |  |
+| `decimal_places` | `number` | No |  |
 | `display` | `boolean` | No |  |
 | `id` | `string` | No |  |
 | `last_fetched_at` | `string` | No |  |
@@ -992,6 +1026,28 @@ const metric = client.Metric()
 | `y_axis_max` | `number` | No |  |
 | `y_axis_min` | `number` | No |  |
 
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `data` | `/pages/{page_id}/metrics/{metric_id}/data` | `client.Metric().create({ $action: 'data', ... })` |
+| `data` | `/pages/{page_id}/metrics/data` | `client.Metric().create({ $action: 'data', ... })` |
+| `data` | `/pages/{page_id}/metrics/{metric_id}/data` | `client.Metric().remove({ $action: 'data', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Metric record — check the API definition for its shape.
+
+```ts
+const result = await client.Metric().create({
+  $action: 'data',
+  /* ...the action's own arguments */
+})
+```
+
 ### Operations
 
 #### `create(data: object, ctrl?: object)`
@@ -1002,6 +1058,7 @@ Create a new entity with the given data.
 const result = await client.Metric().create({
   metrics_provider_id: 'example_metrics_provider_id',
   page_id: 'example_page_id',
+  data: {},
 })
 ```
 
@@ -1010,7 +1067,7 @@ const result = await client.Metric().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Metric().list()
+const results = await client.Metric().list({ page_access_user_id: "example", page_id: "example" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -1106,7 +1163,7 @@ const result = await client.MetricsProvider().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.MetricsProvider().list()
+const results = await client.MetricsProvider().list({ page_id: "example" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -1176,28 +1233,28 @@ const page = client.Page()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `activity_score` | `number` | No |  |
-| `allow_email_subscriber` | `boolean` | No |  |
-| `allow_incident_subscriber` | `boolean` | No |  |
-| `allow_page_subscriber` | `boolean` | No |  |
-| `allow_rss_atom_feed` | `boolean` | No |  |
-| `allow_sms_subscriber` | `boolean` | No |  |
-| `allow_webhook_subscriber` | `boolean` | No |  |
+| `allow_email_subscribers` | `boolean` | No |  |
+| `allow_incident_subscribers` | `boolean` | No |  |
+| `allow_page_subscribers` | `boolean` | No |  |
+| `allow_rss_atom_feeds` | `boolean` | No |  |
+| `allow_sms_subscribers` | `boolean` | No |  |
+| `allow_webhook_subscribers` | `boolean` | No |  |
 | `branding` | `string` | No |  |
 | `city` | `string` | No |  |
 | `country` | `string` | No |  |
 | `created_at` | `string` | No |  |
-| `css_blue` | `string` | No |  |
+| `css_blues` | `string` | No |  |
 | `css_body_background_color` | `string` | No |  |
 | `css_border_color` | `string` | No |  |
 | `css_font_color` | `string` | No |  |
 | `css_graph_color` | `string` | No |  |
-| `css_green` | `string` | No |  |
+| `css_greens` | `string` | No |  |
 | `css_light_font_color` | `string` | No |  |
 | `css_link_color` | `string` | No |  |
 | `css_no_data` | `string` | No |  |
-| `css_orange` | `string` | No |  |
-| `css_red` | `string` | No |  |
-| `css_yellow` | `string` | No |  |
+| `css_oranges` | `string` | No |  |
+| `css_reds` | `string` | No |  |
+| `css_yellows` | `string` | No |  |
 | `domain` | `string` | No |  |
 | `email_logo` | `string` | No |  |
 | `favicon_logo` | `string` | No |  |
@@ -1205,7 +1262,7 @@ const page = client.Page()
 | `hero_cover` | `string` | No |  |
 | `hidden_from_search` | `boolean` | No |  |
 | `id` | `string` | No |  |
-| `ip_restriction` | `string` | No |  |
+| `ip_restrictions` | `string` | No |  |
 | `name` | `string` | No |  |
 | `notifications_email_footer` | `string` | No |  |
 | `notifications_from_email` | `string` | No |  |
@@ -1220,7 +1277,7 @@ const page = client.Page()
 | `twitter_username` | `string` | No |  |
 | `updated_at` | `string` | No |  |
 | `url` | `string` | No |  |
-| `viewers_must_be_team_member` | `boolean` | No |  |
+| `viewers_must_be_team_members` | `boolean` | No |  |
 
 ### Operations
 
@@ -1289,14 +1346,14 @@ const page_access_group = client.PageAccessGroup()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `any[]` | No |  |
+| `component_ids` | `any[]` | No |  |
 | `created_at` | `string` | No |  |
 | `external_identifier` | `string` | No |  |
 | `id` | `string` | No |  |
-| `metric_id` | `any[]` | No |  |
+| `metric_ids` | `any[]` | No |  |
 | `name` | `string` | No |  |
 | `page_access_group` | `Record<string, any>` | No |  |
-| `page_access_user_id` | `any[]` | No |  |
+| `page_access_user_ids` | `any[]` | No |  |
 | `page_id` | `string` | No |  |
 | `updated_at` | `string` | No |  |
 
@@ -1304,16 +1361,39 @@ const page_access_group = client.PageAccessGroup()
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `component_id` | - | - | Yes | - | - |
+| `component_ids` | - | - | Yes | - | - |
 | `created_at` | - | - | - | - | - |
 | `external_identifier` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
-| `metric_id` | - | - | - | - | - |
+| `metric_ids` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
 | `page_access_group` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
+| `page_access_user_ids` | - | - | - | - | - |
 | `page_id` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `component` | `/pages/{page_id}/page_access_groups/{page_access_group_id}/components` | `client.PageAccessGroup().create({ $action: 'component', ... })` |
+| `component` | `/pages/{page_id}/page_access_groups/{page_access_group_id}/components` | `client.PageAccessGroup().patch({ $action: 'component', ... })` |
+| `component` | `/pages/{page_id}/page_access_groups/{page_access_group_id}/components` | `client.PageAccessGroup().remove({ $action: 'component', ... })` |
+| `component` | `/pages/{page_id}/page_access_groups/{page_access_group_id}/components` | `client.PageAccessGroup().update({ $action: 'component', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+PageAccessGroup record — check the API definition for its shape.
+
+```ts
+const result = await client.PageAccessGroup().create({
+  $action: 'component',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -1332,7 +1412,7 @@ const result = await client.PageAccessGroup().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.PageAccessGroup().list()
+const results = await client.PageAccessGroup().list({ id: "example_id" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -1401,16 +1481,44 @@ const page_access_user = client.PageAccessUser()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `any[]` | Yes |  |
+| `component_ids` | `any[]` | Yes |  |
 | `created_at` | `string` | No |  |
 | `email` | `string` | No |  |
 | `external_login` | `string` | No |  |
 | `id` | `string` | No |  |
-| `metric_id` | `any[]` | Yes |  |
+| `metric_ids` | `any[]` | Yes |  |
 | `page_access_group_id` | `string` | No |  |
+| `page_access_group_ids` | `string` | No |  |
 | `page_access_user` | `Record<string, any>` | No |  |
 | `page_id` | `string` | No |  |
 | `updated_at` | `string` | No |  |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `component` | `/pages/{page_id}/page_access_users/{page_access_user_id}/components` | `client.PageAccessUser().create({ $action: 'component', ... })` |
+| `metric` | `/pages/{page_id}/page_access_users/{page_access_user_id}/metrics` | `client.PageAccessUser().create({ $action: 'metric', ... })` |
+| `component` | `/pages/{page_id}/page_access_users/{page_access_user_id}/components` | `client.PageAccessUser().patch({ $action: 'component', ... })` |
+| `metric` | `/pages/{page_id}/page_access_users/{page_access_user_id}/metrics` | `client.PageAccessUser().patch({ $action: 'metric', ... })` |
+| `component` | `/pages/{page_id}/page_access_users/{page_access_user_id}/components` | `client.PageAccessUser().remove({ $action: 'component', ... })` |
+| `metric` | `/pages/{page_id}/page_access_users/{page_access_user_id}/metrics` | `client.PageAccessUser().remove({ $action: 'metric', ... })` |
+| `component` | `/pages/{page_id}/page_access_users/{page_access_user_id}/components` | `client.PageAccessUser().update({ $action: 'component', ... })` |
+| `metric` | `/pages/{page_id}/page_access_users/{page_access_user_id}/metrics` | `client.PageAccessUser().update({ $action: 'metric', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+PageAccessUser record — check the API definition for its shape.
+
+```ts
+const result = await client.PageAccessUser().create({
+  $action: 'component',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -1421,6 +1529,8 @@ Create a new entity with the given data.
 ```ts
 const result = await client.PageAccessUser().create({
   id: 'example_id',
+  component_ids: [],
+  metric_ids: [],
 })
 ```
 
@@ -1429,7 +1539,7 @@ const result = await client.PageAccessUser().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.PageAccessUser().list()
+const results = await client.PageAccessUser().list({ id: "example_id" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -1498,8 +1608,8 @@ const permission = client.Permission()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `Record<string, any>` | No |  |
-| `page` | `Record<string, any>` | No |  |
+| `pages` | `Record<string, any>` | No |  |
+| `user_id` | `string` | No |  |
 
 ### Operations
 
@@ -1567,7 +1677,7 @@ const postmortem = client.Postmortem()
 | `body_updated_at` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `custom_tweet` | `string` | No |  |
-| `notify_subscriber` | `boolean` | No |  |
+| `notify_subscribers` | `boolean` | No |  |
 | `notify_twitter` | `boolean` | No |  |
 | `postmortem` | `Record<string, any>` | Yes |  |
 | `preview_key` | `string` | No |  |
@@ -1584,12 +1694,33 @@ const postmortem = client.Postmortem()
 | `body_updated_at` | - | - |
 | `created_at` | - | - |
 | `custom_tweet` | - | - |
-| `notify_subscriber` | - | - |
+| `notify_subscribers` | - | - |
 | `notify_twitter` | - | - |
 | `postmortem` | - | Yes |
 | `preview_key` | - | - |
 | `published_at` | - | - |
 | `updated_at` | - | - |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `publish` | `/pages/{page_id}/incidents/{incident_id}/postmortem/publish` | `client.Postmortem().update({ $action: 'publish', ... })` |
+| `revert` | `/pages/{page_id}/incidents/{incident_id}/postmortem/revert` | `client.Postmortem().update({ $action: 'revert', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Postmortem record — check the API definition for its shape.
+
+```ts
+const result = await client.Postmortem().update({
+  $action: 'publish',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -1718,8 +1849,8 @@ const subscriber = client.Subscriber()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `string` | No |  |
-| `component_id` | `any[]` | No |  |
+| `component_ids` | `any[]` | No |  |
+| `components` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `display_phone_number` | `string` | No |  |
 | `email` | `string` | No |  |
@@ -1739,40 +1870,37 @@ const subscriber = client.Subscriber()
 | `sms` | `number` | No |  |
 | `state` | `string` | No |  |
 | `subscriber` | `Record<string, any>` | No |  |
-| `team` | `number` | No |  |
+| `subscribers` | `string` | Yes |  |
+| `teams` | `number` | No |  |
 | `type` | `string` | No |  |
 | `webhook` | `number` | No |  |
 | `workspace_name` | `string` | No |  |
 
-### Field Usage by Operation
+### Actions
 
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `component` | - | - | - | - | - |
-| `component_id` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `display_phone_number` | - | - | - | - | - |
-| `email` | - | - | - | - | - |
-| `endpoint` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `integration_partner` | - | - | - | - | - |
-| `mode` | - | - | - | - | - |
-| `obfuscated_channel_name` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
-| `phone_country` | - | - | - | - | - |
-| `phone_number` | - | - | - | - | - |
-| `purge_at` | - | - | - | - | - |
-| `quarantined_at` | - | - | - | - | - |
-| `skip_confirmation_notification` | - | - | - | - | - |
-| `skip_unsubscription_notification` | - | - | - | - | - |
-| `slack` | - | - | - | - | - |
-| `sms` | - | - | - | - | - |
-| `state` | - | - | - | - | - |
-| `subscriber` | - | - | Yes | - | - |
-| `team` | - | - | - | - | - |
-| `type` | - | - | - | - | - |
-| `webhook` | - | - | - | - | - |
-| `workspace_name` | - | - | - | - | - |
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `reactivate` | `/pages/{page_id}/subscribers/reactivate` | `client.Subscriber().create({ $action: 'reactivate', ... })` |
+| `resend_confirmation` | `/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation` | `client.Subscriber().create({ $action: 'resend_confirmation', ... })` |
+| `resend_confirmation` | `/pages/{page_id}/subscribers/resend_confirmation` | `client.Subscriber().create({ $action: 'resend_confirmation', ... })` |
+| `unsubscribe` | `/pages/{page_id}/subscribers/unsubscribe` | `client.Subscriber().create({ $action: 'unsubscribe', ... })` |
+| `unsubscribed` | `/pages/{page_id}/subscribers/unsubscribed` | `client.Subscriber().list({ $action: 'unsubscribed', ... })` |
+| `count` | `/pages/{page_id}/subscribers/count` | `client.Subscriber().load({ $action: 'count', ... })` |
+| `histogram_by_state` | `/pages/{page_id}/subscribers/histogram_by_state` | `client.Subscriber().load({ $action: 'histogram_by_state', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Subscriber record — check the API definition for its shape.
+
+```ts
+const result = await client.Subscriber().create({
+  $action: 'reactivate',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -1783,6 +1911,7 @@ Create a new entity with the given data.
 ```ts
 const result = await client.Subscriber().create({
   page_id: 'example_page_id',
+  subscribers: 'example_subscribers',
 })
 ```
 
@@ -1791,7 +1920,7 @@ const result = await client.Subscriber().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Subscriber().list()
+const results = await client.Subscriber().list({ page_id: "example" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -1878,6 +2007,7 @@ Create a new entity with the given data.
 ```ts
 const result = await client.User().create({
   organization_id: 'example_organization_id',
+  user: {},
 })
 ```
 
@@ -1886,7 +2016,7 @@ const result = await client.User().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.User().list()
+const results = await client.User().list({ organization_id: "example" })
 ```
 
 #### `remove(match: object, ctrl?: object)`

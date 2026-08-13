@@ -46,7 +46,7 @@ error — iterate it directly.
 
 ```python
 try:
-    components = client.Component().list()
+    components = client.Component().list({"page_id": "example"})
     for component in components:
         print(component)
 except Exception as err:
@@ -56,7 +56,7 @@ except Exception as err:
 ### 3. Load a component
 
 Component is nested under page, so provide the `page_id`.
-`load()` returns the bare record (a `dict`) and raises on error.
+`load()` returns the ENTITY — call data_get() for the record — and raises on error.
 
 ```python
 try:
@@ -69,14 +69,14 @@ except Exception as err:
 ### 4. Create, update, and remove
 
 ```python
-# Create — returns the bare created record (a dict)
+# Create — returns the ENTITY (call data_get() for the record)
 created = client.Component().create({"page_id": "example_page_id"})
 
 # Update — the created record's id is a plain dict key
-client.Component().update({"id": created["id"], "page_id": "example_page_id"})
+client.Component().update({"id": created.data_get()["id"], "page_id": "example_page_id", "automation_email": "example_automation_email"})
 
 # Remove
-client.Component().remove({"id": created["id"], "page_id": "example_page_id"})
+client.Component().remove({"id": created.data_get()["id"], "page_id": "example_page_id"})
 ```
 
 
@@ -86,10 +86,10 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    components = client.Component().list()
-    print(components)
+    postmortem = client.Postmortem().load({"incident_id": "example", "page_id": "example"})
+    print(postmortem)
 except Exception as err:
-    print(f"list failed: {err}")
+    print(f"load failed: {err}")
 ```
 
 `direct()` does **not** raise — it returns the result envelope. Branch
@@ -153,9 +153,10 @@ Create a mock client for unit testing — no server required:
 ```python
 client = StatuspageSDK.test()
 
-# Entity ops return the bare record and raise on error.
-component = client.Component().list()
-# component contains the mock response record
+# Entity ops return the ENTITY and raises on error;
+# call data_get() for the record.
+postmortem = client.Postmortem().load({"incident_id": "example", "page_id": "example"})
+# postmortem contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -272,7 +273,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (a `dict` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (a `dict` for single-entity
 ops, a `list` for `list`) and raise on error. Wrap calls in
 `try`/`except` to handle failures.
 
@@ -301,21 +302,14 @@ On error, `ok` is `False` and `err` contains the error value.
 | `group` |  |
 | `group_id` |  |
 | `id` |  |
-| `major_outage` |  |
 | `name` |  |
 | `only_show_if_degraded` |  |
 | `page_id` |  |
-| `partial_outage` |  |
 | `position` |  |
-| `range_end` |  |
-| `range_start` |  |
-| `related_event` |  |
 | `showcase` |  |
 | `start_date` |  |
 | `status` |  |
 | `updated_at` |  |
-| `uptime_percentage` |  |
-| `warning` |  |
 
 Operations: Create, List, Load, Patch, Remove, Update.
 
@@ -325,15 +319,8 @@ API path: `/pages/{page_id}/components/{component_id}/page_access_groups`
 
 | Field | Description |
 | --- | --- |
-| `id` |  |
-| `major_outage` |  |
-| `name` |  |
-| `partial_outage` |  |
-| `range_end` |  |
-| `range_start` |  |
-| `related_event` |  |
-| `uptime_percentage` |  |
-| `warning` |  |
+| `component_id` |  |
+| `incidents` |  |
 
 Operations: Load.
 
@@ -343,8 +330,8 @@ API path: `/pages/{page_id}/component-groups/{id}/uptime`
 
 | Field | Description |
 | --- | --- |
-| `component` |  |
 | `component_group` |  |
+| `components` |  |
 | `created_at` |  |
 | `description` |  |
 | `id` |  |
@@ -365,14 +352,13 @@ API path: `/pages/{page_id}/component-groups`
 | `auto_transition_deliver_notifications_at_start` |  |
 | `auto_transition_to_maintenance_state` |  |
 | `auto_transition_to_operational_state` |  |
-| `component` |  |
+| `components` |  |
 | `created_at` |  |
 | `id` |  |
 | `impact` |  |
 | `impact_override` |  |
 | `incident` |  |
-| `incident_impact` |  |
-| `incident_update` |  |
+| `incident_updates` |  |
 | `metadata` |  |
 | `monitoring_at` |  |
 | `name` |  |
@@ -380,10 +366,10 @@ API path: `/pages/{page_id}/component-groups`
 | `postmortem_body` |  |
 | `postmortem_body_last_updated_at` |  |
 | `postmortem_ignored` |  |
-| `postmortem_notified_subscriber` |  |
+| `postmortem_notified_subscribers` |  |
 | `postmortem_notified_twitter` |  |
 | `postmortem_published_at` |  |
-| `reminder_interval` |  |
+| `reminder_intervals` |  |
 | `resolved_at` |  |
 | `scheduled_auto_completed` |  |
 | `scheduled_auto_in_progress` |  |
@@ -422,11 +408,11 @@ API path: `/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/
 | Field | Description |
 | --- | --- |
 | `body` |  |
-| `component` |  |
+| `components` |  |
 | `group_id` |  |
 | `id` |  |
 | `name` |  |
-| `should_send_notification` |  |
+| `should_send_notifications` |  |
 | `should_tweet` |  |
 | `template` |  |
 | `title` |  |
@@ -440,11 +426,11 @@ API path: `/pages/{page_id}/incident_templates`
 
 | Field | Description |
 | --- | --- |
-| `affected_component` |  |
+| `affected_components` |  |
 | `body` |  |
 | `created_at` |  |
 | `custom_tweet` |  |
-| `deliver_notification` |  |
+| `deliver_notifications` |  |
 | `display_at` |  |
 | `id` |  |
 | `incident_id` |  |
@@ -467,7 +453,7 @@ API path: `/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_u
 | `backfilled` |  |
 | `created_at` |  |
 | `data` |  |
-| `decimal_place` |  |
+| `decimal_places` |  |
 | `display` |  |
 | `id` |  |
 | `last_fetched_at` |  |
@@ -511,28 +497,28 @@ API path: `/pages/{page_id}/metrics_providers`
 | Field | Description |
 | --- | --- |
 | `activity_score` |  |
-| `allow_email_subscriber` |  |
-| `allow_incident_subscriber` |  |
-| `allow_page_subscriber` |  |
-| `allow_rss_atom_feed` |  |
-| `allow_sms_subscriber` |  |
-| `allow_webhook_subscriber` |  |
+| `allow_email_subscribers` |  |
+| `allow_incident_subscribers` |  |
+| `allow_page_subscribers` |  |
+| `allow_rss_atom_feeds` |  |
+| `allow_sms_subscribers` |  |
+| `allow_webhook_subscribers` |  |
 | `branding` |  |
 | `city` |  |
 | `country` |  |
 | `created_at` |  |
-| `css_blue` |  |
+| `css_blues` |  |
 | `css_body_background_color` |  |
 | `css_border_color` |  |
 | `css_font_color` |  |
 | `css_graph_color` |  |
-| `css_green` |  |
+| `css_greens` |  |
 | `css_light_font_color` |  |
 | `css_link_color` |  |
 | `css_no_data` |  |
-| `css_orange` |  |
-| `css_red` |  |
-| `css_yellow` |  |
+| `css_oranges` |  |
+| `css_reds` |  |
+| `css_yellows` |  |
 | `domain` |  |
 | `email_logo` |  |
 | `favicon_logo` |  |
@@ -540,7 +526,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `hero_cover` |  |
 | `hidden_from_search` |  |
 | `id` |  |
-| `ip_restriction` |  |
+| `ip_restrictions` |  |
 | `name` |  |
 | `notifications_email_footer` |  |
 | `notifications_from_email` |  |
@@ -555,7 +541,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `twitter_username` |  |
 | `updated_at` |  |
 | `url` |  |
-| `viewers_must_be_team_member` |  |
+| `viewers_must_be_team_members` |  |
 
 Operations: List, Load, Patch, Update.
 
@@ -565,14 +551,14 @@ API path: `/pages`
 
 | Field | Description |
 | --- | --- |
-| `component_id` |  |
+| `component_ids` |  |
 | `created_at` |  |
 | `external_identifier` |  |
 | `id` |  |
-| `metric_id` |  |
+| `metric_ids` |  |
 | `name` |  |
 | `page_access_group` |  |
-| `page_access_user_id` |  |
+| `page_access_user_ids` |  |
 | `page_id` |  |
 | `updated_at` |  |
 
@@ -584,13 +570,14 @@ API path: `/pages/{page_id}/page_access_groups/{page_access_group_id}/components
 
 | Field | Description |
 | --- | --- |
-| `component_id` |  |
+| `component_ids` |  |
 | `created_at` |  |
 | `email` |  |
 | `external_login` |  |
 | `id` |  |
-| `metric_id` |  |
+| `metric_ids` |  |
 | `page_access_group_id` |  |
+| `page_access_group_ids` |  |
 | `page_access_user` |  |
 | `page_id` |  |
 | `updated_at` |  |
@@ -603,8 +590,8 @@ API path: `/pages/{page_id}/page_access_users/{page_access_user_id}/components`
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `page` |  |
+| `pages` |  |
+| `user_id` |  |
 
 Operations: Load, Update.
 
@@ -620,7 +607,7 @@ API path: `/organizations/{organization_id}/permissions/{user_id}`
 | `body_updated_at` |  |
 | `created_at` |  |
 | `custom_tweet` |  |
-| `notify_subscriber` |  |
+| `notify_subscribers` |  |
 | `notify_twitter` |  |
 | `postmortem` |  |
 | `preview_key` |  |
@@ -651,8 +638,8 @@ API path: `/pages/{page_id}/status_embed_config`
 
 | Field | Description |
 | --- | --- |
-| `component` |  |
-| `component_id` |  |
+| `component_ids` |  |
+| `components` |  |
 | `created_at` |  |
 | `display_phone_number` |  |
 | `email` |  |
@@ -672,7 +659,8 @@ API path: `/pages/{page_id}/status_embed_config`
 | `sms` |  |
 | `state` |  |
 | `subscriber` |  |
-| `team` |  |
+| `subscribers` |  |
+| `teams` |  |
 | `type` |  |
 | `webhook` |  |
 | `workspace_name` |  |
@@ -728,21 +716,14 @@ Create an instance: `component = client.Component()`
 | `group` | `bool` |  |
 | `group_id` | `str` |  |
 | `id` | `str` |  |
-| `major_outage` | `int` |  |
 | `name` | `str` |  |
 | `only_show_if_degraded` | `bool` |  |
 | `page_id` | `str` |  |
-| `partial_outage` | `int` |  |
 | `position` | `int` |  |
-| `range_end` | `str` |  |
-| `range_start` | `str` |  |
-| `related_event` | `dict` |  |
 | `showcase` | `bool` |  |
 | `start_date` | `str` |  |
 | `status` | `str` |  |
 | `updated_at` | `str` |  |
-| `uptime_percentage` | `float` |  |
-| `warning` | `str` |  |
 
 #### Example: Load
 
@@ -753,7 +734,7 @@ component = client.Component().load({"id": "component_id", "page_id": "page_id"}
 #### Example: List
 
 ```python
-components = client.Component().list()
+components = client.Component().list({"page_id": "example"})
 ```
 
 #### Example: Create
@@ -779,15 +760,8 @@ Create an instance: `component_group_uptime = client.ComponentGroupUptime()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `str` |  |
-| `major_outage` | `int` |  |
-| `name` | `str` |  |
-| `partial_outage` | `int` |  |
-| `range_end` | `str` |  |
-| `range_start` | `str` |  |
-| `related_event` | `dict` |  |
-| `uptime_percentage` | `float` |  |
-| `warning` | `str` |  |
+| `component_id` | `str` |  |
+| `incidents` | `dict` |  |
 
 #### Example: Load
 
@@ -814,8 +788,8 @@ Create an instance: `group_component = client.GroupComponent()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `str` |  |
 | `component_group` | `dict` |  |
+| `components` | `str` |  |
 | `created_at` | `str` |  |
 | `description` | `str` |  |
 | `id` | `str` |  |
@@ -833,7 +807,7 @@ group_component = client.GroupComponent().load({"id": "group_component_id", "pag
 #### Example: List
 
 ```python
-group_components = client.GroupComponent().list()
+group_components = client.GroupComponent().list({"page_id": "example"})
 ```
 
 #### Example: Create
@@ -841,6 +815,7 @@ group_components = client.GroupComponent().list()
 ```python
 group_component = client.GroupComponent().create({
     "page_id": "example_page_id",  # str
+    "component_group": {},  # dict
 })
 ```
 
@@ -867,14 +842,13 @@ Create an instance: `incident = client.Incident()`
 | `auto_transition_deliver_notifications_at_start` | `bool` |  |
 | `auto_transition_to_maintenance_state` | `bool` |  |
 | `auto_transition_to_operational_state` | `bool` |  |
-| `component` | `list` |  |
+| `components` | `list` |  |
 | `created_at` | `str` |  |
 | `id` | `str` |  |
 | `impact` | `str` |  |
 | `impact_override` | `str` |  |
 | `incident` | `dict` |  |
-| `incident_impact` | `list` |  |
-| `incident_update` | `list` |  |
+| `incident_updates` | `list` |  |
 | `metadata` | `dict` |  |
 | `monitoring_at` | `str` |  |
 | `name` | `str` |  |
@@ -882,10 +856,10 @@ Create an instance: `incident = client.Incident()`
 | `postmortem_body` | `str` |  |
 | `postmortem_body_last_updated_at` | `str` |  |
 | `postmortem_ignored` | `bool` |  |
-| `postmortem_notified_subscriber` | `bool` |  |
+| `postmortem_notified_subscribers` | `bool` |  |
 | `postmortem_notified_twitter` | `bool` |  |
 | `postmortem_published_at` | `bool` |  |
-| `reminder_interval` | `str` |  |
+| `reminder_intervals` | `str` |  |
 | `resolved_at` | `str` |  |
 | `scheduled_auto_completed` | `bool` |  |
 | `scheduled_auto_in_progress` | `bool` |  |
@@ -906,7 +880,7 @@ incident = client.Incident().load({"id": "incident_id", "page_id": "page_id"})
 #### Example: List
 
 ```python
-incidents = client.Incident().list()
+incidents = client.Incident().list({"page_id": "example"})
 ```
 
 #### Example: Create
@@ -914,6 +888,7 @@ incidents = client.Incident().list()
 ```python
 incident = client.Incident().create({
     "page_id": "example_page_id",  # str
+    "incident": {},  # dict
 })
 ```
 
@@ -966,11 +941,11 @@ Create an instance: `incident_template = client.IncidentTemplate()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `body` | `str` |  |
-| `component` | `list` |  |
+| `components` | `list` |  |
 | `group_id` | `str` |  |
 | `id` | `str` |  |
 | `name` | `str` |  |
-| `should_send_notification` | `bool` |  |
+| `should_send_notifications` | `bool` |  |
 | `should_tweet` | `bool` |  |
 | `template` | `dict` |  |
 | `title` | `str` |  |
@@ -979,7 +954,7 @@ Create an instance: `incident_template = client.IncidentTemplate()`
 #### Example: List
 
 ```python
-incident_templates = client.IncidentTemplate().list()
+incident_templates = client.IncidentTemplate().list({"page_id": "example"})
 ```
 
 #### Example: Create
@@ -987,6 +962,7 @@ incident_templates = client.IncidentTemplate().list()
 ```python
 incident_template = client.IncidentTemplate().create({
     "page_id": "example_page_id",  # str
+    "template": {},  # dict
 })
 ```
 
@@ -1005,11 +981,11 @@ Create an instance: `incident_update = client.IncidentUpdate()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `affected_component` | `list` |  |
+| `affected_components` | `list` |  |
 | `body` | `str` |  |
 | `created_at` | `str` |  |
 | `custom_tweet` | `str` |  |
-| `deliver_notification` | `bool` |  |
+| `deliver_notifications` | `bool` |  |
 | `display_at` | `str` |  |
 | `id` | `str` |  |
 | `incident_id` | `str` |  |
@@ -1043,7 +1019,7 @@ Create an instance: `metric = client.Metric()`
 | `backfilled` | `bool` |  |
 | `created_at` | `str` |  |
 | `data` | `dict` |  |
-| `decimal_place` | `int` |  |
+| `decimal_places` | `int` |  |
 | `display` | `bool` |  |
 | `id` | `str` |  |
 | `last_fetched_at` | `str` |  |
@@ -1069,7 +1045,7 @@ metric = client.Metric().load({"id": "metric_id", "page_id": "page_id"})
 #### Example: List
 
 ```python
-metrics = client.Metric().list()
+metrics = client.Metric().list({"page_access_user_id": "example", "page_id": "example"})
 ```
 
 #### Example: Create
@@ -1078,6 +1054,7 @@ metrics = client.Metric().list()
 metric = client.Metric().create({
     "metrics_provider_id": "example_metrics_provider_id",  # str
     "page_id": "example_page_id",  # str
+    "data": {},  # dict
 })
 ```
 
@@ -1119,7 +1096,7 @@ metrics_provider = client.MetricsProvider().load({"id": "metrics_provider_id", "
 #### Example: List
 
 ```python
-metrics_providers = client.MetricsProvider().list()
+metrics_providers = client.MetricsProvider().list({"page_id": "example"})
 ```
 
 #### Example: Create
@@ -1148,28 +1125,28 @@ Create an instance: `page = client.Page()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `activity_score` | `float` |  |
-| `allow_email_subscriber` | `bool` |  |
-| `allow_incident_subscriber` | `bool` |  |
-| `allow_page_subscriber` | `bool` |  |
-| `allow_rss_atom_feed` | `bool` |  |
-| `allow_sms_subscriber` | `bool` |  |
-| `allow_webhook_subscriber` | `bool` |  |
+| `allow_email_subscribers` | `bool` |  |
+| `allow_incident_subscribers` | `bool` |  |
+| `allow_page_subscribers` | `bool` |  |
+| `allow_rss_atom_feeds` | `bool` |  |
+| `allow_sms_subscribers` | `bool` |  |
+| `allow_webhook_subscribers` | `bool` |  |
 | `branding` | `str` |  |
 | `city` | `str` |  |
 | `country` | `str` |  |
 | `created_at` | `str` |  |
-| `css_blue` | `str` |  |
+| `css_blues` | `str` |  |
 | `css_body_background_color` | `str` |  |
 | `css_border_color` | `str` |  |
 | `css_font_color` | `str` |  |
 | `css_graph_color` | `str` |  |
-| `css_green` | `str` |  |
+| `css_greens` | `str` |  |
 | `css_light_font_color` | `str` |  |
 | `css_link_color` | `str` |  |
 | `css_no_data` | `str` |  |
-| `css_orange` | `str` |  |
-| `css_red` | `str` |  |
-| `css_yellow` | `str` |  |
+| `css_oranges` | `str` |  |
+| `css_reds` | `str` |  |
+| `css_yellows` | `str` |  |
 | `domain` | `str` |  |
 | `email_logo` | `str` |  |
 | `favicon_logo` | `str` |  |
@@ -1177,7 +1154,7 @@ Create an instance: `page = client.Page()`
 | `hero_cover` | `str` |  |
 | `hidden_from_search` | `bool` |  |
 | `id` | `str` |  |
-| `ip_restriction` | `str` |  |
+| `ip_restrictions` | `str` |  |
 | `name` | `str` |  |
 | `notifications_email_footer` | `str` |  |
 | `notifications_from_email` | `str` |  |
@@ -1192,7 +1169,7 @@ Create an instance: `page = client.Page()`
 | `twitter_username` | `str` |  |
 | `updated_at` | `str` |  |
 | `url` | `str` |  |
-| `viewers_must_be_team_member` | `bool` |  |
+| `viewers_must_be_team_members` | `bool` |  |
 
 #### Example: Load
 
@@ -1225,14 +1202,14 @@ Create an instance: `page_access_group = client.PageAccessGroup()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `list` |  |
+| `component_ids` | `list` |  |
 | `created_at` | `str` |  |
 | `external_identifier` | `str` |  |
 | `id` | `str` |  |
-| `metric_id` | `list` |  |
+| `metric_ids` | `list` |  |
 | `name` | `str` |  |
 | `page_access_group` | `dict` |  |
-| `page_access_user_id` | `list` |  |
+| `page_access_user_ids` | `list` |  |
 | `page_id` | `str` |  |
 | `updated_at` | `str` |  |
 
@@ -1245,7 +1222,7 @@ page_access_group = client.PageAccessGroup().load({"id": "page_access_group_id",
 #### Example: List
 
 ```python
-page_access_groups = client.PageAccessGroup().list()
+page_access_groups = client.PageAccessGroup().list({"id": "example_id"})
 ```
 
 #### Example: Create
@@ -1275,13 +1252,14 @@ Create an instance: `page_access_user = client.PageAccessUser()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `list` |  |
+| `component_ids` | `list` |  |
 | `created_at` | `str` |  |
 | `email` | `str` |  |
 | `external_login` | `str` |  |
 | `id` | `str` |  |
-| `metric_id` | `list` |  |
+| `metric_ids` | `list` |  |
 | `page_access_group_id` | `str` |  |
+| `page_access_group_ids` | `str` |  |
 | `page_access_user` | `dict` |  |
 | `page_id` | `str` |  |
 | `updated_at` | `str` |  |
@@ -1295,7 +1273,7 @@ page_access_user = client.PageAccessUser().load({"id": "page_access_user_id", "p
 #### Example: List
 
 ```python
-page_access_users = client.PageAccessUser().list()
+page_access_users = client.PageAccessUser().list({"id": "example_id"})
 ```
 
 #### Example: Create
@@ -1303,6 +1281,8 @@ page_access_users = client.PageAccessUser().list()
 ```python
 page_access_user = client.PageAccessUser().create({
     "id": "example_id",  # str
+    "component_ids": [],  # list
+    "metric_ids": [],  # list
 })
 ```
 
@@ -1322,8 +1302,8 @@ Create an instance: `permission = client.Permission()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `dict` |  |
-| `page` | `dict` |  |
+| `pages` | `dict` |  |
+| `user_id` | `str` |  |
 
 #### Example: Load
 
@@ -1353,7 +1333,7 @@ Create an instance: `postmortem = client.Postmortem()`
 | `body_updated_at` | `str` |  |
 | `created_at` | `str` |  |
 | `custom_tweet` | `str` |  |
-| `notify_subscriber` | `bool` |  |
+| `notify_subscribers` | `bool` |  |
 | `notify_twitter` | `bool` |  |
 | `postmortem` | `dict` |  |
 | `preview_key` | `str` |  |
@@ -1415,8 +1395,8 @@ Create an instance: `subscriber = client.Subscriber()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `str` |  |
-| `component_id` | `list` |  |
+| `component_ids` | `list` |  |
+| `components` | `str` |  |
 | `created_at` | `str` |  |
 | `display_phone_number` | `str` |  |
 | `email` | `str` |  |
@@ -1436,7 +1416,8 @@ Create an instance: `subscriber = client.Subscriber()`
 | `sms` | `int` |  |
 | `state` | `str` |  |
 | `subscriber` | `dict` |  |
-| `team` | `int` |  |
+| `subscribers` | `str` |  |
+| `teams` | `int` |  |
 | `type` | `str` |  |
 | `webhook` | `int` |  |
 | `workspace_name` | `str` |  |
@@ -1450,7 +1431,7 @@ subscriber = client.Subscriber().load({"id": "subscriber_id", "page_id": "page_i
 #### Example: List
 
 ```python
-subscribers = client.Subscriber().list()
+subscribers = client.Subscriber().list({"page_id": "example"})
 ```
 
 #### Example: Create
@@ -1458,6 +1439,7 @@ subscribers = client.Subscriber().list()
 ```python
 subscriber = client.Subscriber().create({
     "page_id": "example_page_id",  # str
+    "subscribers": "example_subscribers",  # str
 })
 ```
 
@@ -1490,7 +1472,7 @@ Create an instance: `user = client.User()`
 #### Example: List
 
 ```python
-users = client.User().list()
+users = client.User().list({"organization_id": "example"})
 ```
 
 #### Example: Create
@@ -1498,6 +1480,7 @@ users = client.User().list()
 ```python
 user = client.User().create({
     "organization_id": "example_organization_id",  # str
+    "user": {},  # dict
 })
 ```
 
@@ -1573,15 +1556,15 @@ Import entity or utility modules directly only when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-component = client.Component()
-component.list()
+postmortem = client.Postmortem()
+postmortem.load({"incident_id": "example", "page_id": "example"})
 
-# component.data_get() now returns the component data from the last list
-# component.match_get() returns the last match criteria
+# postmortem.data_get() now returns the postmortem data from the last load
+# postmortem.match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

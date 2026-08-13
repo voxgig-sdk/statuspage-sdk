@@ -102,7 +102,7 @@ describe("PageEntity", function()
 
     local page_ref01_resdata_up0_result, err = page_ref01_ent:update(page_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local page_ref01_resdata_up0 = helpers.to_map(page_ref01_resdata_up0_result)
+    local page_ref01_resdata_up0 = helpers.to_map(type(page_ref01_resdata_up0_result) == 'table' and page_ref01_resdata_up0_result.data_get and page_ref01_resdata_up0_result:data_get() or page_ref01_resdata_up0_result)
     assert.is_not_nil(page_ref01_resdata_up0)
     assert.are.equal(page_ref01_resdata_up0["id"], page_ref01_data_up0_up["id"])
     assert.are.equal(page_ref01_resdata_up0[page_ref01_markdef_up0_name], page_ref01_markdef_up0_value)
@@ -113,7 +113,7 @@ describe("PageEntity", function()
     }
     local page_ref01_data_dt0_loaded, err = page_ref01_ent:load(page_ref01_match_dt0, nil)
     assert.is_nil(err)
-    local page_ref01_data_dt0_load_result = helpers.to_map(page_ref01_data_dt0_loaded)
+    local page_ref01_data_dt0_load_result = helpers.to_map(type(page_ref01_data_dt0_loaded) == 'table' and page_ref01_data_dt0_loaded.data_get and page_ref01_data_dt0_loaded:data_get() or page_ref01_data_dt0_loaded)
     assert.is_not_nil(page_ref01_data_dt0_load_result)
     assert.are.equal(page_ref01_data_dt0_load_result["id"], page_ref01_data["id"])
 

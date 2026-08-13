@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -47,7 +47,7 @@ class TestIncidentSubscriberEntity:
         incident_subscriber_ref01_data["page_id"] = setup["idmap"]["page01"]
         incident_subscriber_ref01_data["subscriber_id"] = setup["idmap"]["subscriber01"]
 
-        incident_subscriber_ref01_data = helpers.to_map(incident_subscriber_ref01_ent.create(incident_subscriber_ref01_data, None))
+        incident_subscriber_ref01_data = helpers.to_map(runner.entity_data(incident_subscriber_ref01_ent.create(incident_subscriber_ref01_data, None)))
         assert incident_subscriber_ref01_data is not None
 
 

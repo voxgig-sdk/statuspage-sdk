@@ -77,7 +77,7 @@ func main() {
     fmt.Println(created)
 
     // Update a component.
-    updated, err := client.Component(nil).Update(map[string]any{"id": "example_id", "page_id": "example_page_id"}, nil)
+    updated, err := client.Component(nil).Update(map[string]any{"id": "example_id", "page_id": "example_page_id", "automation_email": "example_automation_email"}, nil)
     if err != nil {
         panic(err)
     }
@@ -99,12 +99,12 @@ Every entity operation returns `(value, error)`. Check `err` before
 using the value — there is no exception to catch:
 
 ```go
-components, err := client.Component(nil).List(nil, nil)
+postmortem, err := client.Postmortem(nil).Load(map[string]any{"incident_id": "example", "page_id": "example"}, nil)
 if err != nil {
     // handle err
     return
 }
-_ = components
+_ = postmortem
 ```
 
 `Direct` follows the same `(value, error)` convention:
@@ -168,13 +168,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-component, err := client.Component(nil).List(
-    nil, nil,
+postmortem, err := client.Postmortem(nil).Load(
+    map[string]any{"incident_id": "example", "page_id": "example"}, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(component) // the returned mock data
+fmt.Println(postmortem) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -322,21 +322,14 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 | `"group"` |  |
 | `"group_id"` |  |
 | `"id"` |  |
-| `"major_outage"` |  |
 | `"name"` |  |
 | `"only_show_if_degraded"` |  |
 | `"page_id"` |  |
-| `"partial_outage"` |  |
 | `"position"` |  |
-| `"range_end"` |  |
-| `"range_start"` |  |
-| `"related_event"` |  |
 | `"showcase"` |  |
 | `"start_date"` |  |
 | `"status"` |  |
 | `"updated_at"` |  |
-| `"uptime_percentage"` |  |
-| `"warning"` |  |
 
 Operations: Create, List, Load, Patch, Remove, Update.
 
@@ -346,15 +339,8 @@ API path: `/pages/{page_id}/components/{component_id}/page_access_groups`
 
 | Field | Description |
 | --- | --- |
-| `"id"` |  |
-| `"major_outage"` |  |
-| `"name"` |  |
-| `"partial_outage"` |  |
-| `"range_end"` |  |
-| `"range_start"` |  |
-| `"related_event"` |  |
-| `"uptime_percentage"` |  |
-| `"warning"` |  |
+| `"component_id"` |  |
+| `"incidents"` |  |
 
 Operations: Load.
 
@@ -364,8 +350,8 @@ API path: `/pages/{page_id}/component-groups/{id}/uptime`
 
 | Field | Description |
 | --- | --- |
-| `"component"` |  |
 | `"component_group"` |  |
+| `"components"` |  |
 | `"created_at"` |  |
 | `"description"` |  |
 | `"id"` |  |
@@ -386,14 +372,13 @@ API path: `/pages/{page_id}/component-groups`
 | `"auto_transition_deliver_notifications_at_start"` |  |
 | `"auto_transition_to_maintenance_state"` |  |
 | `"auto_transition_to_operational_state"` |  |
-| `"component"` |  |
+| `"components"` |  |
 | `"created_at"` |  |
 | `"id"` |  |
 | `"impact"` |  |
 | `"impact_override"` |  |
 | `"incident"` |  |
-| `"incident_impact"` |  |
-| `"incident_update"` |  |
+| `"incident_updates"` |  |
 | `"metadata"` |  |
 | `"monitoring_at"` |  |
 | `"name"` |  |
@@ -401,10 +386,10 @@ API path: `/pages/{page_id}/component-groups`
 | `"postmortem_body"` |  |
 | `"postmortem_body_last_updated_at"` |  |
 | `"postmortem_ignored"` |  |
-| `"postmortem_notified_subscriber"` |  |
+| `"postmortem_notified_subscribers"` |  |
 | `"postmortem_notified_twitter"` |  |
 | `"postmortem_published_at"` |  |
-| `"reminder_interval"` |  |
+| `"reminder_intervals"` |  |
 | `"resolved_at"` |  |
 | `"scheduled_auto_completed"` |  |
 | `"scheduled_auto_in_progress"` |  |
@@ -443,11 +428,11 @@ API path: `/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/
 | Field | Description |
 | --- | --- |
 | `"body"` |  |
-| `"component"` |  |
+| `"components"` |  |
 | `"group_id"` |  |
 | `"id"` |  |
 | `"name"` |  |
-| `"should_send_notification"` |  |
+| `"should_send_notifications"` |  |
 | `"should_tweet"` |  |
 | `"template"` |  |
 | `"title"` |  |
@@ -461,11 +446,11 @@ API path: `/pages/{page_id}/incident_templates`
 
 | Field | Description |
 | --- | --- |
-| `"affected_component"` |  |
+| `"affected_components"` |  |
 | `"body"` |  |
 | `"created_at"` |  |
 | `"custom_tweet"` |  |
-| `"deliver_notification"` |  |
+| `"deliver_notifications"` |  |
 | `"display_at"` |  |
 | `"id"` |  |
 | `"incident_id"` |  |
@@ -488,7 +473,7 @@ API path: `/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_u
 | `"backfilled"` |  |
 | `"created_at"` |  |
 | `"data"` |  |
-| `"decimal_place"` |  |
+| `"decimal_places"` |  |
 | `"display"` |  |
 | `"id"` |  |
 | `"last_fetched_at"` |  |
@@ -532,28 +517,28 @@ API path: `/pages/{page_id}/metrics_providers`
 | Field | Description |
 | --- | --- |
 | `"activity_score"` |  |
-| `"allow_email_subscriber"` |  |
-| `"allow_incident_subscriber"` |  |
-| `"allow_page_subscriber"` |  |
-| `"allow_rss_atom_feed"` |  |
-| `"allow_sms_subscriber"` |  |
-| `"allow_webhook_subscriber"` |  |
+| `"allow_email_subscribers"` |  |
+| `"allow_incident_subscribers"` |  |
+| `"allow_page_subscribers"` |  |
+| `"allow_rss_atom_feeds"` |  |
+| `"allow_sms_subscribers"` |  |
+| `"allow_webhook_subscribers"` |  |
 | `"branding"` |  |
 | `"city"` |  |
 | `"country"` |  |
 | `"created_at"` |  |
-| `"css_blue"` |  |
+| `"css_blues"` |  |
 | `"css_body_background_color"` |  |
 | `"css_border_color"` |  |
 | `"css_font_color"` |  |
 | `"css_graph_color"` |  |
-| `"css_green"` |  |
+| `"css_greens"` |  |
 | `"css_light_font_color"` |  |
 | `"css_link_color"` |  |
 | `"css_no_data"` |  |
-| `"css_orange"` |  |
-| `"css_red"` |  |
-| `"css_yellow"` |  |
+| `"css_oranges"` |  |
+| `"css_reds"` |  |
+| `"css_yellows"` |  |
 | `"domain"` |  |
 | `"email_logo"` |  |
 | `"favicon_logo"` |  |
@@ -561,7 +546,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `"hero_cover"` |  |
 | `"hidden_from_search"` |  |
 | `"id"` |  |
-| `"ip_restriction"` |  |
+| `"ip_restrictions"` |  |
 | `"name"` |  |
 | `"notifications_email_footer"` |  |
 | `"notifications_from_email"` |  |
@@ -576,7 +561,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `"twitter_username"` |  |
 | `"updated_at"` |  |
 | `"url"` |  |
-| `"viewers_must_be_team_member"` |  |
+| `"viewers_must_be_team_members"` |  |
 
 Operations: List, Load, Patch, Update.
 
@@ -586,14 +571,14 @@ API path: `/pages`
 
 | Field | Description |
 | --- | --- |
-| `"component_id"` |  |
+| `"component_ids"` |  |
 | `"created_at"` |  |
 | `"external_identifier"` |  |
 | `"id"` |  |
-| `"metric_id"` |  |
+| `"metric_ids"` |  |
 | `"name"` |  |
 | `"page_access_group"` |  |
-| `"page_access_user_id"` |  |
+| `"page_access_user_ids"` |  |
 | `"page_id"` |  |
 | `"updated_at"` |  |
 
@@ -605,13 +590,14 @@ API path: `/pages/{page_id}/page_access_groups/{page_access_group_id}/components
 
 | Field | Description |
 | --- | --- |
-| `"component_id"` |  |
+| `"component_ids"` |  |
 | `"created_at"` |  |
 | `"email"` |  |
 | `"external_login"` |  |
 | `"id"` |  |
-| `"metric_id"` |  |
+| `"metric_ids"` |  |
 | `"page_access_group_id"` |  |
+| `"page_access_group_ids"` |  |
 | `"page_access_user"` |  |
 | `"page_id"` |  |
 | `"updated_at"` |  |
@@ -624,8 +610,8 @@ API path: `/pages/{page_id}/page_access_users/{page_access_user_id}/components`
 
 | Field | Description |
 | --- | --- |
-| `"data"` |  |
-| `"page"` |  |
+| `"pages"` |  |
+| `"user_id"` |  |
 
 Operations: Load, Update.
 
@@ -641,7 +627,7 @@ API path: `/organizations/{organization_id}/permissions/{user_id}`
 | `"body_updated_at"` |  |
 | `"created_at"` |  |
 | `"custom_tweet"` |  |
-| `"notify_subscriber"` |  |
+| `"notify_subscribers"` |  |
 | `"notify_twitter"` |  |
 | `"postmortem"` |  |
 | `"preview_key"` |  |
@@ -672,8 +658,8 @@ API path: `/pages/{page_id}/status_embed_config`
 
 | Field | Description |
 | --- | --- |
-| `"component"` |  |
-| `"component_id"` |  |
+| `"component_ids"` |  |
+| `"components"` |  |
 | `"created_at"` |  |
 | `"display_phone_number"` |  |
 | `"email"` |  |
@@ -693,7 +679,8 @@ API path: `/pages/{page_id}/status_embed_config`
 | `"sms"` |  |
 | `"state"` |  |
 | `"subscriber"` |  |
-| `"team"` |  |
+| `"subscribers"` |  |
+| `"teams"` |  |
 | `"type"` |  |
 | `"webhook"` |  |
 | `"workspace_name"` |  |
@@ -749,21 +736,14 @@ Create an instance: `component := client.Component(nil)`
 | `group` | `bool` |  |
 | `group_id` | `string` |  |
 | `id` | `string` |  |
-| `major_outage` | `int` |  |
 | `name` | `string` |  |
 | `only_show_if_degraded` | `bool` |  |
 | `page_id` | `string` |  |
-| `partial_outage` | `int` |  |
 | `position` | `int` |  |
-| `range_end` | `string` |  |
-| `range_start` | `string` |  |
-| `related_event` | `map[string]any` |  |
 | `showcase` | `bool` |  |
 | `start_date` | `string` |  |
 | `status` | `string` |  |
 | `updated_at` | `string` |  |
-| `uptime_percentage` | `float64` |  |
-| `warning` | `string` |  |
 
 #### Example: Load
 
@@ -812,15 +792,8 @@ Create an instance: `componentGroupUptime := client.ComponentGroupUptime(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` |  |
-| `major_outage` | `int` |  |
-| `name` | `string` |  |
-| `partial_outage` | `int` |  |
-| `range_end` | `string` |  |
-| `range_start` | `string` |  |
-| `related_event` | `map[string]any` |  |
-| `uptime_percentage` | `float64` |  |
-| `warning` | `string` |  |
+| `component_id` | `string` |  |
+| `incidents` | `map[string]any` |  |
 
 #### Example: Load
 
@@ -851,8 +824,8 @@ Create an instance: `groupComponent := client.GroupComponent(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `string` |  |
 | `component_group` | `map[string]any` |  |
+| `components` | `string` |  |
 | `created_at` | `string` |  |
 | `description` | `string` |  |
 | `id` | `string` |  |
@@ -886,6 +859,7 @@ fmt.Println(groupComponents) // the array of records
 ```go
 result, err := client.GroupComponent(nil).Create(map[string]any{
     "page_id": "example_page_id",
+    "component_group": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -916,14 +890,13 @@ Create an instance: `incident := client.Incident(nil)`
 | `auto_transition_deliver_notifications_at_start` | `bool` |  |
 | `auto_transition_to_maintenance_state` | `bool` |  |
 | `auto_transition_to_operational_state` | `bool` |  |
-| `component` | `[]any` |  |
+| `components` | `[]any` |  |
 | `created_at` | `string` |  |
 | `id` | `string` |  |
 | `impact` | `string` |  |
 | `impact_override` | `string` |  |
 | `incident` | `map[string]any` |  |
-| `incident_impact` | `[]any` |  |
-| `incident_update` | `[]any` |  |
+| `incident_updates` | `[]any` |  |
 | `metadata` | `map[string]any` |  |
 | `monitoring_at` | `string` |  |
 | `name` | `string` |  |
@@ -931,10 +904,10 @@ Create an instance: `incident := client.Incident(nil)`
 | `postmortem_body` | `string` |  |
 | `postmortem_body_last_updated_at` | `string` |  |
 | `postmortem_ignored` | `bool` |  |
-| `postmortem_notified_subscriber` | `bool` |  |
+| `postmortem_notified_subscribers` | `bool` |  |
 | `postmortem_notified_twitter` | `bool` |  |
 | `postmortem_published_at` | `bool` |  |
-| `reminder_interval` | `string` |  |
+| `reminder_intervals` | `string` |  |
 | `resolved_at` | `string` |  |
 | `scheduled_auto_completed` | `bool` |  |
 | `scheduled_auto_in_progress` | `bool` |  |
@@ -971,6 +944,7 @@ fmt.Println(incidents) // the array of records
 ```go
 result, err := client.Incident(nil).Create(map[string]any{
     "page_id": "example_page_id",
+    "incident": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1031,11 +1005,11 @@ Create an instance: `incidentTemplate := client.IncidentTemplate(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `body` | `string` |  |
-| `component` | `[]any` |  |
+| `components` | `[]any` |  |
 | `group_id` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
-| `should_send_notification` | `bool` |  |
+| `should_send_notifications` | `bool` |  |
 | `should_tweet` | `bool` |  |
 | `template` | `map[string]any` |  |
 | `title` | `string` |  |
@@ -1056,6 +1030,7 @@ fmt.Println(incidentTemplates) // the array of records
 ```go
 result, err := client.IncidentTemplate(nil).Create(map[string]any{
     "page_id": "example_page_id",
+    "template": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1078,11 +1053,11 @@ Create an instance: `incidentUpdate := client.IncidentUpdate(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `affected_component` | `[]any` |  |
+| `affected_components` | `[]any` |  |
 | `body` | `string` |  |
 | `created_at` | `string` |  |
 | `custom_tweet` | `string` |  |
-| `deliver_notification` | `bool` |  |
+| `deliver_notifications` | `bool` |  |
 | `display_at` | `string` |  |
 | `id` | `string` |  |
 | `incident_id` | `string` |  |
@@ -1116,7 +1091,7 @@ Create an instance: `metric := client.Metric(nil)`
 | `backfilled` | `bool` |  |
 | `created_at` | `string` |  |
 | `data` | `map[string]any` |  |
-| `decimal_place` | `int` |  |
+| `decimal_places` | `int` |  |
 | `display` | `bool` |  |
 | `id` | `string` |  |
 | `last_fetched_at` | `string` |  |
@@ -1159,6 +1134,7 @@ fmt.Println(metrics) // the array of records
 result, err := client.Metric(nil).Create(map[string]any{
     "metrics_provider_id": "example_metrics_provider_id",
     "page_id": "example_page_id",
+    "data": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1245,28 +1221,28 @@ Create an instance: `page := client.Page(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `activity_score` | `float64` |  |
-| `allow_email_subscriber` | `bool` |  |
-| `allow_incident_subscriber` | `bool` |  |
-| `allow_page_subscriber` | `bool` |  |
-| `allow_rss_atom_feed` | `bool` |  |
-| `allow_sms_subscriber` | `bool` |  |
-| `allow_webhook_subscriber` | `bool` |  |
+| `allow_email_subscribers` | `bool` |  |
+| `allow_incident_subscribers` | `bool` |  |
+| `allow_page_subscribers` | `bool` |  |
+| `allow_rss_atom_feeds` | `bool` |  |
+| `allow_sms_subscribers` | `bool` |  |
+| `allow_webhook_subscribers` | `bool` |  |
 | `branding` | `string` |  |
 | `city` | `string` |  |
 | `country` | `string` |  |
 | `created_at` | `string` |  |
-| `css_blue` | `string` |  |
+| `css_blues` | `string` |  |
 | `css_body_background_color` | `string` |  |
 | `css_border_color` | `string` |  |
 | `css_font_color` | `string` |  |
 | `css_graph_color` | `string` |  |
-| `css_green` | `string` |  |
+| `css_greens` | `string` |  |
 | `css_light_font_color` | `string` |  |
 | `css_link_color` | `string` |  |
 | `css_no_data` | `string` |  |
-| `css_orange` | `string` |  |
-| `css_red` | `string` |  |
-| `css_yellow` | `string` |  |
+| `css_oranges` | `string` |  |
+| `css_reds` | `string` |  |
+| `css_yellows` | `string` |  |
 | `domain` | `string` |  |
 | `email_logo` | `string` |  |
 | `favicon_logo` | `string` |  |
@@ -1274,7 +1250,7 @@ Create an instance: `page := client.Page(nil)`
 | `hero_cover` | `string` |  |
 | `hidden_from_search` | `bool` |  |
 | `id` | `string` |  |
-| `ip_restriction` | `string` |  |
+| `ip_restrictions` | `string` |  |
 | `name` | `string` |  |
 | `notifications_email_footer` | `string` |  |
 | `notifications_from_email` | `string` |  |
@@ -1289,7 +1265,7 @@ Create an instance: `page := client.Page(nil)`
 | `twitter_username` | `string` |  |
 | `updated_at` | `string` |  |
 | `url` | `string` |  |
-| `viewers_must_be_team_member` | `bool` |  |
+| `viewers_must_be_team_members` | `bool` |  |
 
 #### Example: Load
 
@@ -1330,14 +1306,14 @@ Create an instance: `pageAccessGroup := client.PageAccessGroup(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `[]any` |  |
+| `component_ids` | `[]any` |  |
 | `created_at` | `string` |  |
 | `external_identifier` | `string` |  |
 | `id` | `string` |  |
-| `metric_id` | `[]any` |  |
+| `metric_ids` | `[]any` |  |
 | `name` | `string` |  |
 | `page_access_group` | `map[string]any` |  |
-| `page_access_user_id` | `[]any` |  |
+| `page_access_user_ids` | `[]any` |  |
 | `page_id` | `string` |  |
 | `updated_at` | `string` |  |
 
@@ -1392,13 +1368,14 @@ Create an instance: `pageAccessUser := client.PageAccessUser(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `[]any` |  |
+| `component_ids` | `[]any` |  |
 | `created_at` | `string` |  |
 | `email` | `string` |  |
 | `external_login` | `string` |  |
 | `id` | `string` |  |
-| `metric_id` | `[]any` |  |
+| `metric_ids` | `[]any` |  |
 | `page_access_group_id` | `string` |  |
+| `page_access_group_ids` | `string` |  |
 | `page_access_user` | `map[string]any` |  |
 | `page_id` | `string` |  |
 | `updated_at` | `string` |  |
@@ -1428,6 +1405,8 @@ fmt.Println(pageAccessUsers) // the array of records
 ```go
 result, err := client.PageAccessUser(nil).Create(map[string]any{
     "id": "example_id",
+    "component_ids": []any{},
+    "metric_ids": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1451,8 +1430,8 @@ Create an instance: `permission := client.Permission(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `map[string]any` |  |
-| `page` | `map[string]any` |  |
+| `pages` | `map[string]any` |  |
+| `user_id` | `string` |  |
 
 #### Example: Load
 
@@ -1486,7 +1465,7 @@ Create an instance: `postmortem := client.Postmortem(nil)`
 | `body_updated_at` | `string` |  |
 | `created_at` | `string` |  |
 | `custom_tweet` | `string` |  |
-| `notify_subscriber` | `bool` |  |
+| `notify_subscribers` | `bool` |  |
 | `notify_twitter` | `bool` |  |
 | `postmortem` | `map[string]any` |  |
 | `preview_key` | `string` |  |
@@ -1556,8 +1535,8 @@ Create an instance: `subscriber := client.Subscriber(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `string` |  |
-| `component_id` | `[]any` |  |
+| `component_ids` | `[]any` |  |
+| `components` | `string` |  |
 | `created_at` | `string` |  |
 | `display_phone_number` | `string` |  |
 | `email` | `string` |  |
@@ -1577,7 +1556,8 @@ Create an instance: `subscriber := client.Subscriber(nil)`
 | `sms` | `int` |  |
 | `state` | `string` |  |
 | `subscriber` | `map[string]any` |  |
-| `team` | `int` |  |
+| `subscribers` | `string` |  |
+| `teams` | `int` |  |
 | `type` | `string` |  |
 | `webhook` | `int` |  |
 | `workspace_name` | `string` |  |
@@ -1607,6 +1587,7 @@ fmt.Println(subscribers) // the array of records
 ```go
 result, err := client.Subscriber(nil).Create(map[string]any{
     "page_id": "example_page_id",
+    "subscribers": "example_subscribers",
 }, nil)
 if err != nil {
     panic(err)
@@ -1655,6 +1636,7 @@ fmt.Println(users) // the array of records
 ```go
 result, err := client.User(nil).Create(map[string]any{
     "organization_id": "example_organization_id",
+    "user": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1732,15 +1714,15 @@ like `core.ToMapAny`.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `List`, the entity
+Entity instances are stateful. After a successful `Load`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-component := client.Component(nil)
-component.List(nil, nil)
+postmortem := client.Postmortem(nil)
+postmortem.Load(map[string]any{"incident_id": "example", "page_id": "example"}, nil)
 
-// component.Data() now returns the component data from the last list
-// component.Match() returns the last match criteria
+// postmortem.Data() now returns the postmortem data from the last load
+// postmortem.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

@@ -74,7 +74,7 @@ class GroupComponentEntityTest < Minitest::Test
     group_component_ref01_data["page_id"] = setup[:idmap]["page01"]
 
     group_component_ref01_data_result = group_component_ref01_ent.create(group_component_ref01_data, nil)
-    group_component_ref01_data = Helpers.to_map(group_component_ref01_data_result)
+    group_component_ref01_data = Helpers.to_map(group_component_ref01_data_result.respond_to?(:data_get) ? group_component_ref01_data_result.data_get : group_component_ref01_data_result)
     assert !group_component_ref01_data.nil?
     assert !group_component_ref01_data["id"].nil?
 
@@ -97,12 +97,12 @@ class GroupComponentEntityTest < Minitest::Test
       "page_id" => setup[:idmap]["page_id"],
     }
 
-    group_component_ref01_markdef_up0_name = "component"
+    group_component_ref01_markdef_up0_name = "components"
     group_component_ref01_markdef_up0_value = "Mark01-group_component_ref01_#{setup[:now]}"
     group_component_ref01_data_up0_up[group_component_ref01_markdef_up0_name] = group_component_ref01_markdef_up0_value
 
     group_component_ref01_resdata_up0_result = group_component_ref01_ent.update(group_component_ref01_data_up0_up, nil)
-    group_component_ref01_resdata_up0 = Helpers.to_map(group_component_ref01_resdata_up0_result)
+    group_component_ref01_resdata_up0 = Helpers.to_map(group_component_ref01_resdata_up0_result.respond_to?(:data_get) ? group_component_ref01_resdata_up0_result.data_get : group_component_ref01_resdata_up0_result)
     assert !group_component_ref01_resdata_up0.nil?
     assert_equal group_component_ref01_resdata_up0["id"], group_component_ref01_data_up0_up["id"]
     assert_equal group_component_ref01_resdata_up0[group_component_ref01_markdef_up0_name], group_component_ref01_markdef_up0_value
@@ -112,7 +112,7 @@ class GroupComponentEntityTest < Minitest::Test
       "id" => group_component_ref01_data["id"],
     }
     group_component_ref01_data_dt0_loaded = group_component_ref01_ent.load(group_component_ref01_match_dt0, nil)
-    group_component_ref01_data_dt0_load_result = Helpers.to_map(group_component_ref01_data_dt0_loaded)
+    group_component_ref01_data_dt0_load_result = Helpers.to_map(group_component_ref01_data_dt0_loaded.respond_to?(:data_get) ? group_component_ref01_data_dt0_loaded.data_get : group_component_ref01_data_dt0_loaded)
     assert !group_component_ref01_data_dt0_load_result.nil?
     assert_equal group_component_ref01_data_dt0_load_result["id"], group_component_ref01_data["id"]
 

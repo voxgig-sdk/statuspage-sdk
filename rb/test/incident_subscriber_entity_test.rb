@@ -40,7 +40,7 @@ class IncidentSubscriberEntityTest < Minitest::Test
     incident_subscriber_ref01_data["subscriber_id"] = setup[:idmap]["subscriber01"]
 
     incident_subscriber_ref01_data_result = incident_subscriber_ref01_ent.create(incident_subscriber_ref01_data, nil)
-    incident_subscriber_ref01_data = Helpers.to_map(incident_subscriber_ref01_data_result)
+    incident_subscriber_ref01_data = Helpers.to_map(incident_subscriber_ref01_data_result.respond_to?(:data_get) ? incident_subscriber_ref01_data_result.data_get : incident_subscriber_ref01_data_result)
     assert !incident_subscriber_ref01_data.nil?
 
   end

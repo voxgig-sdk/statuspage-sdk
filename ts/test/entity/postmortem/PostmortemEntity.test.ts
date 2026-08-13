@@ -67,7 +67,7 @@ describe('PostmortemEntity', async () => {
     const postmortem_ref01_markdef_up0 = { name: 'body', value: 'Mark01-postmortem_ref01_' + setup.now }
     ;(postmortem_ref01_data_up0 as any)[postmortem_ref01_markdef_up0.name] = postmortem_ref01_markdef_up0.value
 
-    const postmortem_ref01_resdata_up0 = await postmortem_ref01_ent.update(postmortem_ref01_data_up0)
+    const postmortem_ref01_resdata_up0 = (await postmortem_ref01_ent.update(postmortem_ref01_data_up0)).data()
     assert(null != postmortem_ref01_resdata_up0)
 
     assert((postmortem_ref01_resdata_up0 as any)[postmortem_ref01_markdef_up0.name] === postmortem_ref01_markdef_up0.value)

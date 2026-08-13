@@ -110,7 +110,7 @@ func TestComponentEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		componentRef01Data = core.ToMapAny(componentRef01DataResult)
+		componentRef01Data = core.ToMapAny(entityData(componentRef01DataResult))
 		if componentRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -151,7 +151,7 @@ func TestComponentEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		componentRef01ResdataUp0 := core.ToMapAny(componentRef01ResdataUp0Result)
+		componentRef01ResdataUp0 := core.ToMapAny(entityData(componentRef01ResdataUp0Result))
 		if componentRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}
@@ -170,7 +170,7 @@ func TestComponentEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		componentRef01DataDt0LoadResult := core.ToMapAny(componentRef01DataDt0Loaded)
+		componentRef01DataDt0LoadResult := core.ToMapAny(entityData(componentRef01DataDt0Loaded))
 		if componentRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}

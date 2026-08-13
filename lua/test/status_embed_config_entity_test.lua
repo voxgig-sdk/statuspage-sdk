@@ -53,7 +53,7 @@ describe("StatusEmbedConfigEntity", function()
 
     local status_embed_config_ref01_resdata_up0_result, err = status_embed_config_ref01_ent:update(status_embed_config_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local status_embed_config_ref01_resdata_up0 = helpers.to_map(status_embed_config_ref01_resdata_up0_result)
+    local status_embed_config_ref01_resdata_up0 = helpers.to_map(type(status_embed_config_ref01_resdata_up0_result) == 'table' and status_embed_config_ref01_resdata_up0_result.data_get and status_embed_config_ref01_resdata_up0_result:data_get() or status_embed_config_ref01_resdata_up0_result)
     assert.is_not_nil(status_embed_config_ref01_resdata_up0)
     assert.are.equal(status_embed_config_ref01_resdata_up0[status_embed_config_ref01_markdef_up0_name], status_embed_config_ref01_markdef_up0_value)
 

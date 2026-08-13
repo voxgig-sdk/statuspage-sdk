@@ -1,10 +1,14 @@
 {
-  "def": "statuspage-openapi3.json",
+  "def": "statuspage-1.0.0-openapi-3.0.0.json",
   "main": {
     "def": {
       "desc": ""
     },
     "kit": {
+      "author": {
+        "name": "",
+        "url": ""
+      },
       "config": {
         "docs_order": [
           "ts",
@@ -18,6 +22,7 @@
           "content-type": "application/json"
         }
       },
+      "contributor": {},
       "entity": {
         "component": {
           "active": true,
@@ -69,12 +74,6 @@
             },
             {
               "active": true,
-              "name": "major_outage",
-              "req": false,
-              "type": "`$INTEGER`"
-            },
-            {
-              "active": true,
               "name": "name",
               "req": false,
               "type": "`$STRING`"
@@ -93,33 +92,9 @@
             },
             {
               "active": true,
-              "name": "partial_outage",
-              "req": false,
-              "type": "`$INTEGER`"
-            },
-            {
-              "active": true,
               "name": "position",
               "req": false,
               "type": "`$INTEGER`"
-            },
-            {
-              "active": true,
-              "name": "range_end",
-              "req": false,
-              "type": "`$STRING`"
-            },
-            {
-              "active": true,
-              "name": "range_start",
-              "req": false,
-              "type": "`$STRING`"
-            },
-            {
-              "active": true,
-              "name": "related_event",
-              "req": false,
-              "type": "`$OBJECT`"
             },
             {
               "active": true,
@@ -142,18 +117,6 @@
             {
               "active": true,
               "name": "updated_at",
-              "req": false,
-              "type": "`$STRING`"
-            },
-            {
-              "active": true,
-              "name": "uptime_percentage",
-              "req": false,
-              "type": "`$NUMBER`"
-            },
-            {
-              "active": true,
-              "name": "warning",
               "req": false,
               "type": "`$STRING`"
             }
@@ -190,6 +153,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/components/{component_id}/page_access_groups",
                   "parts": [
@@ -238,6 +202,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/components/{component_id}/page_access_users",
                   "parts": [
@@ -278,6 +243,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/components",
                   "parts": [
@@ -291,7 +257,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "component": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -341,6 +309,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                   "parts": [
@@ -403,6 +372,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                   "parts": [
@@ -457,6 +427,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/components",
                   "parts": [
@@ -515,14 +486,6 @@
                       {
                         "active": true,
                         "kind": "query",
-                        "name": "skip_related_event",
-                        "orig": "skip_related_event",
-                        "reqd": false,
-                        "type": "`$BOOLEAN`"
-                      },
-                      {
-                        "active": true,
-                        "kind": "query",
                         "name": "start",
                         "orig": "start",
                         "reqd": false,
@@ -530,6 +493,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/components/{component_id}/uptime",
                   "parts": [
@@ -550,13 +514,12 @@
                       "end",
                       "id",
                       "page_id",
-                      "skip_related_event",
                       "start"
                     ]
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.related_events`"
                   }
                 },
                 {
@@ -581,6 +544,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/components/{component_id}",
                   "parts": [
@@ -633,6 +597,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/components/{component_id}",
                   "parts": [
@@ -653,7 +618,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "component": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -685,6 +652,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/components/{component_id}",
                   "parts": [
@@ -731,6 +699,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/components/{component_id}/page_access_groups",
                   "parts": [
@@ -779,6 +748,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/components/{component_id}/page_access_users",
                   "parts": [
@@ -833,6 +803,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/components/{component_id}",
                   "parts": [
@@ -853,7 +824,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "component": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -884,63 +857,17 @@
           "fields": [
             {
               "active": true,
-              "name": "id",
+              "name": "component_id",
               "req": false,
               "type": "`$STRING`"
             },
             {
               "active": true,
-              "name": "major_outage",
-              "req": false,
-              "type": "`$INTEGER`"
-            },
-            {
-              "active": true,
-              "name": "name",
-              "req": false,
-              "type": "`$STRING`"
-            },
-            {
-              "active": true,
-              "name": "partial_outage",
-              "req": false,
-              "type": "`$INTEGER`"
-            },
-            {
-              "active": true,
-              "name": "range_end",
-              "req": false,
-              "type": "`$STRING`"
-            },
-            {
-              "active": true,
-              "name": "range_start",
-              "req": false,
-              "type": "`$STRING`"
-            },
-            {
-              "active": true,
-              "name": "related_event",
+              "name": "incidents",
               "req": false,
               "type": "`$OBJECT`"
-            },
-            {
-              "active": true,
-              "name": "uptime_percentage",
-              "req": false,
-              "type": "`$NUMBER`"
-            },
-            {
-              "active": true,
-              "name": "warning",
-              "req": false,
-              "type": "`$STRING`"
             }
           ],
-          "id": {
-            "field": "id",
-            "name": "id"
-          },
           "name": "component_group_uptime",
           "op": {
             "load": {
@@ -980,14 +907,6 @@
                       {
                         "active": true,
                         "kind": "query",
-                        "name": "skip_related_event",
-                        "orig": "skip_related_event",
-                        "reqd": false,
-                        "type": "`$BOOLEAN`"
-                      },
-                      {
-                        "active": true,
-                        "kind": "query",
                         "name": "start",
                         "orig": "start",
                         "reqd": false,
@@ -995,6 +914,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/component-groups/{id}/uptime",
                   "parts": [
@@ -1009,13 +929,12 @@
                       "end",
                       "id",
                       "page_id",
-                      "skip_related_event",
                       "start"
                     ]
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.related_events`"
                   }
                 }
               ]
@@ -1037,15 +956,15 @@
           "fields": [
             {
               "active": true,
-              "name": "component",
-              "req": false,
-              "type": "`$STRING`"
-            },
-            {
-              "active": true,
               "name": "component_group",
               "req": true,
               "type": "`$OBJECT`"
+            },
+            {
+              "active": true,
+              "name": "components",
+              "req": false,
+              "type": "`$STRING`"
             },
             {
               "active": true,
@@ -1114,6 +1033,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/component-groups",
                   "parts": [
@@ -1169,6 +1089,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/component-groups",
                   "parts": [
@@ -1216,6 +1137,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/component-groups/{id}",
                   "parts": [
@@ -1263,6 +1185,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/component-groups/{id}",
                   "parts": [
@@ -1310,6 +1233,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/component-groups/{id}",
                   "parts": [
@@ -1357,6 +1281,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/component-groups/{id}",
                   "parts": [
@@ -1419,7 +1344,7 @@
             },
             {
               "active": true,
-              "name": "component",
+              "name": "components",
               "req": false,
               "type": "`$ARRAY`"
             },
@@ -1465,13 +1390,7 @@
             },
             {
               "active": true,
-              "name": "incident_impact",
-              "req": false,
-              "type": "`$ARRAY`"
-            },
-            {
-              "active": true,
-              "name": "incident_update",
+              "name": "incident_updates",
               "req": false,
               "type": "`$ARRAY`"
             },
@@ -1519,7 +1438,7 @@
             },
             {
               "active": true,
-              "name": "postmortem_notified_subscriber",
+              "name": "postmortem_notified_subscribers",
               "req": false,
               "type": "`$BOOLEAN`"
             },
@@ -1537,7 +1456,7 @@
             },
             {
               "active": true,
-              "name": "reminder_interval",
+              "name": "reminder_intervals",
               "req": false,
               "type": "`$STRING`"
             },
@@ -1626,6 +1545,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/incidents",
                   "parts": [
@@ -1639,7 +1559,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "incident": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -1689,6 +1611,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incidents",
                   "parts": [
@@ -1743,6 +1666,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incidents/active_maintenance",
                   "parts": [
@@ -1798,6 +1722,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incidents/scheduled",
                   "parts": [
@@ -1853,6 +1778,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incidents/unresolved",
                   "parts": [
@@ -1908,6 +1834,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incidents/upcoming",
                   "parts": [
@@ -1957,6 +1884,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incidents/{incident_id}",
                   "parts": [
@@ -2009,6 +1937,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/incidents/{incident_id}",
                   "parts": [
@@ -2029,7 +1958,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "incident": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -2061,6 +1992,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/incidents/{incident_id}",
                   "parts": [
@@ -2113,6 +2045,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/incidents/{incident_id}",
                   "parts": [
@@ -2133,7 +2066,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "incident": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -2182,6 +2117,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem",
                   "parts": [
@@ -2260,6 +2196,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation",
                   "parts": [
@@ -2310,7 +2247,7 @@
             },
             {
               "active": true,
-              "name": "component",
+              "name": "components",
               "req": false,
               "type": "`$ARRAY`"
             },
@@ -2334,7 +2271,7 @@
             },
             {
               "active": true,
-              "name": "should_send_notification",
+              "name": "should_send_notifications",
               "req": false,
               "type": "`$BOOLEAN`"
             },
@@ -2387,6 +2324,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/incident_templates",
                   "parts": [
@@ -2444,6 +2382,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incident_templates",
                   "parts": [
@@ -2482,7 +2421,7 @@
           "fields": [
             {
               "active": true,
-              "name": "affected_component",
+              "name": "affected_components",
               "req": false,
               "type": "`$ARRAY`"
             },
@@ -2506,7 +2445,7 @@
             },
             {
               "active": true,
-              "name": "deliver_notification",
+              "name": "deliver_notifications",
               "req": false,
               "type": "`$BOOLEAN`"
             },
@@ -2605,6 +2544,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
                   "parts": [
@@ -2628,7 +2568,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "incident_update": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -2668,6 +2610,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
                   "parts": [
@@ -2691,7 +2634,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "incident_update": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -2739,7 +2684,7 @@
             },
             {
               "active": true,
-              "name": "decimal_place",
+              "name": "decimal_places",
               "req": false,
               "type": "`$INTEGER`"
             },
@@ -2866,6 +2811,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/metrics/{metric_id}/data",
                   "parts": [
@@ -2889,7 +2835,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.data`"
                   }
                 },
                 {
@@ -2914,6 +2860,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
                   "parts": [
@@ -2930,7 +2877,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "metric": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 },
@@ -2948,6 +2897,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/metrics/data",
                   "parts": [
@@ -3013,6 +2963,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                   "parts": [
@@ -3081,6 +3032,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
                   "parts": [
@@ -3135,6 +3087,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/metrics",
                   "parts": [
@@ -3176,6 +3129,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/metrics/{metric_id}",
                   "parts": [
@@ -3228,6 +3182,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/metrics/{metric_id}",
                   "parts": [
@@ -3248,7 +3203,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "metric": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -3280,6 +3237,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/metrics/{metric_id}",
                   "parts": [
@@ -3326,6 +3284,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/metrics/{metric_id}/data",
                   "parts": [
@@ -3380,6 +3339,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/metrics/{metric_id}",
                   "parts": [
@@ -3400,7 +3360,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "metric": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -3508,6 +3470,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/metrics_providers",
                   "parts": [
@@ -3521,7 +3484,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "metrics_provider": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -3545,6 +3510,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/metrics_providers",
                   "parts": [
@@ -3590,6 +3556,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
                   "parts": [
@@ -3642,6 +3609,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
                   "parts": [
@@ -3662,7 +3630,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "metrics_provider": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -3694,6 +3664,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
                   "parts": [
@@ -3746,6 +3717,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
                   "parts": [
@@ -3766,7 +3738,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "metrics_provider": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -3795,37 +3769,37 @@
             },
             {
               "active": true,
-              "name": "allow_email_subscriber",
+              "name": "allow_email_subscribers",
               "req": false,
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
-              "name": "allow_incident_subscriber",
+              "name": "allow_incident_subscribers",
               "req": false,
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
-              "name": "allow_page_subscriber",
+              "name": "allow_page_subscribers",
               "req": false,
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
-              "name": "allow_rss_atom_feed",
+              "name": "allow_rss_atom_feeds",
               "req": false,
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
-              "name": "allow_sms_subscriber",
+              "name": "allow_sms_subscribers",
               "req": false,
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
-              "name": "allow_webhook_subscriber",
+              "name": "allow_webhook_subscribers",
               "req": false,
               "type": "`$BOOLEAN`"
             },
@@ -3855,7 +3829,7 @@
             },
             {
               "active": true,
-              "name": "css_blue",
+              "name": "css_blues",
               "req": false,
               "type": "`$STRING`"
             },
@@ -3885,7 +3859,7 @@
             },
             {
               "active": true,
-              "name": "css_green",
+              "name": "css_greens",
               "req": false,
               "type": "`$STRING`"
             },
@@ -3909,19 +3883,19 @@
             },
             {
               "active": true,
-              "name": "css_orange",
+              "name": "css_oranges",
               "req": false,
               "type": "`$STRING`"
             },
             {
               "active": true,
-              "name": "css_red",
+              "name": "css_reds",
               "req": false,
               "type": "`$STRING`"
             },
             {
               "active": true,
-              "name": "css_yellow",
+              "name": "css_yellows",
               "req": false,
               "type": "`$STRING`"
             },
@@ -3969,7 +3943,7 @@
             },
             {
               "active": true,
-              "name": "ip_restriction",
+              "name": "ip_restrictions",
               "req": false,
               "type": "`$STRING`"
             },
@@ -4059,7 +4033,7 @@
             },
             {
               "active": true,
-              "name": "viewers_must_be_team_member",
+              "name": "viewers_must_be_team_members",
               "req": false,
               "type": "`$BOOLEAN`"
             }
@@ -4077,6 +4051,7 @@
                 {
                   "active": true,
                   "args": {},
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages",
                   "parts": [
@@ -4108,6 +4083,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}",
                   "parts": [
@@ -4149,6 +4125,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}",
                   "parts": [
@@ -4166,7 +4143,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "page": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -4190,6 +4169,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}",
                   "parts": [
@@ -4207,7 +4187,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "page": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -4226,7 +4208,7 @@
           "fields": [
             {
               "active": true,
-              "name": "component_id",
+              "name": "component_ids",
               "op": {
                 "create": {
                   "req": true,
@@ -4256,7 +4238,7 @@
             },
             {
               "active": true,
-              "name": "metric_id",
+              "name": "metric_ids",
               "req": false,
               "type": "`$ARRAY`"
             },
@@ -4274,7 +4256,7 @@
             },
             {
               "active": true,
-              "name": "page_access_user_id",
+              "name": "page_access_user_ids",
               "req": false,
               "type": "`$ARRAY`"
             },
@@ -4323,6 +4305,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                   "parts": [
@@ -4363,6 +4346,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/page_access_groups",
                   "parts": [
@@ -4381,7 +4365,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "page_access_group": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -4423,6 +4409,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/page_access_groups",
                   "parts": [
@@ -4475,6 +4462,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
                   "parts": [
@@ -4527,6 +4515,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
                   "parts": [
@@ -4547,7 +4536,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "page_access_group": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 },
@@ -4573,6 +4564,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                   "parts": [
@@ -4635,6 +4627,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components/{component_id}",
                   "parts": [
@@ -4684,6 +4677,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
                   "parts": [
@@ -4730,6 +4724,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                   "parts": [
@@ -4784,6 +4779,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
                   "parts": [
@@ -4804,7 +4800,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "page_access_group": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 },
@@ -4830,6 +4828,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                   "parts": [
@@ -4879,7 +4878,7 @@
           "fields": [
             {
               "active": true,
-              "name": "component_id",
+              "name": "component_ids",
               "req": true,
               "type": "`$ARRAY`"
             },
@@ -4909,13 +4908,19 @@
             },
             {
               "active": true,
-              "name": "metric_id",
+              "name": "metric_ids",
               "req": true,
               "type": "`$ARRAY`"
             },
             {
               "active": true,
               "name": "page_access_group_id",
+              "req": false,
+              "type": "`$STRING`"
+            },
+            {
+              "active": true,
+              "name": "page_access_group_ids",
               "req": false,
               "type": "`$STRING`"
             },
@@ -4970,6 +4975,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                   "parts": [
@@ -5018,6 +5024,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                   "parts": [
@@ -5058,6 +5065,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/page_access_users",
                   "parts": [
@@ -5076,7 +5084,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "page_access_user": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -5126,6 +5136,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/page_access_users",
                   "parts": [
@@ -5179,6 +5190,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
                   "parts": [
@@ -5231,6 +5243,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
                   "parts": [
@@ -5277,6 +5290,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                   "parts": [
@@ -5325,6 +5339,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                   "parts": [
@@ -5387,6 +5402,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components/{component_id}",
                   "parts": [
@@ -5444,6 +5460,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics/{metric_id}",
                   "parts": [
@@ -5493,6 +5510,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
                   "parts": [
@@ -5539,6 +5557,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                   "parts": [
@@ -5587,6 +5606,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                   "parts": [
@@ -5641,6 +5661,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
                   "parts": [
@@ -5687,6 +5708,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                   "parts": [
@@ -5735,6 +5757,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                   "parts": [
@@ -5788,15 +5811,15 @@
           "fields": [
             {
               "active": true,
-              "name": "data",
+              "name": "pages",
               "req": false,
               "type": "`$OBJECT`"
             },
             {
               "active": true,
-              "name": "page",
+              "name": "user_id",
               "req": false,
-              "type": "`$OBJECT`"
+              "type": "`$STRING`"
             }
           ],
           "name": "permission",
@@ -5827,6 +5850,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/organizations/{organization_id}/permissions/{user_id}",
                   "parts": [
@@ -5848,7 +5872,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.data`"
                   }
                 }
               ]
@@ -5879,6 +5903,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/organizations/{organization_id}/permissions/{user_id}",
                   "parts": [
@@ -5900,7 +5925,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.data`"
                   }
                 }
               ]
@@ -5958,7 +5983,7 @@
             },
             {
               "active": true,
-              "name": "notify_subscriber",
+              "name": "notify_subscribers",
               "req": false,
               "type": "`$BOOLEAN`"
             },
@@ -6027,6 +6052,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem",
                   "parts": [
@@ -6075,6 +6101,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem",
                   "parts": [
@@ -6091,7 +6118,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "postmortem": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 },
@@ -6117,6 +6146,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem/publish",
                   "parts": [
@@ -6135,7 +6165,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "postmortem": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 },
@@ -6161,6 +6193,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem/revert",
                   "parts": [
@@ -6264,6 +6297,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/status_embed_config",
                   "parts": [
@@ -6301,6 +6335,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/status_embed_config",
                   "parts": [
@@ -6314,7 +6349,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "status_embed_config": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -6338,6 +6375,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/pages/{page_id}/status_embed_config",
                   "parts": [
@@ -6351,7 +6389,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "status_embed_config": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -6374,15 +6414,15 @@
           "fields": [
             {
               "active": true,
-              "name": "component",
+              "name": "component_ids",
               "req": false,
-              "type": "`$STRING`"
+              "type": "`$ARRAY`"
             },
             {
               "active": true,
-              "name": "component_id",
+              "name": "components",
               "req": false,
-              "type": "`$ARRAY`"
+              "type": "`$STRING`"
             },
             {
               "active": true,
@@ -6495,18 +6535,18 @@
             {
               "active": true,
               "name": "subscriber",
-              "op": {
-                "create": {
-                  "req": true,
-                  "type": "`$STRING`"
-                }
-              },
               "req": false,
               "type": "`$OBJECT`"
             },
             {
               "active": true,
-              "name": "team",
+              "name": "subscribers",
+              "req": true,
+              "type": "`$STRING`"
+            },
+            {
+              "active": true,
+              "name": "teams",
               "req": false,
               "type": "`$INTEGER`"
             },
@@ -6561,6 +6601,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation",
                   "parts": [
@@ -6609,6 +6650,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers",
                   "parts": [
@@ -6625,7 +6667,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "subscriber": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 },
@@ -6643,6 +6687,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/subscribers",
                   "parts": [
@@ -6656,7 +6701,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "subscriber": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 },
@@ -6674,6 +6721,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/subscribers/reactivate",
                   "parts": [
@@ -6707,6 +6755,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/subscribers/resend_confirmation",
                   "parts": [
@@ -6740,6 +6789,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/pages/{page_id}/subscribers/unsubscribe",
                   "parts": [
@@ -6841,6 +6891,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/subscribers",
                   "parts": [
@@ -6905,6 +6956,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers",
                   "parts": [
@@ -6959,6 +7011,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/subscribers/unsubscribed",
                   "parts": [
@@ -7016,6 +7069,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
                   "parts": [
@@ -7076,6 +7130,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/subscribers/count",
                   "parts": [
@@ -7119,6 +7174,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/subscribers/{subscriber_id}",
                   "parts": [
@@ -7157,6 +7213,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/pages/{page_id}/subscribers/histogram_by_state",
                   "parts": [
@@ -7212,6 +7269,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
                   "parts": [
@@ -7271,6 +7329,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/pages/{page_id}/subscribers/{subscriber_id}",
                   "parts": [
@@ -7324,6 +7383,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PATCH",
                   "orig": "/pages/{page_id}/subscribers/{subscriber_id}",
                   "parts": [
@@ -7442,6 +7502,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/organizations/{organization_id}/users",
                   "parts": [
@@ -7455,7 +7516,9 @@
                     ]
                   },
                   "transform": {
-                    "req": "`reqdata`",
+                    "req": {
+                      "user": "`reqdata`"
+                    },
                     "res": "`body`"
                   }
                 }
@@ -7497,6 +7560,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/organizations/{organization_id}/users",
                   "parts": [
@@ -7544,6 +7608,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/organizations/{organization_id}/users/{user_id}",
                   "parts": [
@@ -7879,7 +7944,7 @@
                 "ref": "group_component_ref01",
                 "srcdatavar": "group_component_ref01_data",
                 "suffix": "_up0",
-                "textfield": "component"
+                "textfield": "components"
               },
               "match": {},
               "op": "update",
@@ -8760,7 +8825,8 @@
               "input": {
                 "ref": "permission_ref01",
                 "srcdatavar": "permission_ref01_data",
-                "suffix": "_up0"
+                "suffix": "_up0",
+                "textfield": "user_id"
               },
               "match": {},
               "op": "update",
@@ -8957,7 +9023,7 @@
                 "ref": "subscriber_ref01",
                 "srcdatavar": "subscriber_ref01_data",
                 "suffix": "_up0",
-                "textfield": "component"
+                "textfield": "components"
               },
               "match": {},
               "op": "update",
@@ -9134,18 +9200,41 @@
         }
       },
       "option": {},
+      "repo": {
+        "host": "github.com",
+        "path": ""
+      },
       "target": {
         "go": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "//"
           },
           "deps": {},
           "ext": "go",
+          "feature": {
+            "fullset": [
+              "test/feature_test.go"
+            ],
+            "trim": true
+          },
           "module": {
-            "name": "statuspage"
+            "goversion": "",
+            "name": "statuspage",
+            "package": "",
+            "path": ""
           },
           "name": "go",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -9167,22 +9256,40 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "Golang"
         },
         "go-cli": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "//"
           },
           "deps": {},
           "ext": "go",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "statuspage"
+            "goversion": "",
+            "name": "statuspage",
+            "package": "",
+            "path": ""
           },
           "name": "go-cli",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "phase": {
             "agentguide": {
               "active": false
@@ -9221,21 +9328,39 @@
                 "recipe": "github"
               },
               "via": "root"
-            }
+            },
+            "version": "0.0.1"
           },
           "title": "Go CLI"
         },
         "go-mcp": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "//"
           },
           "deps": {},
           "ext": "go",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "statuspage"
+            "goversion": "",
+            "name": "statuspage",
+            "package": "",
+            "path": ""
           },
           "name": "go-mcp",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "phase": {
             "agentguide": {
               "active": false
@@ -9274,12 +9399,17 @@
                 "recipe": "github"
               },
               "via": "root"
-            }
+            },
+            "version": "0.0.1"
           },
           "title": "Go MCP server"
         },
         "lua": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "--"
           },
@@ -9291,10 +9421,23 @@
             }
           },
           "ext": "lua",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "statuspage"
+            "goversion": "",
+            "name": "statuspage",
+            "package": "",
+            "path": ""
           },
           "name": "lua",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -9316,22 +9459,40 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "Lua"
         },
         "php": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "//"
           },
           "deps": {},
           "ext": "php",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "statuspage"
+            "goversion": "",
+            "name": "statuspage",
+            "package": "",
+            "path": ""
           },
           "name": "php",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -9353,13 +9514,18 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "PHP"
         },
         "py": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "#"
           },
@@ -9371,10 +9537,23 @@
             }
           },
           "ext": "py",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "statuspage"
+            "goversion": "",
+            "name": "statuspage",
+            "package": "",
+            "path": ""
           },
           "name": "py",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -9396,13 +9575,18 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "Python"
         },
         "rb": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "#"
           },
@@ -9419,10 +9603,23 @@
             }
           },
           "ext": "rb",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "statuspage"
+            "goversion": "",
+            "name": "statuspage",
+            "package": "",
+            "path": ""
           },
           "name": "rb",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -9444,13 +9641,18 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "Ruby"
         },
         "ts": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "comment": {
             "line": "//"
@@ -9473,10 +9675,23 @@
             }
           },
           "ext": "ts",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "statuspage"
+            "goversion": "",
+            "name": "statuspage",
+            "package": "",
+            "path": ""
           },
           "name": "ts",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -9498,9 +9713,17 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "title": "TypeScript"
+        }
+      },
+      "test": {
+        "live": {
+          "app": false,
+          "base": "",
+          "strict": false
         }
       }
     }

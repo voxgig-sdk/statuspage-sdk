@@ -41,13 +41,9 @@ class ComponentGroupUptimeEntityTest < Minitest::Test
 
     # LOAD
     component_group_uptime_ref01_ent = client.ComponentGroupUptime(nil)
-    component_group_uptime_ref01_match_dt0 = {
-      "id" => component_group_uptime_ref01_data["id"],
-    }
+    component_group_uptime_ref01_match_dt0 = {}
     component_group_uptime_ref01_data_dt0_loaded = component_group_uptime_ref01_ent.load(component_group_uptime_ref01_match_dt0, nil)
-    component_group_uptime_ref01_data_dt0_load_result = Helpers.to_map(component_group_uptime_ref01_data_dt0_loaded)
-    assert !component_group_uptime_ref01_data_dt0_load_result.nil?
-    assert_equal component_group_uptime_ref01_data_dt0_load_result["id"], component_group_uptime_ref01_data["id"]
+    assert !component_group_uptime_ref01_data_dt0_loaded.nil?
 
   end
 end

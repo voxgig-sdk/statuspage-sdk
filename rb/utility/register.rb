@@ -24,6 +24,7 @@ require_relative 'prepare_method'
 require_relative 'prepare_params'
 require_relative 'prepare_path'
 require_relative 'prepare_query'
+require_relative 'graphql'
 require_relative 'result_basic'
 require_relative 'result_body'
 require_relative 'result_headers'
@@ -55,6 +56,8 @@ StatuspageUtility.registrar = ->(u) {
   u.prepare_params = StatuspageUtilities::PrepareParams
   u.prepare_path = StatuspageUtilities::PreparePath
   u.prepare_query = StatuspageUtilities::PrepareQuery
+  u.graphql_body = StatuspageUtilities::GraphqlBody
+  u.graphql_errors = StatuspageUtilities::GraphqlErrors
   u.result_basic = StatuspageUtilities::ResultBasic
   u.result_body = StatuspageUtilities::ResultBody
   u.result_headers = StatuspageUtilities::ResultHeaders

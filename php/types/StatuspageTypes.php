@@ -22,21 +22,14 @@ class Component
     public ?bool $group = null;
     public ?string $group_id = null;
     public ?string $id = null;
-    public ?int $major_outage = null;
     public ?string $name = null;
     public ?bool $only_show_if_degraded = null;
     public ?string $page_id = null;
-    public ?int $partial_outage = null;
     public ?int $position = null;
-    public ?string $range_end = null;
-    public ?string $range_start = null;
-    public ?array $related_event = null;
     public ?bool $showcase = null;
     public ?string $start_date = null;
     public ?string $status = null;
     public ?string $updated_at = null;
-    public ?float $uptime_percentage = null;
-    public ?string $warning = null;
 }
 
 /** Request payload for Component#load. */
@@ -58,6 +51,20 @@ class ComponentListMatch
 class ComponentCreateData
 {
     public string $page_id;
+    public ?string $automation_email = null;
+    public ?array $component = null;
+    public ?string $created_at = null;
+    public ?string $description = null;
+    public ?bool $group = null;
+    public ?string $group_id = null;
+    public ?string $id = null;
+    public ?string $name = null;
+    public ?bool $only_show_if_degraded = null;
+    public ?int $position = null;
+    public ?bool $showcase = null;
+    public ?string $start_date = null;
+    public ?string $status = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for Component#update. */
@@ -65,6 +72,19 @@ class ComponentUpdateData
 {
     public string $id;
     public string $page_id;
+    public ?string $automation_email = null;
+    public ?array $component = null;
+    public ?string $created_at = null;
+    public ?string $description = null;
+    public ?bool $group = null;
+    public ?string $group_id = null;
+    public ?string $name = null;
+    public ?bool $only_show_if_degraded = null;
+    public ?int $position = null;
+    public ?bool $showcase = null;
+    public ?string $start_date = null;
+    public ?string $status = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for Component#remove. */
@@ -77,15 +97,8 @@ class ComponentRemoveMatch
 /** ComponentGroupUptime entity data model. */
 class ComponentGroupUptime
 {
-    public ?string $id = null;
-    public ?int $major_outage = null;
-    public ?string $name = null;
-    public ?int $partial_outage = null;
-    public ?string $range_end = null;
-    public ?string $range_start = null;
-    public ?array $related_event = null;
-    public ?float $uptime_percentage = null;
-    public ?string $warning = null;
+    public ?string $component_id = null;
+    public ?array $incidents = null;
 }
 
 /** Request payload for ComponentGroupUptime#load. */
@@ -98,8 +111,8 @@ class ComponentGroupUptimeLoadMatch
 /** GroupComponent entity data model. */
 class GroupComponent
 {
-    public ?string $component = null;
     public array $component_group;
+    public ?string $components = null;
     public ?string $created_at = null;
     public ?string $description = null;
     public ?string $id = null;
@@ -126,6 +139,14 @@ class GroupComponentListMatch
 class GroupComponentCreateData
 {
     public string $page_id;
+    public array $component_group;
+    public ?string $components = null;
+    public ?string $created_at = null;
+    public ?string $description = null;
+    public ?string $id = null;
+    public ?string $name = null;
+    public ?string $position = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for GroupComponent#update. */
@@ -133,6 +154,13 @@ class GroupComponentUpdateData
 {
     public string $id;
     public string $page_id;
+    public ?array $component_group = null;
+    public ?string $components = null;
+    public ?string $created_at = null;
+    public ?string $description = null;
+    public ?string $name = null;
+    public ?string $position = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for GroupComponent#remove. */
@@ -149,14 +177,13 @@ class Incident
     public ?bool $auto_transition_deliver_notifications_at_start = null;
     public ?bool $auto_transition_to_maintenance_state = null;
     public ?bool $auto_transition_to_operational_state = null;
-    public ?array $component = null;
+    public ?array $components = null;
     public ?string $created_at = null;
     public ?string $id = null;
     public ?string $impact = null;
     public ?string $impact_override = null;
     public array $incident;
-    public ?array $incident_impact = null;
-    public ?array $incident_update = null;
+    public ?array $incident_updates = null;
     public ?array $metadata = null;
     public ?string $monitoring_at = null;
     public ?string $name = null;
@@ -164,10 +191,10 @@ class Incident
     public ?string $postmortem_body = null;
     public ?string $postmortem_body_last_updated_at = null;
     public ?bool $postmortem_ignored = null;
-    public ?bool $postmortem_notified_subscriber = null;
+    public ?bool $postmortem_notified_subscribers = null;
     public ?bool $postmortem_notified_twitter = null;
     public ?bool $postmortem_published_at = null;
-    public ?string $reminder_interval = null;
+    public ?string $reminder_intervals = null;
     public ?string $resolved_at = null;
     public ?bool $scheduled_auto_completed = null;
     public ?bool $scheduled_auto_in_progress = null;
@@ -197,6 +224,37 @@ class IncidentListMatch
 class IncidentCreateData
 {
     public string $page_id;
+    public ?bool $auto_transition_deliver_notifications_at_end = null;
+    public ?bool $auto_transition_deliver_notifications_at_start = null;
+    public ?bool $auto_transition_to_maintenance_state = null;
+    public ?bool $auto_transition_to_operational_state = null;
+    public ?array $components = null;
+    public ?string $created_at = null;
+    public ?string $id = null;
+    public ?string $impact = null;
+    public ?string $impact_override = null;
+    public array $incident;
+    public ?array $incident_updates = null;
+    public ?array $metadata = null;
+    public ?string $monitoring_at = null;
+    public ?string $name = null;
+    public ?string $postmortem_body = null;
+    public ?string $postmortem_body_last_updated_at = null;
+    public ?bool $postmortem_ignored = null;
+    public ?bool $postmortem_notified_subscribers = null;
+    public ?bool $postmortem_notified_twitter = null;
+    public ?bool $postmortem_published_at = null;
+    public ?string $reminder_intervals = null;
+    public ?string $resolved_at = null;
+    public ?bool $scheduled_auto_completed = null;
+    public ?bool $scheduled_auto_in_progress = null;
+    public ?string $scheduled_for = null;
+    public ?bool $scheduled_remind_prior = null;
+    public ?string $scheduled_reminded_at = null;
+    public ?string $scheduled_until = null;
+    public ?string $shortlink = null;
+    public ?string $status = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for Incident#update. */
@@ -204,6 +262,36 @@ class IncidentUpdateData
 {
     public string $id;
     public string $page_id;
+    public ?bool $auto_transition_deliver_notifications_at_end = null;
+    public ?bool $auto_transition_deliver_notifications_at_start = null;
+    public ?bool $auto_transition_to_maintenance_state = null;
+    public ?bool $auto_transition_to_operational_state = null;
+    public ?array $components = null;
+    public ?string $created_at = null;
+    public ?string $impact = null;
+    public ?string $impact_override = null;
+    public ?array $incident = null;
+    public ?array $incident_updates = null;
+    public ?array $metadata = null;
+    public ?string $monitoring_at = null;
+    public ?string $name = null;
+    public ?string $postmortem_body = null;
+    public ?string $postmortem_body_last_updated_at = null;
+    public ?bool $postmortem_ignored = null;
+    public ?bool $postmortem_notified_subscribers = null;
+    public ?bool $postmortem_notified_twitter = null;
+    public ?bool $postmortem_published_at = null;
+    public ?string $reminder_intervals = null;
+    public ?string $resolved_at = null;
+    public ?bool $scheduled_auto_completed = null;
+    public ?bool $scheduled_auto_in_progress = null;
+    public ?string $scheduled_for = null;
+    public ?bool $scheduled_remind_prior = null;
+    public ?string $scheduled_reminded_at = null;
+    public ?string $scheduled_until = null;
+    public ?string $shortlink = null;
+    public ?string $status = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for Incident#remove. */
@@ -242,11 +330,11 @@ class IncidentSubscriberCreateData
 class IncidentTemplate
 {
     public ?string $body = null;
-    public ?array $component = null;
+    public ?array $components = null;
     public ?string $group_id = null;
     public ?string $id = null;
     public ?string $name = null;
-    public ?bool $should_send_notification = null;
+    public ?bool $should_send_notifications = null;
     public ?bool $should_tweet = null;
     public array $template;
     public ?string $title = null;
@@ -263,16 +351,26 @@ class IncidentTemplateListMatch
 class IncidentTemplateCreateData
 {
     public string $page_id;
+    public ?string $body = null;
+    public ?array $components = null;
+    public ?string $group_id = null;
+    public ?string $id = null;
+    public ?string $name = null;
+    public ?bool $should_send_notifications = null;
+    public ?bool $should_tweet = null;
+    public array $template;
+    public ?string $title = null;
+    public ?string $update_status = null;
 }
 
 /** IncidentUpdate entity data model. */
 class IncidentUpdate
 {
-    public ?array $affected_component = null;
+    public ?array $affected_components = null;
     public ?string $body = null;
     public ?string $created_at = null;
     public ?string $custom_tweet = null;
-    public ?bool $deliver_notification = null;
+    public ?bool $deliver_notifications = null;
     public ?string $display_at = null;
     public ?string $id = null;
     public ?string $incident_id = null;
@@ -290,6 +388,18 @@ class IncidentUpdateUpdateData
     public string $id;
     public string $incident_id;
     public string $page_id;
+    public ?array $affected_components = null;
+    public ?string $body = null;
+    public ?string $created_at = null;
+    public ?string $custom_tweet = null;
+    public ?bool $deliver_notifications = null;
+    public ?string $display_at = null;
+    public ?array $incident_update = null;
+    public ?string $status = null;
+    public ?string $tweet_id = null;
+    public ?string $twitter_updated_at = null;
+    public ?string $updated_at = null;
+    public ?bool $wants_twitter_update = null;
 }
 
 /** Metric entity data model. */
@@ -299,7 +409,7 @@ class Metric
     public ?bool $backfilled = null;
     public ?string $created_at = null;
     public array $data;
-    public ?int $decimal_place = null;
+    public ?int $decimal_places = null;
     public ?bool $display = null;
     public ?string $id = null;
     public ?string $last_fetched_at = null;
@@ -337,6 +447,25 @@ class MetricCreateData
 {
     public string $metrics_provider_id;
     public string $page_id;
+    public ?int $backfill_percentage = null;
+    public ?bool $backfilled = null;
+    public ?string $created_at = null;
+    public array $data;
+    public ?int $decimal_places = null;
+    public ?bool $display = null;
+    public ?string $id = null;
+    public ?string $last_fetched_at = null;
+    public ?array $metric = null;
+    public ?string $metric_identifier = null;
+    public ?string $most_recent_data_at = null;
+    public ?string $name = null;
+    public ?string $reference_name = null;
+    public ?string $suffix = null;
+    public ?string $tooltip_description = null;
+    public ?string $updated_at = null;
+    public ?bool $y_axis_hidden = null;
+    public ?float $y_axis_max = null;
+    public ?float $y_axis_min = null;
 }
 
 /** Request payload for Metric#update. */
@@ -344,6 +473,25 @@ class MetricUpdateData
 {
     public string $id;
     public string $page_id;
+    public ?int $backfill_percentage = null;
+    public ?bool $backfilled = null;
+    public ?string $created_at = null;
+    public ?array $data = null;
+    public ?int $decimal_places = null;
+    public ?bool $display = null;
+    public ?string $last_fetched_at = null;
+    public ?array $metric = null;
+    public ?string $metric_identifier = null;
+    public ?string $metrics_provider_id = null;
+    public ?string $most_recent_data_at = null;
+    public ?string $name = null;
+    public ?string $reference_name = null;
+    public ?string $suffix = null;
+    public ?string $tooltip_description = null;
+    public ?string $updated_at = null;
+    public ?bool $y_axis_hidden = null;
+    public ?float $y_axis_max = null;
+    public ?float $y_axis_min = null;
 }
 
 /** Request payload for Metric#remove. */
@@ -384,6 +532,14 @@ class MetricsProviderListMatch
 class MetricsProviderCreateData
 {
     public string $page_id;
+    public ?string $created_at = null;
+    public ?bool $disabled = null;
+    public ?string $id = null;
+    public ?string $last_revalidated_at = null;
+    public ?string $metric_base_uri = null;
+    public ?array $metrics_provider = null;
+    public ?string $type = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for MetricsProvider#update. */
@@ -391,6 +547,13 @@ class MetricsProviderUpdateData
 {
     public string $id;
     public string $page_id;
+    public ?string $created_at = null;
+    public ?bool $disabled = null;
+    public ?string $last_revalidated_at = null;
+    public ?string $metric_base_uri = null;
+    public ?array $metrics_provider = null;
+    public ?string $type = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for MetricsProvider#remove. */
@@ -404,28 +567,28 @@ class MetricsProviderRemoveMatch
 class Page
 {
     public ?float $activity_score = null;
-    public ?bool $allow_email_subscriber = null;
-    public ?bool $allow_incident_subscriber = null;
-    public ?bool $allow_page_subscriber = null;
-    public ?bool $allow_rss_atom_feed = null;
-    public ?bool $allow_sms_subscriber = null;
-    public ?bool $allow_webhook_subscriber = null;
+    public ?bool $allow_email_subscribers = null;
+    public ?bool $allow_incident_subscribers = null;
+    public ?bool $allow_page_subscribers = null;
+    public ?bool $allow_rss_atom_feeds = null;
+    public ?bool $allow_sms_subscribers = null;
+    public ?bool $allow_webhook_subscribers = null;
     public ?string $branding = null;
     public ?string $city = null;
     public ?string $country = null;
     public ?string $created_at = null;
-    public ?string $css_blue = null;
+    public ?string $css_blues = null;
     public ?string $css_body_background_color = null;
     public ?string $css_border_color = null;
     public ?string $css_font_color = null;
     public ?string $css_graph_color = null;
-    public ?string $css_green = null;
+    public ?string $css_greens = null;
     public ?string $css_light_font_color = null;
     public ?string $css_link_color = null;
     public ?string $css_no_data = null;
-    public ?string $css_orange = null;
-    public ?string $css_red = null;
-    public ?string $css_yellow = null;
+    public ?string $css_oranges = null;
+    public ?string $css_reds = null;
+    public ?string $css_yellows = null;
     public ?string $domain = null;
     public ?string $email_logo = null;
     public ?string $favicon_logo = null;
@@ -433,7 +596,7 @@ class Page
     public ?string $hero_cover = null;
     public ?bool $hidden_from_search = null;
     public ?string $id = null;
-    public ?string $ip_restriction = null;
+    public ?string $ip_restrictions = null;
     public ?string $name = null;
     public ?string $notifications_email_footer = null;
     public ?string $notifications_from_email = null;
@@ -448,7 +611,7 @@ class Page
     public ?string $twitter_username = null;
     public ?string $updated_at = null;
     public ?string $url = null;
-    public ?bool $viewers_must_be_team_member = null;
+    public ?bool $viewers_must_be_team_members = null;
 }
 
 /** Request payload for Page#load. */
@@ -461,28 +624,28 @@ class PageLoadMatch
 class PageListMatch
 {
     public ?float $activity_score = null;
-    public ?bool $allow_email_subscriber = null;
-    public ?bool $allow_incident_subscriber = null;
-    public ?bool $allow_page_subscriber = null;
-    public ?bool $allow_rss_atom_feed = null;
-    public ?bool $allow_sms_subscriber = null;
-    public ?bool $allow_webhook_subscriber = null;
+    public ?bool $allow_email_subscribers = null;
+    public ?bool $allow_incident_subscribers = null;
+    public ?bool $allow_page_subscribers = null;
+    public ?bool $allow_rss_atom_feeds = null;
+    public ?bool $allow_sms_subscribers = null;
+    public ?bool $allow_webhook_subscribers = null;
     public ?string $branding = null;
     public ?string $city = null;
     public ?string $country = null;
     public ?string $created_at = null;
-    public ?string $css_blue = null;
+    public ?string $css_blues = null;
     public ?string $css_body_background_color = null;
     public ?string $css_border_color = null;
     public ?string $css_font_color = null;
     public ?string $css_graph_color = null;
-    public ?string $css_green = null;
+    public ?string $css_greens = null;
     public ?string $css_light_font_color = null;
     public ?string $css_link_color = null;
     public ?string $css_no_data = null;
-    public ?string $css_orange = null;
-    public ?string $css_red = null;
-    public ?string $css_yellow = null;
+    public ?string $css_oranges = null;
+    public ?string $css_reds = null;
+    public ?string $css_yellows = null;
     public ?string $domain = null;
     public ?string $email_logo = null;
     public ?string $favicon_logo = null;
@@ -490,7 +653,7 @@ class PageListMatch
     public ?string $hero_cover = null;
     public ?bool $hidden_from_search = null;
     public ?string $id = null;
-    public ?string $ip_restriction = null;
+    public ?string $ip_restrictions = null;
     public ?string $name = null;
     public ?string $notifications_email_footer = null;
     public ?string $notifications_from_email = null;
@@ -505,26 +668,71 @@ class PageListMatch
     public ?string $twitter_username = null;
     public ?string $updated_at = null;
     public ?string $url = null;
-    public ?bool $viewers_must_be_team_member = null;
+    public ?bool $viewers_must_be_team_members = null;
 }
 
 /** Request payload for Page#update. */
 class PageUpdateData
 {
     public string $id;
+    public ?float $activity_score = null;
+    public ?bool $allow_email_subscribers = null;
+    public ?bool $allow_incident_subscribers = null;
+    public ?bool $allow_page_subscribers = null;
+    public ?bool $allow_rss_atom_feeds = null;
+    public ?bool $allow_sms_subscribers = null;
+    public ?bool $allow_webhook_subscribers = null;
+    public ?string $branding = null;
+    public ?string $city = null;
+    public ?string $country = null;
+    public ?string $created_at = null;
+    public ?string $css_blues = null;
+    public ?string $css_body_background_color = null;
+    public ?string $css_border_color = null;
+    public ?string $css_font_color = null;
+    public ?string $css_graph_color = null;
+    public ?string $css_greens = null;
+    public ?string $css_light_font_color = null;
+    public ?string $css_link_color = null;
+    public ?string $css_no_data = null;
+    public ?string $css_oranges = null;
+    public ?string $css_reds = null;
+    public ?string $css_yellows = null;
+    public ?string $domain = null;
+    public ?string $email_logo = null;
+    public ?string $favicon_logo = null;
+    public ?string $headline = null;
+    public ?string $hero_cover = null;
+    public ?bool $hidden_from_search = null;
+    public ?string $ip_restrictions = null;
+    public ?string $name = null;
+    public ?string $notifications_email_footer = null;
+    public ?string $notifications_from_email = null;
+    public ?array $page = null;
+    public ?string $page_description = null;
+    public ?string $state = null;
+    public ?string $subdomain = null;
+    public ?string $support_url = null;
+    public ?string $time_zone = null;
+    public ?string $transactional_logo = null;
+    public ?string $twitter_logo = null;
+    public ?string $twitter_username = null;
+    public ?string $updated_at = null;
+    public ?string $url = null;
+    public ?bool $viewers_must_be_team_members = null;
 }
 
 /** PageAccessGroup entity data model. */
 class PageAccessGroup
 {
-    public ?array $component_id = null;
+    public ?array $component_ids = null;
     public ?string $created_at = null;
     public ?string $external_identifier = null;
     public ?string $id = null;
-    public ?array $metric_id = null;
+    public ?array $metric_ids = null;
     public ?string $name = null;
     public ?array $page_access_group = null;
-    public ?array $page_access_user_id = null;
+    public ?array $page_access_user_ids = null;
     public ?string $page_id = null;
     public ?string $updated_at = null;
 }
@@ -546,6 +754,15 @@ class PageAccessGroupListMatch
 class PageAccessGroupCreateData
 {
     public string $id;
+    public ?array $component_ids = null;
+    public ?string $created_at = null;
+    public ?string $external_identifier = null;
+    public ?array $metric_ids = null;
+    public ?string $name = null;
+    public ?array $page_access_group = null;
+    public ?array $page_access_user_ids = null;
+    public ?string $page_id = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for PageAccessGroup#update. */
@@ -553,6 +770,14 @@ class PageAccessGroupUpdateData
 {
     public string $id;
     public string $page_id;
+    public ?array $component_ids = null;
+    public ?string $created_at = null;
+    public ?string $external_identifier = null;
+    public ?array $metric_ids = null;
+    public ?string $name = null;
+    public ?array $page_access_group = null;
+    public ?array $page_access_user_ids = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for PageAccessGroup#remove. */
@@ -566,13 +791,14 @@ class PageAccessGroupRemoveMatch
 /** PageAccessUser entity data model. */
 class PageAccessUser
 {
-    public array $component_id;
+    public array $component_ids;
     public ?string $created_at = null;
     public ?string $email = null;
     public ?string $external_login = null;
     public ?string $id = null;
-    public array $metric_id;
+    public array $metric_ids;
     public ?string $page_access_group_id = null;
+    public ?string $page_access_group_ids = null;
     public ?array $page_access_user = null;
     public ?string $page_id = null;
     public ?string $updated_at = null;
@@ -595,6 +821,16 @@ class PageAccessUserListMatch
 class PageAccessUserCreateData
 {
     public string $id;
+    public array $component_ids;
+    public ?string $created_at = null;
+    public ?string $email = null;
+    public ?string $external_login = null;
+    public array $metric_ids;
+    public ?string $page_access_group_id = null;
+    public ?string $page_access_group_ids = null;
+    public ?array $page_access_user = null;
+    public ?string $page_id = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for PageAccessUser#update. */
@@ -602,6 +838,15 @@ class PageAccessUserUpdateData
 {
     public string $id;
     public string $page_id;
+    public ?array $component_ids = null;
+    public ?string $created_at = null;
+    public ?string $email = null;
+    public ?string $external_login = null;
+    public ?array $metric_ids = null;
+    public ?string $page_access_group_id = null;
+    public ?string $page_access_group_ids = null;
+    public ?array $page_access_user = null;
+    public ?string $updated_at = null;
 }
 
 /** Request payload for PageAccessUser#remove. */
@@ -616,8 +861,8 @@ class PageAccessUserRemoveMatch
 /** Permission entity data model. */
 class Permission
 {
-    public ?array $data = null;
-    public ?array $page = null;
+    public ?array $pages = null;
+    public ?string $user_id = null;
 }
 
 /** Request payload for Permission#load. */
@@ -632,6 +877,8 @@ class PermissionUpdateData
 {
     public string $id;
     public string $organization_id;
+    public ?array $pages = null;
+    public ?string $user_id = null;
 }
 
 /** Postmortem entity data model. */
@@ -643,7 +890,7 @@ class Postmortem
     public ?string $body_updated_at = null;
     public ?string $created_at = null;
     public ?string $custom_tweet = null;
-    public ?bool $notify_subscriber = null;
+    public ?bool $notify_subscribers = null;
     public ?bool $notify_twitter = null;
     public array $postmortem;
     public ?string $preview_key = null;
@@ -663,6 +910,18 @@ class PostmortemUpdateData
 {
     public string $incident_id;
     public string $page_id;
+    public ?string $body = null;
+    public ?string $body_draft = null;
+    public ?string $body_draft_updated_at = null;
+    public ?string $body_updated_at = null;
+    public ?string $created_at = null;
+    public ?string $custom_tweet = null;
+    public ?bool $notify_subscribers = null;
+    public ?bool $notify_twitter = null;
+    public ?array $postmortem = null;
+    public ?string $preview_key = null;
+    public ?string $published_at = null;
+    public ?string $updated_at = null;
 }
 
 /** StatusEmbedConfig entity data model. */
@@ -687,13 +946,19 @@ class StatusEmbedConfigLoadMatch
 class StatusEmbedConfigUpdateData
 {
     public string $page_id;
+    public ?string $incident_background_color = null;
+    public ?string $incident_text_color = null;
+    public ?string $maintenance_background_color = null;
+    public ?string $maintenance_text_color = null;
+    public ?string $position = null;
+    public ?array $status_embed_config = null;
 }
 
 /** Subscriber entity data model. */
 class Subscriber
 {
-    public ?string $component = null;
-    public ?array $component_id = null;
+    public ?array $component_ids = null;
+    public ?string $components = null;
     public ?string $created_at = null;
     public ?string $display_phone_number = null;
     public ?string $email = null;
@@ -713,7 +978,8 @@ class Subscriber
     public ?int $sms = null;
     public ?string $state = null;
     public ?array $subscriber = null;
-    public ?int $team = null;
+    public string $subscribers;
+    public ?int $teams = null;
     public ?string $type = null;
     public ?int $webhook = null;
     public ?string $workspace_name = null;
@@ -739,6 +1005,32 @@ class SubscriberCreateData
 {
     public ?string $incident_id = null;
     public string $page_id;
+    public ?array $component_ids = null;
+    public ?string $components = null;
+    public ?string $created_at = null;
+    public ?string $display_phone_number = null;
+    public ?string $email = null;
+    public ?string $endpoint = null;
+    public ?string $id = null;
+    public ?int $integration_partner = null;
+    public ?string $mode = null;
+    public ?string $obfuscated_channel_name = null;
+    public ?string $page_access_user_id = null;
+    public ?string $phone_country = null;
+    public ?string $phone_number = null;
+    public ?string $purge_at = null;
+    public ?string $quarantined_at = null;
+    public ?bool $skip_confirmation_notification = null;
+    public ?bool $skip_unsubscription_notification = null;
+    public ?int $slack = null;
+    public ?int $sms = null;
+    public ?string $state = null;
+    public ?array $subscriber = null;
+    public string $subscribers;
+    public ?int $teams = null;
+    public ?string $type = null;
+    public ?int $webhook = null;
+    public ?string $workspace_name = null;
 }
 
 /** Request payload for Subscriber#update. */
@@ -746,6 +1038,31 @@ class SubscriberUpdateData
 {
     public string $id;
     public string $page_id;
+    public ?array $component_ids = null;
+    public ?string $components = null;
+    public ?string $created_at = null;
+    public ?string $display_phone_number = null;
+    public ?string $email = null;
+    public ?string $endpoint = null;
+    public ?int $integration_partner = null;
+    public ?string $mode = null;
+    public ?string $obfuscated_channel_name = null;
+    public ?string $page_access_user_id = null;
+    public ?string $phone_country = null;
+    public ?string $phone_number = null;
+    public ?string $purge_at = null;
+    public ?string $quarantined_at = null;
+    public ?bool $skip_confirmation_notification = null;
+    public ?bool $skip_unsubscription_notification = null;
+    public ?int $slack = null;
+    public ?int $sms = null;
+    public ?string $state = null;
+    public ?array $subscriber = null;
+    public ?string $subscribers = null;
+    public ?int $teams = null;
+    public ?string $type = null;
+    public ?int $webhook = null;
+    public ?string $workspace_name = null;
 }
 
 /** Request payload for Subscriber#remove. */
@@ -779,6 +1096,13 @@ class UserListMatch
 class UserCreateData
 {
     public string $organization_id;
+    public ?string $created_at = null;
+    public ?string $email = null;
+    public ?string $first_name = null;
+    public ?string $id = null;
+    public ?string $last_name = null;
+    public ?string $updated_at = null;
+    public array $user;
 }
 
 /** Request payload for User#remove. */

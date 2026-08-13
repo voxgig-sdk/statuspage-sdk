@@ -84,7 +84,7 @@ describe("SubscriberEntity", function()
 
     local subscriber_ref01_data_result, err = subscriber_ref01_ent:create(subscriber_ref01_data, nil)
     assert.is_nil(err)
-    subscriber_ref01_data = helpers.to_map(subscriber_ref01_data_result)
+    subscriber_ref01_data = helpers.to_map(type(subscriber_ref01_data_result) == 'table' and subscriber_ref01_data_result.data_get and subscriber_ref01_data_result:data_get() or subscriber_ref01_data_result)
     assert.is_not_nil(subscriber_ref01_data)
     assert.is_not_nil(subscriber_ref01_data["id"])
 
@@ -108,13 +108,13 @@ describe("SubscriberEntity", function()
       ["page_id"] = setup.idmap["page_id"],
     }
 
-    local subscriber_ref01_markdef_up0_name = "component"
+    local subscriber_ref01_markdef_up0_name = "components"
     local subscriber_ref01_markdef_up0_value = "Mark01-subscriber_ref01_" .. tostring(setup.now)
     subscriber_ref01_data_up0_up[subscriber_ref01_markdef_up0_name] = subscriber_ref01_markdef_up0_value
 
     local subscriber_ref01_resdata_up0_result, err = subscriber_ref01_ent:update(subscriber_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local subscriber_ref01_resdata_up0 = helpers.to_map(subscriber_ref01_resdata_up0_result)
+    local subscriber_ref01_resdata_up0 = helpers.to_map(type(subscriber_ref01_resdata_up0_result) == 'table' and subscriber_ref01_resdata_up0_result.data_get and subscriber_ref01_resdata_up0_result:data_get() or subscriber_ref01_resdata_up0_result)
     assert.is_not_nil(subscriber_ref01_resdata_up0)
     assert.are.equal(subscriber_ref01_resdata_up0["id"], subscriber_ref01_data_up0_up["id"])
     assert.are.equal(subscriber_ref01_resdata_up0[subscriber_ref01_markdef_up0_name], subscriber_ref01_markdef_up0_value)
@@ -125,7 +125,7 @@ describe("SubscriberEntity", function()
     }
     local subscriber_ref01_data_dt0_loaded, err = subscriber_ref01_ent:load(subscriber_ref01_match_dt0, nil)
     assert.is_nil(err)
-    local subscriber_ref01_data_dt0_load_result = helpers.to_map(subscriber_ref01_data_dt0_loaded)
+    local subscriber_ref01_data_dt0_load_result = helpers.to_map(type(subscriber_ref01_data_dt0_loaded) == 'table' and subscriber_ref01_data_dt0_loaded.data_get and subscriber_ref01_data_dt0_loaded:data_get() or subscriber_ref01_data_dt0_loaded)
     assert.is_not_nil(subscriber_ref01_data_dt0_load_result)
     assert.are.equal(subscriber_ref01_data_dt0_load_result["id"], subscriber_ref01_data["id"])
 

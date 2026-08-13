@@ -54,7 +54,7 @@ describe("PostmortemEntity", function()
 
     local postmortem_ref01_resdata_up0_result, err = postmortem_ref01_ent:update(postmortem_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local postmortem_ref01_resdata_up0 = helpers.to_map(postmortem_ref01_resdata_up0_result)
+    local postmortem_ref01_resdata_up0 = helpers.to_map(type(postmortem_ref01_resdata_up0_result) == 'table' and postmortem_ref01_resdata_up0_result.data_get and postmortem_ref01_resdata_up0_result:data_get() or postmortem_ref01_resdata_up0_result)
     assert.is_not_nil(postmortem_ref01_resdata_up0)
     assert.are.equal(postmortem_ref01_resdata_up0[postmortem_ref01_markdef_up0_name], postmortem_ref01_markdef_up0_value)
 

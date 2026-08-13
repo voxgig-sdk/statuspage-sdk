@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -42,7 +42,7 @@ class TestMetricsProviderEntity:
         assert len(seen) == 3
 
         # Inbound: streaming active -> yields each item from the feature.
-        from config import make_config
+        from statuspage_sdk.config import make_config
         cfg = make_config()
         if isinstance(cfg.get("feature"), dict) and "streaming" in cfg["feature"]:
             sdk = StatuspageSDK.test(
@@ -79,7 +79,7 @@ class TestMetricsProviderEntity:
             vs.getpath(setup["data"], "new.metrics_provider"), "metrics_provider_ref01"))
         metrics_provider_ref01_data["page_id"] = setup["idmap"]["page01"]
 
-        metrics_provider_ref01_data = helpers.to_map(metrics_provider_ref01_ent.create(metrics_provider_ref01_data, None))
+        metrics_provider_ref01_data = helpers.to_map(runner.entity_data(metrics_provider_ref01_ent.create(metrics_provider_ref01_data, None)))
         assert metrics_provider_ref01_data is not None
         assert metrics_provider_ref01_data["id"] is not None
 
@@ -106,7 +106,7 @@ class TestMetricsProviderEntity:
         metrics_provider_ref01_markdef_up0_value = "Mark01-metrics_provider_ref01_" + str(setup["now"])
         metrics_provider_ref01_data_up0_up[metrics_provider_ref01_markdef_up0_name] = metrics_provider_ref01_markdef_up0_value
 
-        metrics_provider_ref01_resdata_up0 = helpers.to_map(metrics_provider_ref01_ent.update(metrics_provider_ref01_data_up0_up, None))
+        metrics_provider_ref01_resdata_up0 = helpers.to_map(runner.entity_data(metrics_provider_ref01_ent.update(metrics_provider_ref01_data_up0_up, None)))
         assert metrics_provider_ref01_resdata_up0 is not None
         assert metrics_provider_ref01_resdata_up0["id"] == metrics_provider_ref01_data_up0_up["id"]
         assert metrics_provider_ref01_resdata_up0[metrics_provider_ref01_markdef_up0_name] == metrics_provider_ref01_markdef_up0_value
@@ -116,7 +116,7 @@ class TestMetricsProviderEntity:
             "id": metrics_provider_ref01_data["id"],
         }
         metrics_provider_ref01_data_dt0_loaded = metrics_provider_ref01_ent.load(metrics_provider_ref01_match_dt0, None)
-        metrics_provider_ref01_data_dt0_load_result = helpers.to_map(metrics_provider_ref01_data_dt0_loaded)
+        metrics_provider_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(metrics_provider_ref01_data_dt0_loaded))
         assert metrics_provider_ref01_data_dt0_load_result is not None
         assert metrics_provider_ref01_data_dt0_load_result["id"] == metrics_provider_ref01_data["id"]
 

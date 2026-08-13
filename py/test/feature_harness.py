@@ -14,12 +14,12 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import StatuspageControl
-from core.error import StatuspageError
-from core.result import StatuspageResult
-from core.spec import StatuspageSpec
+from statuspage_sdk.config import make_config
+from statuspage_sdk.features import _make_feature
+from statuspage_sdk.core.control import StatuspageControl
+from statuspage_sdk.core.error import StatuspageError
+from statuspage_sdk.core.result import StatuspageResult
+from statuspage_sdk.core.spec import StatuspageSpec
 
 
 # True when this SDK was generated with the named feature.

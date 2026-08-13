@@ -63,7 +63,7 @@ describe('IncidentTemplateEntity', async () => {
     let incident_template_ref01_data = setup.data.new.incident_template['incident_template_ref01']
     incident_template_ref01_data['page_id'] = setup.idmap['page01']
 
-    incident_template_ref01_data = await incident_template_ref01_ent.create(incident_template_ref01_data)
+    incident_template_ref01_data = (await incident_template_ref01_ent.create(incident_template_ref01_data)).data()
     assert(null != incident_template_ref01_data.id)
 
 
@@ -71,7 +71,7 @@ describe('IncidentTemplateEntity', async () => {
     const incident_template_ref01_match: any = {}
     incident_template_ref01_match['page_id'] = setup.idmap['page01']
 
-    const incident_template_ref01_list = await incident_template_ref01_ent.list(incident_template_ref01_match)
+    const incident_template_ref01_list = (await incident_template_ref01_ent.list(incident_template_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(incident_template_ref01_list, { id: incident_template_ref01_data.id })))
 

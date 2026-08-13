@@ -48,10 +48,15 @@ describe("PermissionEntity", function()
       ["organization_id"] = setup.idmap["organization_id"],
     }
 
+    local permission_ref01_markdef_up0_name = "user_id"
+    local permission_ref01_markdef_up0_value = "Mark01-permission_ref01_" .. tostring(setup.now)
+    permission_ref01_data_up0_up[permission_ref01_markdef_up0_name] = permission_ref01_markdef_up0_value
+
     local permission_ref01_resdata_up0_result, err = permission_ref01_ent:update(permission_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local permission_ref01_resdata_up0 = helpers.to_map(permission_ref01_resdata_up0_result)
+    local permission_ref01_resdata_up0 = helpers.to_map(type(permission_ref01_resdata_up0_result) == 'table' and permission_ref01_resdata_up0_result.data_get and permission_ref01_resdata_up0_result:data_get() or permission_ref01_resdata_up0_result)
     assert.is_not_nil(permission_ref01_resdata_up0)
+    assert.are.equal(permission_ref01_resdata_up0[permission_ref01_markdef_up0_name], permission_ref01_markdef_up0_value)
 
     -- LOAD
     local permission_ref01_match_dt0 = {}

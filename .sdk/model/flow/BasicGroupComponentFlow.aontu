@@ -43,7 +43,7 @@ main: kit: flow: BasicGroupComponentFlow:
         ref: "group_component_ref01",
         srcdatavar: "group_component_ref01_data",
         suffix: "_up0",
-        textfield: "component"
+        textfield: "components"
       }
 
       op: "update",

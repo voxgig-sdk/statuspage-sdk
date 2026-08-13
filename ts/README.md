@@ -37,10 +37,12 @@ const client = new StatuspageSDK({
 
 ### 2. List component records
 
-`list()` resolves to an array of Component objects — iterate it directly:
+`list()` resolves to an array of Component ENTITIES — every operation
+resolves to entities, not raw records. Iterate them directly, and call
+`.data()` on one for the record it holds:
 
 ```ts
-const components = await client.Component().list()
+const components = await client.Component().list({ page_id: "example" })
 
 for (const component of components) {
   console.log(component)
@@ -67,20 +69,21 @@ try {
 ### 4. Create, update, and remove
 
 ```ts
-// Create — returns the created Component
+// Create — returns the created Component ENTITY (.data() for the record)
 const created = await client.Component().create({
   page_id: 'example_page_id',
 })
 
-// Update — the id comes straight off the returned entity
+// Update — the id comes off the returned entity's data()
 const updated = await client.Component().update({
-  id: created.id!,
+  id: created.data().id!,
   page_id: 'example_page_id',
+  automation_email: 'example_automation_email',
 })
 
 // Remove
 await client.Component().remove({
-  id: created.id!,
+  id: created.data().id!,
   page_id: 'example_page_id',
 })
 ```
@@ -92,10 +95,10 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const components = await client.Component().list()
-  console.log(components)
+  const postmortem = await client.Postmortem().load({ incident_id: "example", page_id: "example" })
+  console.log(postmortem)
 } catch (err) {
-  console.error('list failed:', err)
+  console.error('load failed:', err)
 }
 ```
 
@@ -159,9 +162,10 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = StatuspageSDK.test()
 
-const component = await client.Component().list()
-// component is a bare entity populated with mock response data
-console.log(component)
+const postmortem = await client.Postmortem().load({ incident_id: 'example_incident_id', page_id: 'example_page_id' })
+// postmortem is the entity, populated with mock response data
+// — call postmortem.data() for the record itself
+console.log(postmortem)
 ```
 
 You can also use the instance method:
@@ -176,14 +180,14 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.Component()
+const entity = client.Postmortem()
 
 // First call runs the operation and stores its result
-await entity.list()
+await entity.load({ incident_id: 'example_incident_id', page_id: 'example_page_id' })
 
 // Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data.id)
+console.log(data)
 ```
 
 ### Add custom middleware
@@ -358,21 +362,14 @@ The `prepare()` method returns:
 | `group` |  |
 | `group_id` |  |
 | `id` |  |
-| `major_outage` |  |
 | `name` |  |
 | `only_show_if_degraded` |  |
 | `page_id` |  |
-| `partial_outage` |  |
 | `position` |  |
-| `range_end` |  |
-| `range_start` |  |
-| `related_event` |  |
 | `showcase` |  |
 | `start_date` |  |
 | `status` |  |
 | `updated_at` |  |
-| `uptime_percentage` |  |
-| `warning` |  |
 
 Operations: create, list, load, patch, remove, update.
 
@@ -382,15 +379,8 @@ API path: `/pages/{page_id}/components/{component_id}/page_access_groups`
 
 | Field | Description |
 | --- | --- |
-| `id` |  |
-| `major_outage` |  |
-| `name` |  |
-| `partial_outage` |  |
-| `range_end` |  |
-| `range_start` |  |
-| `related_event` |  |
-| `uptime_percentage` |  |
-| `warning` |  |
+| `component_id` |  |
+| `incidents` |  |
 
 Operations: load.
 
@@ -400,8 +390,8 @@ API path: `/pages/{page_id}/component-groups/{id}/uptime`
 
 | Field | Description |
 | --- | --- |
-| `component` |  |
 | `component_group` |  |
+| `components` |  |
 | `created_at` |  |
 | `description` |  |
 | `id` |  |
@@ -422,14 +412,13 @@ API path: `/pages/{page_id}/component-groups`
 | `auto_transition_deliver_notifications_at_start` |  |
 | `auto_transition_to_maintenance_state` |  |
 | `auto_transition_to_operational_state` |  |
-| `component` |  |
+| `components` |  |
 | `created_at` |  |
 | `id` |  |
 | `impact` |  |
 | `impact_override` |  |
 | `incident` |  |
-| `incident_impact` |  |
-| `incident_update` |  |
+| `incident_updates` |  |
 | `metadata` |  |
 | `monitoring_at` |  |
 | `name` |  |
@@ -437,10 +426,10 @@ API path: `/pages/{page_id}/component-groups`
 | `postmortem_body` |  |
 | `postmortem_body_last_updated_at` |  |
 | `postmortem_ignored` |  |
-| `postmortem_notified_subscriber` |  |
+| `postmortem_notified_subscribers` |  |
 | `postmortem_notified_twitter` |  |
 | `postmortem_published_at` |  |
-| `reminder_interval` |  |
+| `reminder_intervals` |  |
 | `resolved_at` |  |
 | `scheduled_auto_completed` |  |
 | `scheduled_auto_in_progress` |  |
@@ -479,11 +468,11 @@ API path: `/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/
 | Field | Description |
 | --- | --- |
 | `body` |  |
-| `component` |  |
+| `components` |  |
 | `group_id` |  |
 | `id` |  |
 | `name` |  |
-| `should_send_notification` |  |
+| `should_send_notifications` |  |
 | `should_tweet` |  |
 | `template` |  |
 | `title` |  |
@@ -497,11 +486,11 @@ API path: `/pages/{page_id}/incident_templates`
 
 | Field | Description |
 | --- | --- |
-| `affected_component` |  |
+| `affected_components` |  |
 | `body` |  |
 | `created_at` |  |
 | `custom_tweet` |  |
-| `deliver_notification` |  |
+| `deliver_notifications` |  |
 | `display_at` |  |
 | `id` |  |
 | `incident_id` |  |
@@ -524,7 +513,7 @@ API path: `/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_u
 | `backfilled` |  |
 | `created_at` |  |
 | `data` |  |
-| `decimal_place` |  |
+| `decimal_places` |  |
 | `display` |  |
 | `id` |  |
 | `last_fetched_at` |  |
@@ -568,28 +557,28 @@ API path: `/pages/{page_id}/metrics_providers`
 | Field | Description |
 | --- | --- |
 | `activity_score` |  |
-| `allow_email_subscriber` |  |
-| `allow_incident_subscriber` |  |
-| `allow_page_subscriber` |  |
-| `allow_rss_atom_feed` |  |
-| `allow_sms_subscriber` |  |
-| `allow_webhook_subscriber` |  |
+| `allow_email_subscribers` |  |
+| `allow_incident_subscribers` |  |
+| `allow_page_subscribers` |  |
+| `allow_rss_atom_feeds` |  |
+| `allow_sms_subscribers` |  |
+| `allow_webhook_subscribers` |  |
 | `branding` |  |
 | `city` |  |
 | `country` |  |
 | `created_at` |  |
-| `css_blue` |  |
+| `css_blues` |  |
 | `css_body_background_color` |  |
 | `css_border_color` |  |
 | `css_font_color` |  |
 | `css_graph_color` |  |
-| `css_green` |  |
+| `css_greens` |  |
 | `css_light_font_color` |  |
 | `css_link_color` |  |
 | `css_no_data` |  |
-| `css_orange` |  |
-| `css_red` |  |
-| `css_yellow` |  |
+| `css_oranges` |  |
+| `css_reds` |  |
+| `css_yellows` |  |
 | `domain` |  |
 | `email_logo` |  |
 | `favicon_logo` |  |
@@ -597,7 +586,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `hero_cover` |  |
 | `hidden_from_search` |  |
 | `id` |  |
-| `ip_restriction` |  |
+| `ip_restrictions` |  |
 | `name` |  |
 | `notifications_email_footer` |  |
 | `notifications_from_email` |  |
@@ -612,7 +601,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `twitter_username` |  |
 | `updated_at` |  |
 | `url` |  |
-| `viewers_must_be_team_member` |  |
+| `viewers_must_be_team_members` |  |
 
 Operations: list, load, patch, update.
 
@@ -622,14 +611,14 @@ API path: `/pages`
 
 | Field | Description |
 | --- | --- |
-| `component_id` |  |
+| `component_ids` |  |
 | `created_at` |  |
 | `external_identifier` |  |
 | `id` |  |
-| `metric_id` |  |
+| `metric_ids` |  |
 | `name` |  |
 | `page_access_group` |  |
-| `page_access_user_id` |  |
+| `page_access_user_ids` |  |
 | `page_id` |  |
 | `updated_at` |  |
 
@@ -641,13 +630,14 @@ API path: `/pages/{page_id}/page_access_groups/{page_access_group_id}/components
 
 | Field | Description |
 | --- | --- |
-| `component_id` |  |
+| `component_ids` |  |
 | `created_at` |  |
 | `email` |  |
 | `external_login` |  |
 | `id` |  |
-| `metric_id` |  |
+| `metric_ids` |  |
 | `page_access_group_id` |  |
+| `page_access_group_ids` |  |
 | `page_access_user` |  |
 | `page_id` |  |
 | `updated_at` |  |
@@ -660,8 +650,8 @@ API path: `/pages/{page_id}/page_access_users/{page_access_user_id}/components`
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `page` |  |
+| `pages` |  |
+| `user_id` |  |
 
 Operations: load, update.
 
@@ -677,7 +667,7 @@ API path: `/organizations/{organization_id}/permissions/{user_id}`
 | `body_updated_at` |  |
 | `created_at` |  |
 | `custom_tweet` |  |
-| `notify_subscriber` |  |
+| `notify_subscribers` |  |
 | `notify_twitter` |  |
 | `postmortem` |  |
 | `preview_key` |  |
@@ -708,8 +698,8 @@ API path: `/pages/{page_id}/status_embed_config`
 
 | Field | Description |
 | --- | --- |
-| `component` |  |
-| `component_id` |  |
+| `component_ids` |  |
+| `components` |  |
 | `created_at` |  |
 | `display_phone_number` |  |
 | `email` |  |
@@ -729,7 +719,8 @@ API path: `/pages/{page_id}/status_embed_config`
 | `sms` |  |
 | `state` |  |
 | `subscriber` |  |
-| `team` |  |
+| `subscribers` |  |
+| `teams` |  |
 | `type` |  |
 | `webhook` |  |
 | `workspace_name` |  |
@@ -785,21 +776,14 @@ Create an instance: `const component = client.Component()`
 | `group` | `boolean` |  |
 | `group_id` | `string` |  |
 | `id` | `string` |  |
-| `major_outage` | `number` |  |
 | `name` | `string` |  |
 | `only_show_if_degraded` | `boolean` |  |
 | `page_id` | `string` |  |
-| `partial_outage` | `number` |  |
 | `position` | `number` |  |
-| `range_end` | `string` |  |
-| `range_start` | `string` |  |
-| `related_event` | `Record<string, any>` |  |
 | `showcase` | `boolean` |  |
 | `start_date` | `string` |  |
 | `status` | `string` |  |
 | `updated_at` | `string` |  |
-| `uptime_percentage` | `number` |  |
-| `warning` | `string` |  |
 
 #### Example: Load
 
@@ -810,7 +794,7 @@ const component = await client.Component().load({ id: 'component_id', page_id: '
 #### Example: List
 
 ```ts
-const components = await client.Component().list()
+const components = await client.Component().list({ page_id: "example" })
 ```
 
 #### Example: Create
@@ -836,15 +820,8 @@ Create an instance: `const component_group_uptime = client.ComponentGroupUptime(
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` |  |
-| `major_outage` | `number` |  |
-| `name` | `string` |  |
-| `partial_outage` | `number` |  |
-| `range_end` | `string` |  |
-| `range_start` | `string` |  |
-| `related_event` | `Record<string, any>` |  |
-| `uptime_percentage` | `number` |  |
-| `warning` | `string` |  |
+| `component_id` | `string` |  |
+| `incidents` | `Record<string, any>` |  |
 
 #### Example: Load
 
@@ -871,8 +848,8 @@ Create an instance: `const group_component = client.GroupComponent()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `string` |  |
 | `component_group` | `Record<string, any>` |  |
+| `components` | `string` |  |
 | `created_at` | `string` |  |
 | `description` | `string` |  |
 | `id` | `string` |  |
@@ -890,7 +867,7 @@ const group_component = await client.GroupComponent().load({ id: 'group_componen
 #### Example: List
 
 ```ts
-const group_components = await client.GroupComponent().list()
+const group_components = await client.GroupComponent().list({ page_id: "example" })
 ```
 
 #### Example: Create
@@ -898,6 +875,7 @@ const group_components = await client.GroupComponent().list()
 ```ts
 const group_component = await client.GroupComponent().create({
   page_id: 'example_page_id',
+  component_group: {},
 })
 ```
 
@@ -924,14 +902,13 @@ Create an instance: `const incident = client.Incident()`
 | `auto_transition_deliver_notifications_at_start` | `boolean` |  |
 | `auto_transition_to_maintenance_state` | `boolean` |  |
 | `auto_transition_to_operational_state` | `boolean` |  |
-| `component` | `any[]` |  |
+| `components` | `any[]` |  |
 | `created_at` | `string` |  |
 | `id` | `string` |  |
 | `impact` | `string` |  |
 | `impact_override` | `string` |  |
 | `incident` | `Record<string, any>` |  |
-| `incident_impact` | `any[]` |  |
-| `incident_update` | `any[]` |  |
+| `incident_updates` | `any[]` |  |
 | `metadata` | `Record<string, any>` |  |
 | `monitoring_at` | `string` |  |
 | `name` | `string` |  |
@@ -939,10 +916,10 @@ Create an instance: `const incident = client.Incident()`
 | `postmortem_body` | `string` |  |
 | `postmortem_body_last_updated_at` | `string` |  |
 | `postmortem_ignored` | `boolean` |  |
-| `postmortem_notified_subscriber` | `boolean` |  |
+| `postmortem_notified_subscribers` | `boolean` |  |
 | `postmortem_notified_twitter` | `boolean` |  |
 | `postmortem_published_at` | `boolean` |  |
-| `reminder_interval` | `string` |  |
+| `reminder_intervals` | `string` |  |
 | `resolved_at` | `string` |  |
 | `scheduled_auto_completed` | `boolean` |  |
 | `scheduled_auto_in_progress` | `boolean` |  |
@@ -963,7 +940,7 @@ const incident = await client.Incident().load({ id: 'incident_id', page_id: 'pag
 #### Example: List
 
 ```ts
-const incidents = await client.Incident().list()
+const incidents = await client.Incident().list({ page_id: "example" })
 ```
 
 #### Example: Create
@@ -971,6 +948,7 @@ const incidents = await client.Incident().list()
 ```ts
 const incident = await client.Incident().create({
   page_id: 'example_page_id',
+  incident: {},
 })
 ```
 
@@ -1023,11 +1001,11 @@ Create an instance: `const incident_template = client.IncidentTemplate()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `body` | `string` |  |
-| `component` | `any[]` |  |
+| `components` | `any[]` |  |
 | `group_id` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
-| `should_send_notification` | `boolean` |  |
+| `should_send_notifications` | `boolean` |  |
 | `should_tweet` | `boolean` |  |
 | `template` | `Record<string, any>` |  |
 | `title` | `string` |  |
@@ -1036,7 +1014,7 @@ Create an instance: `const incident_template = client.IncidentTemplate()`
 #### Example: List
 
 ```ts
-const incident_templates = await client.IncidentTemplate().list()
+const incident_templates = await client.IncidentTemplate().list({ page_id: "example" })
 ```
 
 #### Example: Create
@@ -1044,6 +1022,7 @@ const incident_templates = await client.IncidentTemplate().list()
 ```ts
 const incident_template = await client.IncidentTemplate().create({
   page_id: 'example_page_id',
+  template: {},
 })
 ```
 
@@ -1062,11 +1041,11 @@ Create an instance: `const incident_update = client.IncidentUpdate()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `affected_component` | `any[]` |  |
+| `affected_components` | `any[]` |  |
 | `body` | `string` |  |
 | `created_at` | `string` |  |
 | `custom_tweet` | `string` |  |
-| `deliver_notification` | `boolean` |  |
+| `deliver_notifications` | `boolean` |  |
 | `display_at` | `string` |  |
 | `id` | `string` |  |
 | `incident_id` | `string` |  |
@@ -1100,7 +1079,7 @@ Create an instance: `const metric = client.Metric()`
 | `backfilled` | `boolean` |  |
 | `created_at` | `string` |  |
 | `data` | `Record<string, any>` |  |
-| `decimal_place` | `number` |  |
+| `decimal_places` | `number` |  |
 | `display` | `boolean` |  |
 | `id` | `string` |  |
 | `last_fetched_at` | `string` |  |
@@ -1126,7 +1105,7 @@ const metric = await client.Metric().load({ id: 'metric_id', page_id: 'page_id' 
 #### Example: List
 
 ```ts
-const metrics = await client.Metric().list()
+const metrics = await client.Metric().list({ page_access_user_id: "example", page_id: "example" })
 ```
 
 #### Example: Create
@@ -1135,6 +1114,7 @@ const metrics = await client.Metric().list()
 const metric = await client.Metric().create({
   metrics_provider_id: 'example_metrics_provider_id',
   page_id: 'example_page_id',
+  data: {},
 })
 ```
 
@@ -1176,7 +1156,7 @@ const metrics_provider = await client.MetricsProvider().load({ id: 'metrics_prov
 #### Example: List
 
 ```ts
-const metrics_providers = await client.MetricsProvider().list()
+const metrics_providers = await client.MetricsProvider().list({ page_id: "example" })
 ```
 
 #### Example: Create
@@ -1205,28 +1185,28 @@ Create an instance: `const page = client.Page()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `activity_score` | `number` |  |
-| `allow_email_subscriber` | `boolean` |  |
-| `allow_incident_subscriber` | `boolean` |  |
-| `allow_page_subscriber` | `boolean` |  |
-| `allow_rss_atom_feed` | `boolean` |  |
-| `allow_sms_subscriber` | `boolean` |  |
-| `allow_webhook_subscriber` | `boolean` |  |
+| `allow_email_subscribers` | `boolean` |  |
+| `allow_incident_subscribers` | `boolean` |  |
+| `allow_page_subscribers` | `boolean` |  |
+| `allow_rss_atom_feeds` | `boolean` |  |
+| `allow_sms_subscribers` | `boolean` |  |
+| `allow_webhook_subscribers` | `boolean` |  |
 | `branding` | `string` |  |
 | `city` | `string` |  |
 | `country` | `string` |  |
 | `created_at` | `string` |  |
-| `css_blue` | `string` |  |
+| `css_blues` | `string` |  |
 | `css_body_background_color` | `string` |  |
 | `css_border_color` | `string` |  |
 | `css_font_color` | `string` |  |
 | `css_graph_color` | `string` |  |
-| `css_green` | `string` |  |
+| `css_greens` | `string` |  |
 | `css_light_font_color` | `string` |  |
 | `css_link_color` | `string` |  |
 | `css_no_data` | `string` |  |
-| `css_orange` | `string` |  |
-| `css_red` | `string` |  |
-| `css_yellow` | `string` |  |
+| `css_oranges` | `string` |  |
+| `css_reds` | `string` |  |
+| `css_yellows` | `string` |  |
 | `domain` | `string` |  |
 | `email_logo` | `string` |  |
 | `favicon_logo` | `string` |  |
@@ -1234,7 +1214,7 @@ Create an instance: `const page = client.Page()`
 | `hero_cover` | `string` |  |
 | `hidden_from_search` | `boolean` |  |
 | `id` | `string` |  |
-| `ip_restriction` | `string` |  |
+| `ip_restrictions` | `string` |  |
 | `name` | `string` |  |
 | `notifications_email_footer` | `string` |  |
 | `notifications_from_email` | `string` |  |
@@ -1249,7 +1229,7 @@ Create an instance: `const page = client.Page()`
 | `twitter_username` | `string` |  |
 | `updated_at` | `string` |  |
 | `url` | `string` |  |
-| `viewers_must_be_team_member` | `boolean` |  |
+| `viewers_must_be_team_members` | `boolean` |  |
 
 #### Example: Load
 
@@ -1282,14 +1262,14 @@ Create an instance: `const page_access_group = client.PageAccessGroup()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `any[]` |  |
+| `component_ids` | `any[]` |  |
 | `created_at` | `string` |  |
 | `external_identifier` | `string` |  |
 | `id` | `string` |  |
-| `metric_id` | `any[]` |  |
+| `metric_ids` | `any[]` |  |
 | `name` | `string` |  |
 | `page_access_group` | `Record<string, any>` |  |
-| `page_access_user_id` | `any[]` |  |
+| `page_access_user_ids` | `any[]` |  |
 | `page_id` | `string` |  |
 | `updated_at` | `string` |  |
 
@@ -1302,7 +1282,7 @@ const page_access_group = await client.PageAccessGroup().load({ id: 'page_access
 #### Example: List
 
 ```ts
-const page_access_groups = await client.PageAccessGroup().list()
+const page_access_groups = await client.PageAccessGroup().list({ id: "example_id" })
 ```
 
 #### Example: Create
@@ -1332,13 +1312,14 @@ Create an instance: `const page_access_user = client.PageAccessUser()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `any[]` |  |
+| `component_ids` | `any[]` |  |
 | `created_at` | `string` |  |
 | `email` | `string` |  |
 | `external_login` | `string` |  |
 | `id` | `string` |  |
-| `metric_id` | `any[]` |  |
+| `metric_ids` | `any[]` |  |
 | `page_access_group_id` | `string` |  |
+| `page_access_group_ids` | `string` |  |
 | `page_access_user` | `Record<string, any>` |  |
 | `page_id` | `string` |  |
 | `updated_at` | `string` |  |
@@ -1352,7 +1333,7 @@ const page_access_user = await client.PageAccessUser().load({ id: 'page_access_u
 #### Example: List
 
 ```ts
-const page_access_users = await client.PageAccessUser().list()
+const page_access_users = await client.PageAccessUser().list({ id: "example_id" })
 ```
 
 #### Example: Create
@@ -1360,6 +1341,8 @@ const page_access_users = await client.PageAccessUser().list()
 ```ts
 const page_access_user = await client.PageAccessUser().create({
   id: 'example_id',
+  component_ids: [],
+  metric_ids: [],
 })
 ```
 
@@ -1379,8 +1362,8 @@ Create an instance: `const permission = client.Permission()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `Record<string, any>` |  |
-| `page` | `Record<string, any>` |  |
+| `pages` | `Record<string, any>` |  |
+| `user_id` | `string` |  |
 
 #### Example: Load
 
@@ -1410,7 +1393,7 @@ Create an instance: `const postmortem = client.Postmortem()`
 | `body_updated_at` | `string` |  |
 | `created_at` | `string` |  |
 | `custom_tweet` | `string` |  |
-| `notify_subscriber` | `boolean` |  |
+| `notify_subscribers` | `boolean` |  |
 | `notify_twitter` | `boolean` |  |
 | `postmortem` | `Record<string, any>` |  |
 | `preview_key` | `string` |  |
@@ -1472,8 +1455,8 @@ Create an instance: `const subscriber = client.Subscriber()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `string` |  |
-| `component_id` | `any[]` |  |
+| `component_ids` | `any[]` |  |
+| `components` | `string` |  |
 | `created_at` | `string` |  |
 | `display_phone_number` | `string` |  |
 | `email` | `string` |  |
@@ -1493,7 +1476,8 @@ Create an instance: `const subscriber = client.Subscriber()`
 | `sms` | `number` |  |
 | `state` | `string` |  |
 | `subscriber` | `Record<string, any>` |  |
-| `team` | `number` |  |
+| `subscribers` | `string` |  |
+| `teams` | `number` |  |
 | `type` | `string` |  |
 | `webhook` | `number` |  |
 | `workspace_name` | `string` |  |
@@ -1507,7 +1491,7 @@ const subscriber = await client.Subscriber().load({ id: 'subscriber_id', page_id
 #### Example: List
 
 ```ts
-const subscribers = await client.Subscriber().list()
+const subscribers = await client.Subscriber().list({ page_id: "example" })
 ```
 
 #### Example: Create
@@ -1515,6 +1499,7 @@ const subscribers = await client.Subscriber().list()
 ```ts
 const subscriber = await client.Subscriber().create({
   page_id: 'example_page_id',
+  subscribers: 'example_subscribers',
 })
 ```
 
@@ -1547,7 +1532,7 @@ Create an instance: `const user = client.User()`
 #### Example: List
 
 ```ts
-const users = await client.User().list()
+const users = await client.User().list({ organization_id: "example" })
 ```
 
 #### Example: Create
@@ -1555,6 +1540,7 @@ const users = await client.User().list()
 ```ts
 const user = await client.User().create({
   organization_id: 'example_organization_id',
+  user: {},
 })
 ```
 
@@ -1623,16 +1609,16 @@ import { StatuspageSDK } from '@voxgig-sdk/statuspage'
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const component = client.Component()
-await component.list()
+const postmortem = client.Postmortem()
+await postmortem.load({ incident_id: "example", page_id: "example" })
 
-// component.data() now returns the component data from the last `list`
-// component.match() returns the last match criteria
+// postmortem.data() now returns the postmortem data from the last `load`
+// postmortem.match() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

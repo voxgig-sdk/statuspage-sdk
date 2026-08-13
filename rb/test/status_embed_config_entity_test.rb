@@ -49,7 +49,7 @@ class StatusEmbedConfigEntityTest < Minitest::Test
     status_embed_config_ref01_data_up0_up[status_embed_config_ref01_markdef_up0_name] = status_embed_config_ref01_markdef_up0_value
 
     status_embed_config_ref01_resdata_up0_result = status_embed_config_ref01_ent.update(status_embed_config_ref01_data_up0_up, nil)
-    status_embed_config_ref01_resdata_up0 = Helpers.to_map(status_embed_config_ref01_resdata_up0_result)
+    status_embed_config_ref01_resdata_up0 = Helpers.to_map(status_embed_config_ref01_resdata_up0_result.respond_to?(:data_get) ? status_embed_config_ref01_resdata_up0_result.data_get : status_embed_config_ref01_resdata_up0_result)
     assert !status_embed_config_ref01_resdata_up0.nil?
     assert_equal status_embed_config_ref01_resdata_up0[status_embed_config_ref01_markdef_up0_name], status_embed_config_ref01_markdef_up0_value
 

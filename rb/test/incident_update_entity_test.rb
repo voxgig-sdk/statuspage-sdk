@@ -52,7 +52,7 @@ class IncidentUpdateEntityTest < Minitest::Test
     incident_update_ref01_data_up0_up[incident_update_ref01_markdef_up0_name] = incident_update_ref01_markdef_up0_value
 
     incident_update_ref01_resdata_up0_result = incident_update_ref01_ent.update(incident_update_ref01_data_up0_up, nil)
-    incident_update_ref01_resdata_up0 = Helpers.to_map(incident_update_ref01_resdata_up0_result)
+    incident_update_ref01_resdata_up0 = Helpers.to_map(incident_update_ref01_resdata_up0_result.respond_to?(:data_get) ? incident_update_ref01_resdata_up0_result.data_get : incident_update_ref01_resdata_up0_result)
     assert !incident_update_ref01_resdata_up0.nil?
     assert_equal incident_update_ref01_resdata_up0["id"], incident_update_ref01_data_up0_up["id"]
     assert_equal incident_update_ref01_resdata_up0[incident_update_ref01_markdef_up0_name], incident_update_ref01_markdef_up0_value

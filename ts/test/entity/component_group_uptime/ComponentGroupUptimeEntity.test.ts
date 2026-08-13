@@ -59,12 +59,9 @@ describe('ComponentGroupUptimeEntity', async () => {
 
     let component_group_uptime_ref01_data = Object.values(setup.data.existing.component_group_uptime)[0] as any
 
-    // LOAD
+    // LOAD: skipped — no entity id field and load requires path params.
+    // Entity-var is declared here so later flow steps still compile.
     const component_group_uptime_ref01_ent = client.ComponentGroupUptime()
-    const component_group_uptime_ref01_match_dt0: any = {}
-    component_group_uptime_ref01_match_dt0.id = component_group_uptime_ref01_data.id
-    const component_group_uptime_ref01_data_dt0 = await component_group_uptime_ref01_ent.load(component_group_uptime_ref01_match_dt0)
-    assert(component_group_uptime_ref01_data_dt0.id === component_group_uptime_ref01_data.id)
 
 
   })

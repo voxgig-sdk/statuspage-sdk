@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -48,13 +48,9 @@ class TestComponentGroupUptimeEntity:
 
         # LOAD
         component_group_uptime_ref01_ent = client.ComponentGroupUptime(None)
-        component_group_uptime_ref01_match_dt0 = {
-            "id": component_group_uptime_ref01_data["id"],
-        }
+        component_group_uptime_ref01_match_dt0 = {}
         component_group_uptime_ref01_data_dt0_loaded = component_group_uptime_ref01_ent.load(component_group_uptime_ref01_match_dt0, None)
-        component_group_uptime_ref01_data_dt0_load_result = helpers.to_map(component_group_uptime_ref01_data_dt0_loaded)
-        assert component_group_uptime_ref01_data_dt0_load_result is not None
-        assert component_group_uptime_ref01_data_dt0_load_result["id"] == component_group_uptime_ref01_data["id"]
+        assert component_group_uptime_ref01_data_dt0_loaded is not None
 
 
 

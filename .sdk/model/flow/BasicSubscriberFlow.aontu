@@ -44,7 +44,7 @@ main: kit: flow: BasicSubscriberFlow:
         ref: "subscriber_ref01",
         srcdatavar: "subscriber_ref01_data",
         suffix: "_up0",
-        textfield: "component"
+        textfield: "components"
       }
 
       op: "update",

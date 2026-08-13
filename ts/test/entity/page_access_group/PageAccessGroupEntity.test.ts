@@ -63,7 +63,7 @@ describe('PageAccessGroupEntity', async () => {
     let page_access_group_ref01_data = setup.data.new.page_access_group['page_access_group_ref01']
     page_access_group_ref01_data['page_id'] = setup.idmap['page01']
 
-    page_access_group_ref01_data = await page_access_group_ref01_ent.create(page_access_group_ref01_data)
+    page_access_group_ref01_data = (await page_access_group_ref01_ent.create(page_access_group_ref01_data)).data()
     assert(null != page_access_group_ref01_data.id)
 
 
@@ -71,7 +71,7 @@ describe('PageAccessGroupEntity', async () => {
     const page_access_group_ref01_match: any = {}
     page_access_group_ref01_match['page_id'] = setup.idmap['page01']
 
-    const page_access_group_ref01_list = await page_access_group_ref01_ent.list(page_access_group_ref01_match)
+    const page_access_group_ref01_list = (await page_access_group_ref01_ent.list(page_access_group_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(page_access_group_ref01_list, { id: page_access_group_ref01_data.id })))
 
@@ -84,7 +84,7 @@ describe('PageAccessGroupEntity', async () => {
     const page_access_group_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-page_access_group_ref01_' + setup.now }
     ;(page_access_group_ref01_data_up0 as any)[page_access_group_ref01_markdef_up0.name] = page_access_group_ref01_markdef_up0.value
 
-    const page_access_group_ref01_resdata_up0 = await page_access_group_ref01_ent.update(page_access_group_ref01_data_up0)
+    const page_access_group_ref01_resdata_up0 = (await page_access_group_ref01_ent.update(page_access_group_ref01_data_up0)).data()
     assert(page_access_group_ref01_resdata_up0.id === page_access_group_ref01_data_up0.id)
 
     assert((page_access_group_ref01_resdata_up0 as any)[page_access_group_ref01_markdef_up0.name] === page_access_group_ref01_markdef_up0.value)
@@ -93,7 +93,7 @@ describe('PageAccessGroupEntity', async () => {
     // LOAD
     const page_access_group_ref01_match_dt0: any = {}
     page_access_group_ref01_match_dt0.id = page_access_group_ref01_data.id
-    const page_access_group_ref01_data_dt0 = await page_access_group_ref01_ent.load(page_access_group_ref01_match_dt0)
+    const page_access_group_ref01_data_dt0 = (await page_access_group_ref01_ent.load(page_access_group_ref01_match_dt0)).data()
     assert(page_access_group_ref01_data_dt0.id === page_access_group_ref01_data.id)
 
 
@@ -106,7 +106,7 @@ describe('PageAccessGroupEntity', async () => {
     const page_access_group_ref01_match_rt0: any = {}
     page_access_group_ref01_match_rt0['page_id'] = setup.idmap['page01']
 
-    const page_access_group_ref01_list_rt0 = await page_access_group_ref01_ent.list(page_access_group_ref01_match_rt0)
+    const page_access_group_ref01_list_rt0 = (await page_access_group_ref01_ent.list(page_access_group_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(page_access_group_ref01_list_rt0, { id: page_access_group_ref01_data.id })))
 

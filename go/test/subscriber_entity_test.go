@@ -109,7 +109,7 @@ func TestSubscriberEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		subscriberRef01Data = core.ToMapAny(subscriberRef01DataResult)
+		subscriberRef01Data = core.ToMapAny(entityData(subscriberRef01DataResult))
 		if subscriberRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -142,7 +142,7 @@ func TestSubscriberEntity(t *testing.T) {
 			"page_id": setup.idmap["page_id"],
 		}
 
-		subscriberRef01MarkdefUp0Name := "component"
+		subscriberRef01MarkdefUp0Name := "components"
 		subscriberRef01MarkdefUp0Value := fmt.Sprintf("Mark01-subscriber_ref01_%d", setup.now)
 		subscriberRef01DataUp0Up[subscriberRef01MarkdefUp0Name] = subscriberRef01MarkdefUp0Value
 
@@ -150,7 +150,7 @@ func TestSubscriberEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		subscriberRef01ResdataUp0 := core.ToMapAny(subscriberRef01ResdataUp0Result)
+		subscriberRef01ResdataUp0 := core.ToMapAny(entityData(subscriberRef01ResdataUp0Result))
 		if subscriberRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}
@@ -169,7 +169,7 @@ func TestSubscriberEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		subscriberRef01DataDt0LoadResult := core.ToMapAny(subscriberRef01DataDt0Loaded)
+		subscriberRef01DataDt0LoadResult := core.ToMapAny(entityData(subscriberRef01DataDt0Loaded))
 		if subscriberRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}

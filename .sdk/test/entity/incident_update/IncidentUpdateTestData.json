@@ -2,11 +2,11 @@
   "existing": {
     "incident_update": {
       "INCIDENT_UPDATE00": {
-        "affected_component": [],
+        "affected_components": [],
         "body": "s8d",
         "created_at": "s8e",
         "custom_tweet": "s8f",
-        "deliver_notification": true,
+        "deliver_notifications": true,
         "display_at": "s91",
         "id": "INCIDENT_UPDATE00",
         "incident_id": "INCIDENT01",
@@ -19,11 +19,11 @@
         "page_id": "PAGE01"
       },
       "INCIDENT_UPDATE01": {
-        "affected_component": [],
+        "affected_components": [],
         "body": "s119",
         "created_at": "s11a",
         "custom_tweet": "s11b",
-        "deliver_notification": true,
+        "deliver_notifications": true,
         "display_at": "s11d",
         "id": "INCIDENT_UPDATE01",
         "incident_id": "INCIDENT01",
@@ -36,11 +36,11 @@
         "page_id": "PAGE01"
       },
       "INCIDENT_UPDATE02": {
-        "affected_component": [],
+        "affected_components": [],
         "body": "s1a5",
         "created_at": "s1a6",
         "custom_tweet": "s1a7",
-        "deliver_notification": true,
+        "deliver_notifications": true,
         "display_at": "s1a9",
         "id": "INCIDENT_UPDATE02",
         "incident_id": "INCIDENT01",
@@ -57,11 +57,11 @@
   "new": {
     "incident_update": {
       "incident_update_ref01": {
-        "affected_component": [],
+        "affected_components": [],
         "body": "s231",
         "created_at": "s232",
         "custom_tweet": "s233",
-        "deliver_notification": true,
+        "deliver_notifications": true,
         "display_at": "s235",
         "incident_id": "INCIDENT01",
         "incident_update": {},

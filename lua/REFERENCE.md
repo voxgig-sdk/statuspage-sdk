@@ -166,21 +166,14 @@ local component = client:Component(nil)
 | `group` | `boolean` | No |  |
 | `group_id` | `string` | No |  |
 | `id` | `string` | No |  |
-| `major_outage` | `number` | No |  |
 | `name` | `string` | No |  |
 | `only_show_if_degraded` | `boolean` | No |  |
 | `page_id` | `string` | No |  |
-| `partial_outage` | `number` | No |  |
 | `position` | `number` | No |  |
-| `range_end` | `string` | No |  |
-| `range_start` | `string` | No |  |
-| `related_event` | `table` | No |  |
 | `showcase` | `boolean` | No |  |
 | `start_date` | `string` | No |  |
 | `status` | `string` | No |  |
 | `updated_at` | `string` | No |  |
-| `uptime_percentage` | `number` | No |  |
-| `warning` | `string` | No |  |
 
 ### Operations
 
@@ -270,15 +263,8 @@ local component_group_uptime = client:ComponentGroupUptime(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `string` | No |  |
-| `major_outage` | `number` | No |  |
-| `name` | `string` | No |  |
-| `partial_outage` | `number` | No |  |
-| `range_end` | `string` | No |  |
-| `range_start` | `string` | No |  |
-| `related_event` | `table` | No |  |
-| `uptime_percentage` | `number` | No |  |
-| `warning` | `string` | No |  |
+| `component_id` | `string` | No |  |
+| `incidents` | `table` | No |  |
 
 ### Operations
 
@@ -330,8 +316,8 @@ local group_component = client:GroupComponent(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `string` | No |  |
 | `component_group` | `table` | Yes |  |
+| `components` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `description` | `string` | No |  |
 | `id` | `string` | No |  |
@@ -349,6 +335,7 @@ Create a new entity with the given data.
 ```lua
 local result, err = client:GroupComponent():create({
   page_id = --[[ string ]],
+  component_group = --[[ table ]],
 })
 ```
 
@@ -432,14 +419,13 @@ local incident = client:Incident(nil)
 | `auto_transition_deliver_notifications_at_start` | `boolean` | No |  |
 | `auto_transition_to_maintenance_state` | `boolean` | No |  |
 | `auto_transition_to_operational_state` | `boolean` | No |  |
-| `component` | `table` | No |  |
+| `components` | `table` | No |  |
 | `created_at` | `string` | No |  |
 | `id` | `string` | No |  |
 | `impact` | `string` | No |  |
 | `impact_override` | `string` | No |  |
 | `incident` | `table` | Yes |  |
-| `incident_impact` | `table` | No |  |
-| `incident_update` | `table` | No |  |
+| `incident_updates` | `table` | No |  |
 | `metadata` | `table` | No |  |
 | `monitoring_at` | `string` | No |  |
 | `name` | `string` | No |  |
@@ -447,10 +433,10 @@ local incident = client:Incident(nil)
 | `postmortem_body` | `string` | No |  |
 | `postmortem_body_last_updated_at` | `string` | No |  |
 | `postmortem_ignored` | `boolean` | No |  |
-| `postmortem_notified_subscriber` | `boolean` | No |  |
+| `postmortem_notified_subscribers` | `boolean` | No |  |
 | `postmortem_notified_twitter` | `boolean` | No |  |
 | `postmortem_published_at` | `boolean` | No |  |
-| `reminder_interval` | `string` | No |  |
+| `reminder_intervals` | `string` | No |  |
 | `resolved_at` | `string` | No |  |
 | `scheduled_auto_completed` | `boolean` | No |  |
 | `scheduled_auto_in_progress` | `boolean` | No |  |
@@ -470,14 +456,13 @@ local incident = client:Incident(nil)
 | `auto_transition_deliver_notifications_at_start` | - | - | - | - | - |
 | `auto_transition_to_maintenance_state` | - | - | - | - | - |
 | `auto_transition_to_operational_state` | - | - | - | - | - |
-| `component` | - | - | - | - | - |
+| `components` | - | - | - | - | - |
 | `created_at` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `impact` | - | - | - | - | - |
 | `impact_override` | - | - | - | - | - |
 | `incident` | - | - | - | Yes | - |
-| `incident_impact` | - | - | - | - | - |
-| `incident_update` | - | - | - | - | - |
+| `incident_updates` | - | - | - | - | - |
 | `metadata` | - | - | - | - | - |
 | `monitoring_at` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
@@ -485,10 +470,10 @@ local incident = client:Incident(nil)
 | `postmortem_body` | - | - | - | - | - |
 | `postmortem_body_last_updated_at` | - | - | - | - | - |
 | `postmortem_ignored` | - | - | - | - | - |
-| `postmortem_notified_subscriber` | - | - | - | - | - |
+| `postmortem_notified_subscribers` | - | - | - | - | - |
 | `postmortem_notified_twitter` | - | - | - | - | - |
 | `postmortem_published_at` | - | - | - | - | - |
-| `reminder_interval` | - | - | - | - | - |
+| `reminder_intervals` | - | - | - | - | - |
 | `resolved_at` | - | - | - | - | - |
 | `scheduled_auto_completed` | - | - | - | - | - |
 | `scheduled_auto_in_progress` | - | - | - | - | - |
@@ -509,6 +494,7 @@ Create a new entity with the given data.
 ```lua
 local result, err = client:Incident():create({
   page_id = --[[ string ]],
+  incident = --[[ table ]],
 })
 ```
 
@@ -685,11 +671,11 @@ local incident_template = client:IncidentTemplate(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `body` | `string` | No |  |
-| `component` | `table` | No |  |
+| `components` | `table` | No |  |
 | `group_id` | `string` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
-| `should_send_notification` | `boolean` | No |  |
+| `should_send_notifications` | `boolean` | No |  |
 | `should_tweet` | `boolean` | No |  |
 | `template` | `table` | Yes |  |
 | `title` | `string` | No |  |
@@ -704,6 +690,7 @@ Create a new entity with the given data.
 ```lua
 local result, err = client:IncidentTemplate():create({
   page_id = --[[ string ]],
+  template = --[[ table ]],
 })
 ```
 
@@ -755,11 +742,11 @@ local incident_update = client:IncidentUpdate(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `affected_component` | `table` | No |  |
+| `affected_components` | `table` | No |  |
 | `body` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `custom_tweet` | `string` | No |  |
-| `deliver_notification` | `boolean` | No |  |
+| `deliver_notifications` | `boolean` | No |  |
 | `display_at` | `string` | No |  |
 | `id` | `string` | No |  |
 | `incident_id` | `string` | No |  |
@@ -829,7 +816,7 @@ local metric = client:Metric(nil)
 | `backfilled` | `boolean` | No |  |
 | `created_at` | `string` | No |  |
 | `data` | `table` | Yes |  |
-| `decimal_place` | `number` | No |  |
+| `decimal_places` | `number` | No |  |
 | `display` | `boolean` | No |  |
 | `id` | `string` | No |  |
 | `last_fetched_at` | `string` | No |  |
@@ -856,6 +843,7 @@ Create a new entity with the given data.
 local result, err = client:Metric():create({
   metrics_provider_id = --[[ string ]],
   page_id = --[[ string ]],
+  data = --[[ table ]],
 })
 ```
 
@@ -1034,28 +1022,28 @@ local page = client:Page(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `activity_score` | `number` | No |  |
-| `allow_email_subscriber` | `boolean` | No |  |
-| `allow_incident_subscriber` | `boolean` | No |  |
-| `allow_page_subscriber` | `boolean` | No |  |
-| `allow_rss_atom_feed` | `boolean` | No |  |
-| `allow_sms_subscriber` | `boolean` | No |  |
-| `allow_webhook_subscriber` | `boolean` | No |  |
+| `allow_email_subscribers` | `boolean` | No |  |
+| `allow_incident_subscribers` | `boolean` | No |  |
+| `allow_page_subscribers` | `boolean` | No |  |
+| `allow_rss_atom_feeds` | `boolean` | No |  |
+| `allow_sms_subscribers` | `boolean` | No |  |
+| `allow_webhook_subscribers` | `boolean` | No |  |
 | `branding` | `string` | No |  |
 | `city` | `string` | No |  |
 | `country` | `string` | No |  |
 | `created_at` | `string` | No |  |
-| `css_blue` | `string` | No |  |
+| `css_blues` | `string` | No |  |
 | `css_body_background_color` | `string` | No |  |
 | `css_border_color` | `string` | No |  |
 | `css_font_color` | `string` | No |  |
 | `css_graph_color` | `string` | No |  |
-| `css_green` | `string` | No |  |
+| `css_greens` | `string` | No |  |
 | `css_light_font_color` | `string` | No |  |
 | `css_link_color` | `string` | No |  |
 | `css_no_data` | `string` | No |  |
-| `css_orange` | `string` | No |  |
-| `css_red` | `string` | No |  |
-| `css_yellow` | `string` | No |  |
+| `css_oranges` | `string` | No |  |
+| `css_reds` | `string` | No |  |
+| `css_yellows` | `string` | No |  |
 | `domain` | `string` | No |  |
 | `email_logo` | `string` | No |  |
 | `favicon_logo` | `string` | No |  |
@@ -1063,7 +1051,7 @@ local page = client:Page(nil)
 | `hero_cover` | `string` | No |  |
 | `hidden_from_search` | `boolean` | No |  |
 | `id` | `string` | No |  |
-| `ip_restriction` | `string` | No |  |
+| `ip_restrictions` | `string` | No |  |
 | `name` | `string` | No |  |
 | `notifications_email_footer` | `string` | No |  |
 | `notifications_from_email` | `string` | No |  |
@@ -1078,7 +1066,7 @@ local page = client:Page(nil)
 | `twitter_username` | `string` | No |  |
 | `updated_at` | `string` | No |  |
 | `url` | `string` | No |  |
-| `viewers_must_be_team_member` | `boolean` | No |  |
+| `viewers_must_be_team_members` | `boolean` | No |  |
 
 ### Operations
 
@@ -1149,14 +1137,14 @@ local page_access_group = client:PageAccessGroup(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `table` | No |  |
+| `component_ids` | `table` | No |  |
 | `created_at` | `string` | No |  |
 | `external_identifier` | `string` | No |  |
 | `id` | `string` | No |  |
-| `metric_id` | `table` | No |  |
+| `metric_ids` | `table` | No |  |
 | `name` | `string` | No |  |
 | `page_access_group` | `table` | No |  |
-| `page_access_user_id` | `table` | No |  |
+| `page_access_user_ids` | `table` | No |  |
 | `page_id` | `string` | No |  |
 | `updated_at` | `string` | No |  |
 
@@ -1164,14 +1152,14 @@ local page_access_group = client:PageAccessGroup(nil)
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `component_id` | - | - | Yes | - | - |
+| `component_ids` | - | - | Yes | - | - |
 | `created_at` | - | - | - | - | - |
 | `external_identifier` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
-| `metric_id` | - | - | - | - | - |
+| `metric_ids` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
 | `page_access_group` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
+| `page_access_user_ids` | - | - | - | - | - |
 | `page_id` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 
@@ -1263,13 +1251,14 @@ local page_access_user = client:PageAccessUser(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `table` | Yes |  |
+| `component_ids` | `table` | Yes |  |
 | `created_at` | `string` | No |  |
 | `email` | `string` | No |  |
 | `external_login` | `string` | No |  |
 | `id` | `string` | No |  |
-| `metric_id` | `table` | Yes |  |
+| `metric_ids` | `table` | Yes |  |
 | `page_access_group_id` | `string` | No |  |
+| `page_access_group_ids` | `string` | No |  |
 | `page_access_user` | `table` | No |  |
 | `page_id` | `string` | No |  |
 | `updated_at` | `string` | No |  |
@@ -1283,6 +1272,8 @@ Create a new entity with the given data.
 ```lua
 local result, err = client:PageAccessUser():create({
   id = --[[ string ]],
+  component_ids = --[[ table ]],
+  metric_ids = --[[ table ]],
 })
 ```
 
@@ -1362,8 +1353,8 @@ local permission = client:Permission(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `table` | No |  |
-| `page` | `table` | No |  |
+| `pages` | `table` | No |  |
+| `user_id` | `string` | No |  |
 
 ### Operations
 
@@ -1433,7 +1424,7 @@ local postmortem = client:Postmortem(nil)
 | `body_updated_at` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `custom_tweet` | `string` | No |  |
-| `notify_subscriber` | `boolean` | No |  |
+| `notify_subscribers` | `boolean` | No |  |
 | `notify_twitter` | `boolean` | No |  |
 | `postmortem` | `table` | Yes |  |
 | `preview_key` | `string` | No |  |
@@ -1450,7 +1441,7 @@ local postmortem = client:Postmortem(nil)
 | `body_updated_at` | - | - |
 | `created_at` | - | - |
 | `custom_tweet` | - | - |
-| `notify_subscriber` | - | - |
+| `notify_subscribers` | - | - |
 | `notify_twitter` | - | - |
 | `postmortem` | - | Yes |
 | `preview_key` | - | - |
@@ -1588,8 +1579,8 @@ local subscriber = client:Subscriber(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `string` | No |  |
-| `component_id` | `table` | No |  |
+| `component_ids` | `table` | No |  |
+| `components` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `display_phone_number` | `string` | No |  |
 | `email` | `string` | No |  |
@@ -1609,40 +1600,11 @@ local subscriber = client:Subscriber(nil)
 | `sms` | `number` | No |  |
 | `state` | `string` | No |  |
 | `subscriber` | `table` | No |  |
-| `team` | `number` | No |  |
+| `subscribers` | `string` | Yes |  |
+| `teams` | `number` | No |  |
 | `type` | `string` | No |  |
 | `webhook` | `number` | No |  |
 | `workspace_name` | `string` | No |  |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `component` | - | - | - | - | - |
-| `component_id` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `display_phone_number` | - | - | - | - | - |
-| `email` | - | - | - | - | - |
-| `endpoint` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `integration_partner` | - | - | - | - | - |
-| `mode` | - | - | - | - | - |
-| `obfuscated_channel_name` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
-| `phone_country` | - | - | - | - | - |
-| `phone_number` | - | - | - | - | - |
-| `purge_at` | - | - | - | - | - |
-| `quarantined_at` | - | - | - | - | - |
-| `skip_confirmation_notification` | - | - | - | - | - |
-| `skip_unsubscription_notification` | - | - | - | - | - |
-| `slack` | - | - | - | - | - |
-| `sms` | - | - | - | - | - |
-| `state` | - | - | - | - | - |
-| `subscriber` | - | - | Yes | - | - |
-| `team` | - | - | - | - | - |
-| `type` | - | - | - | - | - |
-| `webhook` | - | - | - | - | - |
-| `workspace_name` | - | - | - | - | - |
 
 ### Operations
 
@@ -1653,6 +1615,7 @@ Create a new entity with the given data.
 ```lua
 local result, err = client:Subscriber():create({
   page_id = --[[ string ]],
+  subscribers = --[[ string ]],
 })
 ```
 
@@ -1750,6 +1713,7 @@ Create a new entity with the given data.
 ```lua
 local result, err = client:User():create({
   organization_id = --[[ string ]],
+  user = --[[ table ]],
 })
 ```
 

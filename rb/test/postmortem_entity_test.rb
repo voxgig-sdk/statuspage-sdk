@@ -50,7 +50,7 @@ class PostmortemEntityTest < Minitest::Test
     postmortem_ref01_data_up0_up[postmortem_ref01_markdef_up0_name] = postmortem_ref01_markdef_up0_value
 
     postmortem_ref01_resdata_up0_result = postmortem_ref01_ent.update(postmortem_ref01_data_up0_up, nil)
-    postmortem_ref01_resdata_up0 = Helpers.to_map(postmortem_ref01_resdata_up0_result)
+    postmortem_ref01_resdata_up0 = Helpers.to_map(postmortem_ref01_resdata_up0_result.respond_to?(:data_get) ? postmortem_ref01_resdata_up0_result.data_get : postmortem_ref01_resdata_up0_result)
     assert !postmortem_ref01_resdata_up0.nil?
     assert_equal postmortem_ref01_resdata_up0[postmortem_ref01_markdef_up0_name], postmortem_ref01_markdef_up0_value
 

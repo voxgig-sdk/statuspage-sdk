@@ -2,55 +2,65 @@
   "existing": {
     "page_access_user": {
       "PAGE_ACCESS_USER00": {
-        "component_id": "COMPONENT01",
-        "created_at": "s65",
-        "email": "s66",
-        "external_login": "s67",
+        "component_ids": [],
+        "created_at": "s6f",
+        "email": "s70",
+        "external_login": "s71",
         "id": "PAGE_ACCESS_USER00",
-        "metric_id": "METRIC01",
+        "metric_ids": [],
         "page_access_group_id": "PAGE_ACCESS_GROUP01",
+        "page_access_group_ids": "s75",
         "page_access_user": {},
         "page_id": "PAGE01",
-        "updated_at": "s6d"
+        "updated_at": "s78",
+        "component_id": "COMPONENT01",
+        "metric_id": "METRIC01"
       },
       "PAGE_ACCESS_USER01": {
-        "component_id": "COMPONENT01",
-        "created_at": "sc9",
-        "email": "sca",
-        "external_login": "scb",
+        "component_ids": [],
+        "created_at": "sdd",
+        "email": "sde",
+        "external_login": "sdf",
         "id": "PAGE_ACCESS_USER01",
-        "metric_id": "METRIC01",
+        "metric_ids": [],
         "page_access_group_id": "PAGE_ACCESS_GROUP01",
+        "page_access_group_ids": "se3",
         "page_access_user": {},
         "page_id": "PAGE01",
-        "updated_at": "sd1"
+        "updated_at": "se6",
+        "component_id": "COMPONENT01",
+        "metric_id": "METRIC01"
       },
       "PAGE_ACCESS_USER02": {
-        "component_id": "COMPONENT01",
-        "created_at": "s12d",
-        "email": "s12e",
-        "external_login": "s12f",
+        "component_ids": [],
+        "created_at": "s14b",
+        "email": "s14c",
+        "external_login": "s14d",
         "id": "PAGE_ACCESS_USER02",
-        "metric_id": "METRIC01",
+        "metric_ids": [],
         "page_access_group_id": "PAGE_ACCESS_GROUP01",
+        "page_access_group_ids": "s151",
         "page_access_user": {},
         "page_id": "PAGE01",
-        "updated_at": "s135"
+        "updated_at": "s154",
+        "component_id": "COMPONENT01",
+        "metric_id": "METRIC01"
       }
     }
   },
   "new": {
     "page_access_user": {
       "page_access_user_ref01": {
-        "component_id": "COMPONENT01",
-        "created_at": "s191",
-        "email": "s192",
-        "external_login": "s193",
-        "metric_id": "METRIC01",
+        "component_ids": [],
+        "created_at": "s1b9",
+        "email": "s1ba",
+        "external_login": "s1bb",
+        "metric_ids": [],
         "page_access_group_id": "PAGE_ACCESS_GROUP01",
+        "page_access_group_ids": "s1bf",
         "page_access_user": {},
         "page_id": "PAGE01",
-        "updated_at": "s199"
+        "updated_at": "s1c2"
       }
     }
   }

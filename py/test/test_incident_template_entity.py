@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -42,7 +42,7 @@ class TestIncidentTemplateEntity:
         assert len(seen) == 3
 
         # Inbound: streaming active -> yields each item from the feature.
-        from config import make_config
+        from statuspage_sdk.config import make_config
         cfg = make_config()
         if isinstance(cfg.get("feature"), dict) and "streaming" in cfg["feature"]:
             sdk = StatuspageSDK.test(
@@ -79,7 +79,7 @@ class TestIncidentTemplateEntity:
             vs.getpath(setup["data"], "new.incident_template"), "incident_template_ref01"))
         incident_template_ref01_data["page_id"] = setup["idmap"]["page01"]
 
-        incident_template_ref01_data = helpers.to_map(incident_template_ref01_ent.create(incident_template_ref01_data, None))
+        incident_template_ref01_data = helpers.to_map(runner.entity_data(incident_template_ref01_ent.create(incident_template_ref01_data, None)))
         assert incident_template_ref01_data is not None
         assert incident_template_ref01_data["id"] is not None
 

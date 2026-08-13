@@ -2,6 +2,7 @@ package sdktest
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -65,13 +66,20 @@ func TestPermissionEntity(t *testing.T) {
 			"organization_id": setup.idmap["organization_id"],
 		}
 
+		permissionRef01MarkdefUp0Name := "user_id"
+		permissionRef01MarkdefUp0Value := fmt.Sprintf("Mark01-permission_ref01_%d", setup.now)
+		permissionRef01DataUp0Up[permissionRef01MarkdefUp0Name] = permissionRef01MarkdefUp0Value
+
 		permissionRef01ResdataUp0Result, err := permissionRef01Ent.Update(permissionRef01DataUp0Up, nil)
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		permissionRef01ResdataUp0 := core.ToMapAny(permissionRef01ResdataUp0Result)
+		permissionRef01ResdataUp0 := core.ToMapAny(entityData(permissionRef01ResdataUp0Result))
 		if permissionRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
+		}
+		if permissionRef01ResdataUp0[permissionRef01MarkdefUp0Name] != permissionRef01MarkdefUp0Value {
+			t.Fatalf("expected %s to be updated, got %v", permissionRef01MarkdefUp0Name, permissionRef01ResdataUp0[permissionRef01MarkdefUp0Name])
 		}
 
 		// LOAD

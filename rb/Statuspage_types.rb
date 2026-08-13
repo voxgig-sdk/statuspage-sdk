@@ -31,9 +31,6 @@
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] major_outage
-#   @return [Integer, nil]
-#
 # @!attribute [rw] name
 #   @return [String, nil]
 #
@@ -43,20 +40,8 @@
 # @!attribute [rw] page_id
 #   @return [String, nil]
 #
-# @!attribute [rw] partial_outage
-#   @return [Integer, nil]
-#
 # @!attribute [rw] position
 #   @return [Integer, nil]
-#
-# @!attribute [rw] range_end
-#   @return [String, nil]
-#
-# @!attribute [rw] range_start
-#   @return [String, nil]
-#
-# @!attribute [rw] related_event
-#   @return [Hash, nil]
 #
 # @!attribute [rw] showcase
 #   @return [Boolean, nil]
@@ -69,12 +54,6 @@
 #
 # @!attribute [rw] updated_at
 #   @return [String, nil]
-#
-# @!attribute [rw] uptime_percentage
-#   @return [Float, nil]
-#
-# @!attribute [rw] warning
-#   @return [String, nil]
 Component = Struct.new(
   :automation_email,
   :component,
@@ -83,21 +62,14 @@ Component = Struct.new(
   :group,
   :group_id,
   :id,
-  :major_outage,
   :name,
   :only_show_if_degraded,
   :page_id,
-  :partial_outage,
   :position,
-  :range_end,
-  :range_start,
-  :related_event,
   :showcase,
   :start_date,
   :status,
   :updated_at,
-  :uptime_percentage,
-  :warning,
   keyword_init: true
 )
 
@@ -135,8 +107,64 @@ ComponentListMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] automation_email
+#   @return [String, nil]
+#
+# @!attribute [rw] component
+#   @return [Hash, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] description
+#   @return [String, nil]
+#
+# @!attribute [rw] group
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] group_id
+#   @return [String, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] only_show_if_degraded
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] position
+#   @return [Integer, nil]
+#
+# @!attribute [rw] showcase
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] start_date
+#   @return [String, nil]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 ComponentCreateData = Struct.new(
   :page_id,
+  :automation_email,
+  :component,
+  :created_at,
+  :description,
+  :group,
+  :group_id,
+  :id,
+  :name,
+  :only_show_if_degraded,
+  :position,
+  :showcase,
+  :start_date,
+  :status,
+  :updated_at,
   keyword_init: true
 )
 
@@ -147,9 +175,61 @@ ComponentCreateData = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] automation_email
+#   @return [String, nil]
+#
+# @!attribute [rw] component
+#   @return [Hash, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] description
+#   @return [String, nil]
+#
+# @!attribute [rw] group
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] group_id
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] only_show_if_degraded
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] position
+#   @return [Integer, nil]
+#
+# @!attribute [rw] showcase
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] start_date
+#   @return [String, nil]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 ComponentUpdateData = Struct.new(
   :id,
   :page_id,
+  :automation_email,
+  :component,
+  :created_at,
+  :description,
+  :group,
+  :group_id,
+  :name,
+  :only_show_if_degraded,
+  :position,
+  :showcase,
+  :start_date,
+  :status,
+  :updated_at,
   keyword_init: true
 )
 
@@ -168,42 +248,14 @@ ComponentRemoveMatch = Struct.new(
 
 # ComponentGroupUptime entity data model.
 #
-# @!attribute [rw] id
+# @!attribute [rw] component_id
 #   @return [String, nil]
 #
-# @!attribute [rw] major_outage
-#   @return [Integer, nil]
-#
-# @!attribute [rw] name
-#   @return [String, nil]
-#
-# @!attribute [rw] partial_outage
-#   @return [Integer, nil]
-#
-# @!attribute [rw] range_end
-#   @return [String, nil]
-#
-# @!attribute [rw] range_start
-#   @return [String, nil]
-#
-# @!attribute [rw] related_event
+# @!attribute [rw] incidents
 #   @return [Hash, nil]
-#
-# @!attribute [rw] uptime_percentage
-#   @return [Float, nil]
-#
-# @!attribute [rw] warning
-#   @return [String, nil]
 ComponentGroupUptime = Struct.new(
-  :id,
-  :major_outage,
-  :name,
-  :partial_outage,
-  :range_end,
-  :range_start,
-  :related_event,
-  :uptime_percentage,
-  :warning,
+  :component_id,
+  :incidents,
   keyword_init: true
 )
 
@@ -222,11 +274,11 @@ ComponentGroupUptimeLoadMatch = Struct.new(
 
 # GroupComponent entity data model.
 #
-# @!attribute [rw] component
-#   @return [String, nil]
-#
 # @!attribute [rw] component_group
 #   @return [Hash]
+#
+# @!attribute [rw] components
+#   @return [String, nil]
 #
 # @!attribute [rw] created_at
 #   @return [String, nil]
@@ -249,8 +301,8 @@ ComponentGroupUptimeLoadMatch = Struct.new(
 # @!attribute [rw] updated_at
 #   @return [String, nil]
 GroupComponent = Struct.new(
-  :component,
   :component_group,
+  :components,
   :created_at,
   :description,
   :id,
@@ -287,8 +339,40 @@ GroupComponentListMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] component_group
+#   @return [Hash]
+#
+# @!attribute [rw] components
+#   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] description
+#   @return [String, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] position
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 GroupComponentCreateData = Struct.new(
   :page_id,
+  :component_group,
+  :components,
+  :created_at,
+  :description,
+  :id,
+  :name,
+  :position,
+  :updated_at,
   keyword_init: true
 )
 
@@ -299,9 +383,37 @@ GroupComponentCreateData = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] component_group
+#   @return [Hash, nil]
+#
+# @!attribute [rw] components
+#   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] description
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] position
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 GroupComponentUpdateData = Struct.new(
   :id,
   :page_id,
+  :component_group,
+  :components,
+  :created_at,
+  :description,
+  :name,
+  :position,
+  :updated_at,
   keyword_init: true
 )
 
@@ -332,7 +444,7 @@ GroupComponentRemoveMatch = Struct.new(
 # @!attribute [rw] auto_transition_to_operational_state
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] component
+# @!attribute [rw] components
 #   @return [Array, nil]
 #
 # @!attribute [rw] created_at
@@ -350,10 +462,7 @@ GroupComponentRemoveMatch = Struct.new(
 # @!attribute [rw] incident
 #   @return [Hash]
 #
-# @!attribute [rw] incident_impact
-#   @return [Array, nil]
-#
-# @!attribute [rw] incident_update
+# @!attribute [rw] incident_updates
 #   @return [Array, nil]
 #
 # @!attribute [rw] metadata
@@ -377,7 +486,7 @@ GroupComponentRemoveMatch = Struct.new(
 # @!attribute [rw] postmortem_ignored
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] postmortem_notified_subscriber
+# @!attribute [rw] postmortem_notified_subscribers
 #   @return [Boolean, nil]
 #
 # @!attribute [rw] postmortem_notified_twitter
@@ -386,7 +495,7 @@ GroupComponentRemoveMatch = Struct.new(
 # @!attribute [rw] postmortem_published_at
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] reminder_interval
+# @!attribute [rw] reminder_intervals
 #   @return [String, nil]
 #
 # @!attribute [rw] resolved_at
@@ -423,14 +532,13 @@ Incident = Struct.new(
   :auto_transition_deliver_notifications_at_start,
   :auto_transition_to_maintenance_state,
   :auto_transition_to_operational_state,
-  :component,
+  :components,
   :created_at,
   :id,
   :impact,
   :impact_override,
   :incident,
-  :incident_impact,
-  :incident_update,
+  :incident_updates,
   :metadata,
   :monitoring_at,
   :name,
@@ -438,10 +546,10 @@ Incident = Struct.new(
   :postmortem_body,
   :postmortem_body_last_updated_at,
   :postmortem_ignored,
-  :postmortem_notified_subscriber,
+  :postmortem_notified_subscribers,
   :postmortem_notified_twitter,
   :postmortem_published_at,
-  :reminder_interval,
+  :reminder_intervals,
   :resolved_at,
   :scheduled_auto_completed,
   :scheduled_auto_in_progress,
@@ -481,8 +589,132 @@ IncidentListMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] auto_transition_deliver_notifications_at_end
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] auto_transition_deliver_notifications_at_start
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] auto_transition_to_maintenance_state
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] auto_transition_to_operational_state
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] components
+#   @return [Array, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] impact
+#   @return [String, nil]
+#
+# @!attribute [rw] impact_override
+#   @return [String, nil]
+#
+# @!attribute [rw] incident
+#   @return [Hash]
+#
+# @!attribute [rw] incident_updates
+#   @return [Array, nil]
+#
+# @!attribute [rw] metadata
+#   @return [Hash, nil]
+#
+# @!attribute [rw] monitoring_at
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] postmortem_body
+#   @return [String, nil]
+#
+# @!attribute [rw] postmortem_body_last_updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] postmortem_ignored
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] postmortem_notified_subscribers
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] postmortem_notified_twitter
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] postmortem_published_at
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] reminder_intervals
+#   @return [String, nil]
+#
+# @!attribute [rw] resolved_at
+#   @return [String, nil]
+#
+# @!attribute [rw] scheduled_auto_completed
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] scheduled_auto_in_progress
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] scheduled_for
+#   @return [String, nil]
+#
+# @!attribute [rw] scheduled_remind_prior
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] scheduled_reminded_at
+#   @return [String, nil]
+#
+# @!attribute [rw] scheduled_until
+#   @return [String, nil]
+#
+# @!attribute [rw] shortlink
+#   @return [String, nil]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 IncidentCreateData = Struct.new(
   :page_id,
+  :auto_transition_deliver_notifications_at_end,
+  :auto_transition_deliver_notifications_at_start,
+  :auto_transition_to_maintenance_state,
+  :auto_transition_to_operational_state,
+  :components,
+  :created_at,
+  :id,
+  :impact,
+  :impact_override,
+  :incident,
+  :incident_updates,
+  :metadata,
+  :monitoring_at,
+  :name,
+  :postmortem_body,
+  :postmortem_body_last_updated_at,
+  :postmortem_ignored,
+  :postmortem_notified_subscribers,
+  :postmortem_notified_twitter,
+  :postmortem_published_at,
+  :reminder_intervals,
+  :resolved_at,
+  :scheduled_auto_completed,
+  :scheduled_auto_in_progress,
+  :scheduled_for,
+  :scheduled_remind_prior,
+  :scheduled_reminded_at,
+  :scheduled_until,
+  :shortlink,
+  :status,
+  :updated_at,
   keyword_init: true
 )
 
@@ -493,9 +725,129 @@ IncidentCreateData = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] auto_transition_deliver_notifications_at_end
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] auto_transition_deliver_notifications_at_start
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] auto_transition_to_maintenance_state
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] auto_transition_to_operational_state
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] components
+#   @return [Array, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] impact
+#   @return [String, nil]
+#
+# @!attribute [rw] impact_override
+#   @return [String, nil]
+#
+# @!attribute [rw] incident
+#   @return [Hash, nil]
+#
+# @!attribute [rw] incident_updates
+#   @return [Array, nil]
+#
+# @!attribute [rw] metadata
+#   @return [Hash, nil]
+#
+# @!attribute [rw] monitoring_at
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] postmortem_body
+#   @return [String, nil]
+#
+# @!attribute [rw] postmortem_body_last_updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] postmortem_ignored
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] postmortem_notified_subscribers
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] postmortem_notified_twitter
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] postmortem_published_at
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] reminder_intervals
+#   @return [String, nil]
+#
+# @!attribute [rw] resolved_at
+#   @return [String, nil]
+#
+# @!attribute [rw] scheduled_auto_completed
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] scheduled_auto_in_progress
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] scheduled_for
+#   @return [String, nil]
+#
+# @!attribute [rw] scheduled_remind_prior
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] scheduled_reminded_at
+#   @return [String, nil]
+#
+# @!attribute [rw] scheduled_until
+#   @return [String, nil]
+#
+# @!attribute [rw] shortlink
+#   @return [String, nil]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 IncidentUpdateData = Struct.new(
   :id,
   :page_id,
+  :auto_transition_deliver_notifications_at_end,
+  :auto_transition_deliver_notifications_at_start,
+  :auto_transition_to_maintenance_state,
+  :auto_transition_to_operational_state,
+  :components,
+  :created_at,
+  :impact,
+  :impact_override,
+  :incident,
+  :incident_updates,
+  :metadata,
+  :monitoring_at,
+  :name,
+  :postmortem_body,
+  :postmortem_body_last_updated_at,
+  :postmortem_ignored,
+  :postmortem_notified_subscribers,
+  :postmortem_notified_twitter,
+  :postmortem_published_at,
+  :reminder_intervals,
+  :resolved_at,
+  :scheduled_auto_completed,
+  :scheduled_auto_in_progress,
+  :scheduled_for,
+  :scheduled_remind_prior,
+  :scheduled_reminded_at,
+  :scheduled_until,
+  :shortlink,
+  :status,
+  :updated_at,
   keyword_init: true
 )
 
@@ -555,7 +907,7 @@ IncidentSubscriberCreateData = Struct.new(
 # @!attribute [rw] body
 #   @return [String, nil]
 #
-# @!attribute [rw] component
+# @!attribute [rw] components
 #   @return [Array, nil]
 #
 # @!attribute [rw] group_id
@@ -567,7 +919,7 @@ IncidentSubscriberCreateData = Struct.new(
 # @!attribute [rw] name
 #   @return [String, nil]
 #
-# @!attribute [rw] should_send_notification
+# @!attribute [rw] should_send_notifications
 #   @return [Boolean, nil]
 #
 # @!attribute [rw] should_tweet
@@ -583,11 +935,11 @@ IncidentSubscriberCreateData = Struct.new(
 #   @return [String, nil]
 IncidentTemplate = Struct.new(
   :body,
-  :component,
+  :components,
   :group_id,
   :id,
   :name,
-  :should_send_notification,
+  :should_send_notifications,
   :should_tweet,
   :template,
   :title,
@@ -608,14 +960,54 @@ IncidentTemplateListMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] body
+#   @return [String, nil]
+#
+# @!attribute [rw] components
+#   @return [Array, nil]
+#
+# @!attribute [rw] group_id
+#   @return [String, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] should_send_notifications
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] should_tweet
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] template
+#   @return [Hash]
+#
+# @!attribute [rw] title
+#   @return [String, nil]
+#
+# @!attribute [rw] update_status
+#   @return [String, nil]
 IncidentTemplateCreateData = Struct.new(
   :page_id,
+  :body,
+  :components,
+  :group_id,
+  :id,
+  :name,
+  :should_send_notifications,
+  :should_tweet,
+  :template,
+  :title,
+  :update_status,
   keyword_init: true
 )
 
 # IncidentUpdate entity data model.
 #
-# @!attribute [rw] affected_component
+# @!attribute [rw] affected_components
 #   @return [Array, nil]
 #
 # @!attribute [rw] body
@@ -627,7 +1019,7 @@ IncidentTemplateCreateData = Struct.new(
 # @!attribute [rw] custom_tweet
 #   @return [String, nil]
 #
-# @!attribute [rw] deliver_notification
+# @!attribute [rw] deliver_notifications
 #   @return [Boolean, nil]
 #
 # @!attribute [rw] display_at
@@ -657,11 +1049,11 @@ IncidentTemplateCreateData = Struct.new(
 # @!attribute [rw] wants_twitter_update
 #   @return [Boolean, nil]
 IncidentUpdate = Struct.new(
-  :affected_component,
+  :affected_components,
   :body,
   :created_at,
   :custom_tweet,
-  :deliver_notification,
+  :deliver_notifications,
   :display_at,
   :id,
   :incident_id,
@@ -684,10 +1076,58 @@ IncidentUpdate = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] affected_components
+#   @return [Array, nil]
+#
+# @!attribute [rw] body
+#   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] custom_tweet
+#   @return [String, nil]
+#
+# @!attribute [rw] deliver_notifications
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] display_at
+#   @return [String, nil]
+#
+# @!attribute [rw] incident_update
+#   @return [Hash, nil]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
+#
+# @!attribute [rw] tweet_id
+#   @return [String, nil]
+#
+# @!attribute [rw] twitter_updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] wants_twitter_update
+#   @return [Boolean, nil]
 IncidentUpdateUpdateData = Struct.new(
   :id,
   :incident_id,
   :page_id,
+  :affected_components,
+  :body,
+  :created_at,
+  :custom_tweet,
+  :deliver_notifications,
+  :display_at,
+  :incident_update,
+  :status,
+  :tweet_id,
+  :twitter_updated_at,
+  :updated_at,
+  :wants_twitter_update,
   keyword_init: true
 )
 
@@ -705,7 +1145,7 @@ IncidentUpdateUpdateData = Struct.new(
 # @!attribute [rw] data
 #   @return [Hash]
 #
-# @!attribute [rw] decimal_place
+# @!attribute [rw] decimal_places
 #   @return [Integer, nil]
 #
 # @!attribute [rw] display
@@ -757,7 +1197,7 @@ Metric = Struct.new(
   :backfilled,
   :created_at,
   :data,
-  :decimal_place,
+  :decimal_places,
   :display,
   :id,
   :last_fetched_at,
@@ -813,9 +1253,85 @@ MetricListMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] backfill_percentage
+#   @return [Integer, nil]
+#
+# @!attribute [rw] backfilled
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] data
+#   @return [Hash]
+#
+# @!attribute [rw] decimal_places
+#   @return [Integer, nil]
+#
+# @!attribute [rw] display
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] last_fetched_at
+#   @return [String, nil]
+#
+# @!attribute [rw] metric
+#   @return [Hash, nil]
+#
+# @!attribute [rw] metric_identifier
+#   @return [String, nil]
+#
+# @!attribute [rw] most_recent_data_at
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] reference_name
+#   @return [String, nil]
+#
+# @!attribute [rw] suffix
+#   @return [String, nil]
+#
+# @!attribute [rw] tooltip_description
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] y_axis_hidden
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] y_axis_max
+#   @return [Float, nil]
+#
+# @!attribute [rw] y_axis_min
+#   @return [Float, nil]
 MetricCreateData = Struct.new(
   :metrics_provider_id,
   :page_id,
+  :backfill_percentage,
+  :backfilled,
+  :created_at,
+  :data,
+  :decimal_places,
+  :display,
+  :id,
+  :last_fetched_at,
+  :metric,
+  :metric_identifier,
+  :most_recent_data_at,
+  :name,
+  :reference_name,
+  :suffix,
+  :tooltip_description,
+  :updated_at,
+  :y_axis_hidden,
+  :y_axis_max,
+  :y_axis_min,
   keyword_init: true
 )
 
@@ -826,9 +1342,85 @@ MetricCreateData = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] backfill_percentage
+#   @return [Integer, nil]
+#
+# @!attribute [rw] backfilled
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] data
+#   @return [Hash, nil]
+#
+# @!attribute [rw] decimal_places
+#   @return [Integer, nil]
+#
+# @!attribute [rw] display
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] last_fetched_at
+#   @return [String, nil]
+#
+# @!attribute [rw] metric
+#   @return [Hash, nil]
+#
+# @!attribute [rw] metric_identifier
+#   @return [String, nil]
+#
+# @!attribute [rw] metrics_provider_id
+#   @return [String, nil]
+#
+# @!attribute [rw] most_recent_data_at
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] reference_name
+#   @return [String, nil]
+#
+# @!attribute [rw] suffix
+#   @return [String, nil]
+#
+# @!attribute [rw] tooltip_description
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] y_axis_hidden
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] y_axis_max
+#   @return [Float, nil]
+#
+# @!attribute [rw] y_axis_min
+#   @return [Float, nil]
 MetricUpdateData = Struct.new(
   :id,
   :page_id,
+  :backfill_percentage,
+  :backfilled,
+  :created_at,
+  :data,
+  :decimal_places,
+  :display,
+  :last_fetched_at,
+  :metric,
+  :metric_identifier,
+  :metrics_provider_id,
+  :most_recent_data_at,
+  :name,
+  :reference_name,
+  :suffix,
+  :tooltip_description,
+  :updated_at,
+  :y_axis_hidden,
+  :y_axis_max,
+  :y_axis_min,
   keyword_init: true
 )
 
@@ -912,8 +1504,40 @@ MetricsProviderListMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] disabled
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] last_revalidated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] metric_base_uri
+#   @return [String, nil]
+#
+# @!attribute [rw] metrics_provider
+#   @return [Hash, nil]
+#
+# @!attribute [rw] type
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 MetricsProviderCreateData = Struct.new(
   :page_id,
+  :created_at,
+  :disabled,
+  :id,
+  :last_revalidated_at,
+  :metric_base_uri,
+  :metrics_provider,
+  :type,
+  :updated_at,
   keyword_init: true
 )
 
@@ -924,9 +1548,37 @@ MetricsProviderCreateData = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] disabled
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] last_revalidated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] metric_base_uri
+#   @return [String, nil]
+#
+# @!attribute [rw] metrics_provider
+#   @return [Hash, nil]
+#
+# @!attribute [rw] type
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 MetricsProviderUpdateData = Struct.new(
   :id,
   :page_id,
+  :created_at,
+  :disabled,
+  :last_revalidated_at,
+  :metric_base_uri,
+  :metrics_provider,
+  :type,
+  :updated_at,
   keyword_init: true
 )
 
@@ -948,22 +1600,22 @@ MetricsProviderRemoveMatch = Struct.new(
 # @!attribute [rw] activity_score
 #   @return [Float, nil]
 #
-# @!attribute [rw] allow_email_subscriber
+# @!attribute [rw] allow_email_subscribers
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_incident_subscriber
+# @!attribute [rw] allow_incident_subscribers
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_page_subscriber
+# @!attribute [rw] allow_page_subscribers
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_rss_atom_feed
+# @!attribute [rw] allow_rss_atom_feeds
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_sms_subscriber
+# @!attribute [rw] allow_sms_subscribers
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_webhook_subscriber
+# @!attribute [rw] allow_webhook_subscribers
 #   @return [Boolean, nil]
 #
 # @!attribute [rw] branding
@@ -978,7 +1630,7 @@ MetricsProviderRemoveMatch = Struct.new(
 # @!attribute [rw] created_at
 #   @return [String, nil]
 #
-# @!attribute [rw] css_blue
+# @!attribute [rw] css_blues
 #   @return [String, nil]
 #
 # @!attribute [rw] css_body_background_color
@@ -993,7 +1645,7 @@ MetricsProviderRemoveMatch = Struct.new(
 # @!attribute [rw] css_graph_color
 #   @return [String, nil]
 #
-# @!attribute [rw] css_green
+# @!attribute [rw] css_greens
 #   @return [String, nil]
 #
 # @!attribute [rw] css_light_font_color
@@ -1005,13 +1657,13 @@ MetricsProviderRemoveMatch = Struct.new(
 # @!attribute [rw] css_no_data
 #   @return [String, nil]
 #
-# @!attribute [rw] css_orange
+# @!attribute [rw] css_oranges
 #   @return [String, nil]
 #
-# @!attribute [rw] css_red
+# @!attribute [rw] css_reds
 #   @return [String, nil]
 #
-# @!attribute [rw] css_yellow
+# @!attribute [rw] css_yellows
 #   @return [String, nil]
 #
 # @!attribute [rw] domain
@@ -1035,7 +1687,7 @@ MetricsProviderRemoveMatch = Struct.new(
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] ip_restriction
+# @!attribute [rw] ip_restrictions
 #   @return [String, nil]
 #
 # @!attribute [rw] name
@@ -1080,32 +1732,32 @@ MetricsProviderRemoveMatch = Struct.new(
 # @!attribute [rw] url
 #   @return [String, nil]
 #
-# @!attribute [rw] viewers_must_be_team_member
+# @!attribute [rw] viewers_must_be_team_members
 #   @return [Boolean, nil]
 Page = Struct.new(
   :activity_score,
-  :allow_email_subscriber,
-  :allow_incident_subscriber,
-  :allow_page_subscriber,
-  :allow_rss_atom_feed,
-  :allow_sms_subscriber,
-  :allow_webhook_subscriber,
+  :allow_email_subscribers,
+  :allow_incident_subscribers,
+  :allow_page_subscribers,
+  :allow_rss_atom_feeds,
+  :allow_sms_subscribers,
+  :allow_webhook_subscribers,
   :branding,
   :city,
   :country,
   :created_at,
-  :css_blue,
+  :css_blues,
   :css_body_background_color,
   :css_border_color,
   :css_font_color,
   :css_graph_color,
-  :css_green,
+  :css_greens,
   :css_light_font_color,
   :css_link_color,
   :css_no_data,
-  :css_orange,
-  :css_red,
-  :css_yellow,
+  :css_oranges,
+  :css_reds,
+  :css_yellows,
   :domain,
   :email_logo,
   :favicon_logo,
@@ -1113,7 +1765,7 @@ Page = Struct.new(
   :hero_cover,
   :hidden_from_search,
   :id,
-  :ip_restriction,
+  :ip_restrictions,
   :name,
   :notifications_email_footer,
   :notifications_from_email,
@@ -1128,7 +1780,7 @@ Page = Struct.new(
   :twitter_username,
   :updated_at,
   :url,
-  :viewers_must_be_team_member,
+  :viewers_must_be_team_members,
   keyword_init: true
 )
 
@@ -1146,22 +1798,22 @@ PageLoadMatch = Struct.new(
 # @!attribute [rw] activity_score
 #   @return [Float, nil]
 #
-# @!attribute [rw] allow_email_subscriber
+# @!attribute [rw] allow_email_subscribers
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_incident_subscriber
+# @!attribute [rw] allow_incident_subscribers
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_page_subscriber
+# @!attribute [rw] allow_page_subscribers
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_rss_atom_feed
+# @!attribute [rw] allow_rss_atom_feeds
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_sms_subscriber
+# @!attribute [rw] allow_sms_subscribers
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] allow_webhook_subscriber
+# @!attribute [rw] allow_webhook_subscribers
 #   @return [Boolean, nil]
 #
 # @!attribute [rw] branding
@@ -1176,7 +1828,7 @@ PageLoadMatch = Struct.new(
 # @!attribute [rw] created_at
 #   @return [String, nil]
 #
-# @!attribute [rw] css_blue
+# @!attribute [rw] css_blues
 #   @return [String, nil]
 #
 # @!attribute [rw] css_body_background_color
@@ -1191,7 +1843,7 @@ PageLoadMatch = Struct.new(
 # @!attribute [rw] css_graph_color
 #   @return [String, nil]
 #
-# @!attribute [rw] css_green
+# @!attribute [rw] css_greens
 #   @return [String, nil]
 #
 # @!attribute [rw] css_light_font_color
@@ -1203,13 +1855,13 @@ PageLoadMatch = Struct.new(
 # @!attribute [rw] css_no_data
 #   @return [String, nil]
 #
-# @!attribute [rw] css_orange
+# @!attribute [rw] css_oranges
 #   @return [String, nil]
 #
-# @!attribute [rw] css_red
+# @!attribute [rw] css_reds
 #   @return [String, nil]
 #
-# @!attribute [rw] css_yellow
+# @!attribute [rw] css_yellows
 #   @return [String, nil]
 #
 # @!attribute [rw] domain
@@ -1233,7 +1885,7 @@ PageLoadMatch = Struct.new(
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] ip_restriction
+# @!attribute [rw] ip_restrictions
 #   @return [String, nil]
 #
 # @!attribute [rw] name
@@ -1278,32 +1930,32 @@ PageLoadMatch = Struct.new(
 # @!attribute [rw] url
 #   @return [String, nil]
 #
-# @!attribute [rw] viewers_must_be_team_member
+# @!attribute [rw] viewers_must_be_team_members
 #   @return [Boolean, nil]
 PageListMatch = Struct.new(
   :activity_score,
-  :allow_email_subscriber,
-  :allow_incident_subscriber,
-  :allow_page_subscriber,
-  :allow_rss_atom_feed,
-  :allow_sms_subscriber,
-  :allow_webhook_subscriber,
+  :allow_email_subscribers,
+  :allow_incident_subscribers,
+  :allow_page_subscribers,
+  :allow_rss_atom_feeds,
+  :allow_sms_subscribers,
+  :allow_webhook_subscribers,
   :branding,
   :city,
   :country,
   :created_at,
-  :css_blue,
+  :css_blues,
   :css_body_background_color,
   :css_border_color,
   :css_font_color,
   :css_graph_color,
-  :css_green,
+  :css_greens,
   :css_light_font_color,
   :css_link_color,
   :css_no_data,
-  :css_orange,
-  :css_red,
-  :css_yellow,
+  :css_oranges,
+  :css_reds,
+  :css_yellows,
   :domain,
   :email_logo,
   :favicon_logo,
@@ -1311,7 +1963,7 @@ PageListMatch = Struct.new(
   :hero_cover,
   :hidden_from_search,
   :id,
-  :ip_restriction,
+  :ip_restrictions,
   :name,
   :notifications_email_footer,
   :notifications_from_email,
@@ -1326,7 +1978,7 @@ PageListMatch = Struct.new(
   :twitter_username,
   :updated_at,
   :url,
-  :viewers_must_be_team_member,
+  :viewers_must_be_team_members,
   keyword_init: true
 )
 
@@ -1334,14 +1986,194 @@ PageListMatch = Struct.new(
 #
 # @!attribute [rw] id
 #   @return [String]
+#
+# @!attribute [rw] activity_score
+#   @return [Float, nil]
+#
+# @!attribute [rw] allow_email_subscribers
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] allow_incident_subscribers
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] allow_page_subscribers
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] allow_rss_atom_feeds
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] allow_sms_subscribers
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] allow_webhook_subscribers
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] branding
+#   @return [String, nil]
+#
+# @!attribute [rw] city
+#   @return [String, nil]
+#
+# @!attribute [rw] country
+#   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] css_blues
+#   @return [String, nil]
+#
+# @!attribute [rw] css_body_background_color
+#   @return [String, nil]
+#
+# @!attribute [rw] css_border_color
+#   @return [String, nil]
+#
+# @!attribute [rw] css_font_color
+#   @return [String, nil]
+#
+# @!attribute [rw] css_graph_color
+#   @return [String, nil]
+#
+# @!attribute [rw] css_greens
+#   @return [String, nil]
+#
+# @!attribute [rw] css_light_font_color
+#   @return [String, nil]
+#
+# @!attribute [rw] css_link_color
+#   @return [String, nil]
+#
+# @!attribute [rw] css_no_data
+#   @return [String, nil]
+#
+# @!attribute [rw] css_oranges
+#   @return [String, nil]
+#
+# @!attribute [rw] css_reds
+#   @return [String, nil]
+#
+# @!attribute [rw] css_yellows
+#   @return [String, nil]
+#
+# @!attribute [rw] domain
+#   @return [String, nil]
+#
+# @!attribute [rw] email_logo
+#   @return [String, nil]
+#
+# @!attribute [rw] favicon_logo
+#   @return [String, nil]
+#
+# @!attribute [rw] headline
+#   @return [String, nil]
+#
+# @!attribute [rw] hero_cover
+#   @return [String, nil]
+#
+# @!attribute [rw] hidden_from_search
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] ip_restrictions
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] notifications_email_footer
+#   @return [String, nil]
+#
+# @!attribute [rw] notifications_from_email
+#   @return [String, nil]
+#
+# @!attribute [rw] page
+#   @return [Hash, nil]
+#
+# @!attribute [rw] page_description
+#   @return [String, nil]
+#
+# @!attribute [rw] state
+#   @return [String, nil]
+#
+# @!attribute [rw] subdomain
+#   @return [String, nil]
+#
+# @!attribute [rw] support_url
+#   @return [String, nil]
+#
+# @!attribute [rw] time_zone
+#   @return [String, nil]
+#
+# @!attribute [rw] transactional_logo
+#   @return [String, nil]
+#
+# @!attribute [rw] twitter_logo
+#   @return [String, nil]
+#
+# @!attribute [rw] twitter_username
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] url
+#   @return [String, nil]
+#
+# @!attribute [rw] viewers_must_be_team_members
+#   @return [Boolean, nil]
 PageUpdateData = Struct.new(
   :id,
+  :activity_score,
+  :allow_email_subscribers,
+  :allow_incident_subscribers,
+  :allow_page_subscribers,
+  :allow_rss_atom_feeds,
+  :allow_sms_subscribers,
+  :allow_webhook_subscribers,
+  :branding,
+  :city,
+  :country,
+  :created_at,
+  :css_blues,
+  :css_body_background_color,
+  :css_border_color,
+  :css_font_color,
+  :css_graph_color,
+  :css_greens,
+  :css_light_font_color,
+  :css_link_color,
+  :css_no_data,
+  :css_oranges,
+  :css_reds,
+  :css_yellows,
+  :domain,
+  :email_logo,
+  :favicon_logo,
+  :headline,
+  :hero_cover,
+  :hidden_from_search,
+  :ip_restrictions,
+  :name,
+  :notifications_email_footer,
+  :notifications_from_email,
+  :page,
+  :page_description,
+  :state,
+  :subdomain,
+  :support_url,
+  :time_zone,
+  :transactional_logo,
+  :twitter_logo,
+  :twitter_username,
+  :updated_at,
+  :url,
+  :viewers_must_be_team_members,
   keyword_init: true
 )
 
 # PageAccessGroup entity data model.
 #
-# @!attribute [rw] component_id
+# @!attribute [rw] component_ids
 #   @return [Array, nil]
 #
 # @!attribute [rw] created_at
@@ -1353,7 +2185,7 @@ PageUpdateData = Struct.new(
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] metric_id
+# @!attribute [rw] metric_ids
 #   @return [Array, nil]
 #
 # @!attribute [rw] name
@@ -1362,7 +2194,7 @@ PageUpdateData = Struct.new(
 # @!attribute [rw] page_access_group
 #   @return [Hash, nil]
 #
-# @!attribute [rw] page_access_user_id
+# @!attribute [rw] page_access_user_ids
 #   @return [Array, nil]
 #
 # @!attribute [rw] page_id
@@ -1371,14 +2203,14 @@ PageUpdateData = Struct.new(
 # @!attribute [rw] updated_at
 #   @return [String, nil]
 PageAccessGroup = Struct.new(
-  :component_id,
+  :component_ids,
   :created_at,
   :external_identifier,
   :id,
-  :metric_id,
+  :metric_ids,
   :name,
   :page_access_group,
-  :page_access_user_id,
+  :page_access_user_ids,
   :page_id,
   :updated_at,
   keyword_init: true
@@ -1410,8 +2242,44 @@ PageAccessGroupListMatch = Struct.new(
 #
 # @!attribute [rw] id
 #   @return [String]
+#
+# @!attribute [rw] component_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] external_identifier
+#   @return [String, nil]
+#
+# @!attribute [rw] metric_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] page_access_group
+#   @return [Hash, nil]
+#
+# @!attribute [rw] page_access_user_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] page_id
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 PageAccessGroupCreateData = Struct.new(
   :id,
+  :component_ids,
+  :created_at,
+  :external_identifier,
+  :metric_ids,
+  :name,
+  :page_access_group,
+  :page_access_user_ids,
+  :page_id,
+  :updated_at,
   keyword_init: true
 )
 
@@ -1422,9 +2290,41 @@ PageAccessGroupCreateData = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] component_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] external_identifier
+#   @return [String, nil]
+#
+# @!attribute [rw] metric_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] page_access_group
+#   @return [Hash, nil]
+#
+# @!attribute [rw] page_access_user_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 PageAccessGroupUpdateData = Struct.new(
   :id,
   :page_id,
+  :component_ids,
+  :created_at,
+  :external_identifier,
+  :metric_ids,
+  :name,
+  :page_access_group,
+  :page_access_user_ids,
+  :updated_at,
   keyword_init: true
 )
 
@@ -1447,7 +2347,7 @@ PageAccessGroupRemoveMatch = Struct.new(
 
 # PageAccessUser entity data model.
 #
-# @!attribute [rw] component_id
+# @!attribute [rw] component_ids
 #   @return [Array]
 #
 # @!attribute [rw] created_at
@@ -1462,10 +2362,13 @@ PageAccessGroupRemoveMatch = Struct.new(
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] metric_id
+# @!attribute [rw] metric_ids
 #   @return [Array]
 #
 # @!attribute [rw] page_access_group_id
+#   @return [String, nil]
+#
+# @!attribute [rw] page_access_group_ids
 #   @return [String, nil]
 #
 # @!attribute [rw] page_access_user
@@ -1477,13 +2380,14 @@ PageAccessGroupRemoveMatch = Struct.new(
 # @!attribute [rw] updated_at
 #   @return [String, nil]
 PageAccessUser = Struct.new(
-  :component_id,
+  :component_ids,
   :created_at,
   :email,
   :external_login,
   :id,
-  :metric_id,
+  :metric_ids,
   :page_access_group_id,
+  :page_access_group_ids,
   :page_access_user,
   :page_id,
   :updated_at,
@@ -1516,8 +2420,48 @@ PageAccessUserListMatch = Struct.new(
 #
 # @!attribute [rw] id
 #   @return [String]
+#
+# @!attribute [rw] component_ids
+#   @return [Array]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] email
+#   @return [String, nil]
+#
+# @!attribute [rw] external_login
+#   @return [String, nil]
+#
+# @!attribute [rw] metric_ids
+#   @return [Array]
+#
+# @!attribute [rw] page_access_group_id
+#   @return [String, nil]
+#
+# @!attribute [rw] page_access_group_ids
+#   @return [String, nil]
+#
+# @!attribute [rw] page_access_user
+#   @return [Hash, nil]
+#
+# @!attribute [rw] page_id
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 PageAccessUserCreateData = Struct.new(
   :id,
+  :component_ids,
+  :created_at,
+  :email,
+  :external_login,
+  :metric_ids,
+  :page_access_group_id,
+  :page_access_group_ids,
+  :page_access_user,
+  :page_id,
+  :updated_at,
   keyword_init: true
 )
 
@@ -1528,9 +2472,45 @@ PageAccessUserCreateData = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] component_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] email
+#   @return [String, nil]
+#
+# @!attribute [rw] external_login
+#   @return [String, nil]
+#
+# @!attribute [rw] metric_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] page_access_group_id
+#   @return [String, nil]
+#
+# @!attribute [rw] page_access_group_ids
+#   @return [String, nil]
+#
+# @!attribute [rw] page_access_user
+#   @return [Hash, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 PageAccessUserUpdateData = Struct.new(
   :id,
   :page_id,
+  :component_ids,
+  :created_at,
+  :email,
+  :external_login,
+  :metric_ids,
+  :page_access_group_id,
+  :page_access_group_ids,
+  :page_access_user,
+  :updated_at,
   keyword_init: true
 )
 
@@ -1557,14 +2537,14 @@ PageAccessUserRemoveMatch = Struct.new(
 
 # Permission entity data model.
 #
-# @!attribute [rw] data
+# @!attribute [rw] pages
 #   @return [Hash, nil]
 #
-# @!attribute [rw] page
-#   @return [Hash, nil]
+# @!attribute [rw] user_id
+#   @return [String, nil]
 Permission = Struct.new(
-  :data,
-  :page,
+  :pages,
+  :user_id,
   keyword_init: true
 )
 
@@ -1588,9 +2568,17 @@ PermissionLoadMatch = Struct.new(
 #
 # @!attribute [rw] organization_id
 #   @return [String]
+#
+# @!attribute [rw] pages
+#   @return [Hash, nil]
+#
+# @!attribute [rw] user_id
+#   @return [String, nil]
 PermissionUpdateData = Struct.new(
   :id,
   :organization_id,
+  :pages,
+  :user_id,
   keyword_init: true
 )
 
@@ -1614,7 +2602,7 @@ PermissionUpdateData = Struct.new(
 # @!attribute [rw] custom_tweet
 #   @return [String, nil]
 #
-# @!attribute [rw] notify_subscriber
+# @!attribute [rw] notify_subscribers
 #   @return [Boolean, nil]
 #
 # @!attribute [rw] notify_twitter
@@ -1638,7 +2626,7 @@ Postmortem = Struct.new(
   :body_updated_at,
   :created_at,
   :custom_tweet,
-  :notify_subscriber,
+  :notify_subscribers,
   :notify_twitter,
   :postmortem,
   :preview_key,
@@ -1667,9 +2655,57 @@ PostmortemLoadMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] body
+#   @return [String, nil]
+#
+# @!attribute [rw] body_draft
+#   @return [String, nil]
+#
+# @!attribute [rw] body_draft_updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] body_updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] custom_tweet
+#   @return [String, nil]
+#
+# @!attribute [rw] notify_subscribers
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] notify_twitter
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] postmortem
+#   @return [Hash, nil]
+#
+# @!attribute [rw] preview_key
+#   @return [String, nil]
+#
+# @!attribute [rw] published_at
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
 PostmortemUpdateData = Struct.new(
   :incident_id,
   :page_id,
+  :body,
+  :body_draft,
+  :body_draft_updated_at,
+  :body_updated_at,
+  :created_at,
+  :custom_tweet,
+  :notify_subscribers,
+  :notify_twitter,
+  :postmortem,
+  :preview_key,
+  :published_at,
+  :updated_at,
   keyword_init: true
 )
 
@@ -1719,18 +2755,42 @@ StatusEmbedConfigLoadMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] incident_background_color
+#   @return [String, nil]
+#
+# @!attribute [rw] incident_text_color
+#   @return [String, nil]
+#
+# @!attribute [rw] maintenance_background_color
+#   @return [String, nil]
+#
+# @!attribute [rw] maintenance_text_color
+#   @return [String, nil]
+#
+# @!attribute [rw] position
+#   @return [String, nil]
+#
+# @!attribute [rw] status_embed_config
+#   @return [Hash, nil]
 StatusEmbedConfigUpdateData = Struct.new(
   :page_id,
+  :incident_background_color,
+  :incident_text_color,
+  :maintenance_background_color,
+  :maintenance_text_color,
+  :position,
+  :status_embed_config,
   keyword_init: true
 )
 
 # Subscriber entity data model.
 #
-# @!attribute [rw] component
-#   @return [String, nil]
-#
-# @!attribute [rw] component_id
+# @!attribute [rw] component_ids
 #   @return [Array, nil]
+#
+# @!attribute [rw] components
+#   @return [String, nil]
 #
 # @!attribute [rw] created_at
 #   @return [String, nil]
@@ -1789,7 +2849,10 @@ StatusEmbedConfigUpdateData = Struct.new(
 # @!attribute [rw] subscriber
 #   @return [Hash, nil]
 #
-# @!attribute [rw] team
+# @!attribute [rw] subscribers
+#   @return [String]
+#
+# @!attribute [rw] teams
 #   @return [Integer, nil]
 #
 # @!attribute [rw] type
@@ -1801,8 +2864,8 @@ StatusEmbedConfigUpdateData = Struct.new(
 # @!attribute [rw] workspace_name
 #   @return [String, nil]
 Subscriber = Struct.new(
-  :component,
-  :component_id,
+  :component_ids,
+  :components,
   :created_at,
   :display_phone_number,
   :email,
@@ -1822,7 +2885,8 @@ Subscriber = Struct.new(
   :sms,
   :state,
   :subscriber,
-  :team,
+  :subscribers,
+  :teams,
   :type,
   :webhook,
   :workspace_name,
@@ -1866,9 +2930,113 @@ SubscriberListMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] component_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] components
+#   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] display_phone_number
+#   @return [String, nil]
+#
+# @!attribute [rw] email
+#   @return [String, nil]
+#
+# @!attribute [rw] endpoint
+#   @return [String, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] integration_partner
+#   @return [Integer, nil]
+#
+# @!attribute [rw] mode
+#   @return [String, nil]
+#
+# @!attribute [rw] obfuscated_channel_name
+#   @return [String, nil]
+#
+# @!attribute [rw] page_access_user_id
+#   @return [String, nil]
+#
+# @!attribute [rw] phone_country
+#   @return [String, nil]
+#
+# @!attribute [rw] phone_number
+#   @return [String, nil]
+#
+# @!attribute [rw] purge_at
+#   @return [String, nil]
+#
+# @!attribute [rw] quarantined_at
+#   @return [String, nil]
+#
+# @!attribute [rw] skip_confirmation_notification
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] skip_unsubscription_notification
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] slack
+#   @return [Integer, nil]
+#
+# @!attribute [rw] sms
+#   @return [Integer, nil]
+#
+# @!attribute [rw] state
+#   @return [String, nil]
+#
+# @!attribute [rw] subscriber
+#   @return [Hash, nil]
+#
+# @!attribute [rw] subscribers
+#   @return [String]
+#
+# @!attribute [rw] teams
+#   @return [Integer, nil]
+#
+# @!attribute [rw] type
+#   @return [String, nil]
+#
+# @!attribute [rw] webhook
+#   @return [Integer, nil]
+#
+# @!attribute [rw] workspace_name
+#   @return [String, nil]
 SubscriberCreateData = Struct.new(
   :incident_id,
   :page_id,
+  :component_ids,
+  :components,
+  :created_at,
+  :display_phone_number,
+  :email,
+  :endpoint,
+  :id,
+  :integration_partner,
+  :mode,
+  :obfuscated_channel_name,
+  :page_access_user_id,
+  :phone_country,
+  :phone_number,
+  :purge_at,
+  :quarantined_at,
+  :skip_confirmation_notification,
+  :skip_unsubscription_notification,
+  :slack,
+  :sms,
+  :state,
+  :subscriber,
+  :subscribers,
+  :teams,
+  :type,
+  :webhook,
+  :workspace_name,
   keyword_init: true
 )
 
@@ -1879,9 +3047,109 @@ SubscriberCreateData = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] component_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] components
+#   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] display_phone_number
+#   @return [String, nil]
+#
+# @!attribute [rw] email
+#   @return [String, nil]
+#
+# @!attribute [rw] endpoint
+#   @return [String, nil]
+#
+# @!attribute [rw] integration_partner
+#   @return [Integer, nil]
+#
+# @!attribute [rw] mode
+#   @return [String, nil]
+#
+# @!attribute [rw] obfuscated_channel_name
+#   @return [String, nil]
+#
+# @!attribute [rw] page_access_user_id
+#   @return [String, nil]
+#
+# @!attribute [rw] phone_country
+#   @return [String, nil]
+#
+# @!attribute [rw] phone_number
+#   @return [String, nil]
+#
+# @!attribute [rw] purge_at
+#   @return [String, nil]
+#
+# @!attribute [rw] quarantined_at
+#   @return [String, nil]
+#
+# @!attribute [rw] skip_confirmation_notification
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] skip_unsubscription_notification
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] slack
+#   @return [Integer, nil]
+#
+# @!attribute [rw] sms
+#   @return [Integer, nil]
+#
+# @!attribute [rw] state
+#   @return [String, nil]
+#
+# @!attribute [rw] subscriber
+#   @return [Hash, nil]
+#
+# @!attribute [rw] subscribers
+#   @return [String, nil]
+#
+# @!attribute [rw] teams
+#   @return [Integer, nil]
+#
+# @!attribute [rw] type
+#   @return [String, nil]
+#
+# @!attribute [rw] webhook
+#   @return [Integer, nil]
+#
+# @!attribute [rw] workspace_name
+#   @return [String, nil]
 SubscriberUpdateData = Struct.new(
   :id,
   :page_id,
+  :component_ids,
+  :components,
+  :created_at,
+  :display_phone_number,
+  :email,
+  :endpoint,
+  :integration_partner,
+  :mode,
+  :obfuscated_channel_name,
+  :page_access_user_id,
+  :phone_country,
+  :phone_number,
+  :purge_at,
+  :quarantined_at,
+  :skip_confirmation_notification,
+  :skip_unsubscription_notification,
+  :slack,
+  :sms,
+  :state,
+  :subscriber,
+  :subscribers,
+  :teams,
+  :type,
+  :webhook,
+  :workspace_name,
   keyword_init: true
 )
 
@@ -1952,8 +3220,36 @@ UserListMatch = Struct.new(
 #
 # @!attribute [rw] organization_id
 #   @return [String]
+#
+# @!attribute [rw] created_at
+#   @return [String, nil]
+#
+# @!attribute [rw] email
+#   @return [String, nil]
+#
+# @!attribute [rw] first_name
+#   @return [String, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] last_name
+#   @return [String, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [String, nil]
+#
+# @!attribute [rw] user
+#   @return [Hash]
 UserCreateData = Struct.new(
   :organization_id,
+  :created_at,
+  :email,
+  :first_name,
+  :id,
+  :last_name,
+  :updated_at,
+  :user,
   keyword_init: true
 )
 

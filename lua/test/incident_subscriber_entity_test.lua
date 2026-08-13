@@ -44,7 +44,7 @@ describe("IncidentSubscriberEntity", function()
 
     local incident_subscriber_ref01_data_result, err = incident_subscriber_ref01_ent:create(incident_subscriber_ref01_data, nil)
     assert.is_nil(err)
-    incident_subscriber_ref01_data = helpers.to_map(incident_subscriber_ref01_data_result)
+    incident_subscriber_ref01_data = helpers.to_map(type(incident_subscriber_ref01_data_result) == 'table' and incident_subscriber_ref01_data_result.data_get and incident_subscriber_ref01_data_result:data_get() or incident_subscriber_ref01_data_result)
     assert.is_not_nil(incident_subscriber_ref01_data)
 
   end)

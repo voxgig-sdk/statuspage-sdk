@@ -75,7 +75,7 @@ class SubscriberEntityTest < Minitest::Test
     subscriber_ref01_data["page_id"] = setup[:idmap]["page01"]
 
     subscriber_ref01_data_result = subscriber_ref01_ent.create(subscriber_ref01_data, nil)
-    subscriber_ref01_data = Helpers.to_map(subscriber_ref01_data_result)
+    subscriber_ref01_data = Helpers.to_map(subscriber_ref01_data_result.respond_to?(:data_get) ? subscriber_ref01_data_result.data_get : subscriber_ref01_data_result)
     assert !subscriber_ref01_data.nil?
     assert !subscriber_ref01_data["id"].nil?
 
@@ -98,12 +98,12 @@ class SubscriberEntityTest < Minitest::Test
       "page_id" => setup[:idmap]["page_id"],
     }
 
-    subscriber_ref01_markdef_up0_name = "component"
+    subscriber_ref01_markdef_up0_name = "components"
     subscriber_ref01_markdef_up0_value = "Mark01-subscriber_ref01_#{setup[:now]}"
     subscriber_ref01_data_up0_up[subscriber_ref01_markdef_up0_name] = subscriber_ref01_markdef_up0_value
 
     subscriber_ref01_resdata_up0_result = subscriber_ref01_ent.update(subscriber_ref01_data_up0_up, nil)
-    subscriber_ref01_resdata_up0 = Helpers.to_map(subscriber_ref01_resdata_up0_result)
+    subscriber_ref01_resdata_up0 = Helpers.to_map(subscriber_ref01_resdata_up0_result.respond_to?(:data_get) ? subscriber_ref01_resdata_up0_result.data_get : subscriber_ref01_resdata_up0_result)
     assert !subscriber_ref01_resdata_up0.nil?
     assert_equal subscriber_ref01_resdata_up0["id"], subscriber_ref01_data_up0_up["id"]
     assert_equal subscriber_ref01_resdata_up0[subscriber_ref01_markdef_up0_name], subscriber_ref01_markdef_up0_value
@@ -113,7 +113,7 @@ class SubscriberEntityTest < Minitest::Test
       "id" => subscriber_ref01_data["id"],
     }
     subscriber_ref01_data_dt0_loaded = subscriber_ref01_ent.load(subscriber_ref01_match_dt0, nil)
-    subscriber_ref01_data_dt0_load_result = Helpers.to_map(subscriber_ref01_data_dt0_loaded)
+    subscriber_ref01_data_dt0_load_result = Helpers.to_map(subscriber_ref01_data_dt0_loaded.respond_to?(:data_get) ? subscriber_ref01_data_dt0_loaded.data_get : subscriber_ref01_data_dt0_loaded)
     assert !subscriber_ref01_data_dt0_load_result.nil?
     assert_equal subscriber_ref01_data_dt0_load_result["id"], subscriber_ref01_data["id"]
 

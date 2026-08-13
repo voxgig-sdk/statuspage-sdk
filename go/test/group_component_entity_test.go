@@ -108,7 +108,7 @@ func TestGroupComponentEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		groupComponentRef01Data = core.ToMapAny(groupComponentRef01DataResult)
+		groupComponentRef01Data = core.ToMapAny(entityData(groupComponentRef01DataResult))
 		if groupComponentRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -141,7 +141,7 @@ func TestGroupComponentEntity(t *testing.T) {
 			"page_id": setup.idmap["page_id"],
 		}
 
-		groupComponentRef01MarkdefUp0Name := "component"
+		groupComponentRef01MarkdefUp0Name := "components"
 		groupComponentRef01MarkdefUp0Value := fmt.Sprintf("Mark01-group_component_ref01_%d", setup.now)
 		groupComponentRef01DataUp0Up[groupComponentRef01MarkdefUp0Name] = groupComponentRef01MarkdefUp0Value
 
@@ -149,7 +149,7 @@ func TestGroupComponentEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		groupComponentRef01ResdataUp0 := core.ToMapAny(groupComponentRef01ResdataUp0Result)
+		groupComponentRef01ResdataUp0 := core.ToMapAny(entityData(groupComponentRef01ResdataUp0Result))
 		if groupComponentRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}
@@ -168,7 +168,7 @@ func TestGroupComponentEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		groupComponentRef01DataDt0LoadResult := core.ToMapAny(groupComponentRef01DataDt0Loaded)
+		groupComponentRef01DataDt0LoadResult := core.ToMapAny(entityData(groupComponentRef01DataDt0Loaded))
 		if groupComponentRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}

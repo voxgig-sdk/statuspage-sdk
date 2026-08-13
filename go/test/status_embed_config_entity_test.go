@@ -73,7 +73,7 @@ func TestStatusEmbedConfigEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		statusEmbedConfigRef01ResdataUp0 := core.ToMapAny(statusEmbedConfigRef01ResdataUp0Result)
+		statusEmbedConfigRef01ResdataUp0 := core.ToMapAny(entityData(statusEmbedConfigRef01ResdataUp0Result))
 		if statusEmbedConfigRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}

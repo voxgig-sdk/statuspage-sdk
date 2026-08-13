@@ -83,7 +83,7 @@ describe("IncidentTemplateEntity", function()
 
     local incident_template_ref01_data_result, err = incident_template_ref01_ent:create(incident_template_ref01_data, nil)
     assert.is_nil(err)
-    incident_template_ref01_data = helpers.to_map(incident_template_ref01_data_result)
+    incident_template_ref01_data = helpers.to_map(type(incident_template_ref01_data_result) == 'table' and incident_template_ref01_data_result.data_get and incident_template_ref01_data_result:data_get() or incident_template_ref01_data_result)
     assert.is_not_nil(incident_template_ref01_data)
     assert.is_not_nil(incident_template_ref01_data["id"])
 

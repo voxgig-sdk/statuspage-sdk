@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -55,7 +55,7 @@ class TestStatusEmbedConfigEntity:
         status_embed_config_ref01_markdef_up0_value = "Mark01-status_embed_config_ref01_" + str(setup["now"])
         status_embed_config_ref01_data_up0_up[status_embed_config_ref01_markdef_up0_name] = status_embed_config_ref01_markdef_up0_value
 
-        status_embed_config_ref01_resdata_up0 = helpers.to_map(status_embed_config_ref01_ent.update(status_embed_config_ref01_data_up0_up, None))
+        status_embed_config_ref01_resdata_up0 = helpers.to_map(runner.entity_data(status_embed_config_ref01_ent.update(status_embed_config_ref01_data_up0_up, None)))
         assert status_embed_config_ref01_resdata_up0 is not None
         assert status_embed_config_ref01_resdata_up0[status_embed_config_ref01_markdef_up0_name] == status_embed_config_ref01_markdef_up0_value
 

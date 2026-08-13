@@ -74,7 +74,7 @@ func TestPostmortemEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		postmortemRef01ResdataUp0 := core.ToMapAny(postmortemRef01ResdataUp0Result)
+		postmortemRef01ResdataUp0 := core.ToMapAny(entityData(postmortemRef01ResdataUp0Result))
 		if postmortemRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}

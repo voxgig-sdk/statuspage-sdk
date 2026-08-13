@@ -56,7 +56,7 @@ describe("IncidentUpdateEntity", function()
 
     local incident_update_ref01_resdata_up0_result, err = incident_update_ref01_ent:update(incident_update_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local incident_update_ref01_resdata_up0 = helpers.to_map(incident_update_ref01_resdata_up0_result)
+    local incident_update_ref01_resdata_up0 = helpers.to_map(type(incident_update_ref01_resdata_up0_result) == 'table' and incident_update_ref01_resdata_up0_result.data_get and incident_update_ref01_resdata_up0_result:data_get() or incident_update_ref01_resdata_up0_result)
     assert.is_not_nil(incident_update_ref01_resdata_up0)
     assert.are.equal(incident_update_ref01_resdata_up0["id"], incident_update_ref01_data_up0_up["id"])
     assert.are.equal(incident_update_ref01_resdata_up0[incident_update_ref01_markdef_up0_name], incident_update_ref01_markdef_up0_value)

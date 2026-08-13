@@ -85,7 +85,7 @@ class MetricEntityTest extends TestCase
         $metric_ref01_data["page_id"] = $setup["idmap"]["page01"];
 
         $metric_ref01_data_result = $metric_ref01_ent->create($metric_ref01_data, null);
-        $metric_ref01_data = Helpers::to_map($metric_ref01_data_result);
+        $metric_ref01_data = Helpers::to_map(is_object($metric_ref01_data_result) && method_exists($metric_ref01_data_result, 'data_get') ? $metric_ref01_data_result->data_get() : $metric_ref01_data_result);
         $this->assertNotNull($metric_ref01_data);
         $this->assertNotNull($metric_ref01_data["id"]);
 
@@ -114,7 +114,7 @@ class MetricEntityTest extends TestCase
         $metric_ref01_data_up0_up[$metric_ref01_markdef_up0_name] = $metric_ref01_markdef_up0_value;
 
         $metric_ref01_resdata_up0_result = $metric_ref01_ent->update($metric_ref01_data_up0_up, null);
-        $metric_ref01_resdata_up0 = Helpers::to_map($metric_ref01_resdata_up0_result);
+        $metric_ref01_resdata_up0 = Helpers::to_map(is_object($metric_ref01_resdata_up0_result) && method_exists($metric_ref01_resdata_up0_result, 'data_get') ? $metric_ref01_resdata_up0_result->data_get() : $metric_ref01_resdata_up0_result);
         $this->assertNotNull($metric_ref01_resdata_up0);
         $this->assertEquals($metric_ref01_resdata_up0["id"], $metric_ref01_data_up0_up["id"]);
         $this->assertEquals($metric_ref01_resdata_up0[$metric_ref01_markdef_up0_name], $metric_ref01_markdef_up0_value);
@@ -124,7 +124,7 @@ class MetricEntityTest extends TestCase
             "id" => $metric_ref01_data["id"],
         ];
         $metric_ref01_data_dt0_loaded = $metric_ref01_ent->load($metric_ref01_match_dt0, null);
-        $metric_ref01_data_dt0_load_result = Helpers::to_map($metric_ref01_data_dt0_loaded);
+        $metric_ref01_data_dt0_load_result = Helpers::to_map(is_object($metric_ref01_data_dt0_loaded) && method_exists($metric_ref01_data_dt0_loaded, 'data_get') ? $metric_ref01_data_dt0_loaded->data_get() : $metric_ref01_data_dt0_loaded);
         $this->assertNotNull($metric_ref01_data_dt0_load_result);
         $this->assertEquals($metric_ref01_data_dt0_load_result["id"], $metric_ref01_data["id"]);
 

@@ -74,7 +74,7 @@ class MetricsProviderEntityTest < Minitest::Test
     metrics_provider_ref01_data["page_id"] = setup[:idmap]["page01"]
 
     metrics_provider_ref01_data_result = metrics_provider_ref01_ent.create(metrics_provider_ref01_data, nil)
-    metrics_provider_ref01_data = Helpers.to_map(metrics_provider_ref01_data_result)
+    metrics_provider_ref01_data = Helpers.to_map(metrics_provider_ref01_data_result.respond_to?(:data_get) ? metrics_provider_ref01_data_result.data_get : metrics_provider_ref01_data_result)
     assert !metrics_provider_ref01_data.nil?
     assert !metrics_provider_ref01_data["id"].nil?
 
@@ -102,7 +102,7 @@ class MetricsProviderEntityTest < Minitest::Test
     metrics_provider_ref01_data_up0_up[metrics_provider_ref01_markdef_up0_name] = metrics_provider_ref01_markdef_up0_value
 
     metrics_provider_ref01_resdata_up0_result = metrics_provider_ref01_ent.update(metrics_provider_ref01_data_up0_up, nil)
-    metrics_provider_ref01_resdata_up0 = Helpers.to_map(metrics_provider_ref01_resdata_up0_result)
+    metrics_provider_ref01_resdata_up0 = Helpers.to_map(metrics_provider_ref01_resdata_up0_result.respond_to?(:data_get) ? metrics_provider_ref01_resdata_up0_result.data_get : metrics_provider_ref01_resdata_up0_result)
     assert !metrics_provider_ref01_resdata_up0.nil?
     assert_equal metrics_provider_ref01_resdata_up0["id"], metrics_provider_ref01_data_up0_up["id"]
     assert_equal metrics_provider_ref01_resdata_up0[metrics_provider_ref01_markdef_up0_name], metrics_provider_ref01_markdef_up0_value
@@ -112,7 +112,7 @@ class MetricsProviderEntityTest < Minitest::Test
       "id" => metrics_provider_ref01_data["id"],
     }
     metrics_provider_ref01_data_dt0_loaded = metrics_provider_ref01_ent.load(metrics_provider_ref01_match_dt0, nil)
-    metrics_provider_ref01_data_dt0_load_result = Helpers.to_map(metrics_provider_ref01_data_dt0_loaded)
+    metrics_provider_ref01_data_dt0_load_result = Helpers.to_map(metrics_provider_ref01_data_dt0_loaded.respond_to?(:data_get) ? metrics_provider_ref01_data_dt0_loaded.data_get : metrics_provider_ref01_data_dt0_loaded)
     assert !metrics_provider_ref01_data_dt0_load_result.nil?
     assert_equal metrics_provider_ref01_data_dt0_load_result["id"], metrics_provider_ref01_data["id"]
 

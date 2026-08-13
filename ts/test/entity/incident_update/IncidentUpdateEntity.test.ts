@@ -69,7 +69,7 @@ describe('IncidentUpdateEntity', async () => {
     const incident_update_ref01_markdef_up0 = { name: 'body', value: 'Mark01-incident_update_ref01_' + setup.now }
     ;(incident_update_ref01_data_up0 as any)[incident_update_ref01_markdef_up0.name] = incident_update_ref01_markdef_up0.value
 
-    const incident_update_ref01_resdata_up0 = await incident_update_ref01_ent.update(incident_update_ref01_data_up0)
+    const incident_update_ref01_resdata_up0 = (await incident_update_ref01_ent.update(incident_update_ref01_data_up0)).data()
     assert(incident_update_ref01_resdata_up0.id === incident_update_ref01_data_up0.id)
 
     assert((incident_update_ref01_resdata_up0 as any)[incident_update_ref01_markdef_up0.name] === incident_update_ref01_markdef_up0.value)

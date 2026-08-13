@@ -61,19 +61,13 @@ func TestComponentGroupUptimeEntity(t *testing.T) {
 
 		// LOAD
 		componentGroupUptimeRef01Ent := client.ComponentGroupUptime(nil)
-		componentGroupUptimeRef01MatchDt0 := map[string]any{
-			"id": componentGroupUptimeRef01Data["id"],
-		}
+		componentGroupUptimeRef01MatchDt0 := map[string]any{}
 		componentGroupUptimeRef01DataDt0Loaded, err := componentGroupUptimeRef01Ent.Load(componentGroupUptimeRef01MatchDt0, nil)
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		componentGroupUptimeRef01DataDt0LoadResult := core.ToMapAny(componentGroupUptimeRef01DataDt0Loaded)
-		if componentGroupUptimeRef01DataDt0LoadResult == nil {
-			t.Fatal("expected load result to be a map")
-		}
-		if componentGroupUptimeRef01DataDt0LoadResult["id"] != componentGroupUptimeRef01Data["id"] {
-			t.Fatal("expected load result id to match")
+		if componentGroupUptimeRef01DataDt0Loaded == nil {
+			t.Fatal("expected load result to be non-nil")
 		}
 
 	})

@@ -84,7 +84,7 @@ class MetricsProviderEntityTest extends TestCase
         $metrics_provider_ref01_data["page_id"] = $setup["idmap"]["page01"];
 
         $metrics_provider_ref01_data_result = $metrics_provider_ref01_ent->create($metrics_provider_ref01_data, null);
-        $metrics_provider_ref01_data = Helpers::to_map($metrics_provider_ref01_data_result);
+        $metrics_provider_ref01_data = Helpers::to_map(is_object($metrics_provider_ref01_data_result) && method_exists($metrics_provider_ref01_data_result, 'data_get') ? $metrics_provider_ref01_data_result->data_get() : $metrics_provider_ref01_data_result);
         $this->assertNotNull($metrics_provider_ref01_data);
         $this->assertNotNull($metrics_provider_ref01_data["id"]);
 
@@ -112,7 +112,7 @@ class MetricsProviderEntityTest extends TestCase
         $metrics_provider_ref01_data_up0_up[$metrics_provider_ref01_markdef_up0_name] = $metrics_provider_ref01_markdef_up0_value;
 
         $metrics_provider_ref01_resdata_up0_result = $metrics_provider_ref01_ent->update($metrics_provider_ref01_data_up0_up, null);
-        $metrics_provider_ref01_resdata_up0 = Helpers::to_map($metrics_provider_ref01_resdata_up0_result);
+        $metrics_provider_ref01_resdata_up0 = Helpers::to_map(is_object($metrics_provider_ref01_resdata_up0_result) && method_exists($metrics_provider_ref01_resdata_up0_result, 'data_get') ? $metrics_provider_ref01_resdata_up0_result->data_get() : $metrics_provider_ref01_resdata_up0_result);
         $this->assertNotNull($metrics_provider_ref01_resdata_up0);
         $this->assertEquals($metrics_provider_ref01_resdata_up0["id"], $metrics_provider_ref01_data_up0_up["id"]);
         $this->assertEquals($metrics_provider_ref01_resdata_up0[$metrics_provider_ref01_markdef_up0_name], $metrics_provider_ref01_markdef_up0_value);
@@ -122,7 +122,7 @@ class MetricsProviderEntityTest extends TestCase
             "id" => $metrics_provider_ref01_data["id"],
         ];
         $metrics_provider_ref01_data_dt0_loaded = $metrics_provider_ref01_ent->load($metrics_provider_ref01_match_dt0, null);
-        $metrics_provider_ref01_data_dt0_load_result = Helpers::to_map($metrics_provider_ref01_data_dt0_loaded);
+        $metrics_provider_ref01_data_dt0_load_result = Helpers::to_map(is_object($metrics_provider_ref01_data_dt0_loaded) && method_exists($metrics_provider_ref01_data_dt0_loaded, 'data_get') ? $metrics_provider_ref01_data_dt0_loaded->data_get() : $metrics_provider_ref01_data_dt0_loaded);
         $this->assertNotNull($metrics_provider_ref01_data_dt0_load_result);
         $this->assertEquals($metrics_provider_ref01_data_dt0_load_result["id"], $metrics_provider_ref01_data["id"]);
 

@@ -59,7 +59,7 @@ class IncidentUpdateEntityTest extends TestCase
         $incident_update_ref01_data_up0_up[$incident_update_ref01_markdef_up0_name] = $incident_update_ref01_markdef_up0_value;
 
         $incident_update_ref01_resdata_up0_result = $incident_update_ref01_ent->update($incident_update_ref01_data_up0_up, null);
-        $incident_update_ref01_resdata_up0 = Helpers::to_map($incident_update_ref01_resdata_up0_result);
+        $incident_update_ref01_resdata_up0 = Helpers::to_map(is_object($incident_update_ref01_resdata_up0_result) && method_exists($incident_update_ref01_resdata_up0_result, 'data_get') ? $incident_update_ref01_resdata_up0_result->data_get() : $incident_update_ref01_resdata_up0_result);
         $this->assertNotNull($incident_update_ref01_resdata_up0);
         $this->assertEquals($incident_update_ref01_resdata_up0["id"], $incident_update_ref01_data_up0_up["id"]);
         $this->assertEquals($incident_update_ref01_resdata_up0[$incident_update_ref01_markdef_up0_name], $incident_update_ref01_markdef_up0_value);

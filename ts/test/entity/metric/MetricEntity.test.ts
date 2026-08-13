@@ -64,7 +64,7 @@ describe('MetricEntity', async () => {
     metric_ref01_data['page_access_user_id'] = setup.idmap['page_access_user01']
     metric_ref01_data['page_id'] = setup.idmap['page01']
 
-    metric_ref01_data = await metric_ref01_ent.create(metric_ref01_data)
+    metric_ref01_data = (await metric_ref01_ent.create(metric_ref01_data)).data()
     assert(null != metric_ref01_data.id)
 
 
@@ -73,7 +73,7 @@ describe('MetricEntity', async () => {
     metric_ref01_match['page_access_user_id'] = setup.idmap['page_access_user01']
     metric_ref01_match['page_id'] = setup.idmap['page01']
 
-    const metric_ref01_list = await metric_ref01_ent.list(metric_ref01_match)
+    const metric_ref01_list = (await metric_ref01_ent.list(metric_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(metric_ref01_list, { id: metric_ref01_data.id })))
 
@@ -86,7 +86,7 @@ describe('MetricEntity', async () => {
     const metric_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-metric_ref01_' + setup.now }
     ;(metric_ref01_data_up0 as any)[metric_ref01_markdef_up0.name] = metric_ref01_markdef_up0.value
 
-    const metric_ref01_resdata_up0 = await metric_ref01_ent.update(metric_ref01_data_up0)
+    const metric_ref01_resdata_up0 = (await metric_ref01_ent.update(metric_ref01_data_up0)).data()
     assert(metric_ref01_resdata_up0.id === metric_ref01_data_up0.id)
 
     assert((metric_ref01_resdata_up0 as any)[metric_ref01_markdef_up0.name] === metric_ref01_markdef_up0.value)
@@ -95,7 +95,7 @@ describe('MetricEntity', async () => {
     // LOAD
     const metric_ref01_match_dt0: any = {}
     metric_ref01_match_dt0.id = metric_ref01_data.id
-    const metric_ref01_data_dt0 = await metric_ref01_ent.load(metric_ref01_match_dt0)
+    const metric_ref01_data_dt0 = (await metric_ref01_ent.load(metric_ref01_match_dt0)).data()
     assert(metric_ref01_data_dt0.id === metric_ref01_data.id)
 
 
@@ -109,7 +109,7 @@ describe('MetricEntity', async () => {
     metric_ref01_match_rt0['page_access_user_id'] = setup.idmap['page_access_user01']
     metric_ref01_match_rt0['page_id'] = setup.idmap['page01']
 
-    const metric_ref01_list_rt0 = await metric_ref01_ent.list(metric_ref01_match_rt0)
+    const metric_ref01_list_rt0 = (await metric_ref01_ent.list(metric_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(metric_ref01_list_rt0, { id: metric_ref01_data.id })))
 

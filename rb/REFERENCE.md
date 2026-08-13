@@ -169,21 +169,14 @@ component = client.Component
 | `group` | `Boolean` | No |  |
 | `group_id` | `String` | No |  |
 | `id` | `String` | No |  |
-| `major_outage` | `Integer` | No |  |
 | `name` | `String` | No |  |
 | `only_show_if_degraded` | `Boolean` | No |  |
 | `page_id` | `String` | No |  |
-| `partial_outage` | `Integer` | No |  |
 | `position` | `Integer` | No |  |
-| `range_end` | `String` | No |  |
-| `range_start` | `String` | No |  |
-| `related_event` | `Hash` | No |  |
 | `showcase` | `Boolean` | No |  |
 | `start_date` | `String` | No |  |
 | `status` | `String` | No |  |
 | `updated_at` | `String` | No |  |
-| `uptime_percentage` | `Float` | No |  |
-| `warning` | `String` | No |  |
 
 ### Operations
 
@@ -273,15 +266,8 @@ component_group_uptime = client.ComponentGroupUptime
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `String` | No |  |
-| `major_outage` | `Integer` | No |  |
-| `name` | `String` | No |  |
-| `partial_outage` | `Integer` | No |  |
-| `range_end` | `String` | No |  |
-| `range_start` | `String` | No |  |
-| `related_event` | `Hash` | No |  |
-| `uptime_percentage` | `Float` | No |  |
-| `warning` | `String` | No |  |
+| `component_id` | `String` | No |  |
+| `incidents` | `Hash` | No |  |
 
 ### Operations
 
@@ -333,8 +319,8 @@ group_component = client.GroupComponent
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `String` | No |  |
 | `component_group` | `Hash` | Yes |  |
+| `components` | `String` | No |  |
 | `created_at` | `String` | No |  |
 | `description` | `String` | No |  |
 | `id` | `String` | No |  |
@@ -352,6 +338,7 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.GroupComponent.create({
   "page_id" => "example_page_id", # String
+  "component_group" => {}, # Hash
 })
 ```
 
@@ -435,14 +422,13 @@ incident = client.Incident
 | `auto_transition_deliver_notifications_at_start` | `Boolean` | No |  |
 | `auto_transition_to_maintenance_state` | `Boolean` | No |  |
 | `auto_transition_to_operational_state` | `Boolean` | No |  |
-| `component` | `Array` | No |  |
+| `components` | `Array` | No |  |
 | `created_at` | `String` | No |  |
 | `id` | `String` | No |  |
 | `impact` | `String` | No |  |
 | `impact_override` | `String` | No |  |
 | `incident` | `Hash` | Yes |  |
-| `incident_impact` | `Array` | No |  |
-| `incident_update` | `Array` | No |  |
+| `incident_updates` | `Array` | No |  |
 | `metadata` | `Hash` | No |  |
 | `monitoring_at` | `String` | No |  |
 | `name` | `String` | No |  |
@@ -450,10 +436,10 @@ incident = client.Incident
 | `postmortem_body` | `String` | No |  |
 | `postmortem_body_last_updated_at` | `String` | No |  |
 | `postmortem_ignored` | `Boolean` | No |  |
-| `postmortem_notified_subscriber` | `Boolean` | No |  |
+| `postmortem_notified_subscribers` | `Boolean` | No |  |
 | `postmortem_notified_twitter` | `Boolean` | No |  |
 | `postmortem_published_at` | `Boolean` | No |  |
-| `reminder_interval` | `String` | No |  |
+| `reminder_intervals` | `String` | No |  |
 | `resolved_at` | `String` | No |  |
 | `scheduled_auto_completed` | `Boolean` | No |  |
 | `scheduled_auto_in_progress` | `Boolean` | No |  |
@@ -473,14 +459,13 @@ incident = client.Incident
 | `auto_transition_deliver_notifications_at_start` | - | - | - | - | - |
 | `auto_transition_to_maintenance_state` | - | - | - | - | - |
 | `auto_transition_to_operational_state` | - | - | - | - | - |
-| `component` | - | - | - | - | - |
+| `components` | - | - | - | - | - |
 | `created_at` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `impact` | - | - | - | - | - |
 | `impact_override` | - | - | - | - | - |
 | `incident` | - | - | - | Yes | - |
-| `incident_impact` | - | - | - | - | - |
-| `incident_update` | - | - | - | - | - |
+| `incident_updates` | - | - | - | - | - |
 | `metadata` | - | - | - | - | - |
 | `monitoring_at` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
@@ -488,10 +473,10 @@ incident = client.Incident
 | `postmortem_body` | - | - | - | - | - |
 | `postmortem_body_last_updated_at` | - | - | - | - | - |
 | `postmortem_ignored` | - | - | - | - | - |
-| `postmortem_notified_subscriber` | - | - | - | - | - |
+| `postmortem_notified_subscribers` | - | - | - | - | - |
 | `postmortem_notified_twitter` | - | - | - | - | - |
 | `postmortem_published_at` | - | - | - | - | - |
-| `reminder_interval` | - | - | - | - | - |
+| `reminder_intervals` | - | - | - | - | - |
 | `resolved_at` | - | - | - | - | - |
 | `scheduled_auto_completed` | - | - | - | - | - |
 | `scheduled_auto_in_progress` | - | - | - | - | - |
@@ -512,6 +497,7 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.Incident.create({
   "page_id" => "example_page_id", # String
+  "incident" => {}, # Hash
 })
 ```
 
@@ -688,11 +674,11 @@ incident_template = client.IncidentTemplate
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `body` | `String` | No |  |
-| `component` | `Array` | No |  |
+| `components` | `Array` | No |  |
 | `group_id` | `String` | No |  |
 | `id` | `String` | No |  |
 | `name` | `String` | No |  |
-| `should_send_notification` | `Boolean` | No |  |
+| `should_send_notifications` | `Boolean` | No |  |
 | `should_tweet` | `Boolean` | No |  |
 | `template` | `Hash` | Yes |  |
 | `title` | `String` | No |  |
@@ -707,6 +693,7 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.IncidentTemplate.create({
   "page_id" => "example_page_id", # String
+  "template" => {}, # Hash
 })
 ```
 
@@ -758,11 +745,11 @@ incident_update = client.IncidentUpdate
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `affected_component` | `Array` | No |  |
+| `affected_components` | `Array` | No |  |
 | `body` | `String` | No |  |
 | `created_at` | `String` | No |  |
 | `custom_tweet` | `String` | No |  |
-| `deliver_notification` | `Boolean` | No |  |
+| `deliver_notifications` | `Boolean` | No |  |
 | `display_at` | `String` | No |  |
 | `id` | `String` | No |  |
 | `incident_id` | `String` | No |  |
@@ -832,7 +819,7 @@ metric = client.Metric
 | `backfilled` | `Boolean` | No |  |
 | `created_at` | `String` | No |  |
 | `data` | `Hash` | Yes |  |
-| `decimal_place` | `Integer` | No |  |
+| `decimal_places` | `Integer` | No |  |
 | `display` | `Boolean` | No |  |
 | `id` | `String` | No |  |
 | `last_fetched_at` | `String` | No |  |
@@ -859,6 +846,7 @@ Create a new entity with the given data. Raises on error.
 result = client.Metric.create({
   "metrics_provider_id" => "example_metrics_provider_id", # String
   "page_id" => "example_page_id", # String
+  "data" => {}, # Hash
 })
 ```
 
@@ -1037,28 +1025,28 @@ page = client.Page
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `activity_score` | `Float` | No |  |
-| `allow_email_subscriber` | `Boolean` | No |  |
-| `allow_incident_subscriber` | `Boolean` | No |  |
-| `allow_page_subscriber` | `Boolean` | No |  |
-| `allow_rss_atom_feed` | `Boolean` | No |  |
-| `allow_sms_subscriber` | `Boolean` | No |  |
-| `allow_webhook_subscriber` | `Boolean` | No |  |
+| `allow_email_subscribers` | `Boolean` | No |  |
+| `allow_incident_subscribers` | `Boolean` | No |  |
+| `allow_page_subscribers` | `Boolean` | No |  |
+| `allow_rss_atom_feeds` | `Boolean` | No |  |
+| `allow_sms_subscribers` | `Boolean` | No |  |
+| `allow_webhook_subscribers` | `Boolean` | No |  |
 | `branding` | `String` | No |  |
 | `city` | `String` | No |  |
 | `country` | `String` | No |  |
 | `created_at` | `String` | No |  |
-| `css_blue` | `String` | No |  |
+| `css_blues` | `String` | No |  |
 | `css_body_background_color` | `String` | No |  |
 | `css_border_color` | `String` | No |  |
 | `css_font_color` | `String` | No |  |
 | `css_graph_color` | `String` | No |  |
-| `css_green` | `String` | No |  |
+| `css_greens` | `String` | No |  |
 | `css_light_font_color` | `String` | No |  |
 | `css_link_color` | `String` | No |  |
 | `css_no_data` | `String` | No |  |
-| `css_orange` | `String` | No |  |
-| `css_red` | `String` | No |  |
-| `css_yellow` | `String` | No |  |
+| `css_oranges` | `String` | No |  |
+| `css_reds` | `String` | No |  |
+| `css_yellows` | `String` | No |  |
 | `domain` | `String` | No |  |
 | `email_logo` | `String` | No |  |
 | `favicon_logo` | `String` | No |  |
@@ -1066,7 +1054,7 @@ page = client.Page
 | `hero_cover` | `String` | No |  |
 | `hidden_from_search` | `Boolean` | No |  |
 | `id` | `String` | No |  |
-| `ip_restriction` | `String` | No |  |
+| `ip_restrictions` | `String` | No |  |
 | `name` | `String` | No |  |
 | `notifications_email_footer` | `String` | No |  |
 | `notifications_from_email` | `String` | No |  |
@@ -1081,7 +1069,7 @@ page = client.Page
 | `twitter_username` | `String` | No |  |
 | `updated_at` | `String` | No |  |
 | `url` | `String` | No |  |
-| `viewers_must_be_team_member` | `Boolean` | No |  |
+| `viewers_must_be_team_members` | `Boolean` | No |  |
 
 ### Operations
 
@@ -1152,14 +1140,14 @@ page_access_group = client.PageAccessGroup
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `Array` | No |  |
+| `component_ids` | `Array` | No |  |
 | `created_at` | `String` | No |  |
 | `external_identifier` | `String` | No |  |
 | `id` | `String` | No |  |
-| `metric_id` | `Array` | No |  |
+| `metric_ids` | `Array` | No |  |
 | `name` | `String` | No |  |
 | `page_access_group` | `Hash` | No |  |
-| `page_access_user_id` | `Array` | No |  |
+| `page_access_user_ids` | `Array` | No |  |
 | `page_id` | `String` | No |  |
 | `updated_at` | `String` | No |  |
 
@@ -1167,14 +1155,14 @@ page_access_group = client.PageAccessGroup
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `component_id` | - | - | Yes | - | - |
+| `component_ids` | - | - | Yes | - | - |
 | `created_at` | - | - | - | - | - |
 | `external_identifier` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
-| `metric_id` | - | - | - | - | - |
+| `metric_ids` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
 | `page_access_group` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
+| `page_access_user_ids` | - | - | - | - | - |
 | `page_id` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 
@@ -1266,13 +1254,14 @@ page_access_user = client.PageAccessUser
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `Array` | Yes |  |
+| `component_ids` | `Array` | Yes |  |
 | `created_at` | `String` | No |  |
 | `email` | `String` | No |  |
 | `external_login` | `String` | No |  |
 | `id` | `String` | No |  |
-| `metric_id` | `Array` | Yes |  |
+| `metric_ids` | `Array` | Yes |  |
 | `page_access_group_id` | `String` | No |  |
+| `page_access_group_ids` | `String` | No |  |
 | `page_access_user` | `Hash` | No |  |
 | `page_id` | `String` | No |  |
 | `updated_at` | `String` | No |  |
@@ -1286,6 +1275,8 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.PageAccessUser.create({
   "id" => "example_id", # String
+  "component_ids" => [], # Array
+  "metric_ids" => [], # Array
 })
 ```
 
@@ -1365,8 +1356,8 @@ permission = client.Permission
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `Hash` | No |  |
-| `page` | `Hash` | No |  |
+| `pages` | `Hash` | No |  |
+| `user_id` | `String` | No |  |
 
 ### Operations
 
@@ -1436,7 +1427,7 @@ postmortem = client.Postmortem
 | `body_updated_at` | `String` | No |  |
 | `created_at` | `String` | No |  |
 | `custom_tweet` | `String` | No |  |
-| `notify_subscriber` | `Boolean` | No |  |
+| `notify_subscribers` | `Boolean` | No |  |
 | `notify_twitter` | `Boolean` | No |  |
 | `postmortem` | `Hash` | Yes |  |
 | `preview_key` | `String` | No |  |
@@ -1453,7 +1444,7 @@ postmortem = client.Postmortem
 | `body_updated_at` | - | - |
 | `created_at` | - | - |
 | `custom_tweet` | - | - |
-| `notify_subscriber` | - | - |
+| `notify_subscribers` | - | - |
 | `notify_twitter` | - | - |
 | `postmortem` | - | Yes |
 | `preview_key` | - | - |
@@ -1591,8 +1582,8 @@ subscriber = client.Subscriber
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `String` | No |  |
-| `component_id` | `Array` | No |  |
+| `component_ids` | `Array` | No |  |
+| `components` | `String` | No |  |
 | `created_at` | `String` | No |  |
 | `display_phone_number` | `String` | No |  |
 | `email` | `String` | No |  |
@@ -1612,40 +1603,11 @@ subscriber = client.Subscriber
 | `sms` | `Integer` | No |  |
 | `state` | `String` | No |  |
 | `subscriber` | `Hash` | No |  |
-| `team` | `Integer` | No |  |
+| `subscribers` | `String` | Yes |  |
+| `teams` | `Integer` | No |  |
 | `type` | `String` | No |  |
 | `webhook` | `Integer` | No |  |
 | `workspace_name` | `String` | No |  |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `component` | - | - | - | - | - |
-| `component_id` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `display_phone_number` | - | - | - | - | - |
-| `email` | - | - | - | - | - |
-| `endpoint` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `integration_partner` | - | - | - | - | - |
-| `mode` | - | - | - | - | - |
-| `obfuscated_channel_name` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
-| `phone_country` | - | - | - | - | - |
-| `phone_number` | - | - | - | - | - |
-| `purge_at` | - | - | - | - | - |
-| `quarantined_at` | - | - | - | - | - |
-| `skip_confirmation_notification` | - | - | - | - | - |
-| `skip_unsubscription_notification` | - | - | - | - | - |
-| `slack` | - | - | - | - | - |
-| `sms` | - | - | - | - | - |
-| `state` | - | - | - | - | - |
-| `subscriber` | - | - | Yes | - | - |
-| `team` | - | - | - | - | - |
-| `type` | - | - | - | - | - |
-| `webhook` | - | - | - | - | - |
-| `workspace_name` | - | - | - | - | - |
 
 ### Operations
 
@@ -1656,6 +1618,7 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.Subscriber.create({
   "page_id" => "example_page_id", # String
+  "subscribers" => "example_subscribers", # String
 })
 ```
 
@@ -1753,6 +1716,7 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.User.create({
   "organization_id" => "example_organization_id", # String
+  "user" => {}, # Hash
 })
 ```
 

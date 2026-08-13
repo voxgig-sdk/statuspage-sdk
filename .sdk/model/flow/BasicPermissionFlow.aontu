@@ -14,7 +14,8 @@ main: kit: flow: BasicPermissionFlow:
       input: {
         ref: "permission_ref01",
         srcdatavar: "permission_ref01_data",
-        suffix: "_up0"
+        suffix: "_up0",
+        textfield: "user_id"
       }
 
       op: "update",

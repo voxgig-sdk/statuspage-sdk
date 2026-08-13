@@ -52,9 +52,14 @@ class PermissionEntityTest extends TestCase
             "organization_id" => $setup["idmap"]["organization_id"],
         ];
 
+        $permission_ref01_markdef_up0_name = "user_id";
+        $permission_ref01_markdef_up0_value = "Mark01-permission_ref01_" . $setup["now"];
+        $permission_ref01_data_up0_up[$permission_ref01_markdef_up0_name] = $permission_ref01_markdef_up0_value;
+
         $permission_ref01_resdata_up0_result = $permission_ref01_ent->update($permission_ref01_data_up0_up, null);
-        $permission_ref01_resdata_up0 = Helpers::to_map($permission_ref01_resdata_up0_result);
+        $permission_ref01_resdata_up0 = Helpers::to_map(is_object($permission_ref01_resdata_up0_result) && method_exists($permission_ref01_resdata_up0_result, 'data_get') ? $permission_ref01_resdata_up0_result->data_get() : $permission_ref01_resdata_up0_result);
         $this->assertNotNull($permission_ref01_resdata_up0);
+        $this->assertEquals($permission_ref01_resdata_up0[$permission_ref01_markdef_up0_name], $permission_ref01_markdef_up0_value);
 
         // LOAD
         $permission_ref01_match_dt0 = [];

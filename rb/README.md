@@ -52,7 +52,7 @@ Component is nested under page, so provide the `page_id`.
 
 ```ruby
 begin
-  # load returns the bare Component record (raises on error).
+  # load returns the ENTITY — call data_get for the Component record (raises on error).
   component = client.Component.load({ "page_id" => "example_page_id", "id" => "example_id" })
   puts component
 rescue => err
@@ -63,14 +63,14 @@ end
 ### 4. Create, update, and remove
 
 ```ruby
-# create returns the bare created Component record.
+# create returns the ENTITY — call data_get for the created Component record.
 created = client.Component.create({ "page_id" => "example_page_id" })
 
-# Update — index the bare record directly (created["id"]).
-client.Component.update({ "id" => created["id"], "page_id" => "example_page_id" })
+# Update — index the record via data_get (created.data_get["id"]).
+client.Component.update({ "id" => created.data_get["id"], "page_id" => "example_page_id", "automation_email" => "example_automation_email" })
 
 # Remove
-client.Component.remove({ "id" => created["id"], "page_id" => "example_page_id" })
+client.Component.remove({ "id" => created.data_get["id"], "page_id" => "example_page_id" })
 ```
 
 
@@ -80,9 +80,9 @@ Entity operations raise on failure, so rescue them:
 
 ```ruby
 begin
-  components = client.Component.list()
+  postmortem = client.Postmortem.load({ "incident_id" => "example", "page_id" => "example" })
 rescue => err
-  warn "list failed: #{err}"
+  warn "load failed: #{err}"
 end
 ```
 
@@ -143,17 +143,15 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required. Seed fixture
-data via the `entity` option so offline calls resolve without a live server:
+Create a mock client for unit testing — no server required:
 
 ```ruby
-client = StatuspageSDK.test({
-  "entity" => { "component" => { "test01" => { "id" => "test01" } } },
-})
+client = StatuspageSDK.test
 
-# Entity ops return the bare mock record (raises on error).
-component = client.Component.list()
-puts component
+# Entity ops return the ENTITY (raises on error);
+# call data_get for the mock record.
+postmortem = client.Postmortem.load({ "incident_id" => "example", "page_id" => "example" })
+puts postmortem
 ```
 
 ### Use a custom fetch function
@@ -298,21 +296,14 @@ returns a result `Hash` with these keys:
 | `group` |  |
 | `group_id` |  |
 | `id` |  |
-| `major_outage` |  |
 | `name` |  |
 | `only_show_if_degraded` |  |
 | `page_id` |  |
-| `partial_outage` |  |
 | `position` |  |
-| `range_end` |  |
-| `range_start` |  |
-| `related_event` |  |
 | `showcase` |  |
 | `start_date` |  |
 | `status` |  |
 | `updated_at` |  |
-| `uptime_percentage` |  |
-| `warning` |  |
 
 Operations: Create, List, Load, Patch, Remove, Update.
 
@@ -322,15 +313,8 @@ API path: `/pages/{page_id}/components/{component_id}/page_access_groups`
 
 | Field | Description |
 | --- | --- |
-| `id` |  |
-| `major_outage` |  |
-| `name` |  |
-| `partial_outage` |  |
-| `range_end` |  |
-| `range_start` |  |
-| `related_event` |  |
-| `uptime_percentage` |  |
-| `warning` |  |
+| `component_id` |  |
+| `incidents` |  |
 
 Operations: Load.
 
@@ -340,8 +324,8 @@ API path: `/pages/{page_id}/component-groups/{id}/uptime`
 
 | Field | Description |
 | --- | --- |
-| `component` |  |
 | `component_group` |  |
+| `components` |  |
 | `created_at` |  |
 | `description` |  |
 | `id` |  |
@@ -362,14 +346,13 @@ API path: `/pages/{page_id}/component-groups`
 | `auto_transition_deliver_notifications_at_start` |  |
 | `auto_transition_to_maintenance_state` |  |
 | `auto_transition_to_operational_state` |  |
-| `component` |  |
+| `components` |  |
 | `created_at` |  |
 | `id` |  |
 | `impact` |  |
 | `impact_override` |  |
 | `incident` |  |
-| `incident_impact` |  |
-| `incident_update` |  |
+| `incident_updates` |  |
 | `metadata` |  |
 | `monitoring_at` |  |
 | `name` |  |
@@ -377,10 +360,10 @@ API path: `/pages/{page_id}/component-groups`
 | `postmortem_body` |  |
 | `postmortem_body_last_updated_at` |  |
 | `postmortem_ignored` |  |
-| `postmortem_notified_subscriber` |  |
+| `postmortem_notified_subscribers` |  |
 | `postmortem_notified_twitter` |  |
 | `postmortem_published_at` |  |
-| `reminder_interval` |  |
+| `reminder_intervals` |  |
 | `resolved_at` |  |
 | `scheduled_auto_completed` |  |
 | `scheduled_auto_in_progress` |  |
@@ -419,11 +402,11 @@ API path: `/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/
 | Field | Description |
 | --- | --- |
 | `body` |  |
-| `component` |  |
+| `components` |  |
 | `group_id` |  |
 | `id` |  |
 | `name` |  |
-| `should_send_notification` |  |
+| `should_send_notifications` |  |
 | `should_tweet` |  |
 | `template` |  |
 | `title` |  |
@@ -437,11 +420,11 @@ API path: `/pages/{page_id}/incident_templates`
 
 | Field | Description |
 | --- | --- |
-| `affected_component` |  |
+| `affected_components` |  |
 | `body` |  |
 | `created_at` |  |
 | `custom_tweet` |  |
-| `deliver_notification` |  |
+| `deliver_notifications` |  |
 | `display_at` |  |
 | `id` |  |
 | `incident_id` |  |
@@ -464,7 +447,7 @@ API path: `/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_u
 | `backfilled` |  |
 | `created_at` |  |
 | `data` |  |
-| `decimal_place` |  |
+| `decimal_places` |  |
 | `display` |  |
 | `id` |  |
 | `last_fetched_at` |  |
@@ -508,28 +491,28 @@ API path: `/pages/{page_id}/metrics_providers`
 | Field | Description |
 | --- | --- |
 | `activity_score` |  |
-| `allow_email_subscriber` |  |
-| `allow_incident_subscriber` |  |
-| `allow_page_subscriber` |  |
-| `allow_rss_atom_feed` |  |
-| `allow_sms_subscriber` |  |
-| `allow_webhook_subscriber` |  |
+| `allow_email_subscribers` |  |
+| `allow_incident_subscribers` |  |
+| `allow_page_subscribers` |  |
+| `allow_rss_atom_feeds` |  |
+| `allow_sms_subscribers` |  |
+| `allow_webhook_subscribers` |  |
 | `branding` |  |
 | `city` |  |
 | `country` |  |
 | `created_at` |  |
-| `css_blue` |  |
+| `css_blues` |  |
 | `css_body_background_color` |  |
 | `css_border_color` |  |
 | `css_font_color` |  |
 | `css_graph_color` |  |
-| `css_green` |  |
+| `css_greens` |  |
 | `css_light_font_color` |  |
 | `css_link_color` |  |
 | `css_no_data` |  |
-| `css_orange` |  |
-| `css_red` |  |
-| `css_yellow` |  |
+| `css_oranges` |  |
+| `css_reds` |  |
+| `css_yellows` |  |
 | `domain` |  |
 | `email_logo` |  |
 | `favicon_logo` |  |
@@ -537,7 +520,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `hero_cover` |  |
 | `hidden_from_search` |  |
 | `id` |  |
-| `ip_restriction` |  |
+| `ip_restrictions` |  |
 | `name` |  |
 | `notifications_email_footer` |  |
 | `notifications_from_email` |  |
@@ -552,7 +535,7 @@ API path: `/pages/{page_id}/metrics_providers`
 | `twitter_username` |  |
 | `updated_at` |  |
 | `url` |  |
-| `viewers_must_be_team_member` |  |
+| `viewers_must_be_team_members` |  |
 
 Operations: List, Load, Patch, Update.
 
@@ -562,14 +545,14 @@ API path: `/pages`
 
 | Field | Description |
 | --- | --- |
-| `component_id` |  |
+| `component_ids` |  |
 | `created_at` |  |
 | `external_identifier` |  |
 | `id` |  |
-| `metric_id` |  |
+| `metric_ids` |  |
 | `name` |  |
 | `page_access_group` |  |
-| `page_access_user_id` |  |
+| `page_access_user_ids` |  |
 | `page_id` |  |
 | `updated_at` |  |
 
@@ -581,13 +564,14 @@ API path: `/pages/{page_id}/page_access_groups/{page_access_group_id}/components
 
 | Field | Description |
 | --- | --- |
-| `component_id` |  |
+| `component_ids` |  |
 | `created_at` |  |
 | `email` |  |
 | `external_login` |  |
 | `id` |  |
-| `metric_id` |  |
+| `metric_ids` |  |
 | `page_access_group_id` |  |
+| `page_access_group_ids` |  |
 | `page_access_user` |  |
 | `page_id` |  |
 | `updated_at` |  |
@@ -600,8 +584,8 @@ API path: `/pages/{page_id}/page_access_users/{page_access_user_id}/components`
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `page` |  |
+| `pages` |  |
+| `user_id` |  |
 
 Operations: Load, Update.
 
@@ -617,7 +601,7 @@ API path: `/organizations/{organization_id}/permissions/{user_id}`
 | `body_updated_at` |  |
 | `created_at` |  |
 | `custom_tweet` |  |
-| `notify_subscriber` |  |
+| `notify_subscribers` |  |
 | `notify_twitter` |  |
 | `postmortem` |  |
 | `preview_key` |  |
@@ -648,8 +632,8 @@ API path: `/pages/{page_id}/status_embed_config`
 
 | Field | Description |
 | --- | --- |
-| `component` |  |
-| `component_id` |  |
+| `component_ids` |  |
+| `components` |  |
 | `created_at` |  |
 | `display_phone_number` |  |
 | `email` |  |
@@ -669,7 +653,8 @@ API path: `/pages/{page_id}/status_embed_config`
 | `sms` |  |
 | `state` |  |
 | `subscriber` |  |
-| `team` |  |
+| `subscribers` |  |
+| `teams` |  |
 | `type` |  |
 | `webhook` |  |
 | `workspace_name` |  |
@@ -725,26 +710,19 @@ Create an instance: `component = client.Component`
 | `group` | `Boolean` |  |
 | `group_id` | `String` |  |
 | `id` | `String` |  |
-| `major_outage` | `Integer` |  |
 | `name` | `String` |  |
 | `only_show_if_degraded` | `Boolean` |  |
 | `page_id` | `String` |  |
-| `partial_outage` | `Integer` |  |
 | `position` | `Integer` |  |
-| `range_end` | `String` |  |
-| `range_start` | `String` |  |
-| `related_event` | `Hash` |  |
 | `showcase` | `Boolean` |  |
 | `start_date` | `String` |  |
 | `status` | `String` |  |
 | `updated_at` | `String` |  |
-| `uptime_percentage` | `Float` |  |
-| `warning` | `String` |  |
 
 #### Example: Load
 
 ```ruby
-# load returns the bare Component record (raises on error).
+# load returns the ENTITY — call data_get for the Component record (raises on error).
 component = client.Component.load({ "id" => "component_id", "page_id" => "page_id" })
 ```
 
@@ -778,20 +756,13 @@ Create an instance: `component_group_uptime = client.ComponentGroupUptime`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `String` |  |
-| `major_outage` | `Integer` |  |
-| `name` | `String` |  |
-| `partial_outage` | `Integer` |  |
-| `range_end` | `String` |  |
-| `range_start` | `String` |  |
-| `related_event` | `Hash` |  |
-| `uptime_percentage` | `Float` |  |
-| `warning` | `String` |  |
+| `component_id` | `String` |  |
+| `incidents` | `Hash` |  |
 
 #### Example: Load
 
 ```ruby
-# load returns the bare ComponentGroupUptime record (raises on error).
+# load returns the ENTITY — call data_get for the ComponentGroupUptime record (raises on error).
 component_group_uptime = client.ComponentGroupUptime.load({ "id" => "component_group_uptime_id", "page_id" => "page_id" })
 ```
 
@@ -814,8 +785,8 @@ Create an instance: `group_component = client.GroupComponent`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `String` |  |
 | `component_group` | `Hash` |  |
+| `components` | `String` |  |
 | `created_at` | `String` |  |
 | `description` | `String` |  |
 | `id` | `String` |  |
@@ -827,7 +798,7 @@ Create an instance: `group_component = client.GroupComponent`
 #### Example: Load
 
 ```ruby
-# load returns the bare GroupComponent record (raises on error).
+# load returns the ENTITY — call data_get for the GroupComponent record (raises on error).
 group_component = client.GroupComponent.load({ "id" => "group_component_id", "page_id" => "page_id" })
 ```
 
@@ -843,6 +814,7 @@ group_components = client.GroupComponent.list
 ```ruby
 group_component = client.GroupComponent.create({
   "page_id" => "example_page_id", # String
+  "component_group" => {}, # Hash
 })
 ```
 
@@ -869,14 +841,13 @@ Create an instance: `incident = client.Incident`
 | `auto_transition_deliver_notifications_at_start` | `Boolean` |  |
 | `auto_transition_to_maintenance_state` | `Boolean` |  |
 | `auto_transition_to_operational_state` | `Boolean` |  |
-| `component` | `Array` |  |
+| `components` | `Array` |  |
 | `created_at` | `String` |  |
 | `id` | `String` |  |
 | `impact` | `String` |  |
 | `impact_override` | `String` |  |
 | `incident` | `Hash` |  |
-| `incident_impact` | `Array` |  |
-| `incident_update` | `Array` |  |
+| `incident_updates` | `Array` |  |
 | `metadata` | `Hash` |  |
 | `monitoring_at` | `String` |  |
 | `name` | `String` |  |
@@ -884,10 +855,10 @@ Create an instance: `incident = client.Incident`
 | `postmortem_body` | `String` |  |
 | `postmortem_body_last_updated_at` | `String` |  |
 | `postmortem_ignored` | `Boolean` |  |
-| `postmortem_notified_subscriber` | `Boolean` |  |
+| `postmortem_notified_subscribers` | `Boolean` |  |
 | `postmortem_notified_twitter` | `Boolean` |  |
 | `postmortem_published_at` | `Boolean` |  |
-| `reminder_interval` | `String` |  |
+| `reminder_intervals` | `String` |  |
 | `resolved_at` | `String` |  |
 | `scheduled_auto_completed` | `Boolean` |  |
 | `scheduled_auto_in_progress` | `Boolean` |  |
@@ -902,7 +873,7 @@ Create an instance: `incident = client.Incident`
 #### Example: Load
 
 ```ruby
-# load returns the bare Incident record (raises on error).
+# load returns the ENTITY — call data_get for the Incident record (raises on error).
 incident = client.Incident.load({ "id" => "incident_id", "page_id" => "page_id" })
 ```
 
@@ -918,6 +889,7 @@ incidents = client.Incident.list
 ```ruby
 incident = client.Incident.create({
   "page_id" => "example_page_id", # String
+  "incident" => {}, # Hash
 })
 ```
 
@@ -970,11 +942,11 @@ Create an instance: `incident_template = client.IncidentTemplate`
 | Field | Type | Description |
 | --- | --- | --- |
 | `body` | `String` |  |
-| `component` | `Array` |  |
+| `components` | `Array` |  |
 | `group_id` | `String` |  |
 | `id` | `String` |  |
 | `name` | `String` |  |
-| `should_send_notification` | `Boolean` |  |
+| `should_send_notifications` | `Boolean` |  |
 | `should_tweet` | `Boolean` |  |
 | `template` | `Hash` |  |
 | `title` | `String` |  |
@@ -992,6 +964,7 @@ incident_templates = client.IncidentTemplate.list
 ```ruby
 incident_template = client.IncidentTemplate.create({
   "page_id" => "example_page_id", # String
+  "template" => {}, # Hash
 })
 ```
 
@@ -1010,11 +983,11 @@ Create an instance: `incident_update = client.IncidentUpdate`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `affected_component` | `Array` |  |
+| `affected_components` | `Array` |  |
 | `body` | `String` |  |
 | `created_at` | `String` |  |
 | `custom_tweet` | `String` |  |
-| `deliver_notification` | `Boolean` |  |
+| `deliver_notifications` | `Boolean` |  |
 | `display_at` | `String` |  |
 | `id` | `String` |  |
 | `incident_id` | `String` |  |
@@ -1048,7 +1021,7 @@ Create an instance: `metric = client.Metric`
 | `backfilled` | `Boolean` |  |
 | `created_at` | `String` |  |
 | `data` | `Hash` |  |
-| `decimal_place` | `Integer` |  |
+| `decimal_places` | `Integer` |  |
 | `display` | `Boolean` |  |
 | `id` | `String` |  |
 | `last_fetched_at` | `String` |  |
@@ -1068,7 +1041,7 @@ Create an instance: `metric = client.Metric`
 #### Example: Load
 
 ```ruby
-# load returns the bare Metric record (raises on error).
+# load returns the ENTITY — call data_get for the Metric record (raises on error).
 metric = client.Metric.load({ "id" => "metric_id", "page_id" => "page_id" })
 ```
 
@@ -1085,6 +1058,7 @@ metrics = client.Metric.list
 metric = client.Metric.create({
   "metrics_provider_id" => "example_metrics_provider_id", # String
   "page_id" => "example_page_id", # String
+  "data" => {}, # Hash
 })
 ```
 
@@ -1120,7 +1094,7 @@ Create an instance: `metrics_provider = client.MetricsProvider`
 #### Example: Load
 
 ```ruby
-# load returns the bare MetricsProvider record (raises on error).
+# load returns the ENTITY — call data_get for the MetricsProvider record (raises on error).
 metrics_provider = client.MetricsProvider.load({ "id" => "metrics_provider_id", "page_id" => "page_id" })
 ```
 
@@ -1157,28 +1131,28 @@ Create an instance: `page = client.Page`
 | Field | Type | Description |
 | --- | --- | --- |
 | `activity_score` | `Float` |  |
-| `allow_email_subscriber` | `Boolean` |  |
-| `allow_incident_subscriber` | `Boolean` |  |
-| `allow_page_subscriber` | `Boolean` |  |
-| `allow_rss_atom_feed` | `Boolean` |  |
-| `allow_sms_subscriber` | `Boolean` |  |
-| `allow_webhook_subscriber` | `Boolean` |  |
+| `allow_email_subscribers` | `Boolean` |  |
+| `allow_incident_subscribers` | `Boolean` |  |
+| `allow_page_subscribers` | `Boolean` |  |
+| `allow_rss_atom_feeds` | `Boolean` |  |
+| `allow_sms_subscribers` | `Boolean` |  |
+| `allow_webhook_subscribers` | `Boolean` |  |
 | `branding` | `String` |  |
 | `city` | `String` |  |
 | `country` | `String` |  |
 | `created_at` | `String` |  |
-| `css_blue` | `String` |  |
+| `css_blues` | `String` |  |
 | `css_body_background_color` | `String` |  |
 | `css_border_color` | `String` |  |
 | `css_font_color` | `String` |  |
 | `css_graph_color` | `String` |  |
-| `css_green` | `String` |  |
+| `css_greens` | `String` |  |
 | `css_light_font_color` | `String` |  |
 | `css_link_color` | `String` |  |
 | `css_no_data` | `String` |  |
-| `css_orange` | `String` |  |
-| `css_red` | `String` |  |
-| `css_yellow` | `String` |  |
+| `css_oranges` | `String` |  |
+| `css_reds` | `String` |  |
+| `css_yellows` | `String` |  |
 | `domain` | `String` |  |
 | `email_logo` | `String` |  |
 | `favicon_logo` | `String` |  |
@@ -1186,7 +1160,7 @@ Create an instance: `page = client.Page`
 | `hero_cover` | `String` |  |
 | `hidden_from_search` | `Boolean` |  |
 | `id` | `String` |  |
-| `ip_restriction` | `String` |  |
+| `ip_restrictions` | `String` |  |
 | `name` | `String` |  |
 | `notifications_email_footer` | `String` |  |
 | `notifications_from_email` | `String` |  |
@@ -1201,12 +1175,12 @@ Create an instance: `page = client.Page`
 | `twitter_username` | `String` |  |
 | `updated_at` | `String` |  |
 | `url` | `String` |  |
-| `viewers_must_be_team_member` | `Boolean` |  |
+| `viewers_must_be_team_members` | `Boolean` |  |
 
 #### Example: Load
 
 ```ruby
-# load returns the bare Page record (raises on error).
+# load returns the ENTITY — call data_get for the Page record (raises on error).
 page = client.Page.load({ "id" => "page_id" })
 ```
 
@@ -1236,21 +1210,21 @@ Create an instance: `page_access_group = client.PageAccessGroup`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `Array` |  |
+| `component_ids` | `Array` |  |
 | `created_at` | `String` |  |
 | `external_identifier` | `String` |  |
 | `id` | `String` |  |
-| `metric_id` | `Array` |  |
+| `metric_ids` | `Array` |  |
 | `name` | `String` |  |
 | `page_access_group` | `Hash` |  |
-| `page_access_user_id` | `Array` |  |
+| `page_access_user_ids` | `Array` |  |
 | `page_id` | `String` |  |
 | `updated_at` | `String` |  |
 
 #### Example: Load
 
 ```ruby
-# load returns the bare PageAccessGroup record (raises on error).
+# load returns the ENTITY — call data_get for the PageAccessGroup record (raises on error).
 page_access_group = client.PageAccessGroup.load({ "id" => "page_access_group_id", "page_id" => "page_id" })
 ```
 
@@ -1288,13 +1262,14 @@ Create an instance: `page_access_user = client.PageAccessUser`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `Array` |  |
+| `component_ids` | `Array` |  |
 | `created_at` | `String` |  |
 | `email` | `String` |  |
 | `external_login` | `String` |  |
 | `id` | `String` |  |
-| `metric_id` | `Array` |  |
+| `metric_ids` | `Array` |  |
 | `page_access_group_id` | `String` |  |
+| `page_access_group_ids` | `String` |  |
 | `page_access_user` | `Hash` |  |
 | `page_id` | `String` |  |
 | `updated_at` | `String` |  |
@@ -1302,7 +1277,7 @@ Create an instance: `page_access_user = client.PageAccessUser`
 #### Example: Load
 
 ```ruby
-# load returns the bare PageAccessUser record (raises on error).
+# load returns the ENTITY — call data_get for the PageAccessUser record (raises on error).
 page_access_user = client.PageAccessUser.load({ "id" => "page_access_user_id", "page_id" => "page_id" })
 ```
 
@@ -1318,6 +1293,8 @@ page_access_users = client.PageAccessUser.list
 ```ruby
 page_access_user = client.PageAccessUser.create({
   "id" => "example_id", # String
+  "component_ids" => [], # Array
+  "metric_ids" => [], # Array
 })
 ```
 
@@ -1337,13 +1314,13 @@ Create an instance: `permission = client.Permission`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `Hash` |  |
-| `page` | `Hash` |  |
+| `pages` | `Hash` |  |
+| `user_id` | `String` |  |
 
 #### Example: Load
 
 ```ruby
-# load returns the bare Permission record (raises on error).
+# load returns the ENTITY — call data_get for the Permission record (raises on error).
 permission = client.Permission.load({ "id" => "permission_id", "organization_id" => "organization_id" })
 ```
 
@@ -1369,7 +1346,7 @@ Create an instance: `postmortem = client.Postmortem`
 | `body_updated_at` | `String` |  |
 | `created_at` | `String` |  |
 | `custom_tweet` | `String` |  |
-| `notify_subscriber` | `Boolean` |  |
+| `notify_subscribers` | `Boolean` |  |
 | `notify_twitter` | `Boolean` |  |
 | `postmortem` | `Hash` |  |
 | `preview_key` | `String` |  |
@@ -1379,7 +1356,7 @@ Create an instance: `postmortem = client.Postmortem`
 #### Example: Load
 
 ```ruby
-# load returns the bare Postmortem record (raises on error).
+# load returns the ENTITY — call data_get for the Postmortem record (raises on error).
 postmortem = client.Postmortem.load({ "incident_id" => "incident_id", "page_id" => "page_id" })
 ```
 
@@ -1410,7 +1387,7 @@ Create an instance: `status_embed_config = client.StatusEmbedConfig`
 #### Example: Load
 
 ```ruby
-# load returns the bare StatusEmbedConfig record (raises on error).
+# load returns the ENTITY — call data_get for the StatusEmbedConfig record (raises on error).
 status_embed_config = client.StatusEmbedConfig.load({ "page_id" => "page_id" })
 ```
 
@@ -1433,8 +1410,8 @@ Create an instance: `subscriber = client.Subscriber`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component` | `String` |  |
-| `component_id` | `Array` |  |
+| `component_ids` | `Array` |  |
+| `components` | `String` |  |
 | `created_at` | `String` |  |
 | `display_phone_number` | `String` |  |
 | `email` | `String` |  |
@@ -1454,7 +1431,8 @@ Create an instance: `subscriber = client.Subscriber`
 | `sms` | `Integer` |  |
 | `state` | `String` |  |
 | `subscriber` | `Hash` |  |
-| `team` | `Integer` |  |
+| `subscribers` | `String` |  |
+| `teams` | `Integer` |  |
 | `type` | `String` |  |
 | `webhook` | `Integer` |  |
 | `workspace_name` | `String` |  |
@@ -1462,7 +1440,7 @@ Create an instance: `subscriber = client.Subscriber`
 #### Example: Load
 
 ```ruby
-# load returns the bare Subscriber record (raises on error).
+# load returns the ENTITY — call data_get for the Subscriber record (raises on error).
 subscriber = client.Subscriber.load({ "id" => "subscriber_id", "page_id" => "page_id" })
 ```
 
@@ -1478,6 +1456,7 @@ subscribers = client.Subscriber.list
 ```ruby
 subscriber = client.Subscriber.create({
   "page_id" => "example_page_id", # String
+  "subscribers" => "example_subscribers", # String
 })
 ```
 
@@ -1519,6 +1498,7 @@ users = client.User.list
 ```ruby
 user = client.User.create({
   "organization_id" => "example_organization_id", # String
+  "user" => {}, # Hash
 })
 ```
 
@@ -1595,15 +1575,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-component = client.Component
-component.list()
+postmortem = client.Postmortem
+postmortem.load({ "incident_id" => "example", "page_id" => "example" })
 
-# component.data_get now returns the component data from the last list
-# component.match_get returns the last match criteria
+# postmortem.data_get now returns the postmortem data from the last load
+# postmortem.match_get returns the last match criteria
 ```
 
 Call `make` to create a fresh instance with the same configuration

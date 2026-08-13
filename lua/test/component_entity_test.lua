@@ -85,7 +85,7 @@ describe("ComponentEntity", function()
 
     local component_ref01_data_result, err = component_ref01_ent:create(component_ref01_data, nil)
     assert.is_nil(err)
-    component_ref01_data = helpers.to_map(component_ref01_data_result)
+    component_ref01_data = helpers.to_map(type(component_ref01_data_result) == 'table' and component_ref01_data_result.data_get and component_ref01_data_result:data_get() or component_ref01_data_result)
     assert.is_not_nil(component_ref01_data)
     assert.is_not_nil(component_ref01_data["id"])
 
@@ -115,7 +115,7 @@ describe("ComponentEntity", function()
 
     local component_ref01_resdata_up0_result, err = component_ref01_ent:update(component_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local component_ref01_resdata_up0 = helpers.to_map(component_ref01_resdata_up0_result)
+    local component_ref01_resdata_up0 = helpers.to_map(type(component_ref01_resdata_up0_result) == 'table' and component_ref01_resdata_up0_result.data_get and component_ref01_resdata_up0_result:data_get() or component_ref01_resdata_up0_result)
     assert.is_not_nil(component_ref01_resdata_up0)
     assert.are.equal(component_ref01_resdata_up0["id"], component_ref01_data_up0_up["id"])
     assert.are.equal(component_ref01_resdata_up0[component_ref01_markdef_up0_name], component_ref01_markdef_up0_value)
@@ -126,7 +126,7 @@ describe("ComponentEntity", function()
     }
     local component_ref01_data_dt0_loaded, err = component_ref01_ent:load(component_ref01_match_dt0, nil)
     assert.is_nil(err)
-    local component_ref01_data_dt0_load_result = helpers.to_map(component_ref01_data_dt0_loaded)
+    local component_ref01_data_dt0_load_result = helpers.to_map(type(component_ref01_data_dt0_loaded) == 'table' and component_ref01_data_dt0_loaded.data_get and component_ref01_data_dt0_loaded:data_get() or component_ref01_data_dt0_loaded)
     assert.is_not_nil(component_ref01_data_dt0_load_result)
     assert.are.equal(component_ref01_data_dt0_load_result["id"], component_ref01_data["id"])
 

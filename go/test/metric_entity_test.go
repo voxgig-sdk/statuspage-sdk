@@ -109,7 +109,7 @@ func TestMetricEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		metricRef01Data = core.ToMapAny(metricRef01DataResult)
+		metricRef01Data = core.ToMapAny(entityData(metricRef01DataResult))
 		if metricRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -151,7 +151,7 @@ func TestMetricEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		metricRef01ResdataUp0 := core.ToMapAny(metricRef01ResdataUp0Result)
+		metricRef01ResdataUp0 := core.ToMapAny(entityData(metricRef01ResdataUp0Result))
 		if metricRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}
@@ -170,7 +170,7 @@ func TestMetricEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		metricRef01DataDt0LoadResult := core.ToMapAny(metricRef01DataDt0Loaded)
+		metricRef01DataDt0LoadResult := core.ToMapAny(entityData(metricRef01DataDt0Loaded))
 		if metricRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}

@@ -63,7 +63,7 @@ describe('PageEntity', async () => {
     const page_ref01_ent = client.Page()
     const page_ref01_match: any = {}
 
-    const page_ref01_list = await page_ref01_ent.list(page_ref01_match)
+    const page_ref01_list = (await page_ref01_ent.list(page_ref01_match)).map((e: any) => e.data())
 
 
     // UPDATE
@@ -73,7 +73,7 @@ describe('PageEntity', async () => {
     const page_ref01_markdef_up0 = { name: 'branding', value: 'Mark01-page_ref01_' + setup.now }
     ;(page_ref01_data_up0 as any)[page_ref01_markdef_up0.name] = page_ref01_markdef_up0.value
 
-    const page_ref01_resdata_up0 = await page_ref01_ent.update(page_ref01_data_up0)
+    const page_ref01_resdata_up0 = (await page_ref01_ent.update(page_ref01_data_up0)).data()
     assert(page_ref01_resdata_up0.id === page_ref01_data_up0.id)
 
     assert((page_ref01_resdata_up0 as any)[page_ref01_markdef_up0.name] === page_ref01_markdef_up0.value)
@@ -82,7 +82,7 @@ describe('PageEntity', async () => {
     // LOAD
     const page_ref01_match_dt0: any = {}
     page_ref01_match_dt0.id = page_ref01_data.id
-    const page_ref01_data_dt0 = await page_ref01_ent.load(page_ref01_match_dt0)
+    const page_ref01_data_dt0 = (await page_ref01_ent.load(page_ref01_match_dt0)).data()
     assert(page_ref01_data_dt0.id === page_ref01_data.id)
 
 

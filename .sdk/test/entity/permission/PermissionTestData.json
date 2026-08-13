@@ -2,20 +2,20 @@
   "existing": {
     "permission": {
       "PERMISSION00": {
-        "data": {},
-        "page": {},
+        "pages": {},
+        "user_id": "USER01",
         "organization_id": "ORGANIZATION01",
         "id": "PERMISSION00"
       },
       "PERMISSION01": {
-        "data": {},
-        "page": {},
+        "pages": {},
+        "user_id": "USER01",
         "organization_id": "ORGANIZATION01",
         "id": "PERMISSION01"
       },
       "PERMISSION02": {
-        "data": {},
-        "page": {},
+        "pages": {},
+        "user_id": "USER01",
         "organization_id": "ORGANIZATION01",
         "id": "PERMISSION02"
       }
@@ -24,8 +24,8 @@
   "new": {
     "permission": {
       "permission_ref01": {
-        "data": {},
-        "page": {}
+        "pages": {},
+        "user_id": "USER01"
       }
     }
   }

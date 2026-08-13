@@ -108,7 +108,7 @@ func TestMetricsProviderEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		metricsProviderRef01Data = core.ToMapAny(metricsProviderRef01DataResult)
+		metricsProviderRef01Data = core.ToMapAny(entityData(metricsProviderRef01DataResult))
 		if metricsProviderRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -149,7 +149,7 @@ func TestMetricsProviderEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		metricsProviderRef01ResdataUp0 := core.ToMapAny(metricsProviderRef01ResdataUp0Result)
+		metricsProviderRef01ResdataUp0 := core.ToMapAny(entityData(metricsProviderRef01ResdataUp0Result))
 		if metricsProviderRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}
@@ -168,7 +168,7 @@ func TestMetricsProviderEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		metricsProviderRef01DataDt0LoadResult := core.ToMapAny(metricsProviderRef01DataDt0Loaded)
+		metricsProviderRef01DataDt0LoadResult := core.ToMapAny(entityData(metricsProviderRef01DataDt0Loaded))
 		if metricsProviderRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}

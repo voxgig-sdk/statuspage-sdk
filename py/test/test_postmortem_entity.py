@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -56,7 +56,7 @@ class TestPostmortemEntity:
         postmortem_ref01_markdef_up0_value = "Mark01-postmortem_ref01_" + str(setup["now"])
         postmortem_ref01_data_up0_up[postmortem_ref01_markdef_up0_name] = postmortem_ref01_markdef_up0_value
 
-        postmortem_ref01_resdata_up0 = helpers.to_map(postmortem_ref01_ent.update(postmortem_ref01_data_up0_up, None))
+        postmortem_ref01_resdata_up0 = helpers.to_map(runner.entity_data(postmortem_ref01_ent.update(postmortem_ref01_data_up0_up, None)))
         assert postmortem_ref01_resdata_up0 is not None
         assert postmortem_ref01_resdata_up0[postmortem_ref01_markdef_up0_name] == postmortem_ref01_markdef_up0_value
 

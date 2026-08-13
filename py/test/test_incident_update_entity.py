@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -58,7 +58,7 @@ class TestIncidentUpdateEntity:
         incident_update_ref01_markdef_up0_value = "Mark01-incident_update_ref01_" + str(setup["now"])
         incident_update_ref01_data_up0_up[incident_update_ref01_markdef_up0_name] = incident_update_ref01_markdef_up0_value
 
-        incident_update_ref01_resdata_up0 = helpers.to_map(incident_update_ref01_ent.update(incident_update_ref01_data_up0_up, None))
+        incident_update_ref01_resdata_up0 = helpers.to_map(runner.entity_data(incident_update_ref01_ent.update(incident_update_ref01_data_up0_up, None)))
         assert incident_update_ref01_resdata_up0 is not None
         assert incident_update_ref01_resdata_up0["id"] == incident_update_ref01_data_up0_up["id"]
         assert incident_update_ref01_resdata_up0[incident_update_ref01_markdef_up0_name] == incident_update_ref01_markdef_up0_value

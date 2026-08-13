@@ -41,11 +41,6 @@ main: kit: entity: component: {
       type: "`$STRING`"
     }
     {
-      name: "major_outage"
-      req: false
-      type: "`$INTEGER`"
-    }
-    {
       name: "name"
       req: false
       type: "`$STRING`"
@@ -61,29 +56,9 @@ main: kit: entity: component: {
       type: "`$STRING`"
     }
     {
-      name: "partial_outage"
-      req: false
-      type: "`$INTEGER`"
-    }
-    {
       name: "position"
       req: false
       type: "`$INTEGER`"
-    }
-    {
-      name: "range_end"
-      req: false
-      type: "`$STRING`"
-    }
-    {
-      name: "range_start"
-      req: false
-      type: "`$STRING`"
-    }
-    {
-      name: "related_event"
-      req: false
-      type: "`$OBJECT`"
     }
     {
       name: "showcase"
@@ -102,16 +77,6 @@ main: kit: entity: component: {
     }
     {
       name: "updated_at"
-      req: false
-      type: "`$STRING`"
-    }
-    {
-      name: "uptime_percentage"
-      req: false
-      type: "`$NUMBER`"
-    }
-    {
-      name: "warning"
       req: false
       type: "`$STRING`"
     }
@@ -242,7 +207,9 @@ main: kit: entity: component: {
             ]
           }
           transform: {
-            req: "`reqdata`"
+            req: {
+              component: "`reqdata`"
+            }
             res: "`body`"
           }
         }
@@ -445,13 +412,6 @@ main: kit: entity: component: {
               }
               {
                 kind: "query"
-                name: "skip_related_event"
-                orig: "skip_related_event"
-                reqd: false
-                type: "`$BOOLEAN`"
-              }
-              {
-                kind: "query"
                 name: "start"
                 orig: "start"
                 reqd: false
@@ -479,13 +439,12 @@ main: kit: entity: component: {
               "end"
               "id"
               "page_id"
-              "skip_related_event"
               "start"
             ]
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.related_events`"
           }
         }
         {
@@ -575,7 +534,9 @@ main: kit: entity: component: {
             ]
           }
           transform: {
-            req: "`reqdata`"
+            req: {
+              component: "`reqdata`"
+            }
             res: "`body`"
           }
         }
@@ -761,7 +722,9 @@ main: kit: entity: component: {
             ]
           }
           transform: {
-            req: "`reqdata`"
+            req: {
+              component: "`reqdata`"
+            }
             res: "`body`"
           }
         }

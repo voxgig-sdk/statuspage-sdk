@@ -65,7 +65,7 @@ describe('IncidentSubscriberEntity', async () => {
     incident_subscriber_ref01_data['page_id'] = setup.idmap['page01']
     incident_subscriber_ref01_data['subscriber_id'] = setup.idmap['subscriber01']
 
-    incident_subscriber_ref01_data = await incident_subscriber_ref01_ent.create(incident_subscriber_ref01_data)
+    incident_subscriber_ref01_data = (await incident_subscriber_ref01_ent.create(incident_subscriber_ref01_data)).data()
     assert(null != incident_subscriber_ref01_data)
 
 

@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -42,7 +42,7 @@ class TestSubscriberEntity:
         assert len(seen) == 3
 
         # Inbound: streaming active -> yields each item from the feature.
-        from config import make_config
+        from statuspage_sdk.config import make_config
         cfg = make_config()
         if isinstance(cfg.get("feature"), dict) and "streaming" in cfg["feature"]:
             sdk = StatuspageSDK.test(
@@ -80,7 +80,7 @@ class TestSubscriberEntity:
         subscriber_ref01_data["incident_id"] = setup["idmap"]["incident01"]
         subscriber_ref01_data["page_id"] = setup["idmap"]["page01"]
 
-        subscriber_ref01_data = helpers.to_map(subscriber_ref01_ent.create(subscriber_ref01_data, None))
+        subscriber_ref01_data = helpers.to_map(runner.entity_data(subscriber_ref01_ent.create(subscriber_ref01_data, None)))
         assert subscriber_ref01_data is not None
         assert subscriber_ref01_data["id"] is not None
 
@@ -103,11 +103,11 @@ class TestSubscriberEntity:
             "page_id": setup["idmap"]["page_id"],
         }
 
-        subscriber_ref01_markdef_up0_name = "component"
+        subscriber_ref01_markdef_up0_name = "components"
         subscriber_ref01_markdef_up0_value = "Mark01-subscriber_ref01_" + str(setup["now"])
         subscriber_ref01_data_up0_up[subscriber_ref01_markdef_up0_name] = subscriber_ref01_markdef_up0_value
 
-        subscriber_ref01_resdata_up0 = helpers.to_map(subscriber_ref01_ent.update(subscriber_ref01_data_up0_up, None))
+        subscriber_ref01_resdata_up0 = helpers.to_map(runner.entity_data(subscriber_ref01_ent.update(subscriber_ref01_data_up0_up, None)))
         assert subscriber_ref01_resdata_up0 is not None
         assert subscriber_ref01_resdata_up0["id"] == subscriber_ref01_data_up0_up["id"]
         assert subscriber_ref01_resdata_up0[subscriber_ref01_markdef_up0_name] == subscriber_ref01_markdef_up0_value
@@ -117,7 +117,7 @@ class TestSubscriberEntity:
             "id": subscriber_ref01_data["id"],
         }
         subscriber_ref01_data_dt0_loaded = subscriber_ref01_ent.load(subscriber_ref01_match_dt0, None)
-        subscriber_ref01_data_dt0_load_result = helpers.to_map(subscriber_ref01_data_dt0_loaded)
+        subscriber_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(subscriber_ref01_data_dt0_loaded))
         assert subscriber_ref01_data_dt0_load_result is not None
         assert subscriber_ref01_data_dt0_load_result["id"] == subscriber_ref01_data["id"]
 

@@ -163,21 +163,14 @@ component = client.Component()
 | `group` | `bool` | No |  |
 | `group_id` | `str` | No |  |
 | `id` | `str` | No |  |
-| `major_outage` | `int` | No |  |
 | `name` | `str` | No |  |
 | `only_show_if_degraded` | `bool` | No |  |
 | `page_id` | `str` | No |  |
-| `partial_outage` | `int` | No |  |
 | `position` | `int` | No |  |
-| `range_end` | `str` | No |  |
-| `range_start` | `str` | No |  |
-| `related_event` | `dict` | No |  |
 | `showcase` | `bool` | No |  |
 | `start_date` | `str` | No |  |
 | `status` | `str` | No |  |
 | `updated_at` | `str` | No |  |
-| `uptime_percentage` | `float` | No |  |
-| `warning` | `str` | No |  |
 
 ### Operations
 
@@ -196,7 +189,7 @@ result = client.Component().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Component().list()
+results = client.Component().list({"page_id": "example"})
 for component in results:
     print(component)
 ```
@@ -268,15 +261,8 @@ component_group_uptime = client.ComponentGroupUptime()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `str` | No |  |
-| `major_outage` | `int` | No |  |
-| `name` | `str` | No |  |
-| `partial_outage` | `int` | No |  |
-| `range_end` | `str` | No |  |
-| `range_start` | `str` | No |  |
-| `related_event` | `dict` | No |  |
-| `uptime_percentage` | `float` | No |  |
-| `warning` | `str` | No |  |
+| `component_id` | `str` | No |  |
+| `incidents` | `dict` | No |  |
 
 ### Operations
 
@@ -327,8 +313,8 @@ group_component = client.GroupComponent()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `str` | No |  |
 | `component_group` | `dict` | Yes |  |
+| `components` | `str` | No |  |
 | `created_at` | `str` | No |  |
 | `description` | `str` | No |  |
 | `id` | `str` | No |  |
@@ -346,6 +332,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.GroupComponent().create({
     "page_id": "example_page_id",  # str
+    "component_group": {},  # dict
 })
 ```
 
@@ -354,7 +341,7 @@ result = client.GroupComponent().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.GroupComponent().list()
+results = client.GroupComponent().list({"page_id": "example"})
 for group_component in results:
     print(group_component)
 ```
@@ -430,14 +417,13 @@ incident = client.Incident()
 | `auto_transition_deliver_notifications_at_start` | `bool` | No |  |
 | `auto_transition_to_maintenance_state` | `bool` | No |  |
 | `auto_transition_to_operational_state` | `bool` | No |  |
-| `component` | `list` | No |  |
+| `components` | `list` | No |  |
 | `created_at` | `str` | No |  |
 | `id` | `str` | No |  |
 | `impact` | `str` | No |  |
 | `impact_override` | `str` | No |  |
 | `incident` | `dict` | Yes |  |
-| `incident_impact` | `list` | No |  |
-| `incident_update` | `list` | No |  |
+| `incident_updates` | `list` | No |  |
 | `metadata` | `dict` | No |  |
 | `monitoring_at` | `str` | No |  |
 | `name` | `str` | No |  |
@@ -445,10 +431,10 @@ incident = client.Incident()
 | `postmortem_body` | `str` | No |  |
 | `postmortem_body_last_updated_at` | `str` | No |  |
 | `postmortem_ignored` | `bool` | No |  |
-| `postmortem_notified_subscriber` | `bool` | No |  |
+| `postmortem_notified_subscribers` | `bool` | No |  |
 | `postmortem_notified_twitter` | `bool` | No |  |
 | `postmortem_published_at` | `bool` | No |  |
-| `reminder_interval` | `str` | No |  |
+| `reminder_intervals` | `str` | No |  |
 | `resolved_at` | `str` | No |  |
 | `scheduled_auto_completed` | `bool` | No |  |
 | `scheduled_auto_in_progress` | `bool` | No |  |
@@ -468,14 +454,13 @@ incident = client.Incident()
 | `auto_transition_deliver_notifications_at_start` | - | - | - | - | - |
 | `auto_transition_to_maintenance_state` | - | - | - | - | - |
 | `auto_transition_to_operational_state` | - | - | - | - | - |
-| `component` | - | - | - | - | - |
+| `components` | - | - | - | - | - |
 | `created_at` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `impact` | - | - | - | - | - |
 | `impact_override` | - | - | - | - | - |
 | `incident` | - | - | - | Yes | - |
-| `incident_impact` | - | - | - | - | - |
-| `incident_update` | - | - | - | - | - |
+| `incident_updates` | - | - | - | - | - |
 | `metadata` | - | - | - | - | - |
 | `monitoring_at` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
@@ -483,10 +468,10 @@ incident = client.Incident()
 | `postmortem_body` | - | - | - | - | - |
 | `postmortem_body_last_updated_at` | - | - | - | - | - |
 | `postmortem_ignored` | - | - | - | - | - |
-| `postmortem_notified_subscriber` | - | - | - | - | - |
+| `postmortem_notified_subscribers` | - | - | - | - | - |
 | `postmortem_notified_twitter` | - | - | - | - | - |
 | `postmortem_published_at` | - | - | - | - | - |
-| `reminder_interval` | - | - | - | - | - |
+| `reminder_intervals` | - | - | - | - | - |
 | `resolved_at` | - | - | - | - | - |
 | `scheduled_auto_completed` | - | - | - | - | - |
 | `scheduled_auto_in_progress` | - | - | - | - | - |
@@ -507,6 +492,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.Incident().create({
     "page_id": "example_page_id",  # str
+    "incident": {},  # dict
 })
 ```
 
@@ -515,7 +501,7 @@ result = client.Incident().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Incident().list()
+results = client.Incident().list({"page_id": "example"})
 for incident in results:
     print(incident)
 ```
@@ -682,11 +668,11 @@ incident_template = client.IncidentTemplate()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `body` | `str` | No |  |
-| `component` | `list` | No |  |
+| `components` | `list` | No |  |
 | `group_id` | `str` | No |  |
 | `id` | `str` | No |  |
 | `name` | `str` | No |  |
-| `should_send_notification` | `bool` | No |  |
+| `should_send_notifications` | `bool` | No |  |
 | `should_tweet` | `bool` | No |  |
 | `template` | `dict` | Yes |  |
 | `title` | `str` | No |  |
@@ -701,6 +687,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.IncidentTemplate().create({
     "page_id": "example_page_id",  # str
+    "template": {},  # dict
 })
 ```
 
@@ -709,7 +696,7 @@ result = client.IncidentTemplate().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.IncidentTemplate().list()
+results = client.IncidentTemplate().list({"page_id": "example"})
 for incident_template in results:
     print(incident_template)
 ```
@@ -753,11 +740,11 @@ incident_update = client.IncidentUpdate()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `affected_component` | `list` | No |  |
+| `affected_components` | `list` | No |  |
 | `body` | `str` | No |  |
 | `created_at` | `str` | No |  |
 | `custom_tweet` | `str` | No |  |
-| `deliver_notification` | `bool` | No |  |
+| `deliver_notifications` | `bool` | No |  |
 | `display_at` | `str` | No |  |
 | `id` | `str` | No |  |
 | `incident_id` | `str` | No |  |
@@ -826,7 +813,7 @@ metric = client.Metric()
 | `backfilled` | `bool` | No |  |
 | `created_at` | `str` | No |  |
 | `data` | `dict` | Yes |  |
-| `decimal_place` | `int` | No |  |
+| `decimal_places` | `int` | No |  |
 | `display` | `bool` | No |  |
 | `id` | `str` | No |  |
 | `last_fetched_at` | `str` | No |  |
@@ -853,6 +840,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 result = client.Metric().create({
     "metrics_provider_id": "example_metrics_provider_id",  # str
     "page_id": "example_page_id",  # str
+    "data": {},  # dict
 })
 ```
 
@@ -861,7 +849,7 @@ result = client.Metric().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Metric().list()
+results = client.Metric().list({"page_access_user_id": "example", "page_id": "example"})
 for metric in results:
     print(metric)
 ```
@@ -960,7 +948,7 @@ result = client.MetricsProvider().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.MetricsProvider().list()
+results = client.MetricsProvider().list({"page_id": "example"})
 for metrics_provider in results:
     print(metrics_provider)
 ```
@@ -1033,28 +1021,28 @@ page = client.Page()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `activity_score` | `float` | No |  |
-| `allow_email_subscriber` | `bool` | No |  |
-| `allow_incident_subscriber` | `bool` | No |  |
-| `allow_page_subscriber` | `bool` | No |  |
-| `allow_rss_atom_feed` | `bool` | No |  |
-| `allow_sms_subscriber` | `bool` | No |  |
-| `allow_webhook_subscriber` | `bool` | No |  |
+| `allow_email_subscribers` | `bool` | No |  |
+| `allow_incident_subscribers` | `bool` | No |  |
+| `allow_page_subscribers` | `bool` | No |  |
+| `allow_rss_atom_feeds` | `bool` | No |  |
+| `allow_sms_subscribers` | `bool` | No |  |
+| `allow_webhook_subscribers` | `bool` | No |  |
 | `branding` | `str` | No |  |
 | `city` | `str` | No |  |
 | `country` | `str` | No |  |
 | `created_at` | `str` | No |  |
-| `css_blue` | `str` | No |  |
+| `css_blues` | `str` | No |  |
 | `css_body_background_color` | `str` | No |  |
 | `css_border_color` | `str` | No |  |
 | `css_font_color` | `str` | No |  |
 | `css_graph_color` | `str` | No |  |
-| `css_green` | `str` | No |  |
+| `css_greens` | `str` | No |  |
 | `css_light_font_color` | `str` | No |  |
 | `css_link_color` | `str` | No |  |
 | `css_no_data` | `str` | No |  |
-| `css_orange` | `str` | No |  |
-| `css_red` | `str` | No |  |
-| `css_yellow` | `str` | No |  |
+| `css_oranges` | `str` | No |  |
+| `css_reds` | `str` | No |  |
+| `css_yellows` | `str` | No |  |
 | `domain` | `str` | No |  |
 | `email_logo` | `str` | No |  |
 | `favicon_logo` | `str` | No |  |
@@ -1062,7 +1050,7 @@ page = client.Page()
 | `hero_cover` | `str` | No |  |
 | `hidden_from_search` | `bool` | No |  |
 | `id` | `str` | No |  |
-| `ip_restriction` | `str` | No |  |
+| `ip_restrictions` | `str` | No |  |
 | `name` | `str` | No |  |
 | `notifications_email_footer` | `str` | No |  |
 | `notifications_from_email` | `str` | No |  |
@@ -1077,7 +1065,7 @@ page = client.Page()
 | `twitter_username` | `str` | No |  |
 | `updated_at` | `str` | No |  |
 | `url` | `str` | No |  |
-| `viewers_must_be_team_member` | `bool` | No |  |
+| `viewers_must_be_team_members` | `bool` | No |  |
 
 ### Operations
 
@@ -1149,14 +1137,14 @@ page_access_group = client.PageAccessGroup()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `list` | No |  |
+| `component_ids` | `list` | No |  |
 | `created_at` | `str` | No |  |
 | `external_identifier` | `str` | No |  |
 | `id` | `str` | No |  |
-| `metric_id` | `list` | No |  |
+| `metric_ids` | `list` | No |  |
 | `name` | `str` | No |  |
 | `page_access_group` | `dict` | No |  |
-| `page_access_user_id` | `list` | No |  |
+| `page_access_user_ids` | `list` | No |  |
 | `page_id` | `str` | No |  |
 | `updated_at` | `str` | No |  |
 
@@ -1164,14 +1152,14 @@ page_access_group = client.PageAccessGroup()
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `component_id` | - | - | Yes | - | - |
+| `component_ids` | - | - | Yes | - | - |
 | `created_at` | - | - | - | - | - |
 | `external_identifier` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
-| `metric_id` | - | - | - | - | - |
+| `metric_ids` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
 | `page_access_group` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
+| `page_access_user_ids` | - | - | - | - | - |
 | `page_id` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 
@@ -1192,7 +1180,7 @@ result = client.PageAccessGroup().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.PageAccessGroup().list()
+results = client.PageAccessGroup().list({"id": "example_id"})
 for page_access_group in results:
     print(page_access_group)
 ```
@@ -1264,13 +1252,14 @@ page_access_user = client.PageAccessUser()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `list` | Yes |  |
+| `component_ids` | `list` | Yes |  |
 | `created_at` | `str` | No |  |
 | `email` | `str` | No |  |
 | `external_login` | `str` | No |  |
 | `id` | `str` | No |  |
-| `metric_id` | `list` | Yes |  |
+| `metric_ids` | `list` | Yes |  |
 | `page_access_group_id` | `str` | No |  |
+| `page_access_group_ids` | `str` | No |  |
 | `page_access_user` | `dict` | No |  |
 | `page_id` | `str` | No |  |
 | `updated_at` | `str` | No |  |
@@ -1284,6 +1273,8 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.PageAccessUser().create({
     "id": "example_id",  # str
+    "component_ids": [],  # list
+    "metric_ids": [],  # list
 })
 ```
 
@@ -1292,7 +1283,7 @@ result = client.PageAccessUser().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.PageAccessUser().list()
+results = client.PageAccessUser().list({"id": "example_id"})
 for page_access_user in results:
     print(page_access_user)
 ```
@@ -1364,8 +1355,8 @@ permission = client.Permission()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `dict` | No |  |
-| `page` | `dict` | No |  |
+| `pages` | `dict` | No |  |
+| `user_id` | `str` | No |  |
 
 ### Operations
 
@@ -1434,7 +1425,7 @@ postmortem = client.Postmortem()
 | `body_updated_at` | `str` | No |  |
 | `created_at` | `str` | No |  |
 | `custom_tweet` | `str` | No |  |
-| `notify_subscriber` | `bool` | No |  |
+| `notify_subscribers` | `bool` | No |  |
 | `notify_twitter` | `bool` | No |  |
 | `postmortem` | `dict` | Yes |  |
 | `preview_key` | `str` | No |  |
@@ -1451,7 +1442,7 @@ postmortem = client.Postmortem()
 | `body_updated_at` | - | - |
 | `created_at` | - | - |
 | `custom_tweet` | - | - |
-| `notify_subscriber` | - | - |
+| `notify_subscribers` | - | - |
 | `notify_twitter` | - | - |
 | `postmortem` | - | Yes |
 | `preview_key` | - | - |
@@ -1587,8 +1578,8 @@ subscriber = client.Subscriber()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `str` | No |  |
-| `component_id` | `list` | No |  |
+| `component_ids` | `list` | No |  |
+| `components` | `str` | No |  |
 | `created_at` | `str` | No |  |
 | `display_phone_number` | `str` | No |  |
 | `email` | `str` | No |  |
@@ -1608,40 +1599,11 @@ subscriber = client.Subscriber()
 | `sms` | `int` | No |  |
 | `state` | `str` | No |  |
 | `subscriber` | `dict` | No |  |
-| `team` | `int` | No |  |
+| `subscribers` | `str` | Yes |  |
+| `teams` | `int` | No |  |
 | `type` | `str` | No |  |
 | `webhook` | `int` | No |  |
 | `workspace_name` | `str` | No |  |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `component` | - | - | - | - | - |
-| `component_id` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `display_phone_number` | - | - | - | - | - |
-| `email` | - | - | - | - | - |
-| `endpoint` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `integration_partner` | - | - | - | - | - |
-| `mode` | - | - | - | - | - |
-| `obfuscated_channel_name` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
-| `phone_country` | - | - | - | - | - |
-| `phone_number` | - | - | - | - | - |
-| `purge_at` | - | - | - | - | - |
-| `quarantined_at` | - | - | - | - | - |
-| `skip_confirmation_notification` | - | - | - | - | - |
-| `skip_unsubscription_notification` | - | - | - | - | - |
-| `slack` | - | - | - | - | - |
-| `sms` | - | - | - | - | - |
-| `state` | - | - | - | - | - |
-| `subscriber` | - | - | Yes | - | - |
-| `team` | - | - | - | - | - |
-| `type` | - | - | - | - | - |
-| `webhook` | - | - | - | - | - |
-| `workspace_name` | - | - | - | - | - |
 
 ### Operations
 
@@ -1652,6 +1614,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.Subscriber().create({
     "page_id": "example_page_id",  # str
+    "subscribers": "example_subscribers",  # str
 })
 ```
 
@@ -1660,7 +1623,7 @@ result = client.Subscriber().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Subscriber().list()
+results = client.Subscriber().list({"page_id": "example"})
 for subscriber in results:
     print(subscriber)
 ```
@@ -1750,6 +1713,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.User().create({
     "organization_id": "example_organization_id",  # str
+    "user": {},  # dict
 })
 ```
 
@@ -1758,7 +1722,7 @@ result = client.User().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.User().list()
+results = client.User().list({"organization_id": "example"})
 for user in results:
     print(user)
 ```

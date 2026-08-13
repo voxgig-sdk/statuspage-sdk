@@ -134,7 +134,7 @@ func TestPageEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		pageRef01ResdataUp0 := core.ToMapAny(pageRef01ResdataUp0Result)
+		pageRef01ResdataUp0 := core.ToMapAny(entityData(pageRef01ResdataUp0Result))
 		if pageRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}
@@ -153,7 +153,7 @@ func TestPageEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		pageRef01DataDt0LoadResult := core.ToMapAny(pageRef01DataDt0Loaded)
+		pageRef01DataDt0LoadResult := core.ToMapAny(entityData(pageRef01DataDt0Loaded))
 		if pageRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}

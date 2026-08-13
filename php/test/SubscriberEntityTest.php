@@ -85,7 +85,7 @@ class SubscriberEntityTest extends TestCase
         $subscriber_ref01_data["page_id"] = $setup["idmap"]["page01"];
 
         $subscriber_ref01_data_result = $subscriber_ref01_ent->create($subscriber_ref01_data, null);
-        $subscriber_ref01_data = Helpers::to_map($subscriber_ref01_data_result);
+        $subscriber_ref01_data = Helpers::to_map(is_object($subscriber_ref01_data_result) && method_exists($subscriber_ref01_data_result, 'data_get') ? $subscriber_ref01_data_result->data_get() : $subscriber_ref01_data_result);
         $this->assertNotNull($subscriber_ref01_data);
         $this->assertNotNull($subscriber_ref01_data["id"]);
 
@@ -108,12 +108,12 @@ class SubscriberEntityTest extends TestCase
             "page_id" => $setup["idmap"]["page_id"],
         ];
 
-        $subscriber_ref01_markdef_up0_name = "component";
+        $subscriber_ref01_markdef_up0_name = "components";
         $subscriber_ref01_markdef_up0_value = "Mark01-subscriber_ref01_" . $setup["now"];
         $subscriber_ref01_data_up0_up[$subscriber_ref01_markdef_up0_name] = $subscriber_ref01_markdef_up0_value;
 
         $subscriber_ref01_resdata_up0_result = $subscriber_ref01_ent->update($subscriber_ref01_data_up0_up, null);
-        $subscriber_ref01_resdata_up0 = Helpers::to_map($subscriber_ref01_resdata_up0_result);
+        $subscriber_ref01_resdata_up0 = Helpers::to_map(is_object($subscriber_ref01_resdata_up0_result) && method_exists($subscriber_ref01_resdata_up0_result, 'data_get') ? $subscriber_ref01_resdata_up0_result->data_get() : $subscriber_ref01_resdata_up0_result);
         $this->assertNotNull($subscriber_ref01_resdata_up0);
         $this->assertEquals($subscriber_ref01_resdata_up0["id"], $subscriber_ref01_data_up0_up["id"]);
         $this->assertEquals($subscriber_ref01_resdata_up0[$subscriber_ref01_markdef_up0_name], $subscriber_ref01_markdef_up0_value);
@@ -123,7 +123,7 @@ class SubscriberEntityTest extends TestCase
             "id" => $subscriber_ref01_data["id"],
         ];
         $subscriber_ref01_data_dt0_loaded = $subscriber_ref01_ent->load($subscriber_ref01_match_dt0, null);
-        $subscriber_ref01_data_dt0_load_result = Helpers::to_map($subscriber_ref01_data_dt0_loaded);
+        $subscriber_ref01_data_dt0_load_result = Helpers::to_map(is_object($subscriber_ref01_data_dt0_loaded) && method_exists($subscriber_ref01_data_dt0_loaded, 'data_get') ? $subscriber_ref01_data_dt0_loaded->data_get() : $subscriber_ref01_data_dt0_loaded);
         $this->assertNotNull($subscriber_ref01_data_dt0_load_result);
         $this->assertEquals($subscriber_ref01_data_dt0_load_result["id"], $subscriber_ref01_data["id"]);
 

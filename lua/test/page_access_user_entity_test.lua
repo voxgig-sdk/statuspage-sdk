@@ -83,7 +83,7 @@ describe("PageAccessUserEntity", function()
 
     local page_access_user_ref01_data_result, err = page_access_user_ref01_ent:create(page_access_user_ref01_data, nil)
     assert.is_nil(err)
-    page_access_user_ref01_data = helpers.to_map(page_access_user_ref01_data_result)
+    page_access_user_ref01_data = helpers.to_map(type(page_access_user_ref01_data_result) == 'table' and page_access_user_ref01_data_result.data_get and page_access_user_ref01_data_result:data_get() or page_access_user_ref01_data_result)
     assert.is_not_nil(page_access_user_ref01_data)
     assert.is_not_nil(page_access_user_ref01_data["id"])
 
@@ -113,7 +113,7 @@ describe("PageAccessUserEntity", function()
 
     local page_access_user_ref01_resdata_up0_result, err = page_access_user_ref01_ent:update(page_access_user_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local page_access_user_ref01_resdata_up0 = helpers.to_map(page_access_user_ref01_resdata_up0_result)
+    local page_access_user_ref01_resdata_up0 = helpers.to_map(type(page_access_user_ref01_resdata_up0_result) == 'table' and page_access_user_ref01_resdata_up0_result.data_get and page_access_user_ref01_resdata_up0_result:data_get() or page_access_user_ref01_resdata_up0_result)
     assert.is_not_nil(page_access_user_ref01_resdata_up0)
     assert.are.equal(page_access_user_ref01_resdata_up0["id"], page_access_user_ref01_data_up0_up["id"])
     assert.are.equal(page_access_user_ref01_resdata_up0[page_access_user_ref01_markdef_up0_name], page_access_user_ref01_markdef_up0_value)
@@ -124,7 +124,7 @@ describe("PageAccessUserEntity", function()
     }
     local page_access_user_ref01_data_dt0_loaded, err = page_access_user_ref01_ent:load(page_access_user_ref01_match_dt0, nil)
     assert.is_nil(err)
-    local page_access_user_ref01_data_dt0_load_result = helpers.to_map(page_access_user_ref01_data_dt0_loaded)
+    local page_access_user_ref01_data_dt0_load_result = helpers.to_map(type(page_access_user_ref01_data_dt0_loaded) == 'table' and page_access_user_ref01_data_dt0_loaded.data_get and page_access_user_ref01_data_dt0_loaded:data_get() or page_access_user_ref01_data_dt0_loaded)
     assert.is_not_nil(page_access_user_ref01_data_dt0_load_result)
     assert.are.equal(page_access_user_ref01_data_dt0_load_result["id"], page_access_user_ref01_data["id"])
 

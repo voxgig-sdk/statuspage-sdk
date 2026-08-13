@@ -63,7 +63,7 @@ describe('MetricsProviderEntity', async () => {
     let metrics_provider_ref01_data = setup.data.new.metrics_provider['metrics_provider_ref01']
     metrics_provider_ref01_data['page_id'] = setup.idmap['page01']
 
-    metrics_provider_ref01_data = await metrics_provider_ref01_ent.create(metrics_provider_ref01_data)
+    metrics_provider_ref01_data = (await metrics_provider_ref01_ent.create(metrics_provider_ref01_data)).data()
     assert(null != metrics_provider_ref01_data.id)
 
 
@@ -71,7 +71,7 @@ describe('MetricsProviderEntity', async () => {
     const metrics_provider_ref01_match: any = {}
     metrics_provider_ref01_match['page_id'] = setup.idmap['page01']
 
-    const metrics_provider_ref01_list = await metrics_provider_ref01_ent.list(metrics_provider_ref01_match)
+    const metrics_provider_ref01_list = (await metrics_provider_ref01_ent.list(metrics_provider_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(metrics_provider_ref01_list, { id: metrics_provider_ref01_data.id })))
 
@@ -84,7 +84,7 @@ describe('MetricsProviderEntity', async () => {
     const metrics_provider_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-metrics_provider_ref01_' + setup.now }
     ;(metrics_provider_ref01_data_up0 as any)[metrics_provider_ref01_markdef_up0.name] = metrics_provider_ref01_markdef_up0.value
 
-    const metrics_provider_ref01_resdata_up0 = await metrics_provider_ref01_ent.update(metrics_provider_ref01_data_up0)
+    const metrics_provider_ref01_resdata_up0 = (await metrics_provider_ref01_ent.update(metrics_provider_ref01_data_up0)).data()
     assert(metrics_provider_ref01_resdata_up0.id === metrics_provider_ref01_data_up0.id)
 
     assert((metrics_provider_ref01_resdata_up0 as any)[metrics_provider_ref01_markdef_up0.name] === metrics_provider_ref01_markdef_up0.value)
@@ -93,7 +93,7 @@ describe('MetricsProviderEntity', async () => {
     // LOAD
     const metrics_provider_ref01_match_dt0: any = {}
     metrics_provider_ref01_match_dt0.id = metrics_provider_ref01_data.id
-    const metrics_provider_ref01_data_dt0 = await metrics_provider_ref01_ent.load(metrics_provider_ref01_match_dt0)
+    const metrics_provider_ref01_data_dt0 = (await metrics_provider_ref01_ent.load(metrics_provider_ref01_match_dt0)).data()
     assert(metrics_provider_ref01_data_dt0.id === metrics_provider_ref01_data.id)
 
 
@@ -106,7 +106,7 @@ describe('MetricsProviderEntity', async () => {
     const metrics_provider_ref01_match_rt0: any = {}
     metrics_provider_ref01_match_rt0['page_id'] = setup.idmap['page01']
 
-    const metrics_provider_ref01_list_rt0 = await metrics_provider_ref01_ent.list(metrics_provider_ref01_match_rt0)
+    const metrics_provider_ref01_list_rt0 = (await metrics_provider_ref01_ent.list(metrics_provider_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(metrics_provider_ref01_list_rt0, { id: metrics_provider_ref01_data.id })))
 

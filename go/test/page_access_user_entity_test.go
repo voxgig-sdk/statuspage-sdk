@@ -108,7 +108,7 @@ func TestPageAccessUserEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		pageAccessUserRef01Data = core.ToMapAny(pageAccessUserRef01DataResult)
+		pageAccessUserRef01Data = core.ToMapAny(entityData(pageAccessUserRef01DataResult))
 		if pageAccessUserRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -149,7 +149,7 @@ func TestPageAccessUserEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		pageAccessUserRef01ResdataUp0 := core.ToMapAny(pageAccessUserRef01ResdataUp0Result)
+		pageAccessUserRef01ResdataUp0 := core.ToMapAny(entityData(pageAccessUserRef01ResdataUp0Result))
 		if pageAccessUserRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}
@@ -168,7 +168,7 @@ func TestPageAccessUserEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		pageAccessUserRef01DataDt0LoadResult := core.ToMapAny(pageAccessUserRef01DataDt0Loaded)
+		pageAccessUserRef01DataDt0LoadResult := core.ToMapAny(entityData(pageAccessUserRef01DataDt0Loaded))
 		if pageAccessUserRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}

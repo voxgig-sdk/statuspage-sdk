@@ -84,7 +84,7 @@ class IncidentTemplateEntityTest extends TestCase
         $incident_template_ref01_data["page_id"] = $setup["idmap"]["page01"];
 
         $incident_template_ref01_data_result = $incident_template_ref01_ent->create($incident_template_ref01_data, null);
-        $incident_template_ref01_data = Helpers::to_map($incident_template_ref01_data_result);
+        $incident_template_ref01_data = Helpers::to_map(is_object($incident_template_ref01_data_result) && method_exists($incident_template_ref01_data_result, 'data_get') ? $incident_template_ref01_data_result->data_get() : $incident_template_ref01_data_result);
         $this->assertNotNull($incident_template_ref01_data);
         $this->assertNotNull($incident_template_ref01_data["id"]);
 

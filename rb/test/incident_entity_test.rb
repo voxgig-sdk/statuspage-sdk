@@ -74,7 +74,7 @@ class IncidentEntityTest < Minitest::Test
     incident_ref01_data["page_id"] = setup[:idmap]["page01"]
 
     incident_ref01_data_result = incident_ref01_ent.create(incident_ref01_data, nil)
-    incident_ref01_data = Helpers.to_map(incident_ref01_data_result)
+    incident_ref01_data = Helpers.to_map(incident_ref01_data_result.respond_to?(:data_get) ? incident_ref01_data_result.data_get : incident_ref01_data_result)
     assert !incident_ref01_data.nil?
     assert !incident_ref01_data["id"].nil?
 
@@ -102,7 +102,7 @@ class IncidentEntityTest < Minitest::Test
     incident_ref01_data_up0_up[incident_ref01_markdef_up0_name] = incident_ref01_markdef_up0_value
 
     incident_ref01_resdata_up0_result = incident_ref01_ent.update(incident_ref01_data_up0_up, nil)
-    incident_ref01_resdata_up0 = Helpers.to_map(incident_ref01_resdata_up0_result)
+    incident_ref01_resdata_up0 = Helpers.to_map(incident_ref01_resdata_up0_result.respond_to?(:data_get) ? incident_ref01_resdata_up0_result.data_get : incident_ref01_resdata_up0_result)
     assert !incident_ref01_resdata_up0.nil?
     assert_equal incident_ref01_resdata_up0["id"], incident_ref01_data_up0_up["id"]
     assert_equal incident_ref01_resdata_up0[incident_ref01_markdef_up0_name], incident_ref01_markdef_up0_value
@@ -112,7 +112,7 @@ class IncidentEntityTest < Minitest::Test
       "id" => incident_ref01_data["id"],
     }
     incident_ref01_data_dt0_loaded = incident_ref01_ent.load(incident_ref01_match_dt0, nil)
-    incident_ref01_data_dt0_load_result = Helpers.to_map(incident_ref01_data_dt0_loaded)
+    incident_ref01_data_dt0_load_result = Helpers.to_map(incident_ref01_data_dt0_loaded.respond_to?(:data_get) ? incident_ref01_data_dt0_loaded.data_get : incident_ref01_data_dt0_loaded)
     assert !incident_ref01_data_dt0_load_result.nil?
     assert_equal incident_ref01_data_dt0_load_result["id"], incident_ref01_data["id"]
 

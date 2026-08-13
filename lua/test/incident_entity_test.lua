@@ -83,7 +83,7 @@ describe("IncidentEntity", function()
 
     local incident_ref01_data_result, err = incident_ref01_ent:create(incident_ref01_data, nil)
     assert.is_nil(err)
-    incident_ref01_data = helpers.to_map(incident_ref01_data_result)
+    incident_ref01_data = helpers.to_map(type(incident_ref01_data_result) == 'table' and incident_ref01_data_result.data_get and incident_ref01_data_result:data_get() or incident_ref01_data_result)
     assert.is_not_nil(incident_ref01_data)
     assert.is_not_nil(incident_ref01_data["id"])
 
@@ -113,7 +113,7 @@ describe("IncidentEntity", function()
 
     local incident_ref01_resdata_up0_result, err = incident_ref01_ent:update(incident_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local incident_ref01_resdata_up0 = helpers.to_map(incident_ref01_resdata_up0_result)
+    local incident_ref01_resdata_up0 = helpers.to_map(type(incident_ref01_resdata_up0_result) == 'table' and incident_ref01_resdata_up0_result.data_get and incident_ref01_resdata_up0_result:data_get() or incident_ref01_resdata_up0_result)
     assert.is_not_nil(incident_ref01_resdata_up0)
     assert.are.equal(incident_ref01_resdata_up0["id"], incident_ref01_data_up0_up["id"])
     assert.are.equal(incident_ref01_resdata_up0[incident_ref01_markdef_up0_name], incident_ref01_markdef_up0_value)
@@ -124,7 +124,7 @@ describe("IncidentEntity", function()
     }
     local incident_ref01_data_dt0_loaded, err = incident_ref01_ent:load(incident_ref01_match_dt0, nil)
     assert.is_nil(err)
-    local incident_ref01_data_dt0_load_result = helpers.to_map(incident_ref01_data_dt0_loaded)
+    local incident_ref01_data_dt0_load_result = helpers.to_map(type(incident_ref01_data_dt0_loaded) == 'table' and incident_ref01_data_dt0_loaded.data_get and incident_ref01_data_dt0_loaded:data_get() or incident_ref01_data_dt0_loaded)
     assert.is_not_nil(incident_ref01_data_dt0_load_result)
     assert.are.equal(incident_ref01_data_dt0_load_result["id"], incident_ref01_data["id"])
 

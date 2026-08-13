@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from statuspage_sdk.utility.voxgig_struct import voxgig_struct as vs
 from statuspage_sdk import StatuspageSDK
-from core import helpers
+from statuspage_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -52,8 +52,13 @@ class TestPermissionEntity:
             "organization_id": setup["idmap"]["organization_id"],
         }
 
-        permission_ref01_resdata_up0 = helpers.to_map(permission_ref01_ent.update(permission_ref01_data_up0_up, None))
+        permission_ref01_markdef_up0_name = "user_id"
+        permission_ref01_markdef_up0_value = "Mark01-permission_ref01_" + str(setup["now"])
+        permission_ref01_data_up0_up[permission_ref01_markdef_up0_name] = permission_ref01_markdef_up0_value
+
+        permission_ref01_resdata_up0 = helpers.to_map(runner.entity_data(permission_ref01_ent.update(permission_ref01_data_up0_up, None)))
         assert permission_ref01_resdata_up0 is not None
+        assert permission_ref01_resdata_up0[permission_ref01_markdef_up0_name] == permission_ref01_markdef_up0_value
 
         # LOAD
         permission_ref01_match_dt0 = {}

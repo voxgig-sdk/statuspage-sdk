@@ -174,21 +174,14 @@ fmt.Println(component.GetName()) // "component"
 | `group` | `bool` | No |  |
 | `group_id` | `string` | No |  |
 | `id` | `string` | No |  |
-| `major_outage` | `int` | No |  |
 | `name` | `string` | No |  |
 | `only_show_if_degraded` | `bool` | No |  |
 | `page_id` | `string` | No |  |
-| `partial_outage` | `int` | No |  |
 | `position` | `int` | No |  |
-| `range_end` | `string` | No |  |
-| `range_start` | `string` | No |  |
-| `related_event` | `map[string]any` | No |  |
 | `showcase` | `bool` | No |  |
 | `start_date` | `string` | No |  |
 | `status` | `string` | No |  |
 | `updated_at` | `string` | No |  |
-| `uptime_percentage` | `float64` | No |  |
-| `warning` | `string` | No |  |
 
 ### Operations
 
@@ -293,15 +286,8 @@ fmt.Println(componentGroupUptime.GetName()) // "component_group_uptime"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `string` | No |  |
-| `major_outage` | `int` | No |  |
-| `name` | `string` | No |  |
-| `partial_outage` | `int` | No |  |
-| `range_end` | `string` | No |  |
-| `range_start` | `string` | No |  |
-| `related_event` | `map[string]any` | No |  |
-| `uptime_percentage` | `float64` | No |  |
-| `warning` | `string` | No |  |
+| `component_id` | `string` | No |  |
+| `incidents` | `map[string]any` | No |  |
 
 ### Operations
 
@@ -352,8 +338,8 @@ fmt.Println(groupComponent.GetName()) // "group_component"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `string` | No |  |
 | `component_group` | `map[string]any` | Yes |  |
+| `components` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `description` | `string` | No |  |
 | `id` | `string` | No |  |
@@ -395,6 +381,7 @@ Create a new entity with the given data.
 ```go
 result, err := client.GroupComponent(nil).Create(map[string]any{
     "page_id": "example_page_id",
+    "component_group": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -469,14 +456,13 @@ fmt.Println(incident.GetName()) // "incident"
 | `auto_transition_deliver_notifications_at_start` | `bool` | No |  |
 | `auto_transition_to_maintenance_state` | `bool` | No |  |
 | `auto_transition_to_operational_state` | `bool` | No |  |
-| `component` | `[]any` | No |  |
+| `components` | `[]any` | No |  |
 | `created_at` | `string` | No |  |
 | `id` | `string` | No |  |
 | `impact` | `string` | No |  |
 | `impact_override` | `string` | No |  |
 | `incident` | `map[string]any` | Yes |  |
-| `incident_impact` | `[]any` | No |  |
-| `incident_update` | `[]any` | No |  |
+| `incident_updates` | `[]any` | No |  |
 | `metadata` | `map[string]any` | No |  |
 | `monitoring_at` | `string` | No |  |
 | `name` | `string` | No |  |
@@ -484,10 +470,10 @@ fmt.Println(incident.GetName()) // "incident"
 | `postmortem_body` | `string` | No |  |
 | `postmortem_body_last_updated_at` | `string` | No |  |
 | `postmortem_ignored` | `bool` | No |  |
-| `postmortem_notified_subscriber` | `bool` | No |  |
+| `postmortem_notified_subscribers` | `bool` | No |  |
 | `postmortem_notified_twitter` | `bool` | No |  |
 | `postmortem_published_at` | `bool` | No |  |
-| `reminder_interval` | `string` | No |  |
+| `reminder_intervals` | `string` | No |  |
 | `resolved_at` | `string` | No |  |
 | `scheduled_auto_completed` | `bool` | No |  |
 | `scheduled_auto_in_progress` | `bool` | No |  |
@@ -507,14 +493,13 @@ fmt.Println(incident.GetName()) // "incident"
 | `auto_transition_deliver_notifications_at_start` | - | - | - | - | - |
 | `auto_transition_to_maintenance_state` | - | - | - | - | - |
 | `auto_transition_to_operational_state` | - | - | - | - | - |
-| `component` | - | - | - | - | - |
+| `components` | - | - | - | - | - |
 | `created_at` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `impact` | - | - | - | - | - |
 | `impact_override` | - | - | - | - | - |
 | `incident` | - | - | - | Yes | - |
-| `incident_impact` | - | - | - | - | - |
-| `incident_update` | - | - | - | - | - |
+| `incident_updates` | - | - | - | - | - |
 | `metadata` | - | - | - | - | - |
 | `monitoring_at` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
@@ -522,10 +507,10 @@ fmt.Println(incident.GetName()) // "incident"
 | `postmortem_body` | - | - | - | - | - |
 | `postmortem_body_last_updated_at` | - | - | - | - | - |
 | `postmortem_ignored` | - | - | - | - | - |
-| `postmortem_notified_subscriber` | - | - | - | - | - |
+| `postmortem_notified_subscribers` | - | - | - | - | - |
 | `postmortem_notified_twitter` | - | - | - | - | - |
 | `postmortem_published_at` | - | - | - | - | - |
-| `reminder_interval` | - | - | - | - | - |
+| `reminder_intervals` | - | - | - | - | - |
 | `resolved_at` | - | - | - | - | - |
 | `scheduled_auto_completed` | - | - | - | - | - |
 | `scheduled_auto_in_progress` | - | - | - | - | - |
@@ -570,6 +555,7 @@ Create a new entity with the given data.
 ```go
 result, err := client.Incident(nil).Create(map[string]any{
     "page_id": "example_page_id",
+    "incident": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -735,11 +721,11 @@ fmt.Println(incidentTemplate.GetName()) // "incident_template"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `body` | `string` | No |  |
-| `component` | `[]any` | No |  |
+| `components` | `[]any` | No |  |
 | `group_id` | `string` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
-| `should_send_notification` | `bool` | No |  |
+| `should_send_notifications` | `bool` | No |  |
 | `should_tweet` | `bool` | No |  |
 | `template` | `map[string]any` | Yes |  |
 | `title` | `string` | No |  |
@@ -766,6 +752,7 @@ Create a new entity with the given data.
 ```go
 result, err := client.IncidentTemplate(nil).Create(map[string]any{
     "page_id": "example_page_id",
+    "template": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -808,11 +795,11 @@ fmt.Println(incidentUpdate.GetName()) // "incident_update"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `affected_component` | `[]any` | No |  |
+| `affected_components` | `[]any` | No |  |
 | `body` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `custom_tweet` | `string` | No |  |
-| `deliver_notification` | `bool` | No |  |
+| `deliver_notifications` | `bool` | No |  |
 | `display_at` | `string` | No |  |
 | `id` | `string` | No |  |
 | `incident_id` | `string` | No |  |
@@ -881,7 +868,7 @@ fmt.Println(metric.GetName()) // "metric"
 | `backfilled` | `bool` | No |  |
 | `created_at` | `string` | No |  |
 | `data` | `map[string]any` | Yes |  |
-| `decimal_place` | `int` | No |  |
+| `decimal_places` | `int` | No |  |
 | `display` | `bool` | No |  |
 | `id` | `string` | No |  |
 | `last_fetched_at` | `string` | No |  |
@@ -932,6 +919,7 @@ Create a new entity with the given data.
 result, err := client.Metric(nil).Create(map[string]any{
     "metrics_provider_id": "example_metrics_provider_id",
     "page_id": "example_page_id",
+    "data": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1116,28 +1104,28 @@ fmt.Println(page.GetName()) // "page"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `activity_score` | `float64` | No |  |
-| `allow_email_subscriber` | `bool` | No |  |
-| `allow_incident_subscriber` | `bool` | No |  |
-| `allow_page_subscriber` | `bool` | No |  |
-| `allow_rss_atom_feed` | `bool` | No |  |
-| `allow_sms_subscriber` | `bool` | No |  |
-| `allow_webhook_subscriber` | `bool` | No |  |
+| `allow_email_subscribers` | `bool` | No |  |
+| `allow_incident_subscribers` | `bool` | No |  |
+| `allow_page_subscribers` | `bool` | No |  |
+| `allow_rss_atom_feeds` | `bool` | No |  |
+| `allow_sms_subscribers` | `bool` | No |  |
+| `allow_webhook_subscribers` | `bool` | No |  |
 | `branding` | `string` | No |  |
 | `city` | `string` | No |  |
 | `country` | `string` | No |  |
 | `created_at` | `string` | No |  |
-| `css_blue` | `string` | No |  |
+| `css_blues` | `string` | No |  |
 | `css_body_background_color` | `string` | No |  |
 | `css_border_color` | `string` | No |  |
 | `css_font_color` | `string` | No |  |
 | `css_graph_color` | `string` | No |  |
-| `css_green` | `string` | No |  |
+| `css_greens` | `string` | No |  |
 | `css_light_font_color` | `string` | No |  |
 | `css_link_color` | `string` | No |  |
 | `css_no_data` | `string` | No |  |
-| `css_orange` | `string` | No |  |
-| `css_red` | `string` | No |  |
-| `css_yellow` | `string` | No |  |
+| `css_oranges` | `string` | No |  |
+| `css_reds` | `string` | No |  |
+| `css_yellows` | `string` | No |  |
 | `domain` | `string` | No |  |
 | `email_logo` | `string` | No |  |
 | `favicon_logo` | `string` | No |  |
@@ -1145,7 +1133,7 @@ fmt.Println(page.GetName()) // "page"
 | `hero_cover` | `string` | No |  |
 | `hidden_from_search` | `bool` | No |  |
 | `id` | `string` | No |  |
-| `ip_restriction` | `string` | No |  |
+| `ip_restrictions` | `string` | No |  |
 | `name` | `string` | No |  |
 | `notifications_email_footer` | `string` | No |  |
 | `notifications_from_email` | `string` | No |  |
@@ -1160,7 +1148,7 @@ fmt.Println(page.GetName()) // "page"
 | `twitter_username` | `string` | No |  |
 | `updated_at` | `string` | No |  |
 | `url` | `string` | No |  |
-| `viewers_must_be_team_member` | `bool` | No |  |
+| `viewers_must_be_team_members` | `bool` | No |  |
 
 ### Operations
 
@@ -1238,14 +1226,14 @@ fmt.Println(pageAccessGroup.GetName()) // "page_access_group"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `[]any` | No |  |
+| `component_ids` | `[]any` | No |  |
 | `created_at` | `string` | No |  |
 | `external_identifier` | `string` | No |  |
 | `id` | `string` | No |  |
-| `metric_id` | `[]any` | No |  |
+| `metric_ids` | `[]any` | No |  |
 | `name` | `string` | No |  |
 | `page_access_group` | `map[string]any` | No |  |
-| `page_access_user_id` | `[]any` | No |  |
+| `page_access_user_ids` | `[]any` | No |  |
 | `page_id` | `string` | No |  |
 | `updated_at` | `string` | No |  |
 
@@ -1253,14 +1241,14 @@ fmt.Println(pageAccessGroup.GetName()) // "page_access_group"
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `component_id` | - | - | Yes | - | - |
+| `component_ids` | - | - | Yes | - | - |
 | `created_at` | - | - | - | - | - |
 | `external_identifier` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
-| `metric_id` | - | - | - | - | - |
+| `metric_ids` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
 | `page_access_group` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
+| `page_access_user_ids` | - | - | - | - | - |
 | `page_id` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 
@@ -1367,13 +1355,14 @@ fmt.Println(pageAccessUser.GetName()) // "page_access_user"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `[]any` | Yes |  |
+| `component_ids` | `[]any` | Yes |  |
 | `created_at` | `string` | No |  |
 | `email` | `string` | No |  |
 | `external_login` | `string` | No |  |
 | `id` | `string` | No |  |
-| `metric_id` | `[]any` | Yes |  |
+| `metric_ids` | `[]any` | Yes |  |
 | `page_access_group_id` | `string` | No |  |
+| `page_access_group_ids` | `string` | No |  |
 | `page_access_user` | `map[string]any` | No |  |
 | `page_id` | `string` | No |  |
 | `updated_at` | `string` | No |  |
@@ -1411,6 +1400,8 @@ Create a new entity with the given data.
 ```go
 result, err := client.PageAccessUser(nil).Create(map[string]any{
     "id": "example_id",
+    "component_ids": []any{},
+    "metric_ids": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1481,8 +1472,8 @@ fmt.Println(permission.GetName()) // "permission"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `map[string]any` | No |  |
-| `page` | `map[string]any` | No |  |
+| `pages` | `map[string]any` | No |  |
+| `user_id` | `string` | No |  |
 
 ### Operations
 
@@ -1555,7 +1546,7 @@ fmt.Println(postmortem.GetName()) // "postmortem"
 | `body_updated_at` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `custom_tweet` | `string` | No |  |
-| `notify_subscriber` | `bool` | No |  |
+| `notify_subscribers` | `bool` | No |  |
 | `notify_twitter` | `bool` | No |  |
 | `postmortem` | `map[string]any` | Yes |  |
 | `preview_key` | `string` | No |  |
@@ -1572,7 +1563,7 @@ fmt.Println(postmortem.GetName()) // "postmortem"
 | `body_updated_at` | - | - |
 | `created_at` | - | - |
 | `custom_tweet` | - | - |
-| `notify_subscriber` | - | - |
+| `notify_subscribers` | - | - |
 | `notify_twitter` | - | - |
 | `postmortem` | - | Yes |
 | `preview_key` | - | - |
@@ -1716,8 +1707,8 @@ fmt.Println(subscriber.GetName()) // "subscriber"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component` | `string` | No |  |
-| `component_id` | `[]any` | No |  |
+| `component_ids` | `[]any` | No |  |
+| `components` | `string` | No |  |
 | `created_at` | `string` | No |  |
 | `display_phone_number` | `string` | No |  |
 | `email` | `string` | No |  |
@@ -1737,40 +1728,11 @@ fmt.Println(subscriber.GetName()) // "subscriber"
 | `sms` | `int` | No |  |
 | `state` | `string` | No |  |
 | `subscriber` | `map[string]any` | No |  |
-| `team` | `int` | No |  |
+| `subscribers` | `string` | Yes |  |
+| `teams` | `int` | No |  |
 | `type` | `string` | No |  |
 | `webhook` | `int` | No |  |
 | `workspace_name` | `string` | No |  |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `component` | - | - | - | - | - |
-| `component_id` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `display_phone_number` | - | - | - | - | - |
-| `email` | - | - | - | - | - |
-| `endpoint` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `integration_partner` | - | - | - | - | - |
-| `mode` | - | - | - | - | - |
-| `obfuscated_channel_name` | - | - | - | - | - |
-| `page_access_user_id` | - | - | - | - | - |
-| `phone_country` | - | - | - | - | - |
-| `phone_number` | - | - | - | - | - |
-| `purge_at` | - | - | - | - | - |
-| `quarantined_at` | - | - | - | - | - |
-| `skip_confirmation_notification` | - | - | - | - | - |
-| `skip_unsubscription_notification` | - | - | - | - | - |
-| `slack` | - | - | - | - | - |
-| `sms` | - | - | - | - | - |
-| `state` | - | - | - | - | - |
-| `subscriber` | - | - | Yes | - | - |
-| `team` | - | - | - | - | - |
-| `type` | - | - | - | - | - |
-| `webhook` | - | - | - | - | - |
-| `workspace_name` | - | - | - | - | - |
 
 ### Operations
 
@@ -1805,6 +1767,7 @@ Create a new entity with the given data.
 ```go
 result, err := client.Subscriber(nil).Create(map[string]any{
     "page_id": "example_page_id",
+    "subscribers": "example_subscribers",
 }, nil)
 if err != nil {
     panic(err)
@@ -1905,6 +1868,7 @@ Create a new entity with the given data.
 ```go
 result, err := client.User(nil).Create(map[string]any{
     "organization_id": "example_organization_id",
+    "user": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)

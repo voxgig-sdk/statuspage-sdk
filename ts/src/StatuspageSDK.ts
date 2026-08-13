@@ -163,8 +163,29 @@ class StatuspageSDK {
   }
 
 
+  // Raw endpoint access is operator-controllable, like every entity op.
+  // Blocking it means denying BOTH the 'direct' and 'graphql' tokens, since
+  // either one reaches the same endpoint.
   async direct(fetchargs?: any) {
+    if (!this._options.allow.op.includes('direct')) {
+      return {
+        ok: false,
+        err: new Error('StatuspageSDK: direct: operation not allowed by' +
+          ' SDK option allow.op value: "' + this._options.allow.op + '"'),
+      }
+    }
+
+    return this._rawRequest(fetchargs)
+  }
+
+
+  // Ungated request path shared by direct() and graphql(), each of which
+  // checks its own allow.op token first. Private, rather than a flag on
+  // fetchargs: a caller-supplied marker would let anyone opt straight back
+  // out of the gate by passing it.
+  async _rawRequest(fetchargs?: any) {
     const utility = this._utility
+
     const fetcher = utility.fetcher
     const makeContext = utility.makeContext
 
@@ -225,129 +246,219 @@ class StatuspageSDK {
 
 
 
+  // Raw GraphQL access: the pressure valve that makes the generated
+  // surface's deliberate omissions (per-call selection sets, typed filter
+  // builders, batching, subscriptions) livable — the whole schema stays
+  // reachable.
+  //
+  // Thin wrapper over the same prepare/fetch path `direct` uses, with the
+  // one thing raw `direct` cannot do for GraphQL: a GraphQL failure rides
+  // HTTP 200 as a top-level `errors` array, so status alone would report a
+  // failed query as ok.
+  //
+  // NOTE: like `direct`, this bypasses the feature pipeline — no retry,
+  // ratelimit or paging features apply.
+  async graphql(query: string, variables?: any, ctrl?: any) {
+    const options = this._options
+
+    if (!options.allow.op.includes('graphql')) {
+      return {
+        ok: false,
+        err: new Error('StatuspageSDK: graphql: operation not allowed by' +
+          ' SDK option allow.op value: "' + options.allow.op + '"'),
+      }
+    }
+
+    const res: any = await this._rawRequest({
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: { query, variables: variables || {} },
+      ctrl,
+    })
+
+    if (res instanceof Error) {
+      return res
+    }
+
+    // Errors are read BEFORE any status check: a GraphQL parse or validation
+    // failure comes back as HTTP 400 carrying the standard { errors: [...] }
+    // body, and the raw path represents a non-2xx as { ok: false } with no
+    // err — so returning early on status would discard the server's own
+    // diagnostics, which are the only useful part of that response.
+    const errors = null == res.data ? undefined : res.data.errors
+
+    if (null != errors && Array.isArray(errors) && 0 < errors.length) {
+      const first = errors[0] || {}
+      const err: any = new Error('StatuspageSDK: graphql: ' +
+        (first.message || 'graphql error'))
+      err.graphql = errors
+      return { ok: false, status: res.status, headers: res.headers, err, data: res.data }
+    }
+
+    return res
+  }
+
+
+
   // Entity access: `client.Component().list()` / `client.Component().load({ id })`.
-  Component(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Component(entopts?: Record<string, any>) {
     const self = this
-    return new ComponentEntity(self,data)
+    return new ComponentEntity(self, entopts)
   }
 
 
   // Entity access: `client.ComponentGroupUptime().list()` / `client.ComponentGroupUptime().load({ id })`.
-  ComponentGroupUptime(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  ComponentGroupUptime(entopts?: Record<string, any>) {
     const self = this
-    return new ComponentGroupUptimeEntity(self,data)
+    return new ComponentGroupUptimeEntity(self, entopts)
   }
 
 
   // Entity access: `client.GroupComponent().list()` / `client.GroupComponent().load({ id })`.
-  GroupComponent(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  GroupComponent(entopts?: Record<string, any>) {
     const self = this
-    return new GroupComponentEntity(self,data)
+    return new GroupComponentEntity(self, entopts)
   }
 
 
   // Entity access: `client.Incident().list()` / `client.Incident().load({ id })`.
-  Incident(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Incident(entopts?: Record<string, any>) {
     const self = this
-    return new IncidentEntity(self,data)
+    return new IncidentEntity(self, entopts)
   }
 
 
   // Entity access: `client.IncidentPostmortem().list()` / `client.IncidentPostmortem().load({ id })`.
-  IncidentPostmortem(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  IncidentPostmortem(entopts?: Record<string, any>) {
     const self = this
-    return new IncidentPostmortemEntity(self,data)
+    return new IncidentPostmortemEntity(self, entopts)
   }
 
 
   // Entity access: `client.IncidentSubscriber().list()` / `client.IncidentSubscriber().load({ id })`.
-  IncidentSubscriber(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  IncidentSubscriber(entopts?: Record<string, any>) {
     const self = this
-    return new IncidentSubscriberEntity(self,data)
+    return new IncidentSubscriberEntity(self, entopts)
   }
 
 
   // Entity access: `client.IncidentTemplate().list()` / `client.IncidentTemplate().load({ id })`.
-  IncidentTemplate(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  IncidentTemplate(entopts?: Record<string, any>) {
     const self = this
-    return new IncidentTemplateEntity(self,data)
+    return new IncidentTemplateEntity(self, entopts)
   }
 
 
   // Entity access: `client.IncidentUpdate().list()` / `client.IncidentUpdate().load({ id })`.
-  IncidentUpdate(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  IncidentUpdate(entopts?: Record<string, any>) {
     const self = this
-    return new IncidentUpdateEntity(self,data)
+    return new IncidentUpdateEntity(self, entopts)
   }
 
 
   // Entity access: `client.Metric().list()` / `client.Metric().load({ id })`.
-  Metric(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Metric(entopts?: Record<string, any>) {
     const self = this
-    return new MetricEntity(self,data)
+    return new MetricEntity(self, entopts)
   }
 
 
   // Entity access: `client.MetricsProvider().list()` / `client.MetricsProvider().load({ id })`.
-  MetricsProvider(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  MetricsProvider(entopts?: Record<string, any>) {
     const self = this
-    return new MetricsProviderEntity(self,data)
+    return new MetricsProviderEntity(self, entopts)
   }
 
 
   // Entity access: `client.Page().list()` / `client.Page().load({ id })`.
-  Page(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Page(entopts?: Record<string, any>) {
     const self = this
-    return new PageEntity(self,data)
+    return new PageEntity(self, entopts)
   }
 
 
   // Entity access: `client.PageAccessGroup().list()` / `client.PageAccessGroup().load({ id })`.
-  PageAccessGroup(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  PageAccessGroup(entopts?: Record<string, any>) {
     const self = this
-    return new PageAccessGroupEntity(self,data)
+    return new PageAccessGroupEntity(self, entopts)
   }
 
 
   // Entity access: `client.PageAccessUser().list()` / `client.PageAccessUser().load({ id })`.
-  PageAccessUser(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  PageAccessUser(entopts?: Record<string, any>) {
     const self = this
-    return new PageAccessUserEntity(self,data)
+    return new PageAccessUserEntity(self, entopts)
   }
 
 
   // Entity access: `client.Permission().list()` / `client.Permission().load({ id })`.
-  Permission(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Permission(entopts?: Record<string, any>) {
     const self = this
-    return new PermissionEntity(self,data)
+    return new PermissionEntity(self, entopts)
   }
 
 
   // Entity access: `client.Postmortem().list()` / `client.Postmortem().load({ id })`.
-  Postmortem(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Postmortem(entopts?: Record<string, any>) {
     const self = this
-    return new PostmortemEntity(self,data)
+    return new PostmortemEntity(self, entopts)
   }
 
 
   // Entity access: `client.StatusEmbedConfig().list()` / `client.StatusEmbedConfig().load({ id })`.
-  StatusEmbedConfig(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  StatusEmbedConfig(entopts?: Record<string, any>) {
     const self = this
-    return new StatusEmbedConfigEntity(self,data)
+    return new StatusEmbedConfigEntity(self, entopts)
   }
 
 
   // Entity access: `client.Subscriber().list()` / `client.Subscriber().load({ id })`.
-  Subscriber(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Subscriber(entopts?: Record<string, any>) {
     const self = this
-    return new SubscriberEntity(self,data)
+    return new SubscriberEntity(self, entopts)
   }
 
 
   // Entity access: `client.User().list()` / `client.User().load({ id })`.
-  User(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  User(entopts?: Record<string, any>) {
     const self = this
-    return new UserEntity(self,data)
+    return new UserEntity(self, entopts)
   }
 
 

@@ -84,7 +84,7 @@ describe("MetricEntity", function()
 
     local metric_ref01_data_result, err = metric_ref01_ent:create(metric_ref01_data, nil)
     assert.is_nil(err)
-    metric_ref01_data = helpers.to_map(metric_ref01_data_result)
+    metric_ref01_data = helpers.to_map(type(metric_ref01_data_result) == 'table' and metric_ref01_data_result.data_get and metric_ref01_data_result:data_get() or metric_ref01_data_result)
     assert.is_not_nil(metric_ref01_data)
     assert.is_not_nil(metric_ref01_data["id"])
 
@@ -115,7 +115,7 @@ describe("MetricEntity", function()
 
     local metric_ref01_resdata_up0_result, err = metric_ref01_ent:update(metric_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local metric_ref01_resdata_up0 = helpers.to_map(metric_ref01_resdata_up0_result)
+    local metric_ref01_resdata_up0 = helpers.to_map(type(metric_ref01_resdata_up0_result) == 'table' and metric_ref01_resdata_up0_result.data_get and metric_ref01_resdata_up0_result:data_get() or metric_ref01_resdata_up0_result)
     assert.is_not_nil(metric_ref01_resdata_up0)
     assert.are.equal(metric_ref01_resdata_up0["id"], metric_ref01_data_up0_up["id"])
     assert.are.equal(metric_ref01_resdata_up0[metric_ref01_markdef_up0_name], metric_ref01_markdef_up0_value)
@@ -126,7 +126,7 @@ describe("MetricEntity", function()
     }
     local metric_ref01_data_dt0_loaded, err = metric_ref01_ent:load(metric_ref01_match_dt0, nil)
     assert.is_nil(err)
-    local metric_ref01_data_dt0_load_result = helpers.to_map(metric_ref01_data_dt0_loaded)
+    local metric_ref01_data_dt0_load_result = helpers.to_map(type(metric_ref01_data_dt0_loaded) == 'table' and metric_ref01_data_dt0_loaded.data_get and metric_ref01_data_dt0_loaded:data_get() or metric_ref01_data_dt0_loaded)
     assert.is_not_nil(metric_ref01_data_dt0_load_result)
     assert.are.equal(metric_ref01_data_dt0_load_result["id"], metric_ref01_data["id"])
 
