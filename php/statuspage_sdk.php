@@ -40,7 +40,7 @@ class StatuspageSDK
         $utility = new StatuspageUtility();
         $this->_utility = $utility;
 
-        $config = StatuspageConfig::make_config();
+        $config = StatuspageConfig::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,

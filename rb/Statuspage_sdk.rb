@@ -28,7 +28,7 @@ class StatuspageSDK
     utility = StatuspageUtility.new
     @_utility = utility
 
-    config = StatuspageConfig.make_config
+    config = StatuspageConfig.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,
