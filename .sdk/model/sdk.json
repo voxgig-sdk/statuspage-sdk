@@ -20,9 +20,11 @@
         ],
         "headers": {
           "content-type": "application/json"
-        }
+        },
+        "repr": "auto"
       },
       "contributor": {},
+      "docs": {},
       "entity": {
         "component": {
           "active": true,
@@ -34,6 +36,7 @@
               "active": true,
               "name": "automation_email",
               "req": false,
+              "short": "Requires a special feature flag to be enabled",
               "type": "`$STRING`"
             },
             {
@@ -52,66 +55,77 @@
               "active": true,
               "name": "description",
               "req": false,
+              "short": "More detailed description for component",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "group",
               "req": false,
+              "short": "Is this component a group",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "group_id",
               "req": false,
+              "short": "Component Group identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Incident identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "name",
               "req": false,
+              "short": "Display name for component",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "only_show_if_degraded",
               "req": false,
+              "short": "Requires a special feature flag to be enabled",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "page_id",
               "req": false,
+              "short": "Page identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "position",
               "req": false,
+              "short": "Order the component will appear on the page",
               "type": "`$INTEGER`"
             },
             {
               "active": true,
               "name": "showcase",
               "req": false,
+              "short": "Should this component be showcased",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "start_date",
               "req": false,
+              "short": "The date this component started being used",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "status",
               "req": false,
+              "short": "Status of component",
               "type": "`$STRING`"
             },
             {
@@ -859,12 +873,14 @@
               "active": true,
               "name": "component_id",
               "req": false,
+              "short": "Component identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "incidents",
               "req": false,
+              "short": "Related incidents",
               "type": "`$OBJECT`"
             }
           ],
@@ -976,12 +992,14 @@
               "active": true,
               "name": "description",
               "req": false,
+              "short": "Description of the component group.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Component Group Identifier",
               "type": "`$STRING`"
             },
             {
@@ -1322,54 +1340,63 @@
               "active": true,
               "name": "auto_transition_deliver_notifications_at_end",
               "req": false,
+              "short": "Controls whether send notification when scheduled maintenances auto transition to completed.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "auto_transition_deliver_notifications_at_start",
               "req": false,
+              "short": "Controls whether send notification when scheduled maintenances auto transition to started.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "auto_transition_to_maintenance_state",
               "req": false,
+              "short": "Controls whether change components status to under_maintenance once scheduled maintenance is in progress.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "auto_transition_to_operational_state",
               "req": false,
+              "short": "Controls whether change components status to operational once scheduled maintenance completes.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "components",
               "req": false,
+              "short": "Incident components",
               "type": "`$ARRAY`"
             },
             {
               "active": true,
               "name": "created_at",
               "req": false,
+              "short": "The timestamp when the incident was created at.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Incident Identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "impact",
               "req": false,
+              "short": "The impact of the incident.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "impact_override",
               "req": false,
+              "short": "value to override calculated impact value",
               "type": "`$STRING`"
             },
             {
@@ -1392,132 +1419,154 @@
               "active": true,
               "name": "incident_updates",
               "req": false,
+              "short": "The incident updates for incident.",
               "type": "`$ARRAY`"
             },
             {
               "active": true,
               "name": "metadata",
               "req": false,
+              "short": "Metadata attached to the incident.",
               "type": "`$OBJECT`"
             },
             {
               "active": true,
               "name": "monitoring_at",
               "req": false,
+              "short": "The timestamp when incident entered monitoring state.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "name",
               "req": false,
+              "short": "Incident Name.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "page_id",
               "req": false,
+              "short": "Incident Page Identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "postmortem_body",
               "req": false,
+              "short": "Body of the Postmortem.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "postmortem_body_last_updated_at",
               "req": false,
+              "short": "The timestamp when the incident postmortem body was last updated at.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "postmortem_ignored",
               "req": false,
+              "short": "Controls whether the incident will have postmortem.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "postmortem_notified_subscribers",
               "req": false,
+              "short": "Indicates whether subscribers are already notificed about postmortem.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "postmortem_notified_twitter",
               "req": false,
+              "short": "Controls whether to decide if notify postmortem on twitter.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "postmortem_published_at",
               "req": false,
+              "short": "The timestamp when the postmortem was published.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "reminder_intervals",
               "req": false,
+              "short": "Custom reminder intervals for unresolved/open incidents.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "resolved_at",
               "req": false,
+              "short": "The timestamp when incident was resolved.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "scheduled_auto_completed",
               "req": false,
+              "short": "Controls whether the incident is scheduled to automatically change to complete.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "scheduled_auto_in_progress",
               "req": false,
+              "short": "Controls whether the incident is scheduled to automatically change to in progress.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "scheduled_for",
               "req": false,
+              "short": "The timestamp the incident is scheduled for.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "scheduled_remind_prior",
               "req": false,
+              "short": "Controls whether to remind subscribers prior to scheduled incidents.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "scheduled_reminded_at",
               "req": false,
+              "short": "The timestamp when the scheduled incident reminder was sent at.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "scheduled_until",
               "req": false,
+              "short": "The timestamp the incident is scheduled until.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "shortlink",
               "req": false,
+              "short": "Incident Shortlink.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "status",
               "req": false,
+              "short": "The incident status.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "updated_at",
               "req": false,
+              "short": "The timestamp when the incident was updated at.",
               "type": "`$STRING`"
             }
           ],
@@ -2243,42 +2292,49 @@
               "active": true,
               "name": "body",
               "req": false,
+              "short": "Body of the incident or maintenance update to be applied when selecting this template",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "components",
               "req": false,
+              "short": "Affected components",
               "type": "`$ARRAY`"
             },
             {
               "active": true,
               "name": "group_id",
               "req": false,
+              "short": "Identifier of Template Group this template belongs to",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Incident Template Identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "name",
               "req": false,
+              "short": "Name of the template, as shown in the list on the \"Templates\" tab of the \"Incidents\" page",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "should_send_notifications",
               "req": false,
+              "short": "Whether the \"deliver notifications\" checkbox should be selected when selecting this template",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "should_tweet",
               "req": false,
+              "short": "Whether the \"tweet update\" checkbox should be selected when selecting this template",
               "type": "`$BOOLEAN`"
             },
             {
@@ -2291,12 +2347,14 @@
               "active": true,
               "name": "title",
               "req": false,
+              "short": "Title to be applied to the incident or maintenance when selecting this template",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "update_status",
               "req": false,
+              "short": "The status the incident or maintenance should transition to when selecting this template",
               "type": "`$STRING`"
             }
           ],
@@ -2423,48 +2481,56 @@
               "active": true,
               "name": "affected_components",
               "req": false,
+              "short": "Affected components associated with the incident update.",
               "type": "`$ARRAY`"
             },
             {
               "active": true,
               "name": "body",
               "req": false,
+              "short": "Incident update body.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "created_at",
               "req": false,
+              "short": "The timestamp when the incident update was created at.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "custom_tweet",
               "req": false,
+              "short": "An optional customized tweet message for incident postmortem.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "deliver_notifications",
               "req": false,
+              "short": "Controls whether to delivery notifications.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "display_at",
               "req": false,
+              "short": "Timestamp when incident update is happened.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Incident Update Identifier.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "incident_id",
               "req": false,
+              "short": "Incident Identifier.",
               "type": "`$STRING`"
             },
             {
@@ -2477,30 +2543,35 @@
               "active": true,
               "name": "status",
               "req": false,
+              "short": "The incident status.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "tweet_id",
               "req": false,
+              "short": "Tweet identifier associated to this incident update.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "twitter_updated_at",
               "req": false,
+              "short": "The timestamp when twitter updated at.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "updated_at",
               "req": false,
+              "short": "The timestamp when the incident update is updated.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "wants_twitter_update",
               "req": false,
+              "short": "Controls whether to create twitter update.",
               "type": "`$BOOLEAN`"
             }
           ],
@@ -2680,6 +2751,7 @@
               "active": true,
               "name": "data",
               "req": true,
+              "short": "Add data points to metrics",
               "type": "`$OBJECT`"
             },
             {
@@ -2692,12 +2764,14 @@
               "active": true,
               "name": "display",
               "req": false,
+              "short": "Should the metric be displayed",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Metric identifier",
               "type": "`$STRING`"
             },
             {
@@ -2716,12 +2790,14 @@
               "active": true,
               "name": "metric_identifier",
               "req": false,
+              "short": "Metric Display identifier used to look up the metric data from the provider",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "metrics_provider_id",
               "req": false,
+              "short": "Metric Provider identifier",
               "type": "`$STRING`"
             },
             {
@@ -2734,6 +2810,7 @@
               "active": true,
               "name": "name",
               "req": false,
+              "short": "Name of metric",
               "type": "`$STRING`"
             },
             {
@@ -2746,6 +2823,7 @@
               "active": true,
               "name": "suffix",
               "req": false,
+              "short": "Suffix to describe the units on the graph",
               "type": "`$STRING`"
             },
             {
@@ -2764,6 +2842,7 @@
               "active": true,
               "name": "y_axis_hidden",
               "req": false,
+              "short": "Should the values on the y axis be hidden on render",
               "type": "`$BOOLEAN`"
             },
             {
@@ -3407,6 +3486,7 @@
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Identifier for Metrics Provider",
               "type": "`$STRING`"
             },
             {
@@ -3771,42 +3851,49 @@
               "active": true,
               "name": "allow_email_subscribers",
               "req": false,
+              "short": "Can your users choose to receive notifications via email",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "allow_incident_subscribers",
               "req": false,
+              "short": "Can your users subscribe to notifications for a single incident",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "allow_page_subscribers",
               "req": false,
+              "short": "Can your users subscribe to all notifications on the page",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "allow_rss_atom_feeds",
               "req": false,
+              "short": "Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages)",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "allow_sms_subscribers",
               "req": false,
+              "short": "Can your users choose to receive notifications via SMS",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "allow_webhook_subscribers",
               "req": false,
+              "short": "Can your users choose to receive notifications via Webhooks",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "branding",
               "req": false,
+              "short": "The main template your statuspage will use",
               "type": "`$STRING`"
             },
             {
@@ -3825,84 +3912,98 @@
               "active": true,
               "name": "created_at",
               "req": false,
+              "short": "Timestamp the record was created",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_blues",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_body_background_color",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_border_color",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_font_color",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_graph_color",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_greens",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_light_font_color",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_link_color",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_no_data",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_oranges",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_reds",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "css_yellows",
               "req": false,
+              "short": "CSS Color",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "domain",
               "req": false,
+              "short": "CNAME alias for your status page",
               "type": "`$STRING`"
             },
             {
@@ -3933,12 +4034,14 @@
               "active": true,
               "name": "hidden_from_search",
               "req": false,
+              "short": "Should your page hide itself from search engines",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Page identifier",
               "type": "`$STRING`"
             },
             {
@@ -3951,18 +4054,21 @@
               "active": true,
               "name": "name",
               "req": false,
+              "short": "Name of your page to be displayed",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "notifications_email_footer",
               "req": false,
+              "short": "Allows you to customize the footer appearing on your notification emails.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "notifications_from_email",
               "req": false,
+              "short": "Allows you to customize the email address your page notifications come from",
               "type": "`$STRING`"
             },
             {
@@ -3987,6 +4093,7 @@
               "active": true,
               "name": "subdomain",
               "req": false,
+              "short": "Subdomain at which to access your status page",
               "type": "`$STRING`"
             },
             {
@@ -3999,6 +4106,7 @@
               "active": true,
               "name": "time_zone",
               "req": false,
+              "short": "Timezone configured for your page",
               "type": "`$STRING`"
             },
             {
@@ -4023,12 +4131,14 @@
               "active": true,
               "name": "updated_at",
               "req": false,
+              "short": "Timestamp the record was last updated",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "url",
               "req": false,
+              "short": "Website of your page.",
               "type": "`$STRING`"
             },
             {
@@ -4216,6 +4326,7 @@
                 }
               },
               "req": false,
+              "short": "List of components codes to set on the page access group",
               "type": "`$ARRAY`"
             },
             {
@@ -4228,12 +4339,14 @@
               "active": true,
               "name": "external_identifier",
               "req": false,
+              "short": "Associates group with external group.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Page Access Group Identifier",
               "type": "`$STRING`"
             },
             {
@@ -4246,6 +4359,7 @@
               "active": true,
               "name": "name",
               "req": false,
+              "short": "Name for this Group.",
               "type": "`$STRING`"
             },
             {
@@ -4264,6 +4378,7 @@
               "active": true,
               "name": "page_id",
               "req": false,
+              "short": "Page Identifier.",
               "type": "`$STRING`"
             },
             {
@@ -4880,6 +4995,7 @@
               "active": true,
               "name": "component_ids",
               "req": true,
+              "short": "List of component codes to allow access to",
               "type": "`$ARRAY`"
             },
             {
@@ -4898,18 +5014,21 @@
               "active": true,
               "name": "external_login",
               "req": false,
+              "short": "IDP login user id.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Page Access User Identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "metric_ids",
               "req": true,
+              "short": "List of metrics to add",
               "type": "`$ARRAY`"
             },
             {
@@ -5813,12 +5932,14 @@
               "active": true,
               "name": "pages",
               "req": false,
+              "short": "Pages accessible by the user.",
               "type": "`$OBJECT`"
             },
             {
               "active": true,
               "name": "user_id",
               "req": false,
+              "short": "User identifier",
               "type": "`$STRING`"
             }
           ],
@@ -5949,12 +6070,14 @@
               "active": true,
               "name": "body",
               "req": false,
+              "short": "Postmortem body",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "body_draft",
               "req": false,
+              "short": "Body draft",
               "type": "`$STRING`"
             },
             {
@@ -5979,18 +6102,21 @@
               "active": true,
               "name": "custom_tweet",
               "req": false,
+              "short": "Custom tweet for Incident Postmortem",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "notify_subscribers",
               "req": false,
+              "short": "Should email subscribers be notified.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "notify_twitter",
               "req": false,
+              "short": "Should Twitter followers be notified.",
               "type": "`$BOOLEAN`"
             },
             {
@@ -6009,6 +6135,7 @@
               "active": true,
               "name": "preview_key",
               "req": false,
+              "short": "Preview Key",
               "type": "`$STRING`"
             },
             {
@@ -6238,36 +6365,42 @@
               "active": true,
               "name": "incident_background_color",
               "req": false,
+              "short": "Color of status embed iframe background when displaying incident",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "incident_text_color",
               "req": false,
+              "short": "Color of status embed iframe text when displaying incident",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "maintenance_background_color",
               "req": false,
+              "short": "Color of status embed iframe background when displaying maintenance",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "maintenance_text_color",
               "req": false,
+              "short": "Color of status embed iframe text when displaying maintenance",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "page_id",
               "req": false,
+              "short": "Page identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "position",
               "req": false,
+              "short": "Corner where status embed iframe will appear on page",
               "type": "`$STRING`"
             },
             {
@@ -6416,12 +6549,14 @@
               "active": true,
               "name": "component_ids",
               "req": false,
+              "short": "A list of component ids for which the subscriber should recieve updates for.",
               "type": "`$ARRAY`"
             },
             {
               "active": true,
               "name": "components",
               "req": false,
+              "short": "The components for which the subscriber has elected to receive updates.",
               "type": "`$STRING`"
             },
             {
@@ -6434,102 +6569,119 @@
               "active": true,
               "name": "display_phone_number",
               "req": false,
+              "short": "A formatted version of the phone_number and phone_country pair, nicely formatted for display.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "email",
               "req": false,
+              "short": "The email address to use to contact the subscriber.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "endpoint",
               "req": false,
+              "short": "The URL where a webhook subscriber elects to receive updates.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Subscriber Identifier",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "integration_partner",
               "req": false,
+              "short": "The number of integration partners found by the query.",
               "type": "`$INTEGER`"
             },
             {
               "active": true,
               "name": "mode",
               "req": false,
+              "short": "The communication mode of the subscriber.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "obfuscated_channel_name",
               "req": false,
+              "short": "Obfuscated slack channel name",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "page_access_user_id",
               "req": false,
+              "short": "The Page Access user this subscriber belongs to (only for audience-specific pages).",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "phone_country",
               "req": false,
+              "short": "The two-character country code representing the country of which the phone_number is a part.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "phone_number",
               "req": false,
+              "short": "The phone number used to contact an SMS subscriber",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "purge_at",
               "req": false,
+              "short": "The timestamp when a quarantined subscriber will be purged (unsubscribed).",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "quarantined_at",
               "req": false,
+              "short": "The timestamp when the subscriber was quarantined due to an issue reaching them.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "skip_confirmation_notification",
               "req": false,
+              "short": "If this is true, do not notify the user with changes to their subscription.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "skip_unsubscription_notification",
               "req": false,
+              "short": "If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed.",
               "type": "`$BOOLEAN`"
             },
             {
               "active": true,
               "name": "slack",
               "req": false,
+              "short": "The number of Slack subscribers found by the query.",
               "type": "`$INTEGER`"
             },
             {
               "active": true,
               "name": "sms",
               "req": false,
+              "short": "The number of Webhook subscribers found by the query.",
               "type": "`$INTEGER`"
             },
             {
               "active": true,
               "name": "state",
               "req": false,
+              "short": "If this is present, only unsubscribe subscribers in this state.",
               "type": "`$STRING`"
             },
             {
@@ -6542,30 +6694,35 @@
               "active": true,
               "name": "subscribers",
               "req": true,
+              "short": "The array of quarantined subscriber codes to reactivate, or \"all\" to reactivate all quarantined subscribers.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "teams",
               "req": false,
+              "short": "The number of MS teams subscribers found by the query.",
               "type": "`$INTEGER`"
             },
             {
               "active": true,
               "name": "type",
               "req": false,
+              "short": "If this is present, only reactivate subscribers of this type.",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "webhook",
               "req": false,
+              "short": "The number of SMS subscribers found by the query.",
               "type": "`$INTEGER`"
             },
             {
               "active": true,
               "name": "workspace_name",
               "req": false,
+              "short": "The workspace name of the slack subscriber.",
               "type": "`$STRING`"
             }
           ],
@@ -7439,6 +7596,7 @@
               "active": true,
               "name": "email",
               "req": false,
+              "short": "Email address for the team member",
               "type": "`$STRING`"
             },
             {
@@ -7451,6 +7609,7 @@
               "active": true,
               "name": "id",
               "req": false,
+              "short": "User identifier",
               "type": "`$STRING`"
             },
             {
@@ -7463,6 +7622,7 @@
               "active": true,
               "name": "organization_id",
               "req": false,
+              "short": "Organization identifier",
               "type": "`$STRING`"
             },
             {
@@ -7648,6 +7808,7 @@
       "feature": {
         "test": {
           "active": true,
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "config": {
             "options": {
               "active": false
@@ -7708,6 +7869,8 @@
             }
           },
           "name": "test",
+          "origname": "",
+          "package": "@voxgig/sdkgen",
           "target": {
             "go": {
               "deps": {}
@@ -9211,6 +9374,7 @@
             "name": "",
             "url": ""
           },
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "comment": {
             "line": "//"
           },
@@ -9229,12 +9393,14 @@
             "path": ""
           },
           "name": "go",
+          "origname": "",
           "output": {
             "adopt": false,
             "path": "",
             "repo": "",
             "sdkrel": ""
           },
+          "package": "@voxgig/sdkgen",
           "publish": {
             "registry": {
               "active": false,
@@ -9268,6 +9434,7 @@
             "name": "",
             "url": ""
           },
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "comment": {
             "line": "//"
           },
@@ -9284,12 +9451,14 @@
             "path": ""
           },
           "name": "go-cli",
+          "origname": "",
           "output": {
             "adopt": false,
             "path": "",
             "repo": "",
             "sdkrel": ""
           },
+          "package": "@voxgig/sdkgen",
           "phase": {
             "agentguide": {
               "active": false
@@ -9339,6 +9508,7 @@
             "name": "",
             "url": ""
           },
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "comment": {
             "line": "//"
           },
@@ -9355,12 +9525,14 @@
             "path": ""
           },
           "name": "go-mcp",
+          "origname": "",
           "output": {
             "adopt": false,
             "path": "",
             "repo": "",
             "sdkrel": ""
           },
+          "package": "@voxgig/sdkgen",
           "phase": {
             "agentguide": {
               "active": false
@@ -9410,6 +9582,7 @@
             "name": "",
             "url": ""
           },
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "comment": {
             "line": "--"
           },
@@ -9432,12 +9605,14 @@
             "path": ""
           },
           "name": "lua",
+          "origname": "",
           "output": {
             "adopt": false,
             "path": "",
             "repo": "",
             "sdkrel": ""
           },
+          "package": "@voxgig/sdkgen",
           "publish": {
             "registry": {
               "active": false,
@@ -9471,6 +9646,7 @@
             "name": "",
             "url": ""
           },
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "comment": {
             "line": "//"
           },
@@ -9487,12 +9663,14 @@
             "path": ""
           },
           "name": "php",
+          "origname": "",
           "output": {
             "adopt": false,
             "path": "",
             "repo": "",
             "sdkrel": ""
           },
+          "package": "@voxgig/sdkgen",
           "publish": {
             "registry": {
               "active": false,
@@ -9526,6 +9704,7 @@
             "name": "",
             "url": ""
           },
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "comment": {
             "line": "#"
           },
@@ -9548,12 +9727,14 @@
             "path": ""
           },
           "name": "py",
+          "origname": "",
           "output": {
             "adopt": false,
             "path": "",
             "repo": "",
             "sdkrel": ""
           },
+          "package": "@voxgig/sdkgen",
           "publish": {
             "registry": {
               "active": false,
@@ -9587,6 +9768,7 @@
             "name": "",
             "url": ""
           },
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "comment": {
             "line": "#"
           },
@@ -9614,12 +9796,14 @@
             "path": ""
           },
           "name": "rb",
+          "origname": "",
           "output": {
             "adopt": false,
             "path": "",
             "repo": "",
             "sdkrel": ""
           },
+          "package": "@voxgig/sdkgen",
           "publish": {
             "registry": {
               "active": false,
@@ -9686,12 +9870,14 @@
             "path": ""
           },
           "name": "ts",
+          "origname": "",
           "output": {
             "adopt": false,
             "path": "",
             "repo": "",
             "sdkrel": ""
           },
+          "package": "@voxgig/sdkgen",
           "publish": {
             "registry": {
               "active": false,

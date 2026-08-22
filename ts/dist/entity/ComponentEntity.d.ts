@@ -5,10 +5,10 @@ import type { Component, ComponentLoadMatch, ComponentListMatch, ComponentCreate
 declare class ComponentEntity extends StatuspageEntityBase<Component> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: ComponentEntity): ComponentEntity;
-    load(this: any, reqmatch?: ComponentLoadMatch, ctrl?: Control): Promise<Component>;
-    list(this: any, reqmatch?: ComponentListMatch, ctrl?: Control): Promise<Component[]>;
-    create(this: any, reqdata?: ComponentCreateData, ctrl?: Control): Promise<Component>;
-    update(this: any, reqdata?: ComponentUpdateData, ctrl?: Control): Promise<Component>;
-    remove(this: any, reqmatch?: ComponentRemoveMatch, ctrl?: Control): Promise<Component>;
+    load(this: any, reqmatch?: ComponentLoadMatch, ctrl?: Control): Promise<ComponentEntity>;
+    list(this: any, reqmatch?: ComponentListMatch, ctrl?: Control): Promise<ComponentEntity[]>;
+    create(this: any, reqdata?: ComponentCreateData, ctrl?: Control): Promise<ComponentEntity>;
+    update(this: any, reqdata?: ComponentUpdateData, ctrl?: Control): Promise<ComponentEntity>;
+    remove(this: any, reqmatch?: ComponentRemoveMatch, ctrl?: Control): Promise<ComponentEntity>;
 }
 export { ComponentEntity };

@@ -5,7 +5,7 @@ import type { IncidentTemplate, IncidentTemplateListMatch, IncidentTemplateCreat
 declare class IncidentTemplateEntity extends StatuspageEntityBase<IncidentTemplate> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: IncidentTemplateEntity): IncidentTemplateEntity;
-    list(this: any, reqmatch?: IncidentTemplateListMatch, ctrl?: Control): Promise<IncidentTemplate[]>;
-    create(this: any, reqdata?: IncidentTemplateCreateData, ctrl?: Control): Promise<IncidentTemplate>;
+    list(this: any, reqmatch?: IncidentTemplateListMatch, ctrl?: Control): Promise<IncidentTemplateEntity[]>;
+    create(this: any, reqdata?: IncidentTemplateCreateData, ctrl?: Control): Promise<IncidentTemplateEntity>;
 }
 export { IncidentTemplateEntity };

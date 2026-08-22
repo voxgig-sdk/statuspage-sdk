@@ -78,7 +78,7 @@ const utility_1 = require("../../utility");
         postmortem_ref01_data_up0['page_id'] = setup.idmap['page_id'];
         const postmortem_ref01_markdef_up0 = { name: 'body', value: 'Mark01-postmortem_ref01_' + setup.now };
         postmortem_ref01_data_up0[postmortem_ref01_markdef_up0.name] = postmortem_ref01_markdef_up0.value;
-        const postmortem_ref01_resdata_up0 = await postmortem_ref01_ent.update(postmortem_ref01_data_up0);
+        const postmortem_ref01_resdata_up0 = (await postmortem_ref01_ent.update(postmortem_ref01_data_up0)).data();
         (0, node_assert_1.default)(null != postmortem_ref01_resdata_up0);
         (0, node_assert_1.default)(postmortem_ref01_resdata_up0[postmortem_ref01_markdef_up0.name] === postmortem_ref01_markdef_up0.value);
     });

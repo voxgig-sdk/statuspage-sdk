@@ -5,6 +5,6 @@ import type { ComponentGroupUptime, ComponentGroupUptimeLoadMatch } from '../Sta
 declare class ComponentGroupUptimeEntity extends StatuspageEntityBase<ComponentGroupUptime> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: ComponentGroupUptimeEntity): ComponentGroupUptimeEntity;
-    load(this: any, reqmatch?: ComponentGroupUptimeLoadMatch, ctrl?: Control): Promise<ComponentGroupUptime>;
+    load(this: any, reqmatch?: ComponentGroupUptimeLoadMatch, ctrl?: Control): Promise<ComponentGroupUptimeEntity>;
 }
 export { ComponentGroupUptimeEntity };

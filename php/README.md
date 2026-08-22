@@ -299,20 +299,20 @@ On error, `ok` is `false` and `$err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `automation_email` |  |
+| `automation_email` | Requires a special feature flag to be enabled |
 | `component` |  |
 | `created_at` |  |
-| `description` |  |
-| `group` |  |
-| `group_id` |  |
-| `id` |  |
-| `name` |  |
-| `only_show_if_degraded` |  |
-| `page_id` |  |
-| `position` |  |
-| `showcase` |  |
-| `start_date` |  |
-| `status` |  |
+| `description` | More detailed description for component |
+| `group` | Is this component a group |
+| `group_id` | Component Group identifier |
+| `id` | Incident identifier |
+| `name` | Display name for component |
+| `only_show_if_degraded` | Requires a special feature flag to be enabled |
+| `page_id` | Page identifier |
+| `position` | Order the component will appear on the page |
+| `showcase` | Should this component be showcased |
+| `start_date` | The date this component started being used |
+| `status` | Status of component |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Patch, Remove, Update.
@@ -323,8 +323,8 @@ API path: `/pages/{page_id}/components/{component_id}/page_access_groups`
 
 | Field | Description |
 | --- | --- |
-| `component_id` |  |
-| `incidents` |  |
+| `component_id` | Component identifier |
+| `incidents` | Related incidents |
 
 Operations: Load.
 
@@ -337,8 +337,8 @@ API path: `/pages/{page_id}/component-groups/{id}/uptime`
 | `component_group` |  |
 | `components` |  |
 | `created_at` |  |
-| `description` |  |
-| `id` |  |
+| `description` | Description of the component group. |
+| `id` | Component Group Identifier |
 | `name` |  |
 | `page_id` |  |
 | `position` |  |
@@ -352,38 +352,38 @@ API path: `/pages/{page_id}/component-groups`
 
 | Field | Description |
 | --- | --- |
-| `auto_transition_deliver_notifications_at_end` |  |
-| `auto_transition_deliver_notifications_at_start` |  |
-| `auto_transition_to_maintenance_state` |  |
-| `auto_transition_to_operational_state` |  |
-| `components` |  |
-| `created_at` |  |
-| `id` |  |
-| `impact` |  |
-| `impact_override` |  |
+| `auto_transition_deliver_notifications_at_end` | Controls whether send notification when scheduled maintenances auto transition to completed. |
+| `auto_transition_deliver_notifications_at_start` | Controls whether send notification when scheduled maintenances auto transition to started. |
+| `auto_transition_to_maintenance_state` | Controls whether change components status to under_maintenance once scheduled maintenance is in progress. |
+| `auto_transition_to_operational_state` | Controls whether change components status to operational once scheduled maintenance completes. |
+| `components` | Incident components |
+| `created_at` | The timestamp when the incident was created at. |
+| `id` | Incident Identifier |
+| `impact` | The impact of the incident. |
+| `impact_override` | value to override calculated impact value |
 | `incident` |  |
-| `incident_updates` |  |
-| `metadata` |  |
-| `monitoring_at` |  |
-| `name` |  |
-| `page_id` |  |
-| `postmortem_body` |  |
-| `postmortem_body_last_updated_at` |  |
-| `postmortem_ignored` |  |
-| `postmortem_notified_subscribers` |  |
-| `postmortem_notified_twitter` |  |
-| `postmortem_published_at` |  |
-| `reminder_intervals` |  |
-| `resolved_at` |  |
-| `scheduled_auto_completed` |  |
-| `scheduled_auto_in_progress` |  |
-| `scheduled_for` |  |
-| `scheduled_remind_prior` |  |
-| `scheduled_reminded_at` |  |
-| `scheduled_until` |  |
-| `shortlink` |  |
-| `status` |  |
-| `updated_at` |  |
+| `incident_updates` | The incident updates for incident. |
+| `metadata` | Metadata attached to the incident. |
+| `monitoring_at` | The timestamp when incident entered monitoring state. |
+| `name` | Incident Name. |
+| `page_id` | Incident Page Identifier |
+| `postmortem_body` | Body of the Postmortem. |
+| `postmortem_body_last_updated_at` | The timestamp when the incident postmortem body was last updated at. |
+| `postmortem_ignored` | Controls whether the incident will have postmortem. |
+| `postmortem_notified_subscribers` | Indicates whether subscribers are already notificed about postmortem. |
+| `postmortem_notified_twitter` | Controls whether to decide if notify postmortem on twitter. |
+| `postmortem_published_at` | The timestamp when the postmortem was published. |
+| `reminder_intervals` | Custom reminder intervals for unresolved/open incidents. |
+| `resolved_at` | The timestamp when incident was resolved. |
+| `scheduled_auto_completed` | Controls whether the incident is scheduled to automatically change to complete. |
+| `scheduled_auto_in_progress` | Controls whether the incident is scheduled to automatically change to in progress. |
+| `scheduled_for` | The timestamp the incident is scheduled for. |
+| `scheduled_remind_prior` | Controls whether to remind subscribers prior to scheduled incidents. |
+| `scheduled_reminded_at` | The timestamp when the scheduled incident reminder was sent at. |
+| `scheduled_until` | The timestamp the incident is scheduled until. |
+| `shortlink` | Incident Shortlink. |
+| `status` | The incident status. |
+| `updated_at` | The timestamp when the incident was updated at. |
 
 Operations: Create, List, Load, Patch, Remove, Update.
 
@@ -411,16 +411,16 @@ API path: `/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/
 
 | Field | Description |
 | --- | --- |
-| `body` |  |
-| `components` |  |
-| `group_id` |  |
-| `id` |  |
-| `name` |  |
-| `should_send_notifications` |  |
-| `should_tweet` |  |
+| `body` | Body of the incident or maintenance update to be applied when selecting this template |
+| `components` | Affected components |
+| `group_id` | Identifier of Template Group this template belongs to |
+| `id` | Incident Template Identifier |
+| `name` | Name of the template, as shown in the list on the "Templates" tab of the "Incidents" page |
+| `should_send_notifications` | Whether the "deliver notifications" checkbox should be selected when selecting this template |
+| `should_tweet` | Whether the "tweet update" checkbox should be selected when selecting this template |
 | `template` |  |
-| `title` |  |
-| `update_status` |  |
+| `title` | Title to be applied to the incident or maintenance when selecting this template |
+| `update_status` | The status the incident or maintenance should transition to when selecting this template |
 
 Operations: Create, List.
 
@@ -430,20 +430,20 @@ API path: `/pages/{page_id}/incident_templates`
 
 | Field | Description |
 | --- | --- |
-| `affected_components` |  |
-| `body` |  |
-| `created_at` |  |
-| `custom_tweet` |  |
-| `deliver_notifications` |  |
-| `display_at` |  |
-| `id` |  |
-| `incident_id` |  |
+| `affected_components` | Affected components associated with the incident update. |
+| `body` | Incident update body. |
+| `created_at` | The timestamp when the incident update was created at. |
+| `custom_tweet` | An optional customized tweet message for incident postmortem. |
+| `deliver_notifications` | Controls whether to delivery notifications. |
+| `display_at` | Timestamp when incident update is happened. |
+| `id` | Incident Update Identifier. |
+| `incident_id` | Incident Identifier. |
 | `incident_update` |  |
-| `status` |  |
-| `tweet_id` |  |
-| `twitter_updated_at` |  |
-| `updated_at` |  |
-| `wants_twitter_update` |  |
+| `status` | The incident status. |
+| `tweet_id` | Tweet identifier associated to this incident update. |
+| `twitter_updated_at` | The timestamp when twitter updated at. |
+| `updated_at` | The timestamp when the incident update is updated. |
+| `wants_twitter_update` | Controls whether to create twitter update. |
 
 Operations: Patch, Update.
 
@@ -456,21 +456,21 @@ API path: `/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_u
 | `backfill_percentage` |  |
 | `backfilled` |  |
 | `created_at` |  |
-| `data` |  |
+| `data` | Add data points to metrics |
 | `decimal_places` |  |
-| `display` |  |
-| `id` |  |
+| `display` | Should the metric be displayed |
+| `id` | Metric identifier |
 | `last_fetched_at` |  |
 | `metric` |  |
-| `metric_identifier` |  |
-| `metrics_provider_id` |  |
+| `metric_identifier` | Metric Display identifier used to look up the metric data from the provider |
+| `metrics_provider_id` | Metric Provider identifier |
 | `most_recent_data_at` |  |
-| `name` |  |
+| `name` | Name of metric |
 | `reference_name` |  |
-| `suffix` |  |
+| `suffix` | Suffix to describe the units on the graph |
 | `tooltip_description` |  |
 | `updated_at` |  |
-| `y_axis_hidden` |  |
+| `y_axis_hidden` | Should the values on the y axis be hidden on render |
 | `y_axis_max` |  |
 | `y_axis_min` |  |
 
@@ -484,7 +484,7 @@ API path: `/pages/{page_id}/metrics/{metric_id}/data`
 | --- | --- |
 | `created_at` |  |
 | `disabled` |  |
-| `id` |  |
+| `id` | Identifier for Metrics Provider |
 | `last_revalidated_at` |  |
 | `metric_base_uri` |  |
 | `metrics_provider` |  |
@@ -501,50 +501,50 @@ API path: `/pages/{page_id}/metrics_providers`
 | Field | Description |
 | --- | --- |
 | `activity_score` |  |
-| `allow_email_subscribers` |  |
-| `allow_incident_subscribers` |  |
-| `allow_page_subscribers` |  |
-| `allow_rss_atom_feeds` |  |
-| `allow_sms_subscribers` |  |
-| `allow_webhook_subscribers` |  |
-| `branding` |  |
+| `allow_email_subscribers` | Can your users choose to receive notifications via email |
+| `allow_incident_subscribers` | Can your users subscribe to notifications for a single incident |
+| `allow_page_subscribers` | Can your users subscribe to all notifications on the page |
+| `allow_rss_atom_feeds` | Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages) |
+| `allow_sms_subscribers` | Can your users choose to receive notifications via SMS |
+| `allow_webhook_subscribers` | Can your users choose to receive notifications via Webhooks |
+| `branding` | The main template your statuspage will use |
 | `city` |  |
 | `country` |  |
-| `created_at` |  |
-| `css_blues` |  |
-| `css_body_background_color` |  |
-| `css_border_color` |  |
-| `css_font_color` |  |
-| `css_graph_color` |  |
-| `css_greens` |  |
-| `css_light_font_color` |  |
-| `css_link_color` |  |
-| `css_no_data` |  |
-| `css_oranges` |  |
-| `css_reds` |  |
-| `css_yellows` |  |
-| `domain` |  |
+| `created_at` | Timestamp the record was created |
+| `css_blues` | CSS Color |
+| `css_body_background_color` | CSS Color |
+| `css_border_color` | CSS Color |
+| `css_font_color` | CSS Color |
+| `css_graph_color` | CSS Color |
+| `css_greens` | CSS Color |
+| `css_light_font_color` | CSS Color |
+| `css_link_color` | CSS Color |
+| `css_no_data` | CSS Color |
+| `css_oranges` | CSS Color |
+| `css_reds` | CSS Color |
+| `css_yellows` | CSS Color |
+| `domain` | CNAME alias for your status page |
 | `email_logo` |  |
 | `favicon_logo` |  |
 | `headline` |  |
 | `hero_cover` |  |
-| `hidden_from_search` |  |
-| `id` |  |
+| `hidden_from_search` | Should your page hide itself from search engines |
+| `id` | Page identifier |
 | `ip_restrictions` |  |
-| `name` |  |
-| `notifications_email_footer` |  |
-| `notifications_from_email` |  |
+| `name` | Name of your page to be displayed |
+| `notifications_email_footer` | Allows you to customize the footer appearing on your notification emails. |
+| `notifications_from_email` | Allows you to customize the email address your page notifications come from |
 | `page` |  |
 | `page_description` |  |
 | `state` |  |
-| `subdomain` |  |
+| `subdomain` | Subdomain at which to access your status page |
 | `support_url` |  |
-| `time_zone` |  |
+| `time_zone` | Timezone configured for your page |
 | `transactional_logo` |  |
 | `twitter_logo` |  |
 | `twitter_username` |  |
-| `updated_at` |  |
-| `url` |  |
+| `updated_at` | Timestamp the record was last updated |
+| `url` | Website of your page. |
 | `viewers_must_be_team_members` |  |
 
 Operations: List, Load, Patch, Update.
@@ -555,15 +555,15 @@ API path: `/pages`
 
 | Field | Description |
 | --- | --- |
-| `component_ids` |  |
+| `component_ids` | List of components codes to set on the page access group |
 | `created_at` |  |
-| `external_identifier` |  |
-| `id` |  |
+| `external_identifier` | Associates group with external group. |
+| `id` | Page Access Group Identifier |
 | `metric_ids` |  |
-| `name` |  |
+| `name` | Name for this Group. |
 | `page_access_group` |  |
 | `page_access_user_ids` |  |
-| `page_id` |  |
+| `page_id` | Page Identifier. |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Patch, Remove, Update.
@@ -574,12 +574,12 @@ API path: `/pages/{page_id}/page_access_groups/{page_access_group_id}/components
 
 | Field | Description |
 | --- | --- |
-| `component_ids` |  |
+| `component_ids` | List of component codes to allow access to |
 | `created_at` |  |
 | `email` |  |
-| `external_login` |  |
-| `id` |  |
-| `metric_ids` |  |
+| `external_login` | IDP login user id. |
+| `id` | Page Access User Identifier |
+| `metric_ids` | List of metrics to add |
 | `page_access_group_id` |  |
 | `page_access_group_ids` |  |
 | `page_access_user` |  |
@@ -594,8 +594,8 @@ API path: `/pages/{page_id}/page_access_users/{page_access_user_id}/components`
 
 | Field | Description |
 | --- | --- |
-| `pages` |  |
-| `user_id` |  |
+| `pages` | Pages accessible by the user. |
+| `user_id` | User identifier |
 
 Operations: Load, Update.
 
@@ -605,16 +605,16 @@ API path: `/organizations/{organization_id}/permissions/{user_id}`
 
 | Field | Description |
 | --- | --- |
-| `body` |  |
-| `body_draft` |  |
+| `body` | Postmortem body |
+| `body_draft` | Body draft |
 | `body_draft_updated_at` |  |
 | `body_updated_at` |  |
 | `created_at` |  |
-| `custom_tweet` |  |
-| `notify_subscribers` |  |
-| `notify_twitter` |  |
+| `custom_tweet` | Custom tweet for Incident Postmortem |
+| `notify_subscribers` | Should email subscribers be notified. |
+| `notify_twitter` | Should Twitter followers be notified. |
 | `postmortem` |  |
-| `preview_key` |  |
+| `preview_key` | Preview Key |
 | `published_at` |  |
 | `updated_at` |  |
 
@@ -626,12 +626,12 @@ API path: `/pages/{page_id}/incidents/{incident_id}/postmortem`
 
 | Field | Description |
 | --- | --- |
-| `incident_background_color` |  |
-| `incident_text_color` |  |
-| `maintenance_background_color` |  |
-| `maintenance_text_color` |  |
-| `page_id` |  |
-| `position` |  |
+| `incident_background_color` | Color of status embed iframe background when displaying incident |
+| `incident_text_color` | Color of status embed iframe text when displaying incident |
+| `maintenance_background_color` | Color of status embed iframe background when displaying maintenance |
+| `maintenance_text_color` | Color of status embed iframe text when displaying maintenance |
+| `page_id` | Page identifier |
+| `position` | Corner where status embed iframe will appear on page |
 | `status_embed_config` |  |
 
 Operations: Load, Patch, Update.
@@ -642,32 +642,32 @@ API path: `/pages/{page_id}/status_embed_config`
 
 | Field | Description |
 | --- | --- |
-| `component_ids` |  |
-| `components` |  |
+| `component_ids` | A list of component ids for which the subscriber should recieve updates for. |
+| `components` | The components for which the subscriber has elected to receive updates. |
 | `created_at` |  |
-| `display_phone_number` |  |
-| `email` |  |
-| `endpoint` |  |
-| `id` |  |
-| `integration_partner` |  |
-| `mode` |  |
-| `obfuscated_channel_name` |  |
-| `page_access_user_id` |  |
-| `phone_country` |  |
-| `phone_number` |  |
-| `purge_at` |  |
-| `quarantined_at` |  |
-| `skip_confirmation_notification` |  |
-| `skip_unsubscription_notification` |  |
-| `slack` |  |
-| `sms` |  |
-| `state` |  |
+| `display_phone_number` | A formatted version of the phone_number and phone_country pair, nicely formatted for display. |
+| `email` | The email address to use to contact the subscriber. |
+| `endpoint` | The URL where a webhook subscriber elects to receive updates. |
+| `id` | Subscriber Identifier |
+| `integration_partner` | The number of integration partners found by the query. |
+| `mode` | The communication mode of the subscriber. |
+| `obfuscated_channel_name` | Obfuscated slack channel name |
+| `page_access_user_id` | The Page Access user this subscriber belongs to (only for audience-specific pages). |
+| `phone_country` | The two-character country code representing the country of which the phone_number is a part. |
+| `phone_number` | The phone number used to contact an SMS subscriber |
+| `purge_at` | The timestamp when a quarantined subscriber will be purged (unsubscribed). |
+| `quarantined_at` | The timestamp when the subscriber was quarantined due to an issue reaching them. |
+| `skip_confirmation_notification` | If this is true, do not notify the user with changes to their subscription. |
+| `skip_unsubscription_notification` | If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed. |
+| `slack` | The number of Slack subscribers found by the query. |
+| `sms` | The number of Webhook subscribers found by the query. |
+| `state` | If this is present, only unsubscribe subscribers in this state. |
 | `subscriber` |  |
-| `subscribers` |  |
-| `teams` |  |
-| `type` |  |
-| `webhook` |  |
-| `workspace_name` |  |
+| `subscribers` | The array of quarantined subscriber codes to reactivate, or "all" to reactivate all quarantined subscribers. |
+| `teams` | The number of MS teams subscribers found by the query. |
+| `type` | If this is present, only reactivate subscribers of this type. |
+| `webhook` | The number of SMS subscribers found by the query. |
+| `workspace_name` | The workspace name of the slack subscriber. |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -678,11 +678,11 @@ API path: `/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation`
 | Field | Description |
 | --- | --- |
 | `created_at` |  |
-| `email` |  |
+| `email` | Email address for the team member |
 | `first_name` |  |
-| `id` |  |
+| `id` | User identifier |
 | `last_name` |  |
-| `organization_id` |  |
+| `organization_id` | Organization identifier |
 | `updated_at` |  |
 | `user` |  |
 
@@ -713,20 +713,20 @@ Create an instance: `$component = $client->Component();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `automation_email` | `string` |  |
+| `automation_email` | `string` | Requires a special feature flag to be enabled |
 | `component` | `array` |  |
 | `created_at` | `string` |  |
-| `description` | `string` |  |
-| `group` | `bool` |  |
-| `group_id` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `only_show_if_degraded` | `bool` |  |
-| `page_id` | `string` |  |
-| `position` | `int` |  |
-| `showcase` | `bool` |  |
-| `start_date` | `string` |  |
-| `status` | `string` |  |
+| `description` | `string` | More detailed description for component |
+| `group` | `bool` | Is this component a group |
+| `group_id` | `string` | Component Group identifier |
+| `id` | `string` | Incident identifier |
+| `name` | `string` | Display name for component |
+| `only_show_if_degraded` | `bool` | Requires a special feature flag to be enabled |
+| `page_id` | `string` | Page identifier |
+| `position` | `int` | Order the component will appear on the page |
+| `showcase` | `bool` | Should this component be showcased |
+| `start_date` | `string` | The date this component started being used |
+| `status` | `string` | Status of component |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -766,8 +766,8 @@ Create an instance: `$component_group_uptime = $client->ComponentGroupUptime();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_id` | `string` |  |
-| `incidents` | `array` |  |
+| `component_id` | `string` | Component identifier |
+| `incidents` | `array` | Related incidents |
 
 #### Example: Load
 
@@ -798,8 +798,8 @@ Create an instance: `$group_component = $client->GroupComponent();`
 | `component_group` | `array` |  |
 | `components` | `string` |  |
 | `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
+| `description` | `string` | Description of the component group. |
+| `id` | `string` | Component Group Identifier |
 | `name` | `string` |  |
 | `page_id` | `string` |  |
 | `position` | `string` |  |
@@ -847,38 +847,38 @@ Create an instance: `$incident = $client->Incident();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `auto_transition_deliver_notifications_at_end` | `bool` |  |
-| `auto_transition_deliver_notifications_at_start` | `bool` |  |
-| `auto_transition_to_maintenance_state` | `bool` |  |
-| `auto_transition_to_operational_state` | `bool` |  |
-| `components` | `array` |  |
-| `created_at` | `string` |  |
-| `id` | `string` |  |
-| `impact` | `string` |  |
-| `impact_override` | `string` |  |
+| `auto_transition_deliver_notifications_at_end` | `bool` | Controls whether send notification when scheduled maintenances auto transition to completed. |
+| `auto_transition_deliver_notifications_at_start` | `bool` | Controls whether send notification when scheduled maintenances auto transition to started. |
+| `auto_transition_to_maintenance_state` | `bool` | Controls whether change components status to under_maintenance once scheduled maintenance is in progress. |
+| `auto_transition_to_operational_state` | `bool` | Controls whether change components status to operational once scheduled maintenance completes. |
+| `components` | `array` | Incident components |
+| `created_at` | `string` | The timestamp when the incident was created at. |
+| `id` | `string` | Incident Identifier |
+| `impact` | `string` | The impact of the incident. |
+| `impact_override` | `string` | value to override calculated impact value |
 | `incident` | `array` |  |
-| `incident_updates` | `array` |  |
-| `metadata` | `array` |  |
-| `monitoring_at` | `string` |  |
-| `name` | `string` |  |
-| `page_id` | `string` |  |
-| `postmortem_body` | `string` |  |
-| `postmortem_body_last_updated_at` | `string` |  |
-| `postmortem_ignored` | `bool` |  |
-| `postmortem_notified_subscribers` | `bool` |  |
-| `postmortem_notified_twitter` | `bool` |  |
-| `postmortem_published_at` | `bool` |  |
-| `reminder_intervals` | `string` |  |
-| `resolved_at` | `string` |  |
-| `scheduled_auto_completed` | `bool` |  |
-| `scheduled_auto_in_progress` | `bool` |  |
-| `scheduled_for` | `string` |  |
-| `scheduled_remind_prior` | `bool` |  |
-| `scheduled_reminded_at` | `string` |  |
-| `scheduled_until` | `string` |  |
-| `shortlink` | `string` |  |
-| `status` | `string` |  |
-| `updated_at` | `string` |  |
+| `incident_updates` | `array` | The incident updates for incident. |
+| `metadata` | `array` | Metadata attached to the incident. |
+| `monitoring_at` | `string` | The timestamp when incident entered monitoring state. |
+| `name` | `string` | Incident Name. |
+| `page_id` | `string` | Incident Page Identifier |
+| `postmortem_body` | `string` | Body of the Postmortem. |
+| `postmortem_body_last_updated_at` | `string` | The timestamp when the incident postmortem body was last updated at. |
+| `postmortem_ignored` | `bool` | Controls whether the incident will have postmortem. |
+| `postmortem_notified_subscribers` | `bool` | Indicates whether subscribers are already notificed about postmortem. |
+| `postmortem_notified_twitter` | `bool` | Controls whether to decide if notify postmortem on twitter. |
+| `postmortem_published_at` | `bool` | The timestamp when the postmortem was published. |
+| `reminder_intervals` | `string` | Custom reminder intervals for unresolved/open incidents. |
+| `resolved_at` | `string` | The timestamp when incident was resolved. |
+| `scheduled_auto_completed` | `bool` | Controls whether the incident is scheduled to automatically change to complete. |
+| `scheduled_auto_in_progress` | `bool` | Controls whether the incident is scheduled to automatically change to in progress. |
+| `scheduled_for` | `string` | The timestamp the incident is scheduled for. |
+| `scheduled_remind_prior` | `bool` | Controls whether to remind subscribers prior to scheduled incidents. |
+| `scheduled_reminded_at` | `string` | The timestamp when the scheduled incident reminder was sent at. |
+| `scheduled_until` | `string` | The timestamp the incident is scheduled until. |
+| `shortlink` | `string` | Incident Shortlink. |
+| `status` | `string` | The incident status. |
+| `updated_at` | `string` | The timestamp when the incident was updated at. |
 
 #### Example: Load
 
@@ -951,16 +951,16 @@ Create an instance: `$incident_template = $client->IncidentTemplate();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `body` | `string` |  |
-| `components` | `array` |  |
-| `group_id` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `should_send_notifications` | `bool` |  |
-| `should_tweet` | `bool` |  |
+| `body` | `string` | Body of the incident or maintenance update to be applied when selecting this template |
+| `components` | `array` | Affected components |
+| `group_id` | `string` | Identifier of Template Group this template belongs to |
+| `id` | `string` | Incident Template Identifier |
+| `name` | `string` | Name of the template, as shown in the list on the "Templates" tab of the "Incidents" page |
+| `should_send_notifications` | `bool` | Whether the "deliver notifications" checkbox should be selected when selecting this template |
+| `should_tweet` | `bool` | Whether the "tweet update" checkbox should be selected when selecting this template |
 | `template` | `array` |  |
-| `title` | `string` |  |
-| `update_status` | `string` |  |
+| `title` | `string` | Title to be applied to the incident or maintenance when selecting this template |
+| `update_status` | `string` | The status the incident or maintenance should transition to when selecting this template |
 
 #### Example: List
 
@@ -993,20 +993,20 @@ Create an instance: `$incident_update = $client->IncidentUpdate();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `affected_components` | `array` |  |
-| `body` | `string` |  |
-| `created_at` | `string` |  |
-| `custom_tweet` | `string` |  |
-| `deliver_notifications` | `bool` |  |
-| `display_at` | `string` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
+| `affected_components` | `array` | Affected components associated with the incident update. |
+| `body` | `string` | Incident update body. |
+| `created_at` | `string` | The timestamp when the incident update was created at. |
+| `custom_tweet` | `string` | An optional customized tweet message for incident postmortem. |
+| `deliver_notifications` | `bool` | Controls whether to delivery notifications. |
+| `display_at` | `string` | Timestamp when incident update is happened. |
+| `id` | `string` | Incident Update Identifier. |
+| `incident_id` | `string` | Incident Identifier. |
 | `incident_update` | `array` |  |
-| `status` | `string` |  |
-| `tweet_id` | `string` |  |
-| `twitter_updated_at` | `string` |  |
-| `updated_at` | `string` |  |
-| `wants_twitter_update` | `bool` |  |
+| `status` | `string` | The incident status. |
+| `tweet_id` | `string` | Tweet identifier associated to this incident update. |
+| `twitter_updated_at` | `string` | The timestamp when twitter updated at. |
+| `updated_at` | `string` | The timestamp when the incident update is updated. |
+| `wants_twitter_update` | `bool` | Controls whether to create twitter update. |
 
 
 ### Metric
@@ -1030,21 +1030,21 @@ Create an instance: `$metric = $client->Metric();`
 | `backfill_percentage` | `int` |  |
 | `backfilled` | `bool` |  |
 | `created_at` | `string` |  |
-| `data` | `array` |  |
+| `data` | `array` | Add data points to metrics |
 | `decimal_places` | `int` |  |
-| `display` | `bool` |  |
-| `id` | `string` |  |
+| `display` | `bool` | Should the metric be displayed |
+| `id` | `string` | Metric identifier |
 | `last_fetched_at` | `string` |  |
 | `metric` | `array` |  |
-| `metric_identifier` | `string` |  |
-| `metrics_provider_id` | `string` |  |
+| `metric_identifier` | `string` | Metric Display identifier used to look up the metric data from the provider |
+| `metrics_provider_id` | `string` | Metric Provider identifier |
 | `most_recent_data_at` | `string` |  |
-| `name` | `string` |  |
+| `name` | `string` | Name of metric |
 | `reference_name` | `string` |  |
-| `suffix` | `string` |  |
+| `suffix` | `string` | Suffix to describe the units on the graph |
 | `tooltip_description` | `string` |  |
 | `updated_at` | `string` |  |
-| `y_axis_hidden` | `bool` |  |
+| `y_axis_hidden` | `bool` | Should the values on the y axis be hidden on render |
 | `y_axis_max` | `float` |  |
 | `y_axis_min` | `float` |  |
 
@@ -1093,7 +1093,7 @@ Create an instance: `$metrics_provider = $client->MetricsProvider();`
 | --- | --- | --- |
 | `created_at` | `string` |  |
 | `disabled` | `bool` |  |
-| `id` | `string` |  |
+| `id` | `string` | Identifier for Metrics Provider |
 | `last_revalidated_at` | `string` |  |
 | `metric_base_uri` | `string` |  |
 | `metrics_provider` | `array` |  |
@@ -1141,50 +1141,50 @@ Create an instance: `$page = $client->Page();`
 | Field | Type | Description |
 | --- | --- | --- |
 | `activity_score` | `float` |  |
-| `allow_email_subscribers` | `bool` |  |
-| `allow_incident_subscribers` | `bool` |  |
-| `allow_page_subscribers` | `bool` |  |
-| `allow_rss_atom_feeds` | `bool` |  |
-| `allow_sms_subscribers` | `bool` |  |
-| `allow_webhook_subscribers` | `bool` |  |
-| `branding` | `string` |  |
+| `allow_email_subscribers` | `bool` | Can your users choose to receive notifications via email |
+| `allow_incident_subscribers` | `bool` | Can your users subscribe to notifications for a single incident |
+| `allow_page_subscribers` | `bool` | Can your users subscribe to all notifications on the page |
+| `allow_rss_atom_feeds` | `bool` | Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages) |
+| `allow_sms_subscribers` | `bool` | Can your users choose to receive notifications via SMS |
+| `allow_webhook_subscribers` | `bool` | Can your users choose to receive notifications via Webhooks |
+| `branding` | `string` | The main template your statuspage will use |
 | `city` | `string` |  |
 | `country` | `string` |  |
-| `created_at` | `string` |  |
-| `css_blues` | `string` |  |
-| `css_body_background_color` | `string` |  |
-| `css_border_color` | `string` |  |
-| `css_font_color` | `string` |  |
-| `css_graph_color` | `string` |  |
-| `css_greens` | `string` |  |
-| `css_light_font_color` | `string` |  |
-| `css_link_color` | `string` |  |
-| `css_no_data` | `string` |  |
-| `css_oranges` | `string` |  |
-| `css_reds` | `string` |  |
-| `css_yellows` | `string` |  |
-| `domain` | `string` |  |
+| `created_at` | `string` | Timestamp the record was created |
+| `css_blues` | `string` | CSS Color |
+| `css_body_background_color` | `string` | CSS Color |
+| `css_border_color` | `string` | CSS Color |
+| `css_font_color` | `string` | CSS Color |
+| `css_graph_color` | `string` | CSS Color |
+| `css_greens` | `string` | CSS Color |
+| `css_light_font_color` | `string` | CSS Color |
+| `css_link_color` | `string` | CSS Color |
+| `css_no_data` | `string` | CSS Color |
+| `css_oranges` | `string` | CSS Color |
+| `css_reds` | `string` | CSS Color |
+| `css_yellows` | `string` | CSS Color |
+| `domain` | `string` | CNAME alias for your status page |
 | `email_logo` | `string` |  |
 | `favicon_logo` | `string` |  |
 | `headline` | `string` |  |
 | `hero_cover` | `string` |  |
-| `hidden_from_search` | `bool` |  |
-| `id` | `string` |  |
+| `hidden_from_search` | `bool` | Should your page hide itself from search engines |
+| `id` | `string` | Page identifier |
 | `ip_restrictions` | `string` |  |
-| `name` | `string` |  |
-| `notifications_email_footer` | `string` |  |
-| `notifications_from_email` | `string` |  |
+| `name` | `string` | Name of your page to be displayed |
+| `notifications_email_footer` | `string` | Allows you to customize the footer appearing on your notification emails. |
+| `notifications_from_email` | `string` | Allows you to customize the email address your page notifications come from |
 | `page` | `array` |  |
 | `page_description` | `string` |  |
 | `state` | `string` |  |
-| `subdomain` | `string` |  |
+| `subdomain` | `string` | Subdomain at which to access your status page |
 | `support_url` | `string` |  |
-| `time_zone` | `string` |  |
+| `time_zone` | `string` | Timezone configured for your page |
 | `transactional_logo` | `string` |  |
 | `twitter_logo` | `string` |  |
 | `twitter_username` | `string` |  |
-| `updated_at` | `string` |  |
-| `url` | `string` |  |
+| `updated_at` | `string` | Timestamp the record was last updated |
+| `url` | `string` | Website of your page. |
 | `viewers_must_be_team_members` | `bool` |  |
 
 #### Example: Load
@@ -1220,15 +1220,15 @@ Create an instance: `$page_access_group = $client->PageAccessGroup();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_ids` | `array` |  |
+| `component_ids` | `array` | List of components codes to set on the page access group |
 | `created_at` | `string` |  |
-| `external_identifier` | `string` |  |
-| `id` | `string` |  |
+| `external_identifier` | `string` | Associates group with external group. |
+| `id` | `string` | Page Access Group Identifier |
 | `metric_ids` | `array` |  |
-| `name` | `string` |  |
+| `name` | `string` | Name for this Group. |
 | `page_access_group` | `array` |  |
 | `page_access_user_ids` | `array` |  |
-| `page_id` | `string` |  |
+| `page_id` | `string` | Page Identifier. |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -1272,12 +1272,12 @@ Create an instance: `$page_access_user = $client->PageAccessUser();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_ids` | `array` |  |
+| `component_ids` | `array` | List of component codes to allow access to |
 | `created_at` | `string` |  |
 | `email` | `string` |  |
-| `external_login` | `string` |  |
-| `id` | `string` |  |
-| `metric_ids` | `array` |  |
+| `external_login` | `string` | IDP login user id. |
+| `id` | `string` | Page Access User Identifier |
+| `metric_ids` | `array` | List of metrics to add |
 | `page_access_group_id` | `string` |  |
 | `page_access_group_ids` | `string` |  |
 | `page_access_user` | `array` |  |
@@ -1324,8 +1324,8 @@ Create an instance: `$permission = $client->Permission();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `pages` | `array` |  |
-| `user_id` | `string` |  |
+| `pages` | `array` | Pages accessible by the user. |
+| `user_id` | `string` | User identifier |
 
 #### Example: Load
 
@@ -1350,16 +1350,16 @@ Create an instance: `$postmortem = $client->Postmortem();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `body` | `string` |  |
-| `body_draft` | `string` |  |
+| `body` | `string` | Postmortem body |
+| `body_draft` | `string` | Body draft |
 | `body_draft_updated_at` | `string` |  |
 | `body_updated_at` | `string` |  |
 | `created_at` | `string` |  |
-| `custom_tweet` | `string` |  |
-| `notify_subscribers` | `bool` |  |
-| `notify_twitter` | `bool` |  |
+| `custom_tweet` | `string` | Custom tweet for Incident Postmortem |
+| `notify_subscribers` | `bool` | Should email subscribers be notified. |
+| `notify_twitter` | `bool` | Should Twitter followers be notified. |
 | `postmortem` | `array` |  |
-| `preview_key` | `string` |  |
+| `preview_key` | `string` | Preview Key |
 | `published_at` | `string` |  |
 | `updated_at` | `string` |  |
 
@@ -1386,12 +1386,12 @@ Create an instance: `$status_embed_config = $client->StatusEmbedConfig();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `incident_background_color` | `string` |  |
-| `incident_text_color` | `string` |  |
-| `maintenance_background_color` | `string` |  |
-| `maintenance_text_color` | `string` |  |
-| `page_id` | `string` |  |
-| `position` | `string` |  |
+| `incident_background_color` | `string` | Color of status embed iframe background when displaying incident |
+| `incident_text_color` | `string` | Color of status embed iframe text when displaying incident |
+| `maintenance_background_color` | `string` | Color of status embed iframe background when displaying maintenance |
+| `maintenance_text_color` | `string` | Color of status embed iframe text when displaying maintenance |
+| `page_id` | `string` | Page identifier |
+| `position` | `string` | Corner where status embed iframe will appear on page |
 | `status_embed_config` | `array` |  |
 
 #### Example: Load
@@ -1420,32 +1420,32 @@ Create an instance: `$subscriber = $client->Subscriber();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_ids` | `array` |  |
-| `components` | `string` |  |
+| `component_ids` | `array` | A list of component ids for which the subscriber should recieve updates for. |
+| `components` | `string` | The components for which the subscriber has elected to receive updates. |
 | `created_at` | `string` |  |
-| `display_phone_number` | `string` |  |
-| `email` | `string` |  |
-| `endpoint` | `string` |  |
-| `id` | `string` |  |
-| `integration_partner` | `int` |  |
-| `mode` | `string` |  |
-| `obfuscated_channel_name` | `string` |  |
-| `page_access_user_id` | `string` |  |
-| `phone_country` | `string` |  |
-| `phone_number` | `string` |  |
-| `purge_at` | `string` |  |
-| `quarantined_at` | `string` |  |
-| `skip_confirmation_notification` | `bool` |  |
-| `skip_unsubscription_notification` | `bool` |  |
-| `slack` | `int` |  |
-| `sms` | `int` |  |
-| `state` | `string` |  |
+| `display_phone_number` | `string` | A formatted version of the phone_number and phone_country pair, nicely formatted for display. |
+| `email` | `string` | The email address to use to contact the subscriber. |
+| `endpoint` | `string` | The URL where a webhook subscriber elects to receive updates. |
+| `id` | `string` | Subscriber Identifier |
+| `integration_partner` | `int` | The number of integration partners found by the query. |
+| `mode` | `string` | The communication mode of the subscriber. |
+| `obfuscated_channel_name` | `string` | Obfuscated slack channel name |
+| `page_access_user_id` | `string` | The Page Access user this subscriber belongs to (only for audience-specific pages). |
+| `phone_country` | `string` | The two-character country code representing the country of which the phone_number is a part. |
+| `phone_number` | `string` | The phone number used to contact an SMS subscriber |
+| `purge_at` | `string` | The timestamp when a quarantined subscriber will be purged (unsubscribed). |
+| `quarantined_at` | `string` | The timestamp when the subscriber was quarantined due to an issue reaching them. |
+| `skip_confirmation_notification` | `bool` | If this is true, do not notify the user with changes to their subscription. |
+| `skip_unsubscription_notification` | `bool` | If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed. |
+| `slack` | `int` | The number of Slack subscribers found by the query. |
+| `sms` | `int` | The number of Webhook subscribers found by the query. |
+| `state` | `string` | If this is present, only unsubscribe subscribers in this state. |
 | `subscriber` | `array` |  |
-| `subscribers` | `string` |  |
-| `teams` | `int` |  |
-| `type` | `string` |  |
-| `webhook` | `int` |  |
-| `workspace_name` | `string` |  |
+| `subscribers` | `string` | The array of quarantined subscriber codes to reactivate, or "all" to reactivate all quarantined subscribers. |
+| `teams` | `int` | The number of MS teams subscribers found by the query. |
+| `type` | `string` | If this is present, only reactivate subscribers of this type. |
+| `webhook` | `int` | The number of SMS subscribers found by the query. |
+| `workspace_name` | `string` | The workspace name of the slack subscriber. |
 
 #### Example: Load
 
@@ -1488,11 +1488,11 @@ Create an instance: `$user = $client->User();`
 | Field | Type | Description |
 | --- | --- | --- |
 | `created_at` | `string` |  |
-| `email` | `string` |  |
+| `email` | `string` | Email address for the team member |
 | `first_name` | `string` |  |
-| `id` | `string` |  |
+| `id` | `string` | User identifier |
 | `last_name` | `string` |  |
-| `organization_id` | `string` |  |
+| `organization_id` | `string` | Organization identifier |
 | `updated_at` | `string` |  |
 | `user` | `array` |  |
 

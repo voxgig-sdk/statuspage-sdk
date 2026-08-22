@@ -5,8 +5,8 @@ import type { Page, PageLoadMatch, PageListMatch, PageUpdateData } from '../Stat
 declare class PageEntity extends StatuspageEntityBase<Page> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: PageEntity): PageEntity;
-    load(this: any, reqmatch?: PageLoadMatch, ctrl?: Control): Promise<Page>;
-    list(this: any, reqmatch?: PageListMatch, ctrl?: Control): Promise<Page[]>;
-    update(this: any, reqdata?: PageUpdateData, ctrl?: Control): Promise<Page>;
+    load(this: any, reqmatch?: PageLoadMatch, ctrl?: Control): Promise<PageEntity>;
+    list(this: any, reqmatch?: PageListMatch, ctrl?: Control): Promise<PageEntity[]>;
+    update(this: any, reqdata?: PageUpdateData, ctrl?: Control): Promise<PageEntity>;
 }
 export { PageEntity };

@@ -12,8 +12,17 @@ class Config {
         // TODO: errors etc
         return fi;
     }
+    // False for a feature added at runtime via options.extend (station's
+    // adopt path) - the constructor uses this to skip makeFeature for names
+    // no generated class backs.
+    hasFeature(fn) {
+        return null != FEATURE_CLASS[fn];
+    }
     main = {
         name: 'Statuspage',
+        slug: "statuspage",
+        version: "0.0.1",
+        target: "ts",
     };
     feature = {
         test: {
@@ -23,7 +32,7 @@ class Config {
         },
     };
     options = {
-        base: 'https://api.statuspage.io/v1',
+        base: "https://api.statuspage.io/v1",
         auth: {
             prefix: 'OAuth',
         },
@@ -55,109 +64,76 @@ class Config {
         "component": {
             "fields": [
                 {
-                    "active": true,
                     "name": "automation_email",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "short": "Requires a special feature flag to be enabled",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "component",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 1
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "description",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "short": "More detailed description for component",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "group",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 4
+                    "short": "Is this component a group",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "group_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 5
+                    "short": "Component Group identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 6
+                    "short": "Incident identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 7
+                    "short": "Display name for component",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "only_show_if_degraded",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 8
+                    "short": "Requires a special feature flag to be enabled",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "page_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 9
+                    "short": "Page identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "position",
-                    "req": false,
-                    "type": "`$INTEGER`",
-                    "index$": 10
+                    "short": "Order the component will appear on the page",
+                    "type": "`$INTEGER`"
                 },
                 {
-                    "active": true,
                     "name": "showcase",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 11
+                    "short": "Should this component be showcased",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "start_date",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 12
+                    "short": "The date this component started being used",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "status",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 13
+                    "short": "Status of component",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 14
+                    "type": "`$STRING`"
                 }
             ],
             "name": "component",
@@ -167,26 +143,21 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "component_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -215,15 +186,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "component_id",
@@ -231,7 +199,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -265,21 +232,17 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -301,54 +264,43 @@ class Config {
                                     "component": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_access_group_id",
                                         "orig": "page_access_group_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -374,47 +326,37 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_access_user_id",
                                         "orig": "page_access_user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -440,38 +382,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -494,54 +428,43 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "load": {
                     "input": "data",
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "component_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "end",
                                         "orig": "end",
-                                        "reqd": false,
                                         "type": "Any"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "start",
                                         "orig": "start",
-                                        "reqd": false,
                                         "type": "Any"
                                     }
                                 ]
@@ -573,30 +496,24 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.related_events`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "component_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -623,22 +540,18 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "patch": {
                     "input": "data",
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "component_id",
@@ -646,7 +559,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -680,37 +592,30 @@ class Config {
                                     "component": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "remove": {
                     "input": "data",
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "component_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -737,15 +642,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "component_id",
@@ -753,7 +655,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -787,15 +688,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "component_id",
@@ -803,7 +701,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -837,37 +734,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "component_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -896,11 +786,9 @@ class Config {
                                     "component": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -922,18 +810,14 @@ class Config {
         "component_group_uptime": {
             "fields": [
                 {
-                    "active": true,
                     "name": "component_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "short": "Component identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "incidents",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 1
+                    "short": "Related incidents",
+                    "type": "`$OBJECT`"
                 }
             ],
             "name": "component_group_uptime",
@@ -943,43 +827,34 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "end",
                                         "orig": "end",
-                                        "reqd": false,
                                         "type": "Any"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "start",
                                         "orig": "start",
-                                        "reqd": false,
                                         "type": "Any"
                                     }
                                 ]
@@ -1005,11 +880,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.related_events`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 }
             },
             "relations": {
@@ -1023,67 +896,43 @@ class Config {
         "group_component": {
             "fields": [
                 {
-                    "active": true,
                     "name": "component_group",
                     "req": true,
-                    "type": "`$OBJECT`",
-                    "index$": 0
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "components",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "description",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "short": "Description of the component group.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 4
+                    "short": "Component Group Identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 5
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "page_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 6
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "position",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 7
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 8
+                    "type": "`$STRING`"
                 }
             ],
             "name": "group_component",
@@ -1093,17 +942,14 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -1123,45 +969,36 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -1184,37 +1021,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "load": {
                     "input": "data",
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -1236,22 +1066,18 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "patch": {
                     "input": "data",
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "id",
@@ -1259,7 +1085,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -1286,37 +1111,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "remove": {
                     "input": "data",
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -1338,37 +1156,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -1390,11 +1201,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -1408,238 +1217,172 @@ class Config {
         "incident": {
             "fields": [
                 {
-                    "active": true,
                     "name": "auto_transition_deliver_notifications_at_end",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 0
+                    "short": "Controls whether send notification when scheduled maintenances auto transition to completed.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "auto_transition_deliver_notifications_at_start",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 1
+                    "short": "Controls whether send notification when scheduled maintenances auto transition to started.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "auto_transition_to_maintenance_state",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 2
+                    "short": "Controls whether change components status to under_maintenance once scheduled maintenance is in progress.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "auto_transition_to_operational_state",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 3
+                    "short": "Controls whether change components status to operational once scheduled maintenance completes.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "components",
-                    "req": false,
-                    "type": "`$ARRAY`",
-                    "index$": 4
+                    "short": "Incident components",
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 5
+                    "short": "The timestamp when the incident was created at.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 6
+                    "short": "Incident Identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "impact",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 7
+                    "short": "The impact of the incident.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "impact_override",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 8
+                    "short": "value to override calculated impact value",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "incident",
                     "op": {
                         "patch": {
-                            "req": false,
                             "type": "`$OBJECT`"
                         },
                         "update": {
-                            "req": false,
                             "type": "`$OBJECT`"
                         }
                     },
                     "req": true,
-                    "type": "`$OBJECT`",
-                    "index$": 9
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "incident_updates",
-                    "req": false,
-                    "type": "`$ARRAY`",
-                    "index$": 10
+                    "short": "The incident updates for incident.",
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "metadata",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 11
+                    "short": "Metadata attached to the incident.",
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "monitoring_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 12
+                    "short": "The timestamp when incident entered monitoring state.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 13
+                    "short": "Incident Name.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "page_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 14
+                    "short": "Incident Page Identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "postmortem_body",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 15
+                    "short": "Body of the Postmortem.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "postmortem_body_last_updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 16
+                    "short": "The timestamp when the incident postmortem body was last updated at.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "postmortem_ignored",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 17
+                    "short": "Controls whether the incident will have postmortem.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "postmortem_notified_subscribers",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 18
+                    "short": "Indicates whether subscribers are already notificed about postmortem.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "postmortem_notified_twitter",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 19
+                    "short": "Controls whether to decide if notify postmortem on twitter.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "postmortem_published_at",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 20
+                    "short": "The timestamp when the postmortem was published.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "reminder_intervals",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 21
+                    "short": "Custom reminder intervals for unresolved/open incidents.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "resolved_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 22
+                    "short": "The timestamp when incident was resolved.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "scheduled_auto_completed",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 23
+                    "short": "Controls whether the incident is scheduled to automatically change to complete.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "scheduled_auto_in_progress",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 24
+                    "short": "Controls whether the incident is scheduled to automatically change to in progress.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "scheduled_for",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 25
+                    "short": "The timestamp the incident is scheduled for.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "scheduled_remind_prior",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 26
+                    "short": "Controls whether to remind subscribers prior to scheduled incidents.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "scheduled_reminded_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 27
+                    "short": "The timestamp when the scheduled incident reminder was sent at.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "scheduled_until",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 28
+                    "short": "The timestamp the incident is scheduled until.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "shortlink",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 29
+                    "short": "Incident Shortlink.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "status",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 30
+                    "short": "The incident status.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 31
+                    "short": "The timestamp when the incident was updated at.",
+                    "type": "`$STRING`"
                 }
             ],
             "name": "incident",
@@ -1649,17 +1392,14 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -1681,53 +1421,42 @@ class Config {
                                     "incident": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "limit",
                                         "orig": "limit",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "q",
                                         "orig": "q",
-                                        "reqd": false,
                                         "type": "`$STRING`"
                                     }
                                 ]
@@ -1751,15 +1480,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -1769,21 +1495,17 @@ class Config {
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "example": 1,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "example": 100,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -1808,15 +1530,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -1826,21 +1545,17 @@ class Config {
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "example": 1,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "example": 100,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -1865,15 +1580,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -1883,21 +1595,17 @@ class Config {
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "example": 1,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "example": 100,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -1922,15 +1630,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 3
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -1940,21 +1645,17 @@ class Config {
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "example": 1,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "example": 100,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -1979,37 +1680,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 4
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "load": {
                     "input": "data",
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -2036,22 +1730,18 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "patch": {
                     "input": "data",
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "incident_id",
@@ -2059,7 +1749,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -2093,37 +1782,30 @@ class Config {
                                     "incident": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "remove": {
                     "input": "data",
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -2150,37 +1832,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -2209,11 +1884,9 @@ class Config {
                                     "incident": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -2233,26 +1906,21 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -2280,11 +1948,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 }
             },
             "relations": {
@@ -2304,35 +1970,28 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "subscriber_id",
                                         "orig": "subscriber_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 2
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -2358,11 +2017,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 }
             },
             "relations": {
@@ -2378,74 +2035,54 @@ class Config {
         "incident_template": {
             "fields": [
                 {
-                    "active": true,
                     "name": "body",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "short": "Body of the incident or maintenance update to be applied when selecting this template",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "components",
-                    "req": false,
-                    "type": "`$ARRAY`",
-                    "index$": 1
+                    "short": "Affected components",
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "group_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "short": "Identifier of Template Group this template belongs to",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "short": "Incident Template Identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 4
+                    "short": "Name of the template, as shown in the list on the \"Templates\" tab of the \"Incidents\" page",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "should_send_notifications",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 5
+                    "short": "Whether the \"deliver notifications\" checkbox should be selected when selecting this template",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "should_tweet",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 6
+                    "short": "Whether the \"tweet update\" checkbox should be selected when selecting this template",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "template",
                     "req": true,
-                    "type": "`$OBJECT`",
-                    "index$": 7
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "title",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 8
+                    "short": "Title to be applied to the incident or maintenance when selecting this template",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "update_status",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 9
+                    "short": "The status the incident or maintenance should transition to when selecting this template",
+                    "type": "`$STRING`"
                 }
             ],
             "name": "incident_template",
@@ -2455,17 +2092,14 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -2485,47 +2119,38 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "example": 1,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "example": 100,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -2548,11 +2173,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 }
             },
             "relations": {
@@ -2566,102 +2189,73 @@ class Config {
         "incident_update": {
             "fields": [
                 {
-                    "active": true,
                     "name": "affected_components",
-                    "req": false,
-                    "type": "`$ARRAY`",
-                    "index$": 0
+                    "short": "Affected components associated with the incident update.",
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "body",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "short": "Incident update body.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "short": "The timestamp when the incident update was created at.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "custom_tweet",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "short": "An optional customized tweet message for incident postmortem.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "deliver_notifications",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 4
+                    "short": "Controls whether to delivery notifications.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "display_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 5
+                    "short": "Timestamp when incident update is happened.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 6
+                    "short": "Incident Update Identifier.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "incident_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 7
+                    "short": "Incident Identifier.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "incident_update",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 8
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "status",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 9
+                    "short": "The incident status.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "tweet_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 10
+                    "short": "Tweet identifier associated to this incident update.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "twitter_updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 11
+                    "short": "The timestamp when twitter updated at.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 12
+                    "short": "The timestamp when the incident update is updated.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "wants_twitter_update",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 13
+                    "short": "Controls whether to create twitter update.",
+                    "type": "`$BOOLEAN`"
                 }
             ],
             "name": "incident_update",
@@ -2671,11 +2265,9 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "incident_update_id",
@@ -2683,7 +2275,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
@@ -2691,7 +2282,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -2728,46 +2318,37 @@ class Config {
                                     "incident_update": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "incident_update_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 2
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -2799,11 +2380,9 @@ class Config {
                                     "incident_update": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -2818,144 +2397,93 @@ class Config {
         "metric": {
             "fields": [
                 {
-                    "active": true,
                     "name": "backfill_percentage",
-                    "req": false,
-                    "type": "`$INTEGER`",
-                    "index$": 0
+                    "type": "`$INTEGER`"
                 },
                 {
-                    "active": true,
                     "name": "backfilled",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 1
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "data",
                     "req": true,
-                    "type": "`$OBJECT`",
-                    "index$": 3
+                    "short": "Add data points to metrics",
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "decimal_places",
-                    "req": false,
-                    "type": "`$INTEGER`",
-                    "index$": 4
+                    "type": "`$INTEGER`"
                 },
                 {
-                    "active": true,
                     "name": "display",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 5
+                    "short": "Should the metric be displayed",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 6
+                    "short": "Metric identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "last_fetched_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 7
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "metric",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 8
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "metric_identifier",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 9
+                    "short": "Metric Display identifier used to look up the metric data from the provider",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "metrics_provider_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 10
+                    "short": "Metric Provider identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "most_recent_data_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 11
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 12
+                    "short": "Name of metric",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "reference_name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 13
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "suffix",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 14
+                    "short": "Suffix to describe the units on the graph",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "tooltip_description",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 15
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 16
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "y_axis_hidden",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 17
+                    "short": "Should the values on the y axis be hidden on render",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "y_axis_max",
-                    "req": false,
-                    "type": "`$NUMBER`",
-                    "index$": 18
+                    "type": "`$NUMBER`"
                 },
                 {
-                    "active": true,
                     "name": "y_axis_min",
-                    "req": false,
-                    "type": "`$NUMBER`",
-                    "index$": 19
+                    "type": "`$NUMBER`"
                 }
             ],
             "name": "metric",
@@ -2965,26 +2493,21 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metric_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3013,30 +2536,24 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.data`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "metrics_provider_id",
                                         "orig": "metrics_provider_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3061,21 +2578,17 @@ class Config {
                                     "metric": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3097,54 +2610,43 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_access_user_id",
                                         "orig": "page_access_user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -3170,54 +2672,43 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "load": {
                     "input": "data",
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "metrics_provider_id",
                                         "orig": "metrics_provider_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -3243,38 +2734,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -3297,30 +2780,24 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metric_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3347,22 +2824,18 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "patch": {
                     "input": "data",
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metric_id",
@@ -3370,7 +2843,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -3404,37 +2876,30 @@ class Config {
                                     "metric": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "remove": {
                     "input": "data",
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metric_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3461,15 +2926,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metric_id",
@@ -3477,7 +2939,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -3511,37 +2972,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metric_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3570,11 +3024,9 @@ class Config {
                                     "metric": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -3596,67 +3048,41 @@ class Config {
         "metrics_provider": {
             "fields": [
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "disabled",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 1
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "short": "Identifier for Metrics Provider",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "last_revalidated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "metric_base_uri",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 4
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "metrics_provider",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 5
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "page_id",
-                    "req": false,
-                    "type": "`$INTEGER`",
-                    "index$": 6
+                    "type": "`$INTEGER`"
                 },
                 {
-                    "active": true,
                     "name": "type",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 7
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 8
+                    "type": "`$STRING`"
                 }
             ],
             "name": "metrics_provider",
@@ -3666,17 +3092,14 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3698,28 +3121,23 @@ class Config {
                                     "metrics_provider": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3739,37 +3157,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "load": {
                     "input": "data",
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metrics_provider_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3796,22 +3207,18 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "patch": {
                     "input": "data",
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metrics_provider_id",
@@ -3819,7 +3226,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -3853,37 +3259,30 @@ class Config {
                                     "metrics_provider": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "remove": {
                     "input": "data",
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metrics_provider_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3910,37 +3309,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "metrics_provider_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -3969,11 +3361,9 @@ class Config {
                                     "metrics_provider": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -3987,326 +3377,218 @@ class Config {
         "page": {
             "fields": [
                 {
-                    "active": true,
                     "name": "activity_score",
-                    "req": false,
-                    "type": "`$NUMBER`",
-                    "index$": 0
+                    "type": "`$NUMBER`"
                 },
                 {
-                    "active": true,
                     "name": "allow_email_subscribers",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 1
+                    "short": "Can your users choose to receive notifications via email",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "allow_incident_subscribers",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 2
+                    "short": "Can your users subscribe to notifications for a single incident",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "allow_page_subscribers",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 3
+                    "short": "Can your users subscribe to all notifications on the page",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "allow_rss_atom_feeds",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 4
+                    "short": "Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages)",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "allow_sms_subscribers",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 5
+                    "short": "Can your users choose to receive notifications via SMS",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "allow_webhook_subscribers",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 6
+                    "short": "Can your users choose to receive notifications via Webhooks",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "branding",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 7
+                    "short": "The main template your statuspage will use",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "city",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 8
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "country",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 9
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 10
+                    "short": "Timestamp the record was created",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_blues",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 11
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_body_background_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 12
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_border_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 13
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_font_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 14
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_graph_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 15
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_greens",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 16
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_light_font_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 17
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_link_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 18
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_no_data",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 19
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_oranges",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 20
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_reds",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 21
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "css_yellows",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 22
+                    "short": "CSS Color",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "domain",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 23
+                    "short": "CNAME alias for your status page",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "email_logo",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 24
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "favicon_logo",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 25
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "headline",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 26
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "hero_cover",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 27
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "hidden_from_search",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 28
+                    "short": "Should your page hide itself from search engines",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 29
+                    "short": "Page identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "ip_restrictions",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 30
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 31
+                    "short": "Name of your page to be displayed",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "notifications_email_footer",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 32
+                    "short": "Allows you to customize the footer appearing on your notification emails.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "notifications_from_email",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 33
+                    "short": "Allows you to customize the email address your page notifications come from",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "page",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 34
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "page_description",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 35
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "state",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 36
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "subdomain",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 37
+                    "short": "Subdomain at which to access your status page",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "support_url",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 38
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "time_zone",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 39
+                    "short": "Timezone configured for your page",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "transactional_logo",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 40
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "twitter_logo",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 41
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "twitter_username",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 42
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 43
+                    "short": "Timestamp the record was last updated",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "url",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 44
+                    "short": "Website of your page.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "viewers_must_be_team_members",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 45
+                    "type": "`$BOOLEAN`"
                 }
             ],
             "name": "page",
@@ -4316,7 +3598,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {},
                             "kind": "http",
                             "method": "GET",
@@ -4328,28 +3609,23 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "load": {
                     "input": "data",
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -4373,22 +3649,18 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "patch": {
                     "input": "data",
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_id",
@@ -4419,28 +3691,23 @@ class Config {
                                     "page": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -4466,11 +3733,9 @@ class Config {
                                     "page": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -4480,7 +3745,6 @@ class Config {
         "page_access_group": {
             "fields": [
                 {
-                    "active": true,
                     "name": "component_ids",
                     "op": {
                         "create": {
@@ -4488,72 +3752,48 @@ class Config {
                             "type": "`$ARRAY`"
                         }
                     },
-                    "req": false,
-                    "type": "`$ARRAY`",
-                    "index$": 0
+                    "short": "List of components codes to set on the page access group",
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "external_identifier",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "short": "Associates group with external group.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "short": "Page Access Group Identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "metric_ids",
-                    "req": false,
-                    "type": "`$ARRAY`",
-                    "index$": 4
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 5
+                    "short": "Name for this Group.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "page_access_group",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 6
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "page_access_user_ids",
-                    "req": false,
-                    "type": "`$ARRAY`",
-                    "index$": 7
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "page_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 8
+                    "short": "Page Identifier.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 9
+                    "type": "`$STRING`"
                 }
             ],
             "name": "page_access_group",
@@ -4563,26 +3803,21 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -4611,21 +3846,17 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -4652,45 +3883,36 @@ class Config {
                                     "page_access_group": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -4718,37 +3940,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "load": {
                     "input": "data",
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -4775,22 +3990,18 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "patch": {
                     "input": "data",
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
@@ -4798,7 +4009,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -4832,15 +4042,12 @@ class Config {
                                     "page_access_group": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
@@ -4848,7 +4055,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -4882,46 +4088,37 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "remove": {
                     "input": "data",
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "component_id",
                                         "orig": "component_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 2
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -4951,30 +4148,24 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -5001,15 +4192,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
@@ -5017,7 +4205,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -5051,37 +4238,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -5110,15 +4290,12 @@ class Config {
                                     "page_access_group": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
@@ -5126,7 +4303,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -5160,11 +4336,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -5182,81 +4356,54 @@ class Config {
         "page_access_user": {
             "fields": [
                 {
-                    "active": true,
                     "name": "component_ids",
                     "req": true,
-                    "type": "`$ARRAY`",
-                    "index$": 0
+                    "short": "List of component codes to allow access to",
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "email",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "external_login",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "short": "IDP login user id.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 4
+                    "short": "Page Access User Identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "metric_ids",
                     "req": true,
-                    "type": "`$ARRAY`",
-                    "index$": 5
+                    "short": "List of metrics to add",
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "page_access_group_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 6
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "page_access_group_ids",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 7
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "page_access_user",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 8
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "page_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 9
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 10
+                    "type": "`$STRING`"
                 }
             ],
             "name": "page_access_user",
@@ -5266,26 +4413,21 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -5314,30 +4456,24 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -5366,21 +4502,17 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -5407,53 +4539,42 @@ class Config {
                                     "page_access_user": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "email",
                                         "orig": "email",
-                                        "reqd": false,
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -5482,37 +4603,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "load": {
                     "input": "data",
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -5539,22 +4653,18 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "patch": {
                     "input": "data",
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
@@ -5562,7 +4672,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -5594,15 +4703,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
@@ -5610,7 +4716,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -5644,15 +4749,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
@@ -5660,7 +4762,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -5694,46 +4795,37 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "remove": {
                     "input": "data",
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "component_id",
                                         "orig": "component_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 2
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -5763,39 +4855,31 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "metric_id",
                                         "orig": "metric_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 2
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -5825,30 +4909,24 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -5875,15 +4953,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
@@ -5891,7 +4966,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -5925,15 +4999,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 3
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
@@ -5941,7 +5012,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -5975,37 +5045,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 4
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -6032,15 +5095,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
@@ -6048,7 +5108,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -6082,15 +5141,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_user_id",
@@ -6098,7 +5154,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -6132,11 +5187,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -6158,18 +5211,14 @@ class Config {
         "permission": {
             "fields": [
                 {
-                    "active": true,
                     "name": "pages",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 0
+                    "short": "Pages accessible by the user.",
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "user_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "short": "User identifier",
+                    "type": "`$STRING`"
                 }
             ],
             "name": "permission",
@@ -6179,26 +5228,21 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "organization_id",
                                         "orig": "organization_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -6225,37 +5269,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.data`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "organization_id",
                                         "orig": "organization_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -6282,11 +5319,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.data`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -6300,94 +5335,64 @@ class Config {
         "postmortem": {
             "fields": [
                 {
-                    "active": true,
                     "name": "body",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "short": "Postmortem body",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "body_draft",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "short": "Body draft",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "body_draft_updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "body_updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 4
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "custom_tweet",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 5
+                    "short": "Custom tweet for Incident Postmortem",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "notify_subscribers",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 6
+                    "short": "Should email subscribers be notified.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "notify_twitter",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 7
+                    "short": "Should Twitter followers be notified.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "postmortem",
                     "op": {
                         "update": {
-                            "req": false,
                             "type": "`$OBJECT`"
                         }
                     },
                     "req": true,
-                    "type": "`$OBJECT`",
-                    "index$": 8
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "preview_key",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 9
+                    "short": "Preview Key",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "published_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 10
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 11
+                    "type": "`$STRING`"
                 }
             ],
             "name": "postmortem",
@@ -6397,26 +5402,21 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -6439,37 +5439,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -6494,15 +5487,12 @@ class Config {
                                     "postmortem": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
@@ -6510,7 +5500,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -6542,15 +5531,12 @@ class Config {
                                     "postmortem": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
@@ -6558,7 +5544,6 @@ class Config {
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -6588,11 +5573,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -6607,53 +5590,38 @@ class Config {
         "status_embed_config": {
             "fields": [
                 {
-                    "active": true,
                     "name": "incident_background_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "short": "Color of status embed iframe background when displaying incident",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "incident_text_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "short": "Color of status embed iframe text when displaying incident",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "maintenance_background_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "short": "Color of status embed iframe background when displaying maintenance",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "maintenance_text_color",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "short": "Color of status embed iframe text when displaying maintenance",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "page_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 4
+                    "short": "Page identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "position",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 5
+                    "short": "Corner where status embed iframe will appear on page",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "status_embed_config",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 6
+                    "type": "`$OBJECT`"
                 }
             ],
             "name": "status_embed_config",
@@ -6663,17 +5631,14 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -6693,22 +5658,18 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "patch": {
                     "input": "data",
                     "name": "patch",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -6735,28 +5696,23 @@ class Config {
                                     "status_embed_config": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "patch"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -6778,11 +5734,9 @@ class Config {
                                     "status_embed_config": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -6796,186 +5750,133 @@ class Config {
         "subscriber": {
             "fields": [
                 {
-                    "active": true,
                     "name": "component_ids",
-                    "req": false,
-                    "type": "`$ARRAY`",
-                    "index$": 0
+                    "short": "A list of component ids for which the subscriber should recieve updates for.",
+                    "type": "`$ARRAY`"
                 },
                 {
-                    "active": true,
                     "name": "components",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "short": "The components for which the subscriber has elected to receive updates.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "display_phone_number",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "short": "A formatted version of the phone_number and phone_country pair, nicely formatted for display.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "email",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 4
+                    "short": "The email address to use to contact the subscriber.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "endpoint",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 5
+                    "short": "The URL where a webhook subscriber elects to receive updates.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 6
+                    "short": "Subscriber Identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "integration_partner",
-                    "req": false,
-                    "type": "`$INTEGER`",
-                    "index$": 7
+                    "short": "The number of integration partners found by the query.",
+                    "type": "`$INTEGER`"
                 },
                 {
-                    "active": true,
                     "name": "mode",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 8
+                    "short": "The communication mode of the subscriber.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "obfuscated_channel_name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 9
+                    "short": "Obfuscated slack channel name",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "page_access_user_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 10
+                    "short": "The Page Access user this subscriber belongs to (only for audience-specific pages).",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "phone_country",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 11
+                    "short": "The two-character country code representing the country of which the phone_number is a part.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "phone_number",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 12
+                    "short": "The phone number used to contact an SMS subscriber",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "purge_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 13
+                    "short": "The timestamp when a quarantined subscriber will be purged (unsubscribed).",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "quarantined_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 14
+                    "short": "The timestamp when the subscriber was quarantined due to an issue reaching them.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "skip_confirmation_notification",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 15
+                    "short": "If this is true, do not notify the user with changes to their subscription.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "skip_unsubscription_notification",
-                    "req": false,
-                    "type": "`$BOOLEAN`",
-                    "index$": 16
+                    "short": "If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed.",
+                    "type": "`$BOOLEAN`"
                 },
                 {
-                    "active": true,
                     "name": "slack",
-                    "req": false,
-                    "type": "`$INTEGER`",
-                    "index$": 17
+                    "short": "The number of Slack subscribers found by the query.",
+                    "type": "`$INTEGER`"
                 },
                 {
-                    "active": true,
                     "name": "sms",
-                    "req": false,
-                    "type": "`$INTEGER`",
-                    "index$": 18
+                    "short": "The number of Webhook subscribers found by the query.",
+                    "type": "`$INTEGER`"
                 },
                 {
-                    "active": true,
                     "name": "state",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 19
+                    "short": "If this is present, only unsubscribe subscribers in this state.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "subscriber",
-                    "req": false,
-                    "type": "`$OBJECT`",
-                    "index$": 20
+                    "type": "`$OBJECT`"
                 },
                 {
-                    "active": true,
                     "name": "subscribers",
                     "req": true,
-                    "type": "`$STRING`",
-                    "index$": 21
+                    "short": "The array of quarantined subscriber codes to reactivate, or \"all\" to reactivate all quarantined subscribers.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "teams",
-                    "req": false,
-                    "type": "`$INTEGER`",
-                    "index$": 22
+                    "short": "The number of MS teams subscribers found by the query.",
+                    "type": "`$INTEGER`"
                 },
                 {
-                    "active": true,
                     "name": "type",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 23
+                    "short": "If this is present, only reactivate subscribers of this type.",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "webhook",
-                    "req": false,
-                    "type": "`$INTEGER`",
-                    "index$": 24
+                    "short": "The number of SMS subscribers found by the query.",
+                    "type": "`$INTEGER`"
                 },
                 {
-                    "active": true,
                     "name": "workspace_name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 25
+                    "short": "The workspace name of the slack subscriber.",
+                    "type": "`$STRING`"
                 }
             ],
             "name": "subscriber",
@@ -6985,26 +5886,21 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "subscriber_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7033,30 +5929,24 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7081,21 +5971,17 @@ class Config {
                                     "subscriber": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7117,21 +6003,17 @@ class Config {
                                     "subscriber": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7153,21 +6035,17 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 3
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7189,21 +6067,17 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 4
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7225,89 +6099,70 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 5
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "limit",
                                         "orig": "limit",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "example": 0,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "q",
                                         "orig": "q",
-                                        "reqd": false,
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "example": "asc",
                                         "kind": "query",
                                         "name": "sort_direction",
                                         "orig": "sort_direction",
-                                        "reqd": false,
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "example": "primary",
                                         "kind": "query",
                                         "name": "sort_field",
                                         "orig": "sort_field",
-                                        "reqd": false,
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "example": "active",
                                         "kind": "query",
                                         "name": "state",
                                         "orig": "state",
-                                        "reqd": false,
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "type",
                                         "orig": "type",
-                                        "reqd": false,
                                         "type": "`$STRING`"
                                     }
                                 ]
@@ -7335,47 +6190,37 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -7401,15 +6246,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -7419,19 +6261,15 @@ class Config {
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -7456,46 +6294,37 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "load": {
                     "input": "data",
                     "name": "load",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "subscriber_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 2
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7525,15 +6354,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -7543,20 +6369,16 @@ class Config {
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "example": "active",
                                         "kind": "query",
                                         "name": "state",
                                         "orig": "state",
-                                        "reqd": false,
                                         "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "type",
                                         "orig": "type",
-                                        "reqd": false,
                                         "type": "`$STRING`"
                                     }
                                 ]
@@ -7581,30 +6403,24 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "subscriber_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7631,15 +6447,12 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 2
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
@@ -7666,46 +6479,37 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 3
+                            }
                         }
-                    ],
-                    "key$": "load"
+                    ]
                 },
                 "remove": {
                     "input": "data",
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "subscriber_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 2
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7735,39 +6539,31 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         },
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "subscriber_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "skip_unsubscription_notification",
                                         "orig": "skip_unsubscription_notification",
-                                        "reqd": false,
                                         "type": "`$BOOLEAN`"
                                     }
                                 ]
@@ -7796,37 +6592,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 1
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 },
                 "update": {
                     "input": "data",
                     "name": "update",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "subscriber_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7853,11 +6642,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "update"
+                    ]
                 }
             },
             "relations": {
@@ -7875,60 +6662,40 @@ class Config {
         "user": {
             "fields": [
                 {
-                    "active": true,
                     "name": "created_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "email",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "short": "Email address for the team member",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "first_name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 2
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 3
+                    "short": "User identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "last_name",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 4
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "organization_id",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 5
+                    "short": "Organization identifier",
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "updated_at",
-                    "req": false,
-                    "type": "`$STRING`",
-                    "index$": 6
+                    "type": "`$STRING`"
                 },
                 {
-                    "active": true,
                     "name": "user",
                     "req": true,
-                    "type": "`$OBJECT`",
-                    "index$": 7
+                    "type": "`$OBJECT`"
                 }
             ],
             "name": "user",
@@ -7938,17 +6705,14 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "organization_id",
                                         "orig": "organization_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -7970,45 +6734,36 @@ class Config {
                                     "user": "`reqdata`"
                                 },
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "create"
+                    ]
                 },
                 "list": {
                     "input": "data",
                     "name": "list",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "organization_id",
                                         "orig": "organization_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     }
                                 ],
                                 "query": [
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "page",
                                         "orig": "page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "query",
                                         "name": "per_page",
                                         "orig": "per_page",
-                                        "reqd": false,
                                         "type": "`$INTEGER`"
                                     }
                                 ]
@@ -8031,37 +6786,30 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "list"
+                    ]
                 },
                 "remove": {
                     "input": "data",
                     "name": "remove",
                     "points": [
                         {
-                            "active": true,
                             "args": {
                                 "params": [
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "id",
                                         "orig": "user_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 0
+                                        "type": "`$STRING`"
                                     },
                                     {
-                                        "active": true,
                                         "kind": "param",
                                         "name": "organization_id",
                                         "orig": "organization_id",
                                         "reqd": true,
-                                        "type": "`$STRING`",
-                                        "index$": 1
+                                        "type": "`$STRING`"
                                     }
                                 ]
                             },
@@ -8088,11 +6836,9 @@ class Config {
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
-                            },
-                            "index$": 0
+                            }
                         }
-                    ],
-                    "key$": "remove"
+                    ]
                 }
             },
             "relations": {

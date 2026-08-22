@@ -77,7 +77,7 @@ const utility_1 = require("../../utility");
         incident_subscriber_ref01_data['incident_id'] = setup.idmap['incident01'];
         incident_subscriber_ref01_data['page_id'] = setup.idmap['page01'];
         incident_subscriber_ref01_data['subscriber_id'] = setup.idmap['subscriber01'];
-        incident_subscriber_ref01_data = await incident_subscriber_ref01_ent.create(incident_subscriber_ref01_data);
+        incident_subscriber_ref01_data = (await incident_subscriber_ref01_ent.create(incident_subscriber_ref01_data)).data();
         (0, node_assert_1.default)(null != incident_subscriber_ref01_data);
     });
 });

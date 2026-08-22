@@ -5,10 +5,10 @@ import type { PageAccessUser, PageAccessUserLoadMatch, PageAccessUserListMatch, 
 declare class PageAccessUserEntity extends StatuspageEntityBase<PageAccessUser> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: PageAccessUserEntity): PageAccessUserEntity;
-    load(this: any, reqmatch?: PageAccessUserLoadMatch, ctrl?: Control): Promise<PageAccessUser>;
-    list(this: any, reqmatch?: PageAccessUserListMatch, ctrl?: Control): Promise<PageAccessUser[]>;
-    create(this: any, reqdata?: PageAccessUserCreateData, ctrl?: Control): Promise<PageAccessUser>;
-    update(this: any, reqdata?: PageAccessUserUpdateData, ctrl?: Control): Promise<PageAccessUser>;
-    remove(this: any, reqmatch?: PageAccessUserRemoveMatch, ctrl?: Control): Promise<PageAccessUser>;
+    load(this: any, reqmatch?: PageAccessUserLoadMatch, ctrl?: Control): Promise<PageAccessUserEntity>;
+    list(this: any, reqmatch?: PageAccessUserListMatch, ctrl?: Control): Promise<PageAccessUserEntity[]>;
+    create(this: any, reqdata?: PageAccessUserCreateData, ctrl?: Control): Promise<PageAccessUserEntity>;
+    update(this: any, reqdata?: PageAccessUserUpdateData, ctrl?: Control): Promise<PageAccessUserEntity>;
+    remove(this: any, reqmatch?: PageAccessUserRemoveMatch, ctrl?: Control): Promise<PageAccessUserEntity>;
 }
 export { PageAccessUserEntity };

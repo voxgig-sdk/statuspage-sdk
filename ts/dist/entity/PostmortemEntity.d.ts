@@ -5,7 +5,7 @@ import type { Postmortem, PostmortemLoadMatch, PostmortemUpdateData } from '../S
 declare class PostmortemEntity extends StatuspageEntityBase<Postmortem> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: PostmortemEntity): PostmortemEntity;
-    load(this: any, reqmatch?: PostmortemLoadMatch, ctrl?: Control): Promise<Postmortem>;
-    update(this: any, reqdata?: PostmortemUpdateData, ctrl?: Control): Promise<Postmortem>;
+    load(this: any, reqmatch?: PostmortemLoadMatch, ctrl?: Control): Promise<PostmortemEntity>;
+    update(this: any, reqdata?: PostmortemUpdateData, ctrl?: Control): Promise<PostmortemEntity>;
 }
 export { PostmortemEntity };

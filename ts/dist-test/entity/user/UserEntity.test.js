@@ -75,12 +75,12 @@ const utility_1 = require("../../utility");
         const user_ref01_ent = client.User();
         let user_ref01_data = setup.data.new.user['user_ref01'];
         user_ref01_data['organization_id'] = setup.idmap['organization01'];
-        user_ref01_data = await user_ref01_ent.create(user_ref01_data);
+        user_ref01_data = (await user_ref01_ent.create(user_ref01_data)).data();
         (0, node_assert_1.default)(null != user_ref01_data.id);
         // LIST
         const user_ref01_match = {};
         user_ref01_match['organization_id'] = setup.idmap['organization01'];
-        const user_ref01_list = await user_ref01_ent.list(user_ref01_match);
+        const user_ref01_list = (await user_ref01_ent.list(user_ref01_match)).map((e) => e.data());
         (0, node_assert_1.default)(!isempty(select(user_ref01_list, { id: user_ref01_data.id })));
         // REMOVE
         const user_ref01_match_rm0 = { id: user_ref01_data.id };
@@ -88,7 +88,7 @@ const utility_1 = require("../../utility");
         // LIST
         const user_ref01_match_rt0 = {};
         user_ref01_match_rt0['organization_id'] = setup.idmap['organization01'];
-        const user_ref01_list_rt0 = await user_ref01_ent.list(user_ref01_match_rt0);
+        const user_ref01_list_rt0 = (await user_ref01_ent.list(user_ref01_match_rt0)).map((e) => e.data());
         (0, node_assert_1.default)(isempty(select(user_ref01_list_rt0, { id: user_ref01_data.id })));
     });
 });

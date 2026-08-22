@@ -162,20 +162,20 @@ component = client.Component
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `automation_email` | `String` | No |  |
+| `automation_email` | `String` | No | Requires a special feature flag to be enabled |
 | `component` | `Hash` | No |  |
 | `created_at` | `String` | No |  |
-| `description` | `String` | No |  |
-| `group` | `Boolean` | No |  |
-| `group_id` | `String` | No |  |
-| `id` | `String` | No |  |
-| `name` | `String` | No |  |
-| `only_show_if_degraded` | `Boolean` | No |  |
-| `page_id` | `String` | No |  |
-| `position` | `Integer` | No |  |
-| `showcase` | `Boolean` | No |  |
-| `start_date` | `String` | No |  |
-| `status` | `String` | No |  |
+| `description` | `String` | No | More detailed description for component |
+| `group` | `Boolean` | No | Is this component a group |
+| `group_id` | `String` | No | Component Group identifier |
+| `id` | `String` | No | Incident identifier |
+| `name` | `String` | No | Display name for component |
+| `only_show_if_degraded` | `Boolean` | No | Requires a special feature flag to be enabled |
+| `page_id` | `String` | No | Page identifier |
+| `position` | `Integer` | No | Order the component will appear on the page |
+| `showcase` | `Boolean` | No | Should this component be showcased |
+| `start_date` | `String` | No | The date this component started being used |
+| `status` | `String` | No | Status of component |
 | `updated_at` | `String` | No |  |
 
 ### Operations
@@ -266,8 +266,8 @@ component_group_uptime = client.ComponentGroupUptime
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `String` | No |  |
-| `incidents` | `Hash` | No |  |
+| `component_id` | `String` | No | Component identifier |
+| `incidents` | `Hash` | No | Related incidents |
 
 ### Operations
 
@@ -322,8 +322,8 @@ group_component = client.GroupComponent
 | `component_group` | `Hash` | Yes |  |
 | `components` | `String` | No |  |
 | `created_at` | `String` | No |  |
-| `description` | `String` | No |  |
-| `id` | `String` | No |  |
+| `description` | `String` | No | Description of the component group. |
+| `id` | `String` | No | Component Group Identifier |
 | `name` | `String` | No |  |
 | `page_id` | `String` | No |  |
 | `position` | `String` | No |  |
@@ -418,38 +418,38 @@ incident = client.Incident
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `auto_transition_deliver_notifications_at_end` | `Boolean` | No |  |
-| `auto_transition_deliver_notifications_at_start` | `Boolean` | No |  |
-| `auto_transition_to_maintenance_state` | `Boolean` | No |  |
-| `auto_transition_to_operational_state` | `Boolean` | No |  |
-| `components` | `Array` | No |  |
-| `created_at` | `String` | No |  |
-| `id` | `String` | No |  |
-| `impact` | `String` | No |  |
-| `impact_override` | `String` | No |  |
+| `auto_transition_deliver_notifications_at_end` | `Boolean` | No | Controls whether send notification when scheduled maintenances auto transition to completed. |
+| `auto_transition_deliver_notifications_at_start` | `Boolean` | No | Controls whether send notification when scheduled maintenances auto transition to started. |
+| `auto_transition_to_maintenance_state` | `Boolean` | No | Controls whether change components status to under_maintenance once scheduled maintenance is in progress. |
+| `auto_transition_to_operational_state` | `Boolean` | No | Controls whether change components status to operational once scheduled maintenance completes. |
+| `components` | `Array` | No | Incident components |
+| `created_at` | `String` | No | The timestamp when the incident was created at. |
+| `id` | `String` | No | Incident Identifier |
+| `impact` | `String` | No | The impact of the incident. |
+| `impact_override` | `String` | No | value to override calculated impact value |
 | `incident` | `Hash` | Yes |  |
-| `incident_updates` | `Array` | No |  |
-| `metadata` | `Hash` | No |  |
-| `monitoring_at` | `String` | No |  |
-| `name` | `String` | No |  |
-| `page_id` | `String` | No |  |
-| `postmortem_body` | `String` | No |  |
-| `postmortem_body_last_updated_at` | `String` | No |  |
-| `postmortem_ignored` | `Boolean` | No |  |
-| `postmortem_notified_subscribers` | `Boolean` | No |  |
-| `postmortem_notified_twitter` | `Boolean` | No |  |
-| `postmortem_published_at` | `Boolean` | No |  |
-| `reminder_intervals` | `String` | No |  |
-| `resolved_at` | `String` | No |  |
-| `scheduled_auto_completed` | `Boolean` | No |  |
-| `scheduled_auto_in_progress` | `Boolean` | No |  |
-| `scheduled_for` | `String` | No |  |
-| `scheduled_remind_prior` | `Boolean` | No |  |
-| `scheduled_reminded_at` | `String` | No |  |
-| `scheduled_until` | `String` | No |  |
-| `shortlink` | `String` | No |  |
-| `status` | `String` | No |  |
-| `updated_at` | `String` | No |  |
+| `incident_updates` | `Array` | No | The incident updates for incident. |
+| `metadata` | `Hash` | No | Metadata attached to the incident. |
+| `monitoring_at` | `String` | No | The timestamp when incident entered monitoring state. |
+| `name` | `String` | No | Incident Name. |
+| `page_id` | `String` | No | Incident Page Identifier |
+| `postmortem_body` | `String` | No | Body of the Postmortem. |
+| `postmortem_body_last_updated_at` | `String` | No | The timestamp when the incident postmortem body was last updated at. |
+| `postmortem_ignored` | `Boolean` | No | Controls whether the incident will have postmortem. |
+| `postmortem_notified_subscribers` | `Boolean` | No | Indicates whether subscribers are already notificed about postmortem. |
+| `postmortem_notified_twitter` | `Boolean` | No | Controls whether to decide if notify postmortem on twitter. |
+| `postmortem_published_at` | `Boolean` | No | The timestamp when the postmortem was published. |
+| `reminder_intervals` | `String` | No | Custom reminder intervals for unresolved/open incidents. |
+| `resolved_at` | `String` | No | The timestamp when incident was resolved. |
+| `scheduled_auto_completed` | `Boolean` | No | Controls whether the incident is scheduled to automatically change to complete. |
+| `scheduled_auto_in_progress` | `Boolean` | No | Controls whether the incident is scheduled to automatically change to in progress. |
+| `scheduled_for` | `String` | No | The timestamp the incident is scheduled for. |
+| `scheduled_remind_prior` | `Boolean` | No | Controls whether to remind subscribers prior to scheduled incidents. |
+| `scheduled_reminded_at` | `String` | No | The timestamp when the scheduled incident reminder was sent at. |
+| `scheduled_until` | `String` | No | The timestamp the incident is scheduled until. |
+| `shortlink` | `String` | No | Incident Shortlink. |
+| `status` | `String` | No | The incident status. |
+| `updated_at` | `String` | No | The timestamp when the incident was updated at. |
 
 ### Field Usage by Operation
 
@@ -673,16 +673,16 @@ incident_template = client.IncidentTemplate
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `body` | `String` | No |  |
-| `components` | `Array` | No |  |
-| `group_id` | `String` | No |  |
-| `id` | `String` | No |  |
-| `name` | `String` | No |  |
-| `should_send_notifications` | `Boolean` | No |  |
-| `should_tweet` | `Boolean` | No |  |
+| `body` | `String` | No | Body of the incident or maintenance update to be applied when selecting this template |
+| `components` | `Array` | No | Affected components |
+| `group_id` | `String` | No | Identifier of Template Group this template belongs to |
+| `id` | `String` | No | Incident Template Identifier |
+| `name` | `String` | No | Name of the template, as shown in the list on the "Templates" tab of the "Incidents" page |
+| `should_send_notifications` | `Boolean` | No | Whether the "deliver notifications" checkbox should be selected when selecting this template |
+| `should_tweet` | `Boolean` | No | Whether the "tweet update" checkbox should be selected when selecting this template |
 | `template` | `Hash` | Yes |  |
-| `title` | `String` | No |  |
-| `update_status` | `String` | No |  |
+| `title` | `String` | No | Title to be applied to the incident or maintenance when selecting this template |
+| `update_status` | `String` | No | The status the incident or maintenance should transition to when selecting this template |
 
 ### Operations
 
@@ -745,20 +745,20 @@ incident_update = client.IncidentUpdate
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `affected_components` | `Array` | No |  |
-| `body` | `String` | No |  |
-| `created_at` | `String` | No |  |
-| `custom_tweet` | `String` | No |  |
-| `deliver_notifications` | `Boolean` | No |  |
-| `display_at` | `String` | No |  |
-| `id` | `String` | No |  |
-| `incident_id` | `String` | No |  |
+| `affected_components` | `Array` | No | Affected components associated with the incident update. |
+| `body` | `String` | No | Incident update body. |
+| `created_at` | `String` | No | The timestamp when the incident update was created at. |
+| `custom_tweet` | `String` | No | An optional customized tweet message for incident postmortem. |
+| `deliver_notifications` | `Boolean` | No | Controls whether to delivery notifications. |
+| `display_at` | `String` | No | Timestamp when incident update is happened. |
+| `id` | `String` | No | Incident Update Identifier. |
+| `incident_id` | `String` | No | Incident Identifier. |
 | `incident_update` | `Hash` | No |  |
-| `status` | `String` | No |  |
-| `tweet_id` | `String` | No |  |
-| `twitter_updated_at` | `String` | No |  |
-| `updated_at` | `String` | No |  |
-| `wants_twitter_update` | `Boolean` | No |  |
+| `status` | `String` | No | The incident status. |
+| `tweet_id` | `String` | No | Tweet identifier associated to this incident update. |
+| `twitter_updated_at` | `String` | No | The timestamp when twitter updated at. |
+| `updated_at` | `String` | No | The timestamp when the incident update is updated. |
+| `wants_twitter_update` | `Boolean` | No | Controls whether to create twitter update. |
 
 ### Operations
 
@@ -818,21 +818,21 @@ metric = client.Metric
 | `backfill_percentage` | `Integer` | No |  |
 | `backfilled` | `Boolean` | No |  |
 | `created_at` | `String` | No |  |
-| `data` | `Hash` | Yes |  |
+| `data` | `Hash` | Yes | Add data points to metrics |
 | `decimal_places` | `Integer` | No |  |
-| `display` | `Boolean` | No |  |
-| `id` | `String` | No |  |
+| `display` | `Boolean` | No | Should the metric be displayed |
+| `id` | `String` | No | Metric identifier |
 | `last_fetched_at` | `String` | No |  |
 | `metric` | `Hash` | No |  |
-| `metric_identifier` | `String` | No |  |
-| `metrics_provider_id` | `String` | No |  |
+| `metric_identifier` | `String` | No | Metric Display identifier used to look up the metric data from the provider |
+| `metrics_provider_id` | `String` | No | Metric Provider identifier |
 | `most_recent_data_at` | `String` | No |  |
-| `name` | `String` | No |  |
+| `name` | `String` | No | Name of metric |
 | `reference_name` | `String` | No |  |
-| `suffix` | `String` | No |  |
+| `suffix` | `String` | No | Suffix to describe the units on the graph |
 | `tooltip_description` | `String` | No |  |
 | `updated_at` | `String` | No |  |
-| `y_axis_hidden` | `Boolean` | No |  |
+| `y_axis_hidden` | `Boolean` | No | Should the values on the y axis be hidden on render |
 | `y_axis_max` | `Float` | No |  |
 | `y_axis_min` | `Float` | No |  |
 
@@ -928,7 +928,7 @@ metrics_provider = client.MetricsProvider
 | --- | --- | --- | --- |
 | `created_at` | `String` | No |  |
 | `disabled` | `Boolean` | No |  |
-| `id` | `String` | No |  |
+| `id` | `String` | No | Identifier for Metrics Provider |
 | `last_revalidated_at` | `String` | No |  |
 | `metric_base_uri` | `String` | No |  |
 | `metrics_provider` | `Hash` | No |  |
@@ -1025,50 +1025,50 @@ page = client.Page
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `activity_score` | `Float` | No |  |
-| `allow_email_subscribers` | `Boolean` | No |  |
-| `allow_incident_subscribers` | `Boolean` | No |  |
-| `allow_page_subscribers` | `Boolean` | No |  |
-| `allow_rss_atom_feeds` | `Boolean` | No |  |
-| `allow_sms_subscribers` | `Boolean` | No |  |
-| `allow_webhook_subscribers` | `Boolean` | No |  |
-| `branding` | `String` | No |  |
+| `allow_email_subscribers` | `Boolean` | No | Can your users choose to receive notifications via email |
+| `allow_incident_subscribers` | `Boolean` | No | Can your users subscribe to notifications for a single incident |
+| `allow_page_subscribers` | `Boolean` | No | Can your users subscribe to all notifications on the page |
+| `allow_rss_atom_feeds` | `Boolean` | No | Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages) |
+| `allow_sms_subscribers` | `Boolean` | No | Can your users choose to receive notifications via SMS |
+| `allow_webhook_subscribers` | `Boolean` | No | Can your users choose to receive notifications via Webhooks |
+| `branding` | `String` | No | The main template your statuspage will use |
 | `city` | `String` | No |  |
 | `country` | `String` | No |  |
-| `created_at` | `String` | No |  |
-| `css_blues` | `String` | No |  |
-| `css_body_background_color` | `String` | No |  |
-| `css_border_color` | `String` | No |  |
-| `css_font_color` | `String` | No |  |
-| `css_graph_color` | `String` | No |  |
-| `css_greens` | `String` | No |  |
-| `css_light_font_color` | `String` | No |  |
-| `css_link_color` | `String` | No |  |
-| `css_no_data` | `String` | No |  |
-| `css_oranges` | `String` | No |  |
-| `css_reds` | `String` | No |  |
-| `css_yellows` | `String` | No |  |
-| `domain` | `String` | No |  |
+| `created_at` | `String` | No | Timestamp the record was created |
+| `css_blues` | `String` | No | CSS Color |
+| `css_body_background_color` | `String` | No | CSS Color |
+| `css_border_color` | `String` | No | CSS Color |
+| `css_font_color` | `String` | No | CSS Color |
+| `css_graph_color` | `String` | No | CSS Color |
+| `css_greens` | `String` | No | CSS Color |
+| `css_light_font_color` | `String` | No | CSS Color |
+| `css_link_color` | `String` | No | CSS Color |
+| `css_no_data` | `String` | No | CSS Color |
+| `css_oranges` | `String` | No | CSS Color |
+| `css_reds` | `String` | No | CSS Color |
+| `css_yellows` | `String` | No | CSS Color |
+| `domain` | `String` | No | CNAME alias for your status page |
 | `email_logo` | `String` | No |  |
 | `favicon_logo` | `String` | No |  |
 | `headline` | `String` | No |  |
 | `hero_cover` | `String` | No |  |
-| `hidden_from_search` | `Boolean` | No |  |
-| `id` | `String` | No |  |
+| `hidden_from_search` | `Boolean` | No | Should your page hide itself from search engines |
+| `id` | `String` | No | Page identifier |
 | `ip_restrictions` | `String` | No |  |
-| `name` | `String` | No |  |
-| `notifications_email_footer` | `String` | No |  |
-| `notifications_from_email` | `String` | No |  |
+| `name` | `String` | No | Name of your page to be displayed |
+| `notifications_email_footer` | `String` | No | Allows you to customize the footer appearing on your notification emails. |
+| `notifications_from_email` | `String` | No | Allows you to customize the email address your page notifications come from |
 | `page` | `Hash` | No |  |
 | `page_description` | `String` | No |  |
 | `state` | `String` | No |  |
-| `subdomain` | `String` | No |  |
+| `subdomain` | `String` | No | Subdomain at which to access your status page |
 | `support_url` | `String` | No |  |
-| `time_zone` | `String` | No |  |
+| `time_zone` | `String` | No | Timezone configured for your page |
 | `transactional_logo` | `String` | No |  |
 | `twitter_logo` | `String` | No |  |
 | `twitter_username` | `String` | No |  |
-| `updated_at` | `String` | No |  |
-| `url` | `String` | No |  |
+| `updated_at` | `String` | No | Timestamp the record was last updated |
+| `url` | `String` | No | Website of your page. |
 | `viewers_must_be_team_members` | `Boolean` | No |  |
 
 ### Operations
@@ -1140,15 +1140,15 @@ page_access_group = client.PageAccessGroup
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_ids` | `Array` | No |  |
+| `component_ids` | `Array` | No | List of components codes to set on the page access group |
 | `created_at` | `String` | No |  |
-| `external_identifier` | `String` | No |  |
-| `id` | `String` | No |  |
+| `external_identifier` | `String` | No | Associates group with external group. |
+| `id` | `String` | No | Page Access Group Identifier |
 | `metric_ids` | `Array` | No |  |
-| `name` | `String` | No |  |
+| `name` | `String` | No | Name for this Group. |
 | `page_access_group` | `Hash` | No |  |
 | `page_access_user_ids` | `Array` | No |  |
-| `page_id` | `String` | No |  |
+| `page_id` | `String` | No | Page Identifier. |
 | `updated_at` | `String` | No |  |
 
 ### Field Usage by Operation
@@ -1254,12 +1254,12 @@ page_access_user = client.PageAccessUser
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_ids` | `Array` | Yes |  |
+| `component_ids` | `Array` | Yes | List of component codes to allow access to |
 | `created_at` | `String` | No |  |
 | `email` | `String` | No |  |
-| `external_login` | `String` | No |  |
-| `id` | `String` | No |  |
-| `metric_ids` | `Array` | Yes |  |
+| `external_login` | `String` | No | IDP login user id. |
+| `id` | `String` | No | Page Access User Identifier |
+| `metric_ids` | `Array` | Yes | List of metrics to add |
 | `page_access_group_id` | `String` | No |  |
 | `page_access_group_ids` | `String` | No |  |
 | `page_access_user` | `Hash` | No |  |
@@ -1356,8 +1356,8 @@ permission = client.Permission
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `pages` | `Hash` | No |  |
-| `user_id` | `String` | No |  |
+| `pages` | `Hash` | No | Pages accessible by the user. |
+| `user_id` | `String` | No | User identifier |
 
 ### Operations
 
@@ -1421,16 +1421,16 @@ postmortem = client.Postmortem
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `body` | `String` | No |  |
-| `body_draft` | `String` | No |  |
+| `body` | `String` | No | Postmortem body |
+| `body_draft` | `String` | No | Body draft |
 | `body_draft_updated_at` | `String` | No |  |
 | `body_updated_at` | `String` | No |  |
 | `created_at` | `String` | No |  |
-| `custom_tweet` | `String` | No |  |
-| `notify_subscribers` | `Boolean` | No |  |
-| `notify_twitter` | `Boolean` | No |  |
+| `custom_tweet` | `String` | No | Custom tweet for Incident Postmortem |
+| `notify_subscribers` | `Boolean` | No | Should email subscribers be notified. |
+| `notify_twitter` | `Boolean` | No | Should Twitter followers be notified. |
 | `postmortem` | `Hash` | Yes |  |
-| `preview_key` | `String` | No |  |
+| `preview_key` | `String` | No | Preview Key |
 | `published_at` | `String` | No |  |
 | `updated_at` | `String` | No |  |
 
@@ -1513,12 +1513,12 @@ status_embed_config = client.StatusEmbedConfig
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `incident_background_color` | `String` | No |  |
-| `incident_text_color` | `String` | No |  |
-| `maintenance_background_color` | `String` | No |  |
-| `maintenance_text_color` | `String` | No |  |
-| `page_id` | `String` | No |  |
-| `position` | `String` | No |  |
+| `incident_background_color` | `String` | No | Color of status embed iframe background when displaying incident |
+| `incident_text_color` | `String` | No | Color of status embed iframe text when displaying incident |
+| `maintenance_background_color` | `String` | No | Color of status embed iframe background when displaying maintenance |
+| `maintenance_text_color` | `String` | No | Color of status embed iframe text when displaying maintenance |
+| `page_id` | `String` | No | Page identifier |
+| `position` | `String` | No | Corner where status embed iframe will appear on page |
 | `status_embed_config` | `Hash` | No |  |
 
 ### Operations
@@ -1582,32 +1582,32 @@ subscriber = client.Subscriber
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_ids` | `Array` | No |  |
-| `components` | `String` | No |  |
+| `component_ids` | `Array` | No | A list of component ids for which the subscriber should recieve updates for. |
+| `components` | `String` | No | The components for which the subscriber has elected to receive updates. |
 | `created_at` | `String` | No |  |
-| `display_phone_number` | `String` | No |  |
-| `email` | `String` | No |  |
-| `endpoint` | `String` | No |  |
-| `id` | `String` | No |  |
-| `integration_partner` | `Integer` | No |  |
-| `mode` | `String` | No |  |
-| `obfuscated_channel_name` | `String` | No |  |
-| `page_access_user_id` | `String` | No |  |
-| `phone_country` | `String` | No |  |
-| `phone_number` | `String` | No |  |
-| `purge_at` | `String` | No |  |
-| `quarantined_at` | `String` | No |  |
-| `skip_confirmation_notification` | `Boolean` | No |  |
-| `skip_unsubscription_notification` | `Boolean` | No |  |
-| `slack` | `Integer` | No |  |
-| `sms` | `Integer` | No |  |
-| `state` | `String` | No |  |
+| `display_phone_number` | `String` | No | A formatted version of the phone_number and phone_country pair, nicely formatted for display. |
+| `email` | `String` | No | The email address to use to contact the subscriber. |
+| `endpoint` | `String` | No | The URL where a webhook subscriber elects to receive updates. |
+| `id` | `String` | No | Subscriber Identifier |
+| `integration_partner` | `Integer` | No | The number of integration partners found by the query. |
+| `mode` | `String` | No | The communication mode of the subscriber. |
+| `obfuscated_channel_name` | `String` | No | Obfuscated slack channel name |
+| `page_access_user_id` | `String` | No | The Page Access user this subscriber belongs to (only for audience-specific pages). |
+| `phone_country` | `String` | No | The two-character country code representing the country of which the phone_number is a part. |
+| `phone_number` | `String` | No | The phone number used to contact an SMS subscriber |
+| `purge_at` | `String` | No | The timestamp when a quarantined subscriber will be purged (unsubscribed). |
+| `quarantined_at` | `String` | No | The timestamp when the subscriber was quarantined due to an issue reaching them. |
+| `skip_confirmation_notification` | `Boolean` | No | If this is true, do not notify the user with changes to their subscription. |
+| `skip_unsubscription_notification` | `Boolean` | No | If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed. |
+| `slack` | `Integer` | No | The number of Slack subscribers found by the query. |
+| `sms` | `Integer` | No | The number of Webhook subscribers found by the query. |
+| `state` | `String` | No | If this is present, only unsubscribe subscribers in this state. |
 | `subscriber` | `Hash` | No |  |
-| `subscribers` | `String` | Yes |  |
-| `teams` | `Integer` | No |  |
-| `type` | `String` | No |  |
-| `webhook` | `Integer` | No |  |
-| `workspace_name` | `String` | No |  |
+| `subscribers` | `String` | Yes | The array of quarantined subscriber codes to reactivate, or "all" to reactivate all quarantined subscribers. |
+| `teams` | `Integer` | No | The number of MS teams subscribers found by the query. |
+| `type` | `String` | No | If this is present, only reactivate subscribers of this type. |
+| `webhook` | `Integer` | No | The number of SMS subscribers found by the query. |
+| `workspace_name` | `String` | No | The workspace name of the slack subscriber. |
 
 ### Operations
 
@@ -1699,11 +1699,11 @@ user = client.User
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `created_at` | `String` | No |  |
-| `email` | `String` | No |  |
+| `email` | `String` | No | Email address for the team member |
 | `first_name` | `String` | No |  |
-| `id` | `String` | No |  |
+| `id` | `String` | No | User identifier |
 | `last_name` | `String` | No |  |
-| `organization_id` | `String` | No |  |
+| `organization_id` | `String` | No | Organization identifier |
 | `updated_at` | `String` | No |  |
 | `user` | `Hash` | Yes |  |
 

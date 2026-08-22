@@ -5,10 +5,10 @@ import type { GroupComponent, GroupComponentLoadMatch, GroupComponentListMatch, 
 declare class GroupComponentEntity extends StatuspageEntityBase<GroupComponent> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: GroupComponentEntity): GroupComponentEntity;
-    load(this: any, reqmatch?: GroupComponentLoadMatch, ctrl?: Control): Promise<GroupComponent>;
-    list(this: any, reqmatch?: GroupComponentListMatch, ctrl?: Control): Promise<GroupComponent[]>;
-    create(this: any, reqdata?: GroupComponentCreateData, ctrl?: Control): Promise<GroupComponent>;
-    update(this: any, reqdata?: GroupComponentUpdateData, ctrl?: Control): Promise<GroupComponent>;
-    remove(this: any, reqmatch?: GroupComponentRemoveMatch, ctrl?: Control): Promise<GroupComponent>;
+    load(this: any, reqmatch?: GroupComponentLoadMatch, ctrl?: Control): Promise<GroupComponentEntity>;
+    list(this: any, reqmatch?: GroupComponentListMatch, ctrl?: Control): Promise<GroupComponentEntity[]>;
+    create(this: any, reqdata?: GroupComponentCreateData, ctrl?: Control): Promise<GroupComponentEntity>;
+    update(this: any, reqdata?: GroupComponentUpdateData, ctrl?: Control): Promise<GroupComponentEntity>;
+    remove(this: any, reqmatch?: GroupComponentRemoveMatch, ctrl?: Control): Promise<GroupComponentEntity>;
 }
 export { GroupComponentEntity };

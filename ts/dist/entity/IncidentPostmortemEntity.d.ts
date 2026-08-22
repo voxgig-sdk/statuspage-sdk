@@ -5,6 +5,6 @@ import type { IncidentPostmortem, IncidentPostmortemRemoveMatch } from '../Statu
 declare class IncidentPostmortemEntity extends StatuspageEntityBase<IncidentPostmortem> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: IncidentPostmortemEntity): IncidentPostmortemEntity;
-    remove(this: any, reqmatch?: IncidentPostmortemRemoveMatch, ctrl?: Control): Promise<IncidentPostmortem>;
+    remove(this: any, reqmatch?: IncidentPostmortemRemoveMatch, ctrl?: Control): Promise<IncidentPostmortemEntity>;
 }
 export { IncidentPostmortemEntity };

@@ -76,12 +76,12 @@ const utility_1 = require("../../utility");
         let subscriber_ref01_data = setup.data.new.subscriber['subscriber_ref01'];
         subscriber_ref01_data['incident_id'] = setup.idmap['incident01'];
         subscriber_ref01_data['page_id'] = setup.idmap['page01'];
-        subscriber_ref01_data = await subscriber_ref01_ent.create(subscriber_ref01_data);
+        subscriber_ref01_data = (await subscriber_ref01_ent.create(subscriber_ref01_data)).data();
         (0, node_assert_1.default)(null != subscriber_ref01_data.id);
         // LIST
         const subscriber_ref01_match = {};
         subscriber_ref01_match['page_id'] = setup.idmap['page01'];
-        const subscriber_ref01_list = await subscriber_ref01_ent.list(subscriber_ref01_match);
+        const subscriber_ref01_list = (await subscriber_ref01_ent.list(subscriber_ref01_match)).map((e) => e.data());
         (0, node_assert_1.default)(!isempty(select(subscriber_ref01_list, { id: subscriber_ref01_data.id })));
         // UPDATE
         const subscriber_ref01_data_up0 = {};
@@ -89,13 +89,13 @@ const utility_1 = require("../../utility");
         subscriber_ref01_data_up0['page_id'] = setup.idmap['page_id'];
         const subscriber_ref01_markdef_up0 = { name: 'components', value: 'Mark01-subscriber_ref01_' + setup.now };
         subscriber_ref01_data_up0[subscriber_ref01_markdef_up0.name] = subscriber_ref01_markdef_up0.value;
-        const subscriber_ref01_resdata_up0 = await subscriber_ref01_ent.update(subscriber_ref01_data_up0);
+        const subscriber_ref01_resdata_up0 = (await subscriber_ref01_ent.update(subscriber_ref01_data_up0)).data();
         (0, node_assert_1.default)(subscriber_ref01_resdata_up0.id === subscriber_ref01_data_up0.id);
         (0, node_assert_1.default)(subscriber_ref01_resdata_up0[subscriber_ref01_markdef_up0.name] === subscriber_ref01_markdef_up0.value);
         // LOAD
         const subscriber_ref01_match_dt0 = {};
         subscriber_ref01_match_dt0.id = subscriber_ref01_data.id;
-        const subscriber_ref01_data_dt0 = await subscriber_ref01_ent.load(subscriber_ref01_match_dt0);
+        const subscriber_ref01_data_dt0 = (await subscriber_ref01_ent.load(subscriber_ref01_match_dt0)).data();
         (0, node_assert_1.default)(subscriber_ref01_data_dt0.id === subscriber_ref01_data.id);
         // REMOVE
         const subscriber_ref01_match_rm0 = { id: subscriber_ref01_data.id };
@@ -103,7 +103,7 @@ const utility_1 = require("../../utility");
         // LIST
         const subscriber_ref01_match_rt0 = {};
         subscriber_ref01_match_rt0['page_id'] = setup.idmap['page01'];
-        const subscriber_ref01_list_rt0 = await subscriber_ref01_ent.list(subscriber_ref01_match_rt0);
+        const subscriber_ref01_list_rt0 = (await subscriber_ref01_ent.list(subscriber_ref01_match_rt0)).map((e) => e.data());
         (0, node_assert_1.default)(isempty(select(subscriber_ref01_list_rt0, { id: subscriber_ref01_data.id })));
     });
 });

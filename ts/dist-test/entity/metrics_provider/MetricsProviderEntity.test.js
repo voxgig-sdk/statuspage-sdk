@@ -75,12 +75,12 @@ const utility_1 = require("../../utility");
         const metrics_provider_ref01_ent = client.MetricsProvider();
         let metrics_provider_ref01_data = setup.data.new.metrics_provider['metrics_provider_ref01'];
         metrics_provider_ref01_data['page_id'] = setup.idmap['page01'];
-        metrics_provider_ref01_data = await metrics_provider_ref01_ent.create(metrics_provider_ref01_data);
+        metrics_provider_ref01_data = (await metrics_provider_ref01_ent.create(metrics_provider_ref01_data)).data();
         (0, node_assert_1.default)(null != metrics_provider_ref01_data.id);
         // LIST
         const metrics_provider_ref01_match = {};
         metrics_provider_ref01_match['page_id'] = setup.idmap['page01'];
-        const metrics_provider_ref01_list = await metrics_provider_ref01_ent.list(metrics_provider_ref01_match);
+        const metrics_provider_ref01_list = (await metrics_provider_ref01_ent.list(metrics_provider_ref01_match)).map((e) => e.data());
         (0, node_assert_1.default)(!isempty(select(metrics_provider_ref01_list, { id: metrics_provider_ref01_data.id })));
         // UPDATE
         const metrics_provider_ref01_data_up0 = {};
@@ -88,13 +88,13 @@ const utility_1 = require("../../utility");
         metrics_provider_ref01_data_up0['page_id'] = setup.idmap['page_id'];
         const metrics_provider_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-metrics_provider_ref01_' + setup.now };
         metrics_provider_ref01_data_up0[metrics_provider_ref01_markdef_up0.name] = metrics_provider_ref01_markdef_up0.value;
-        const metrics_provider_ref01_resdata_up0 = await metrics_provider_ref01_ent.update(metrics_provider_ref01_data_up0);
+        const metrics_provider_ref01_resdata_up0 = (await metrics_provider_ref01_ent.update(metrics_provider_ref01_data_up0)).data();
         (0, node_assert_1.default)(metrics_provider_ref01_resdata_up0.id === metrics_provider_ref01_data_up0.id);
         (0, node_assert_1.default)(metrics_provider_ref01_resdata_up0[metrics_provider_ref01_markdef_up0.name] === metrics_provider_ref01_markdef_up0.value);
         // LOAD
         const metrics_provider_ref01_match_dt0 = {};
         metrics_provider_ref01_match_dt0.id = metrics_provider_ref01_data.id;
-        const metrics_provider_ref01_data_dt0 = await metrics_provider_ref01_ent.load(metrics_provider_ref01_match_dt0);
+        const metrics_provider_ref01_data_dt0 = (await metrics_provider_ref01_ent.load(metrics_provider_ref01_match_dt0)).data();
         (0, node_assert_1.default)(metrics_provider_ref01_data_dt0.id === metrics_provider_ref01_data.id);
         // REMOVE
         const metrics_provider_ref01_match_rm0 = { id: metrics_provider_ref01_data.id };
@@ -102,7 +102,7 @@ const utility_1 = require("../../utility");
         // LIST
         const metrics_provider_ref01_match_rt0 = {};
         metrics_provider_ref01_match_rt0['page_id'] = setup.idmap['page01'];
-        const metrics_provider_ref01_list_rt0 = await metrics_provider_ref01_ent.list(metrics_provider_ref01_match_rt0);
+        const metrics_provider_ref01_list_rt0 = (await metrics_provider_ref01_ent.list(metrics_provider_ref01_match_rt0)).map((e) => e.data());
         (0, node_assert_1.default)(isempty(select(metrics_provider_ref01_list_rt0, { id: metrics_provider_ref01_data.id })));
     });
 });

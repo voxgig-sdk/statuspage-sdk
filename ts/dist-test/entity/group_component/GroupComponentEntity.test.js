@@ -75,12 +75,12 @@ const utility_1 = require("../../utility");
         const group_component_ref01_ent = client.GroupComponent();
         let group_component_ref01_data = setup.data.new.group_component['group_component_ref01'];
         group_component_ref01_data['page_id'] = setup.idmap['page01'];
-        group_component_ref01_data = await group_component_ref01_ent.create(group_component_ref01_data);
+        group_component_ref01_data = (await group_component_ref01_ent.create(group_component_ref01_data)).data();
         (0, node_assert_1.default)(null != group_component_ref01_data.id);
         // LIST
         const group_component_ref01_match = {};
         group_component_ref01_match['page_id'] = setup.idmap['page01'];
-        const group_component_ref01_list = await group_component_ref01_ent.list(group_component_ref01_match);
+        const group_component_ref01_list = (await group_component_ref01_ent.list(group_component_ref01_match)).map((e) => e.data());
         (0, node_assert_1.default)(!isempty(select(group_component_ref01_list, { id: group_component_ref01_data.id })));
         // UPDATE
         const group_component_ref01_data_up0 = {};
@@ -88,13 +88,13 @@ const utility_1 = require("../../utility");
         group_component_ref01_data_up0['page_id'] = setup.idmap['page_id'];
         const group_component_ref01_markdef_up0 = { name: 'components', value: 'Mark01-group_component_ref01_' + setup.now };
         group_component_ref01_data_up0[group_component_ref01_markdef_up0.name] = group_component_ref01_markdef_up0.value;
-        const group_component_ref01_resdata_up0 = await group_component_ref01_ent.update(group_component_ref01_data_up0);
+        const group_component_ref01_resdata_up0 = (await group_component_ref01_ent.update(group_component_ref01_data_up0)).data();
         (0, node_assert_1.default)(group_component_ref01_resdata_up0.id === group_component_ref01_data_up0.id);
         (0, node_assert_1.default)(group_component_ref01_resdata_up0[group_component_ref01_markdef_up0.name] === group_component_ref01_markdef_up0.value);
         // LOAD
         const group_component_ref01_match_dt0 = {};
         group_component_ref01_match_dt0.id = group_component_ref01_data.id;
-        const group_component_ref01_data_dt0 = await group_component_ref01_ent.load(group_component_ref01_match_dt0);
+        const group_component_ref01_data_dt0 = (await group_component_ref01_ent.load(group_component_ref01_match_dt0)).data();
         (0, node_assert_1.default)(group_component_ref01_data_dt0.id === group_component_ref01_data.id);
         // REMOVE
         const group_component_ref01_match_rm0 = { id: group_component_ref01_data.id };
@@ -102,7 +102,7 @@ const utility_1 = require("../../utility");
         // LIST
         const group_component_ref01_match_rt0 = {};
         group_component_ref01_match_rt0['page_id'] = setup.idmap['page01'];
-        const group_component_ref01_list_rt0 = await group_component_ref01_ent.list(group_component_ref01_match_rt0);
+        const group_component_ref01_list_rt0 = (await group_component_ref01_ent.list(group_component_ref01_match_rt0)).map((e) => e.data());
         (0, node_assert_1.default)(isempty(select(group_component_ref01_list_rt0, { id: group_component_ref01_data.id })));
     });
 });

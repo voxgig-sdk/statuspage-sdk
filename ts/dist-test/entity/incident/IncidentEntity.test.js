@@ -75,12 +75,12 @@ const utility_1 = require("../../utility");
         const incident_ref01_ent = client.Incident();
         let incident_ref01_data = setup.data.new.incident['incident_ref01'];
         incident_ref01_data['page_id'] = setup.idmap['page01'];
-        incident_ref01_data = await incident_ref01_ent.create(incident_ref01_data);
+        incident_ref01_data = (await incident_ref01_ent.create(incident_ref01_data)).data();
         (0, node_assert_1.default)(null != incident_ref01_data.id);
         // LIST
         const incident_ref01_match = {};
         incident_ref01_match['page_id'] = setup.idmap['page01'];
-        const incident_ref01_list = await incident_ref01_ent.list(incident_ref01_match);
+        const incident_ref01_list = (await incident_ref01_ent.list(incident_ref01_match)).map((e) => e.data());
         (0, node_assert_1.default)(!isempty(select(incident_ref01_list, { id: incident_ref01_data.id })));
         // UPDATE
         const incident_ref01_data_up0 = {};
@@ -88,13 +88,13 @@ const utility_1 = require("../../utility");
         incident_ref01_data_up0['page_id'] = setup.idmap['page_id'];
         const incident_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-incident_ref01_' + setup.now };
         incident_ref01_data_up0[incident_ref01_markdef_up0.name] = incident_ref01_markdef_up0.value;
-        const incident_ref01_resdata_up0 = await incident_ref01_ent.update(incident_ref01_data_up0);
+        const incident_ref01_resdata_up0 = (await incident_ref01_ent.update(incident_ref01_data_up0)).data();
         (0, node_assert_1.default)(incident_ref01_resdata_up0.id === incident_ref01_data_up0.id);
         (0, node_assert_1.default)(incident_ref01_resdata_up0[incident_ref01_markdef_up0.name] === incident_ref01_markdef_up0.value);
         // LOAD
         const incident_ref01_match_dt0 = {};
         incident_ref01_match_dt0.id = incident_ref01_data.id;
-        const incident_ref01_data_dt0 = await incident_ref01_ent.load(incident_ref01_match_dt0);
+        const incident_ref01_data_dt0 = (await incident_ref01_ent.load(incident_ref01_match_dt0)).data();
         (0, node_assert_1.default)(incident_ref01_data_dt0.id === incident_ref01_data.id);
         // REMOVE
         const incident_ref01_match_rm0 = { id: incident_ref01_data.id };
@@ -102,7 +102,7 @@ const utility_1 = require("../../utility");
         // LIST
         const incident_ref01_match_rt0 = {};
         incident_ref01_match_rt0['page_id'] = setup.idmap['page01'];
-        const incident_ref01_list_rt0 = await incident_ref01_ent.list(incident_ref01_match_rt0);
+        const incident_ref01_list_rt0 = (await incident_ref01_ent.list(incident_ref01_match_rt0)).map((e) => e.data());
         (0, node_assert_1.default)(isempty(select(incident_ref01_list_rt0, { id: incident_ref01_data.id })));
     });
 });

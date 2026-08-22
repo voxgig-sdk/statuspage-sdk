@@ -5,7 +5,7 @@ import type { Permission, PermissionLoadMatch, PermissionUpdateData } from '../S
 declare class PermissionEntity extends StatuspageEntityBase<Permission> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: PermissionEntity): PermissionEntity;
-    load(this: any, reqmatch?: PermissionLoadMatch, ctrl?: Control): Promise<Permission>;
-    update(this: any, reqdata?: PermissionUpdateData, ctrl?: Control): Promise<Permission>;
+    load(this: any, reqmatch?: PermissionLoadMatch, ctrl?: Control): Promise<PermissionEntity>;
+    update(this: any, reqdata?: PermissionUpdateData, ctrl?: Control): Promise<PermissionEntity>;
 }
 export { PermissionEntity };

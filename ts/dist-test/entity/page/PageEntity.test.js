@@ -75,19 +75,19 @@ const utility_1 = require("../../utility");
         // LIST
         const page_ref01_ent = client.Page();
         const page_ref01_match = {};
-        const page_ref01_list = await page_ref01_ent.list(page_ref01_match);
+        const page_ref01_list = (await page_ref01_ent.list(page_ref01_match)).map((e) => e.data());
         // UPDATE
         const page_ref01_data_up0 = {};
         page_ref01_data_up0.id = page_ref01_data.id;
         const page_ref01_markdef_up0 = { name: 'branding', value: 'Mark01-page_ref01_' + setup.now };
         page_ref01_data_up0[page_ref01_markdef_up0.name] = page_ref01_markdef_up0.value;
-        const page_ref01_resdata_up0 = await page_ref01_ent.update(page_ref01_data_up0);
+        const page_ref01_resdata_up0 = (await page_ref01_ent.update(page_ref01_data_up0)).data();
         (0, node_assert_1.default)(page_ref01_resdata_up0.id === page_ref01_data_up0.id);
         (0, node_assert_1.default)(page_ref01_resdata_up0[page_ref01_markdef_up0.name] === page_ref01_markdef_up0.value);
         // LOAD
         const page_ref01_match_dt0 = {};
         page_ref01_match_dt0.id = page_ref01_data.id;
-        const page_ref01_data_dt0 = await page_ref01_ent.load(page_ref01_match_dt0);
+        const page_ref01_data_dt0 = (await page_ref01_ent.load(page_ref01_match_dt0)).data();
         (0, node_assert_1.default)(page_ref01_data_dt0.id === page_ref01_data.id);
     });
 });

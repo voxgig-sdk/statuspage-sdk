@@ -18,6 +18,8 @@ export interface Component {
 export interface ComponentLoadMatch {
     id: string;
     page_id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface ComponentListMatch {
     page_access_group_id?: string;
@@ -40,6 +42,8 @@ export interface ComponentCreateData {
     start_date?: string;
     status?: string;
     updated_at?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface ComponentUpdateData {
     id: string;
@@ -61,6 +65,8 @@ export interface ComponentUpdateData {
 export interface ComponentRemoveMatch {
     id: string;
     page_id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface ComponentGroupUptime {
     component_id?: string;
@@ -154,6 +160,8 @@ export interface IncidentLoadMatch {
 }
 export interface IncidentListMatch {
     page_id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface IncidentCreateData {
     page_id: string;
@@ -354,6 +362,8 @@ export interface MetricCreateData {
     y_axis_hidden?: boolean;
     y_axis_max?: number;
     y_axis_min?: number;
+    $action?: string;
+    [action: string]: any;
 }
 export interface MetricUpdateData {
     id: string;
@@ -381,6 +391,8 @@ export interface MetricUpdateData {
 export interface MetricRemoveMatch {
     id: string;
     page_id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface MetricsProvider {
     created_at?: string;
@@ -603,6 +615,8 @@ export interface PageAccessGroupCreateData {
     page_access_user_ids?: any[];
     page_id?: string;
     updated_at?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface PageAccessGroupUpdateData {
     id: string;
@@ -615,11 +629,15 @@ export interface PageAccessGroupUpdateData {
     page_access_group?: Record<string, any>;
     page_access_user_ids?: any[];
     updated_at?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface PageAccessGroupRemoveMatch {
     component_id?: string;
     id: string;
     page_id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface PageAccessUser {
     component_ids: any[];
@@ -653,6 +671,8 @@ export interface PageAccessUserCreateData {
     page_access_user?: Record<string, any>;
     page_id?: string;
     updated_at?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface PageAccessUserUpdateData {
     id: string;
@@ -666,12 +686,16 @@ export interface PageAccessUserUpdateData {
     page_access_group_ids?: string;
     page_access_user?: Record<string, any>;
     updated_at?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface PageAccessUserRemoveMatch {
     component_id?: string;
     id: string;
     page_id: string;
     metric_id?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface Permission {
     pages?: Record<string, any>;
@@ -720,6 +744,8 @@ export interface PostmortemUpdateData {
     preview_key?: string;
     published_at?: string;
     updated_at?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface StatusEmbedConfig {
     incident_background_color?: string;
@@ -774,10 +800,14 @@ export interface SubscriberLoadMatch {
     id: string;
     incident_id?: string;
     page_id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface SubscriberListMatch {
     page_id: string;
     incident_id?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface SubscriberCreateData {
     incident_id?: string;
@@ -808,6 +838,8 @@ export interface SubscriberCreateData {
     type?: string;
     webhook?: number;
     workspace_name?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface SubscriberUpdateData {
     id: string;

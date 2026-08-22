@@ -80,7 +80,7 @@ const utility_1 = require("../../utility");
         incident_update_ref01_data_up0['page_id'] = setup.idmap['page_id'];
         const incident_update_ref01_markdef_up0 = { name: 'body', value: 'Mark01-incident_update_ref01_' + setup.now };
         incident_update_ref01_data_up0[incident_update_ref01_markdef_up0.name] = incident_update_ref01_markdef_up0.value;
-        const incident_update_ref01_resdata_up0 = await incident_update_ref01_ent.update(incident_update_ref01_data_up0);
+        const incident_update_ref01_resdata_up0 = (await incident_update_ref01_ent.update(incident_update_ref01_data_up0)).data();
         (0, node_assert_1.default)(incident_update_ref01_resdata_up0.id === incident_update_ref01_data_up0.id);
         (0, node_assert_1.default)(incident_update_ref01_resdata_up0[incident_update_ref01_markdef_up0.name] === incident_update_ref01_markdef_up0.value);
     });

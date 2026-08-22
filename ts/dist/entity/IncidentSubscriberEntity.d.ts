@@ -5,6 +5,6 @@ import type { IncidentSubscriber, IncidentSubscriberCreateData } from '../Status
 declare class IncidentSubscriberEntity extends StatuspageEntityBase<IncidentSubscriber> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: IncidentSubscriberEntity): IncidentSubscriberEntity;
-    create(this: any, reqdata?: IncidentSubscriberCreateData, ctrl?: Control): Promise<IncidentSubscriber>;
+    create(this: any, reqdata?: IncidentSubscriberCreateData, ctrl?: Control): Promise<IncidentSubscriberEntity>;
 }
 export { IncidentSubscriberEntity };

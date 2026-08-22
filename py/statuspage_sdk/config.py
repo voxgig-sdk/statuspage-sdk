@@ -28,6 +28,9 @@ def make_config():
     return {
         "main": {
             "name": "Statuspage",
+            "slug": "statuspage",
+            "version": "0.0.1",
+            "target": "py",
         },
         "feature": {
             "test": {
@@ -70,6 +73,7 @@ def make_config():
         "fields": [
           {
             "name": "automation_email",
+            "short": "Requires a special feature flag to be enabled",
             "type": "`$STRING`",
           },
           {
@@ -82,46 +86,57 @@ def make_config():
           },
           {
             "name": "description",
+            "short": "More detailed description for component",
             "type": "`$STRING`",
           },
           {
             "name": "group",
+            "short": "Is this component a group",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "group_id",
+            "short": "Component Group identifier",
             "type": "`$STRING`",
           },
           {
             "name": "id",
+            "short": "Incident identifier",
             "type": "`$STRING`",
           },
           {
             "name": "name",
+            "short": "Display name for component",
             "type": "`$STRING`",
           },
           {
             "name": "only_show_if_degraded",
+            "short": "Requires a special feature flag to be enabled",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "page_id",
+            "short": "Page identifier",
             "type": "`$STRING`",
           },
           {
             "name": "position",
+            "short": "Order the component will appear on the page",
             "type": "`$INTEGER`",
           },
           {
             "name": "showcase",
+            "short": "Should this component be showcased",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "start_date",
+            "short": "The date this component started being used",
             "type": "`$STRING`",
           },
           {
             "name": "status",
+            "short": "Status of component",
             "type": "`$STRING`",
           },
           {
@@ -804,10 +819,12 @@ def make_config():
         "fields": [
           {
             "name": "component_id",
+            "short": "Component identifier",
             "type": "`$STRING`",
           },
           {
             "name": "incidents",
+            "short": "Related incidents",
             "type": "`$OBJECT`",
           },
         ],
@@ -901,10 +918,12 @@ def make_config():
           },
           {
             "name": "description",
+            "short": "Description of the component group.",
             "type": "`$STRING`",
           },
           {
             "name": "id",
+            "short": "Component Group Identifier",
             "type": "`$STRING`",
           },
           {
@@ -1207,38 +1226,47 @@ def make_config():
         "fields": [
           {
             "name": "auto_transition_deliver_notifications_at_end",
+            "short": "Controls whether send notification when scheduled maintenances auto transition to completed.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "auto_transition_deliver_notifications_at_start",
+            "short": "Controls whether send notification when scheduled maintenances auto transition to started.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "auto_transition_to_maintenance_state",
+            "short": "Controls whether change components status to under_maintenance once scheduled maintenance is in progress.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "auto_transition_to_operational_state",
+            "short": "Controls whether change components status to operational once scheduled maintenance completes.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "components",
+            "short": "Incident components",
             "type": "`$ARRAY`",
           },
           {
             "name": "created_at",
+            "short": "The timestamp when the incident was created at.",
             "type": "`$STRING`",
           },
           {
             "name": "id",
+            "short": "Incident Identifier",
             "type": "`$STRING`",
           },
           {
             "name": "impact",
+            "short": "The impact of the incident.",
             "type": "`$STRING`",
           },
           {
             "name": "impact_override",
+            "short": "value to override calculated impact value",
             "type": "`$STRING`",
           },
           {
@@ -1256,90 +1284,112 @@ def make_config():
           },
           {
             "name": "incident_updates",
+            "short": "The incident updates for incident.",
             "type": "`$ARRAY`",
           },
           {
             "name": "metadata",
+            "short": "Metadata attached to the incident.",
             "type": "`$OBJECT`",
           },
           {
             "name": "monitoring_at",
+            "short": "The timestamp when incident entered monitoring state.",
             "type": "`$STRING`",
           },
           {
             "name": "name",
+            "short": "Incident Name.",
             "type": "`$STRING`",
           },
           {
             "name": "page_id",
+            "short": "Incident Page Identifier",
             "type": "`$STRING`",
           },
           {
             "name": "postmortem_body",
+            "short": "Body of the Postmortem.",
             "type": "`$STRING`",
           },
           {
             "name": "postmortem_body_last_updated_at",
+            "short": "The timestamp when the incident postmortem body was last updated at.",
             "type": "`$STRING`",
           },
           {
             "name": "postmortem_ignored",
+            "short": "Controls whether the incident will have postmortem.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "postmortem_notified_subscribers",
+            "short": "Indicates whether subscribers are already notificed about postmortem.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "postmortem_notified_twitter",
+            "short": "Controls whether to decide if notify postmortem on twitter.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "postmortem_published_at",
+            "short": "The timestamp when the postmortem was published.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "reminder_intervals",
+            "short": "Custom reminder intervals for unresolved/open incidents.",
             "type": "`$STRING`",
           },
           {
             "name": "resolved_at",
+            "short": "The timestamp when incident was resolved.",
             "type": "`$STRING`",
           },
           {
             "name": "scheduled_auto_completed",
+            "short": "Controls whether the incident is scheduled to automatically change to complete.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "scheduled_auto_in_progress",
+            "short": "Controls whether the incident is scheduled to automatically change to in progress.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "scheduled_for",
+            "short": "The timestamp the incident is scheduled for.",
             "type": "`$STRING`",
           },
           {
             "name": "scheduled_remind_prior",
+            "short": "Controls whether to remind subscribers prior to scheduled incidents.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "scheduled_reminded_at",
+            "short": "The timestamp when the scheduled incident reminder was sent at.",
             "type": "`$STRING`",
           },
           {
             "name": "scheduled_until",
+            "short": "The timestamp the incident is scheduled until.",
             "type": "`$STRING`",
           },
           {
             "name": "shortlink",
+            "short": "Incident Shortlink.",
             "type": "`$STRING`",
           },
           {
             "name": "status",
+            "short": "The incident status.",
             "type": "`$STRING`",
           },
           {
             "name": "updated_at",
+            "short": "The timestamp when the incident was updated at.",
             "type": "`$STRING`",
           },
         ],
@@ -1994,30 +2044,37 @@ def make_config():
         "fields": [
           {
             "name": "body",
+            "short": "Body of the incident or maintenance update to be applied when selecting this template",
             "type": "`$STRING`",
           },
           {
             "name": "components",
+            "short": "Affected components",
             "type": "`$ARRAY`",
           },
           {
             "name": "group_id",
+            "short": "Identifier of Template Group this template belongs to",
             "type": "`$STRING`",
           },
           {
             "name": "id",
+            "short": "Incident Template Identifier",
             "type": "`$STRING`",
           },
           {
             "name": "name",
+            "short": "Name of the template, as shown in the list on the \"Templates\" tab of the \"Incidents\" page",
             "type": "`$STRING`",
           },
           {
             "name": "should_send_notifications",
+            "short": "Whether the \"deliver notifications\" checkbox should be selected when selecting this template",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "should_tweet",
+            "short": "Whether the \"tweet update\" checkbox should be selected when selecting this template",
             "type": "`$BOOLEAN`",
           },
           {
@@ -2027,10 +2084,12 @@ def make_config():
           },
           {
             "name": "title",
+            "short": "Title to be applied to the incident or maintenance when selecting this template",
             "type": "`$STRING`",
           },
           {
             "name": "update_status",
+            "short": "The status the incident or maintenance should transition to when selecting this template",
             "type": "`$STRING`",
           },
         ],
@@ -2139,34 +2198,42 @@ def make_config():
         "fields": [
           {
             "name": "affected_components",
+            "short": "Affected components associated with the incident update.",
             "type": "`$ARRAY`",
           },
           {
             "name": "body",
+            "short": "Incident update body.",
             "type": "`$STRING`",
           },
           {
             "name": "created_at",
+            "short": "The timestamp when the incident update was created at.",
             "type": "`$STRING`",
           },
           {
             "name": "custom_tweet",
+            "short": "An optional customized tweet message for incident postmortem.",
             "type": "`$STRING`",
           },
           {
             "name": "deliver_notifications",
+            "short": "Controls whether to delivery notifications.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "display_at",
+            "short": "Timestamp when incident update is happened.",
             "type": "`$STRING`",
           },
           {
             "name": "id",
+            "short": "Incident Update Identifier.",
             "type": "`$STRING`",
           },
           {
             "name": "incident_id",
+            "short": "Incident Identifier.",
             "type": "`$STRING`",
           },
           {
@@ -2175,22 +2242,27 @@ def make_config():
           },
           {
             "name": "status",
+            "short": "The incident status.",
             "type": "`$STRING`",
           },
           {
             "name": "tweet_id",
+            "short": "Tweet identifier associated to this incident update.",
             "type": "`$STRING`",
           },
           {
             "name": "twitter_updated_at",
+            "short": "The timestamp when twitter updated at.",
             "type": "`$STRING`",
           },
           {
             "name": "updated_at",
+            "short": "The timestamp when the incident update is updated.",
             "type": "`$STRING`",
           },
           {
             "name": "wants_twitter_update",
+            "short": "Controls whether to create twitter update.",
             "type": "`$BOOLEAN`",
           },
         ],
@@ -2347,6 +2419,7 @@ def make_config():
           {
             "name": "data",
             "req": True,
+            "short": "Add data points to metrics",
             "type": "`$OBJECT`",
           },
           {
@@ -2355,10 +2428,12 @@ def make_config():
           },
           {
             "name": "display",
+            "short": "Should the metric be displayed",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "id",
+            "short": "Metric identifier",
             "type": "`$STRING`",
           },
           {
@@ -2371,10 +2446,12 @@ def make_config():
           },
           {
             "name": "metric_identifier",
+            "short": "Metric Display identifier used to look up the metric data from the provider",
             "type": "`$STRING`",
           },
           {
             "name": "metrics_provider_id",
+            "short": "Metric Provider identifier",
             "type": "`$STRING`",
           },
           {
@@ -2383,6 +2460,7 @@ def make_config():
           },
           {
             "name": "name",
+            "short": "Name of metric",
             "type": "`$STRING`",
           },
           {
@@ -2391,6 +2469,7 @@ def make_config():
           },
           {
             "name": "suffix",
+            "short": "Suffix to describe the units on the graph",
             "type": "`$STRING`",
           },
           {
@@ -2403,6 +2482,7 @@ def make_config():
           },
           {
             "name": "y_axis_hidden",
+            "short": "Should the values on the y axis be hidden on render",
             "type": "`$BOOLEAN`",
           },
           {
@@ -2985,6 +3065,7 @@ def make_config():
           },
           {
             "name": "id",
+            "short": "Identifier for Metrics Provider",
             "type": "`$STRING`",
           },
           {
@@ -3309,30 +3390,37 @@ def make_config():
           },
           {
             "name": "allow_email_subscribers",
+            "short": "Can your users choose to receive notifications via email",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "allow_incident_subscribers",
+            "short": "Can your users subscribe to notifications for a single incident",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "allow_page_subscribers",
+            "short": "Can your users subscribe to all notifications on the page",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "allow_rss_atom_feeds",
+            "short": "Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages)",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "allow_sms_subscribers",
+            "short": "Can your users choose to receive notifications via SMS",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "allow_webhook_subscribers",
+            "short": "Can your users choose to receive notifications via Webhooks",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "branding",
+            "short": "The main template your statuspage will use",
             "type": "`$STRING`",
           },
           {
@@ -3345,58 +3433,72 @@ def make_config():
           },
           {
             "name": "created_at",
+            "short": "Timestamp the record was created",
             "type": "`$STRING`",
           },
           {
             "name": "css_blues",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_body_background_color",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_border_color",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_font_color",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_graph_color",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_greens",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_light_font_color",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_link_color",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_no_data",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_oranges",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_reds",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "css_yellows",
+            "short": "CSS Color",
             "type": "`$STRING`",
           },
           {
             "name": "domain",
+            "short": "CNAME alias for your status page",
             "type": "`$STRING`",
           },
           {
@@ -3417,10 +3519,12 @@ def make_config():
           },
           {
             "name": "hidden_from_search",
+            "short": "Should your page hide itself from search engines",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "id",
+            "short": "Page identifier",
             "type": "`$STRING`",
           },
           {
@@ -3429,14 +3533,17 @@ def make_config():
           },
           {
             "name": "name",
+            "short": "Name of your page to be displayed",
             "type": "`$STRING`",
           },
           {
             "name": "notifications_email_footer",
+            "short": "Allows you to customize the footer appearing on your notification emails.",
             "type": "`$STRING`",
           },
           {
             "name": "notifications_from_email",
+            "short": "Allows you to customize the email address your page notifications come from",
             "type": "`$STRING`",
           },
           {
@@ -3453,6 +3560,7 @@ def make_config():
           },
           {
             "name": "subdomain",
+            "short": "Subdomain at which to access your status page",
             "type": "`$STRING`",
           },
           {
@@ -3461,6 +3569,7 @@ def make_config():
           },
           {
             "name": "time_zone",
+            "short": "Timezone configured for your page",
             "type": "`$STRING`",
           },
           {
@@ -3477,10 +3586,12 @@ def make_config():
           },
           {
             "name": "updated_at",
+            "short": "Timestamp the record was last updated",
             "type": "`$STRING`",
           },
           {
             "name": "url",
+            "short": "Website of your page.",
             "type": "`$STRING`",
           },
           {
@@ -3649,6 +3760,7 @@ def make_config():
                 "type": "`$ARRAY`",
               },
             },
+            "short": "List of components codes to set on the page access group",
             "type": "`$ARRAY`",
           },
           {
@@ -3657,10 +3769,12 @@ def make_config():
           },
           {
             "name": "external_identifier",
+            "short": "Associates group with external group.",
             "type": "`$STRING`",
           },
           {
             "name": "id",
+            "short": "Page Access Group Identifier",
             "type": "`$STRING`",
           },
           {
@@ -3669,6 +3783,7 @@ def make_config():
           },
           {
             "name": "name",
+            "short": "Name for this Group.",
             "type": "`$STRING`",
           },
           {
@@ -3681,6 +3796,7 @@ def make_config():
           },
           {
             "name": "page_id",
+            "short": "Page Identifier.",
             "type": "`$STRING`",
           },
           {
@@ -4250,6 +4366,7 @@ def make_config():
           {
             "name": "component_ids",
             "req": True,
+            "short": "List of component codes to allow access to",
             "type": "`$ARRAY`",
           },
           {
@@ -4262,15 +4379,18 @@ def make_config():
           },
           {
             "name": "external_login",
+            "short": "IDP login user id.",
             "type": "`$STRING`",
           },
           {
             "name": "id",
+            "short": "Page Access User Identifier",
             "type": "`$STRING`",
           },
           {
             "name": "metric_ids",
             "req": True,
+            "short": "List of metrics to add",
             "type": "`$ARRAY`",
           },
           {
@@ -5100,10 +5220,12 @@ def make_config():
         "fields": [
           {
             "name": "pages",
+            "short": "Pages accessible by the user.",
             "type": "`$OBJECT`",
           },
           {
             "name": "user_id",
+            "short": "User identifier",
             "type": "`$STRING`",
           },
         ],
@@ -5222,10 +5344,12 @@ def make_config():
         "fields": [
           {
             "name": "body",
+            "short": "Postmortem body",
             "type": "`$STRING`",
           },
           {
             "name": "body_draft",
+            "short": "Body draft",
             "type": "`$STRING`",
           },
           {
@@ -5242,14 +5366,17 @@ def make_config():
           },
           {
             "name": "custom_tweet",
+            "short": "Custom tweet for Incident Postmortem",
             "type": "`$STRING`",
           },
           {
             "name": "notify_subscribers",
+            "short": "Should email subscribers be notified.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "notify_twitter",
+            "short": "Should Twitter followers be notified.",
             "type": "`$BOOLEAN`",
           },
           {
@@ -5264,6 +5391,7 @@ def make_config():
           },
           {
             "name": "preview_key",
+            "short": "Preview Key",
             "type": "`$STRING`",
           },
           {
@@ -5471,26 +5599,32 @@ def make_config():
         "fields": [
           {
             "name": "incident_background_color",
+            "short": "Color of status embed iframe background when displaying incident",
             "type": "`$STRING`",
           },
           {
             "name": "incident_text_color",
+            "short": "Color of status embed iframe text when displaying incident",
             "type": "`$STRING`",
           },
           {
             "name": "maintenance_background_color",
+            "short": "Color of status embed iframe background when displaying maintenance",
             "type": "`$STRING`",
           },
           {
             "name": "maintenance_text_color",
+            "short": "Color of status embed iframe text when displaying maintenance",
             "type": "`$STRING`",
           },
           {
             "name": "page_id",
+            "short": "Page identifier",
             "type": "`$STRING`",
           },
           {
             "name": "position",
+            "short": "Corner where status embed iframe will appear on page",
             "type": "`$STRING`",
           },
           {
@@ -5625,10 +5759,12 @@ def make_config():
         "fields": [
           {
             "name": "component_ids",
+            "short": "A list of component ids for which the subscriber should recieve updates for.",
             "type": "`$ARRAY`",
           },
           {
             "name": "components",
+            "short": "The components for which the subscriber has elected to receive updates.",
             "type": "`$STRING`",
           },
           {
@@ -5637,70 +5773,87 @@ def make_config():
           },
           {
             "name": "display_phone_number",
+            "short": "A formatted version of the phone_number and phone_country pair, nicely formatted for display.",
             "type": "`$STRING`",
           },
           {
             "name": "email",
+            "short": "The email address to use to contact the subscriber.",
             "type": "`$STRING`",
           },
           {
             "name": "endpoint",
+            "short": "The URL where a webhook subscriber elects to receive updates.",
             "type": "`$STRING`",
           },
           {
             "name": "id",
+            "short": "Subscriber Identifier",
             "type": "`$STRING`",
           },
           {
             "name": "integration_partner",
+            "short": "The number of integration partners found by the query.",
             "type": "`$INTEGER`",
           },
           {
             "name": "mode",
+            "short": "The communication mode of the subscriber.",
             "type": "`$STRING`",
           },
           {
             "name": "obfuscated_channel_name",
+            "short": "Obfuscated slack channel name",
             "type": "`$STRING`",
           },
           {
             "name": "page_access_user_id",
+            "short": "The Page Access user this subscriber belongs to (only for audience-specific pages).",
             "type": "`$STRING`",
           },
           {
             "name": "phone_country",
+            "short": "The two-character country code representing the country of which the phone_number is a part.",
             "type": "`$STRING`",
           },
           {
             "name": "phone_number",
+            "short": "The phone number used to contact an SMS subscriber",
             "type": "`$STRING`",
           },
           {
             "name": "purge_at",
+            "short": "The timestamp when a quarantined subscriber will be purged (unsubscribed).",
             "type": "`$STRING`",
           },
           {
             "name": "quarantined_at",
+            "short": "The timestamp when the subscriber was quarantined due to an issue reaching them.",
             "type": "`$STRING`",
           },
           {
             "name": "skip_confirmation_notification",
+            "short": "If this is true, do not notify the user with changes to their subscription.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "skip_unsubscription_notification",
+            "short": "If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed.",
             "type": "`$BOOLEAN`",
           },
           {
             "name": "slack",
+            "short": "The number of Slack subscribers found by the query.",
             "type": "`$INTEGER`",
           },
           {
             "name": "sms",
+            "short": "The number of Webhook subscribers found by the query.",
             "type": "`$INTEGER`",
           },
           {
             "name": "state",
+            "short": "If this is present, only unsubscribe subscribers in this state.",
             "type": "`$STRING`",
           },
           {
@@ -5710,22 +5863,27 @@ def make_config():
           {
             "name": "subscribers",
             "req": True,
+            "short": "The array of quarantined subscriber codes to reactivate, or \"all\" to reactivate all quarantined subscribers.",
             "type": "`$STRING`",
           },
           {
             "name": "teams",
+            "short": "The number of MS teams subscribers found by the query.",
             "type": "`$INTEGER`",
           },
           {
             "name": "type",
+            "short": "If this is present, only reactivate subscribers of this type.",
             "type": "`$STRING`",
           },
           {
             "name": "webhook",
+            "short": "The number of SMS subscribers found by the query.",
             "type": "`$INTEGER`",
           },
           {
             "name": "workspace_name",
+            "short": "The workspace name of the slack subscriber.",
             "type": "`$STRING`",
           },
         ],
@@ -6517,6 +6675,7 @@ def make_config():
           },
           {
             "name": "email",
+            "short": "Email address for the team member",
             "type": "`$STRING`",
           },
           {
@@ -6525,6 +6684,7 @@ def make_config():
           },
           {
             "name": "id",
+            "short": "User identifier",
             "type": "`$STRING`",
           },
           {
@@ -6533,6 +6693,7 @@ def make_config():
           },
           {
             "name": "organization_id",
+            "short": "Organization identifier",
             "type": "`$STRING`",
           },
           {

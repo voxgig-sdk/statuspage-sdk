@@ -75,12 +75,12 @@ const utility_1 = require("../../utility");
         const incident_template_ref01_ent = client.IncidentTemplate();
         let incident_template_ref01_data = setup.data.new.incident_template['incident_template_ref01'];
         incident_template_ref01_data['page_id'] = setup.idmap['page01'];
-        incident_template_ref01_data = await incident_template_ref01_ent.create(incident_template_ref01_data);
+        incident_template_ref01_data = (await incident_template_ref01_ent.create(incident_template_ref01_data)).data();
         (0, node_assert_1.default)(null != incident_template_ref01_data.id);
         // LIST
         const incident_template_ref01_match = {};
         incident_template_ref01_match['page_id'] = setup.idmap['page01'];
-        const incident_template_ref01_list = await incident_template_ref01_ent.list(incident_template_ref01_match);
+        const incident_template_ref01_list = (await incident_template_ref01_ent.list(incident_template_ref01_match)).map((e) => e.data());
         (0, node_assert_1.default)(!isempty(select(incident_template_ref01_list, { id: incident_template_ref01_data.id })));
     });
 });

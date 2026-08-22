@@ -5,10 +5,10 @@ import type { MetricsProvider, MetricsProviderLoadMatch, MetricsProviderListMatc
 declare class MetricsProviderEntity extends StatuspageEntityBase<MetricsProvider> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: MetricsProviderEntity): MetricsProviderEntity;
-    load(this: any, reqmatch?: MetricsProviderLoadMatch, ctrl?: Control): Promise<MetricsProvider>;
-    list(this: any, reqmatch?: MetricsProviderListMatch, ctrl?: Control): Promise<MetricsProvider[]>;
-    create(this: any, reqdata?: MetricsProviderCreateData, ctrl?: Control): Promise<MetricsProvider>;
-    update(this: any, reqdata?: MetricsProviderUpdateData, ctrl?: Control): Promise<MetricsProvider>;
-    remove(this: any, reqmatch?: MetricsProviderRemoveMatch, ctrl?: Control): Promise<MetricsProvider>;
+    load(this: any, reqmatch?: MetricsProviderLoadMatch, ctrl?: Control): Promise<MetricsProviderEntity>;
+    list(this: any, reqmatch?: MetricsProviderListMatch, ctrl?: Control): Promise<MetricsProviderEntity[]>;
+    create(this: any, reqdata?: MetricsProviderCreateData, ctrl?: Control): Promise<MetricsProviderEntity>;
+    update(this: any, reqdata?: MetricsProviderUpdateData, ctrl?: Control): Promise<MetricsProviderEntity>;
+    remove(this: any, reqmatch?: MetricsProviderRemoveMatch, ctrl?: Control): Promise<MetricsProviderEntity>;
 }
 export { MetricsProviderEntity };

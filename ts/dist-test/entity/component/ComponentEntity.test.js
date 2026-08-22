@@ -77,12 +77,12 @@ const utility_1 = require("../../utility");
         component_ref01_data['page_access_group_id'] = setup.idmap['page_access_group01'];
         component_ref01_data['page_access_user_id'] = setup.idmap['page_access_user01'];
         component_ref01_data['page_id'] = setup.idmap['page01'];
-        component_ref01_data = await component_ref01_ent.create(component_ref01_data);
+        component_ref01_data = (await component_ref01_ent.create(component_ref01_data)).data();
         (0, node_assert_1.default)(null != component_ref01_data.id);
         // LIST
         const component_ref01_match = {};
         component_ref01_match['page_id'] = setup.idmap['page01'];
-        const component_ref01_list = await component_ref01_ent.list(component_ref01_match);
+        const component_ref01_list = (await component_ref01_ent.list(component_ref01_match)).map((e) => e.data());
         (0, node_assert_1.default)(!isempty(select(component_ref01_list, { id: component_ref01_data.id })));
         // UPDATE
         const component_ref01_data_up0 = {};
@@ -90,13 +90,13 @@ const utility_1 = require("../../utility");
         component_ref01_data_up0['page_id'] = setup.idmap['page_id'];
         const component_ref01_markdef_up0 = { name: 'automation_email', value: 'Mark01-component_ref01_' + setup.now };
         component_ref01_data_up0[component_ref01_markdef_up0.name] = component_ref01_markdef_up0.value;
-        const component_ref01_resdata_up0 = await component_ref01_ent.update(component_ref01_data_up0);
+        const component_ref01_resdata_up0 = (await component_ref01_ent.update(component_ref01_data_up0)).data();
         (0, node_assert_1.default)(component_ref01_resdata_up0.id === component_ref01_data_up0.id);
         (0, node_assert_1.default)(component_ref01_resdata_up0[component_ref01_markdef_up0.name] === component_ref01_markdef_up0.value);
         // LOAD
         const component_ref01_match_dt0 = {};
         component_ref01_match_dt0.id = component_ref01_data.id;
-        const component_ref01_data_dt0 = await component_ref01_ent.load(component_ref01_match_dt0);
+        const component_ref01_data_dt0 = (await component_ref01_ent.load(component_ref01_match_dt0)).data();
         (0, node_assert_1.default)(component_ref01_data_dt0.id === component_ref01_data.id);
         // REMOVE
         const component_ref01_match_rm0 = { id: component_ref01_data.id };
@@ -104,7 +104,7 @@ const utility_1 = require("../../utility");
         // LIST
         const component_ref01_match_rt0 = {};
         component_ref01_match_rt0['page_id'] = setup.idmap['page01'];
-        const component_ref01_list_rt0 = await component_ref01_ent.list(component_ref01_match_rt0);
+        const component_ref01_list_rt0 = (await component_ref01_ent.list(component_ref01_match_rt0)).map((e) => e.data());
         (0, node_assert_1.default)(isempty(select(component_ref01_list_rt0, { id: component_ref01_data.id })));
     });
 });

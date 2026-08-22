@@ -5,7 +5,7 @@ import type { StatusEmbedConfig, StatusEmbedConfigLoadMatch, StatusEmbedConfigUp
 declare class StatusEmbedConfigEntity extends StatuspageEntityBase<StatusEmbedConfig> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: StatusEmbedConfigEntity): StatusEmbedConfigEntity;
-    load(this: any, reqmatch?: StatusEmbedConfigLoadMatch, ctrl?: Control): Promise<StatusEmbedConfig>;
-    update(this: any, reqdata?: StatusEmbedConfigUpdateData, ctrl?: Control): Promise<StatusEmbedConfig>;
+    load(this: any, reqmatch?: StatusEmbedConfigLoadMatch, ctrl?: Control): Promise<StatusEmbedConfigEntity>;
+    update(this: any, reqdata?: StatusEmbedConfigUpdateData, ctrl?: Control): Promise<StatusEmbedConfigEntity>;
 }
 export { StatusEmbedConfigEntity };

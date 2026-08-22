@@ -77,7 +77,7 @@ const utility_1 = require("../../utility");
         const status_embed_config_ref01_data_up0 = {};
         const status_embed_config_ref01_markdef_up0 = { name: 'incident_background_color', value: 'Mark01-status_embed_config_ref01_' + setup.now };
         status_embed_config_ref01_data_up0[status_embed_config_ref01_markdef_up0.name] = status_embed_config_ref01_markdef_up0.value;
-        const status_embed_config_ref01_resdata_up0 = await status_embed_config_ref01_ent.update(status_embed_config_ref01_data_up0);
+        const status_embed_config_ref01_resdata_up0 = (await status_embed_config_ref01_ent.update(status_embed_config_ref01_data_up0)).data();
         (0, node_assert_1.default)(null != status_embed_config_ref01_resdata_up0);
         (0, node_assert_1.default)(status_embed_config_ref01_resdata_up0[status_embed_config_ref01_markdef_up0.name] === status_embed_config_ref01_markdef_up0.value);
     });

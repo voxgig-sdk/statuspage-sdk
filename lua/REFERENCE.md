@@ -159,20 +159,20 @@ local component = client:Component(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `automation_email` | `string` | No |  |
+| `automation_email` | `string` | No | Requires a special feature flag to be enabled |
 | `component` | `table` | No |  |
 | `created_at` | `string` | No |  |
-| `description` | `string` | No |  |
-| `group` | `boolean` | No |  |
-| `group_id` | `string` | No |  |
-| `id` | `string` | No |  |
-| `name` | `string` | No |  |
-| `only_show_if_degraded` | `boolean` | No |  |
-| `page_id` | `string` | No |  |
-| `position` | `number` | No |  |
-| `showcase` | `boolean` | No |  |
-| `start_date` | `string` | No |  |
-| `status` | `string` | No |  |
+| `description` | `string` | No | More detailed description for component |
+| `group` | `boolean` | No | Is this component a group |
+| `group_id` | `string` | No | Component Group identifier |
+| `id` | `string` | No | Incident identifier |
+| `name` | `string` | No | Display name for component |
+| `only_show_if_degraded` | `boolean` | No | Requires a special feature flag to be enabled |
+| `page_id` | `string` | No | Page identifier |
+| `position` | `number` | No | Order the component will appear on the page |
+| `showcase` | `boolean` | No | Should this component be showcased |
+| `start_date` | `string` | No | The date this component started being used |
+| `status` | `string` | No | Status of component |
 | `updated_at` | `string` | No |  |
 
 ### Operations
@@ -263,8 +263,8 @@ local component_group_uptime = client:ComponentGroupUptime(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_id` | `string` | No |  |
-| `incidents` | `table` | No |  |
+| `component_id` | `string` | No | Component identifier |
+| `incidents` | `table` | No | Related incidents |
 
 ### Operations
 
@@ -319,8 +319,8 @@ local group_component = client:GroupComponent(nil)
 | `component_group` | `table` | Yes |  |
 | `components` | `string` | No |  |
 | `created_at` | `string` | No |  |
-| `description` | `string` | No |  |
-| `id` | `string` | No |  |
+| `description` | `string` | No | Description of the component group. |
+| `id` | `string` | No | Component Group Identifier |
 | `name` | `string` | No |  |
 | `page_id` | `string` | No |  |
 | `position` | `string` | No |  |
@@ -415,38 +415,38 @@ local incident = client:Incident(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `auto_transition_deliver_notifications_at_end` | `boolean` | No |  |
-| `auto_transition_deliver_notifications_at_start` | `boolean` | No |  |
-| `auto_transition_to_maintenance_state` | `boolean` | No |  |
-| `auto_transition_to_operational_state` | `boolean` | No |  |
-| `components` | `table` | No |  |
-| `created_at` | `string` | No |  |
-| `id` | `string` | No |  |
-| `impact` | `string` | No |  |
-| `impact_override` | `string` | No |  |
+| `auto_transition_deliver_notifications_at_end` | `boolean` | No | Controls whether send notification when scheduled maintenances auto transition to completed. |
+| `auto_transition_deliver_notifications_at_start` | `boolean` | No | Controls whether send notification when scheduled maintenances auto transition to started. |
+| `auto_transition_to_maintenance_state` | `boolean` | No | Controls whether change components status to under_maintenance once scheduled maintenance is in progress. |
+| `auto_transition_to_operational_state` | `boolean` | No | Controls whether change components status to operational once scheduled maintenance completes. |
+| `components` | `table` | No | Incident components |
+| `created_at` | `string` | No | The timestamp when the incident was created at. |
+| `id` | `string` | No | Incident Identifier |
+| `impact` | `string` | No | The impact of the incident. |
+| `impact_override` | `string` | No | value to override calculated impact value |
 | `incident` | `table` | Yes |  |
-| `incident_updates` | `table` | No |  |
-| `metadata` | `table` | No |  |
-| `monitoring_at` | `string` | No |  |
-| `name` | `string` | No |  |
-| `page_id` | `string` | No |  |
-| `postmortem_body` | `string` | No |  |
-| `postmortem_body_last_updated_at` | `string` | No |  |
-| `postmortem_ignored` | `boolean` | No |  |
-| `postmortem_notified_subscribers` | `boolean` | No |  |
-| `postmortem_notified_twitter` | `boolean` | No |  |
-| `postmortem_published_at` | `boolean` | No |  |
-| `reminder_intervals` | `string` | No |  |
-| `resolved_at` | `string` | No |  |
-| `scheduled_auto_completed` | `boolean` | No |  |
-| `scheduled_auto_in_progress` | `boolean` | No |  |
-| `scheduled_for` | `string` | No |  |
-| `scheduled_remind_prior` | `boolean` | No |  |
-| `scheduled_reminded_at` | `string` | No |  |
-| `scheduled_until` | `string` | No |  |
-| `shortlink` | `string` | No |  |
-| `status` | `string` | No |  |
-| `updated_at` | `string` | No |  |
+| `incident_updates` | `table` | No | The incident updates for incident. |
+| `metadata` | `table` | No | Metadata attached to the incident. |
+| `monitoring_at` | `string` | No | The timestamp when incident entered monitoring state. |
+| `name` | `string` | No | Incident Name. |
+| `page_id` | `string` | No | Incident Page Identifier |
+| `postmortem_body` | `string` | No | Body of the Postmortem. |
+| `postmortem_body_last_updated_at` | `string` | No | The timestamp when the incident postmortem body was last updated at. |
+| `postmortem_ignored` | `boolean` | No | Controls whether the incident will have postmortem. |
+| `postmortem_notified_subscribers` | `boolean` | No | Indicates whether subscribers are already notificed about postmortem. |
+| `postmortem_notified_twitter` | `boolean` | No | Controls whether to decide if notify postmortem on twitter. |
+| `postmortem_published_at` | `boolean` | No | The timestamp when the postmortem was published. |
+| `reminder_intervals` | `string` | No | Custom reminder intervals for unresolved/open incidents. |
+| `resolved_at` | `string` | No | The timestamp when incident was resolved. |
+| `scheduled_auto_completed` | `boolean` | No | Controls whether the incident is scheduled to automatically change to complete. |
+| `scheduled_auto_in_progress` | `boolean` | No | Controls whether the incident is scheduled to automatically change to in progress. |
+| `scheduled_for` | `string` | No | The timestamp the incident is scheduled for. |
+| `scheduled_remind_prior` | `boolean` | No | Controls whether to remind subscribers prior to scheduled incidents. |
+| `scheduled_reminded_at` | `string` | No | The timestamp when the scheduled incident reminder was sent at. |
+| `scheduled_until` | `string` | No | The timestamp the incident is scheduled until. |
+| `shortlink` | `string` | No | Incident Shortlink. |
+| `status` | `string` | No | The incident status. |
+| `updated_at` | `string` | No | The timestamp when the incident was updated at. |
 
 ### Field Usage by Operation
 
@@ -670,16 +670,16 @@ local incident_template = client:IncidentTemplate(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `body` | `string` | No |  |
-| `components` | `table` | No |  |
-| `group_id` | `string` | No |  |
-| `id` | `string` | No |  |
-| `name` | `string` | No |  |
-| `should_send_notifications` | `boolean` | No |  |
-| `should_tweet` | `boolean` | No |  |
+| `body` | `string` | No | Body of the incident or maintenance update to be applied when selecting this template |
+| `components` | `table` | No | Affected components |
+| `group_id` | `string` | No | Identifier of Template Group this template belongs to |
+| `id` | `string` | No | Incident Template Identifier |
+| `name` | `string` | No | Name of the template, as shown in the list on the "Templates" tab of the "Incidents" page |
+| `should_send_notifications` | `boolean` | No | Whether the "deliver notifications" checkbox should be selected when selecting this template |
+| `should_tweet` | `boolean` | No | Whether the "tweet update" checkbox should be selected when selecting this template |
 | `template` | `table` | Yes |  |
-| `title` | `string` | No |  |
-| `update_status` | `string` | No |  |
+| `title` | `string` | No | Title to be applied to the incident or maintenance when selecting this template |
+| `update_status` | `string` | No | The status the incident or maintenance should transition to when selecting this template |
 
 ### Operations
 
@@ -742,20 +742,20 @@ local incident_update = client:IncidentUpdate(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `affected_components` | `table` | No |  |
-| `body` | `string` | No |  |
-| `created_at` | `string` | No |  |
-| `custom_tweet` | `string` | No |  |
-| `deliver_notifications` | `boolean` | No |  |
-| `display_at` | `string` | No |  |
-| `id` | `string` | No |  |
-| `incident_id` | `string` | No |  |
+| `affected_components` | `table` | No | Affected components associated with the incident update. |
+| `body` | `string` | No | Incident update body. |
+| `created_at` | `string` | No | The timestamp when the incident update was created at. |
+| `custom_tweet` | `string` | No | An optional customized tweet message for incident postmortem. |
+| `deliver_notifications` | `boolean` | No | Controls whether to delivery notifications. |
+| `display_at` | `string` | No | Timestamp when incident update is happened. |
+| `id` | `string` | No | Incident Update Identifier. |
+| `incident_id` | `string` | No | Incident Identifier. |
 | `incident_update` | `table` | No |  |
-| `status` | `string` | No |  |
-| `tweet_id` | `string` | No |  |
-| `twitter_updated_at` | `string` | No |  |
-| `updated_at` | `string` | No |  |
-| `wants_twitter_update` | `boolean` | No |  |
+| `status` | `string` | No | The incident status. |
+| `tweet_id` | `string` | No | Tweet identifier associated to this incident update. |
+| `twitter_updated_at` | `string` | No | The timestamp when twitter updated at. |
+| `updated_at` | `string` | No | The timestamp when the incident update is updated. |
+| `wants_twitter_update` | `boolean` | No | Controls whether to create twitter update. |
 
 ### Operations
 
@@ -815,21 +815,21 @@ local metric = client:Metric(nil)
 | `backfill_percentage` | `number` | No |  |
 | `backfilled` | `boolean` | No |  |
 | `created_at` | `string` | No |  |
-| `data` | `table` | Yes |  |
+| `data` | `table` | Yes | Add data points to metrics |
 | `decimal_places` | `number` | No |  |
-| `display` | `boolean` | No |  |
-| `id` | `string` | No |  |
+| `display` | `boolean` | No | Should the metric be displayed |
+| `id` | `string` | No | Metric identifier |
 | `last_fetched_at` | `string` | No |  |
 | `metric` | `table` | No |  |
-| `metric_identifier` | `string` | No |  |
-| `metrics_provider_id` | `string` | No |  |
+| `metric_identifier` | `string` | No | Metric Display identifier used to look up the metric data from the provider |
+| `metrics_provider_id` | `string` | No | Metric Provider identifier |
 | `most_recent_data_at` | `string` | No |  |
-| `name` | `string` | No |  |
+| `name` | `string` | No | Name of metric |
 | `reference_name` | `string` | No |  |
-| `suffix` | `string` | No |  |
+| `suffix` | `string` | No | Suffix to describe the units on the graph |
 | `tooltip_description` | `string` | No |  |
 | `updated_at` | `string` | No |  |
-| `y_axis_hidden` | `boolean` | No |  |
+| `y_axis_hidden` | `boolean` | No | Should the values on the y axis be hidden on render |
 | `y_axis_max` | `number` | No |  |
 | `y_axis_min` | `number` | No |  |
 
@@ -925,7 +925,7 @@ local metrics_provider = client:MetricsProvider(nil)
 | --- | --- | --- | --- |
 | `created_at` | `string` | No |  |
 | `disabled` | `boolean` | No |  |
-| `id` | `string` | No |  |
+| `id` | `string` | No | Identifier for Metrics Provider |
 | `last_revalidated_at` | `string` | No |  |
 | `metric_base_uri` | `string` | No |  |
 | `metrics_provider` | `table` | No |  |
@@ -1022,50 +1022,50 @@ local page = client:Page(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `activity_score` | `number` | No |  |
-| `allow_email_subscribers` | `boolean` | No |  |
-| `allow_incident_subscribers` | `boolean` | No |  |
-| `allow_page_subscribers` | `boolean` | No |  |
-| `allow_rss_atom_feeds` | `boolean` | No |  |
-| `allow_sms_subscribers` | `boolean` | No |  |
-| `allow_webhook_subscribers` | `boolean` | No |  |
-| `branding` | `string` | No |  |
+| `allow_email_subscribers` | `boolean` | No | Can your users choose to receive notifications via email |
+| `allow_incident_subscribers` | `boolean` | No | Can your users subscribe to notifications for a single incident |
+| `allow_page_subscribers` | `boolean` | No | Can your users subscribe to all notifications on the page |
+| `allow_rss_atom_feeds` | `boolean` | No | Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages) |
+| `allow_sms_subscribers` | `boolean` | No | Can your users choose to receive notifications via SMS |
+| `allow_webhook_subscribers` | `boolean` | No | Can your users choose to receive notifications via Webhooks |
+| `branding` | `string` | No | The main template your statuspage will use |
 | `city` | `string` | No |  |
 | `country` | `string` | No |  |
-| `created_at` | `string` | No |  |
-| `css_blues` | `string` | No |  |
-| `css_body_background_color` | `string` | No |  |
-| `css_border_color` | `string` | No |  |
-| `css_font_color` | `string` | No |  |
-| `css_graph_color` | `string` | No |  |
-| `css_greens` | `string` | No |  |
-| `css_light_font_color` | `string` | No |  |
-| `css_link_color` | `string` | No |  |
-| `css_no_data` | `string` | No |  |
-| `css_oranges` | `string` | No |  |
-| `css_reds` | `string` | No |  |
-| `css_yellows` | `string` | No |  |
-| `domain` | `string` | No |  |
+| `created_at` | `string` | No | Timestamp the record was created |
+| `css_blues` | `string` | No | CSS Color |
+| `css_body_background_color` | `string` | No | CSS Color |
+| `css_border_color` | `string` | No | CSS Color |
+| `css_font_color` | `string` | No | CSS Color |
+| `css_graph_color` | `string` | No | CSS Color |
+| `css_greens` | `string` | No | CSS Color |
+| `css_light_font_color` | `string` | No | CSS Color |
+| `css_link_color` | `string` | No | CSS Color |
+| `css_no_data` | `string` | No | CSS Color |
+| `css_oranges` | `string` | No | CSS Color |
+| `css_reds` | `string` | No | CSS Color |
+| `css_yellows` | `string` | No | CSS Color |
+| `domain` | `string` | No | CNAME alias for your status page |
 | `email_logo` | `string` | No |  |
 | `favicon_logo` | `string` | No |  |
 | `headline` | `string` | No |  |
 | `hero_cover` | `string` | No |  |
-| `hidden_from_search` | `boolean` | No |  |
-| `id` | `string` | No |  |
+| `hidden_from_search` | `boolean` | No | Should your page hide itself from search engines |
+| `id` | `string` | No | Page identifier |
 | `ip_restrictions` | `string` | No |  |
-| `name` | `string` | No |  |
-| `notifications_email_footer` | `string` | No |  |
-| `notifications_from_email` | `string` | No |  |
+| `name` | `string` | No | Name of your page to be displayed |
+| `notifications_email_footer` | `string` | No | Allows you to customize the footer appearing on your notification emails. |
+| `notifications_from_email` | `string` | No | Allows you to customize the email address your page notifications come from |
 | `page` | `table` | No |  |
 | `page_description` | `string` | No |  |
 | `state` | `string` | No |  |
-| `subdomain` | `string` | No |  |
+| `subdomain` | `string` | No | Subdomain at which to access your status page |
 | `support_url` | `string` | No |  |
-| `time_zone` | `string` | No |  |
+| `time_zone` | `string` | No | Timezone configured for your page |
 | `transactional_logo` | `string` | No |  |
 | `twitter_logo` | `string` | No |  |
 | `twitter_username` | `string` | No |  |
-| `updated_at` | `string` | No |  |
-| `url` | `string` | No |  |
+| `updated_at` | `string` | No | Timestamp the record was last updated |
+| `url` | `string` | No | Website of your page. |
 | `viewers_must_be_team_members` | `boolean` | No |  |
 
 ### Operations
@@ -1137,15 +1137,15 @@ local page_access_group = client:PageAccessGroup(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_ids` | `table` | No |  |
+| `component_ids` | `table` | No | List of components codes to set on the page access group |
 | `created_at` | `string` | No |  |
-| `external_identifier` | `string` | No |  |
-| `id` | `string` | No |  |
+| `external_identifier` | `string` | No | Associates group with external group. |
+| `id` | `string` | No | Page Access Group Identifier |
 | `metric_ids` | `table` | No |  |
-| `name` | `string` | No |  |
+| `name` | `string` | No | Name for this Group. |
 | `page_access_group` | `table` | No |  |
 | `page_access_user_ids` | `table` | No |  |
-| `page_id` | `string` | No |  |
+| `page_id` | `string` | No | Page Identifier. |
 | `updated_at` | `string` | No |  |
 
 ### Field Usage by Operation
@@ -1251,12 +1251,12 @@ local page_access_user = client:PageAccessUser(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_ids` | `table` | Yes |  |
+| `component_ids` | `table` | Yes | List of component codes to allow access to |
 | `created_at` | `string` | No |  |
 | `email` | `string` | No |  |
-| `external_login` | `string` | No |  |
-| `id` | `string` | No |  |
-| `metric_ids` | `table` | Yes |  |
+| `external_login` | `string` | No | IDP login user id. |
+| `id` | `string` | No | Page Access User Identifier |
+| `metric_ids` | `table` | Yes | List of metrics to add |
 | `page_access_group_id` | `string` | No |  |
 | `page_access_group_ids` | `string` | No |  |
 | `page_access_user` | `table` | No |  |
@@ -1353,8 +1353,8 @@ local permission = client:Permission(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `pages` | `table` | No |  |
-| `user_id` | `string` | No |  |
+| `pages` | `table` | No | Pages accessible by the user. |
+| `user_id` | `string` | No | User identifier |
 
 ### Operations
 
@@ -1418,16 +1418,16 @@ local postmortem = client:Postmortem(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `body` | `string` | No |  |
-| `body_draft` | `string` | No |  |
+| `body` | `string` | No | Postmortem body |
+| `body_draft` | `string` | No | Body draft |
 | `body_draft_updated_at` | `string` | No |  |
 | `body_updated_at` | `string` | No |  |
 | `created_at` | `string` | No |  |
-| `custom_tweet` | `string` | No |  |
-| `notify_subscribers` | `boolean` | No |  |
-| `notify_twitter` | `boolean` | No |  |
+| `custom_tweet` | `string` | No | Custom tweet for Incident Postmortem |
+| `notify_subscribers` | `boolean` | No | Should email subscribers be notified. |
+| `notify_twitter` | `boolean` | No | Should Twitter followers be notified. |
 | `postmortem` | `table` | Yes |  |
-| `preview_key` | `string` | No |  |
+| `preview_key` | `string` | No | Preview Key |
 | `published_at` | `string` | No |  |
 | `updated_at` | `string` | No |  |
 
@@ -1510,12 +1510,12 @@ local status_embed_config = client:StatusEmbedConfig(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `incident_background_color` | `string` | No |  |
-| `incident_text_color` | `string` | No |  |
-| `maintenance_background_color` | `string` | No |  |
-| `maintenance_text_color` | `string` | No |  |
-| `page_id` | `string` | No |  |
-| `position` | `string` | No |  |
+| `incident_background_color` | `string` | No | Color of status embed iframe background when displaying incident |
+| `incident_text_color` | `string` | No | Color of status embed iframe text when displaying incident |
+| `maintenance_background_color` | `string` | No | Color of status embed iframe background when displaying maintenance |
+| `maintenance_text_color` | `string` | No | Color of status embed iframe text when displaying maintenance |
+| `page_id` | `string` | No | Page identifier |
+| `position` | `string` | No | Corner where status embed iframe will appear on page |
 | `status_embed_config` | `table` | No |  |
 
 ### Operations
@@ -1579,32 +1579,32 @@ local subscriber = client:Subscriber(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_ids` | `table` | No |  |
-| `components` | `string` | No |  |
+| `component_ids` | `table` | No | A list of component ids for which the subscriber should recieve updates for. |
+| `components` | `string` | No | The components for which the subscriber has elected to receive updates. |
 | `created_at` | `string` | No |  |
-| `display_phone_number` | `string` | No |  |
-| `email` | `string` | No |  |
-| `endpoint` | `string` | No |  |
-| `id` | `string` | No |  |
-| `integration_partner` | `number` | No |  |
-| `mode` | `string` | No |  |
-| `obfuscated_channel_name` | `string` | No |  |
-| `page_access_user_id` | `string` | No |  |
-| `phone_country` | `string` | No |  |
-| `phone_number` | `string` | No |  |
-| `purge_at` | `string` | No |  |
-| `quarantined_at` | `string` | No |  |
-| `skip_confirmation_notification` | `boolean` | No |  |
-| `skip_unsubscription_notification` | `boolean` | No |  |
-| `slack` | `number` | No |  |
-| `sms` | `number` | No |  |
-| `state` | `string` | No |  |
+| `display_phone_number` | `string` | No | A formatted version of the phone_number and phone_country pair, nicely formatted for display. |
+| `email` | `string` | No | The email address to use to contact the subscriber. |
+| `endpoint` | `string` | No | The URL where a webhook subscriber elects to receive updates. |
+| `id` | `string` | No | Subscriber Identifier |
+| `integration_partner` | `number` | No | The number of integration partners found by the query. |
+| `mode` | `string` | No | The communication mode of the subscriber. |
+| `obfuscated_channel_name` | `string` | No | Obfuscated slack channel name |
+| `page_access_user_id` | `string` | No | The Page Access user this subscriber belongs to (only for audience-specific pages). |
+| `phone_country` | `string` | No | The two-character country code representing the country of which the phone_number is a part. |
+| `phone_number` | `string` | No | The phone number used to contact an SMS subscriber |
+| `purge_at` | `string` | No | The timestamp when a quarantined subscriber will be purged (unsubscribed). |
+| `quarantined_at` | `string` | No | The timestamp when the subscriber was quarantined due to an issue reaching them. |
+| `skip_confirmation_notification` | `boolean` | No | If this is true, do not notify the user with changes to their subscription. |
+| `skip_unsubscription_notification` | `boolean` | No | If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed. |
+| `slack` | `number` | No | The number of Slack subscribers found by the query. |
+| `sms` | `number` | No | The number of Webhook subscribers found by the query. |
+| `state` | `string` | No | If this is present, only unsubscribe subscribers in this state. |
 | `subscriber` | `table` | No |  |
-| `subscribers` | `string` | Yes |  |
-| `teams` | `number` | No |  |
-| `type` | `string` | No |  |
-| `webhook` | `number` | No |  |
-| `workspace_name` | `string` | No |  |
+| `subscribers` | `string` | Yes | The array of quarantined subscriber codes to reactivate, or "all" to reactivate all quarantined subscribers. |
+| `teams` | `number` | No | The number of MS teams subscribers found by the query. |
+| `type` | `string` | No | If this is present, only reactivate subscribers of this type. |
+| `webhook` | `number` | No | The number of SMS subscribers found by the query. |
+| `workspace_name` | `string` | No | The workspace name of the slack subscriber. |
 
 ### Operations
 
@@ -1696,11 +1696,11 @@ local user = client:User(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `created_at` | `string` | No |  |
-| `email` | `string` | No |  |
+| `email` | `string` | No | Email address for the team member |
 | `first_name` | `string` | No |  |
-| `id` | `string` | No |  |
+| `id` | `string` | No | User identifier |
 | `last_name` | `string` | No |  |
-| `organization_id` | `string` | No |  |
+| `organization_id` | `string` | No | Organization identifier |
 | `updated_at` | `string` | No |  |
 | `user` | `table` | Yes |  |
 

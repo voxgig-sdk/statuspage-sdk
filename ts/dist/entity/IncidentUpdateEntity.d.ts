@@ -5,6 +5,6 @@ import type { IncidentUpdate, IncidentUpdateUpdateData } from '../StatuspageType
 declare class IncidentUpdateEntity extends StatuspageEntityBase<IncidentUpdate> {
     constructor(client: StatuspageSDK, entopts: any);
     make(this: IncidentUpdateEntity): IncidentUpdateEntity;
-    update(this: any, reqdata?: IncidentUpdateUpdateData, ctrl?: Control): Promise<IncidentUpdate>;
+    update(this: any, reqdata?: IncidentUpdateUpdateData, ctrl?: Control): Promise<IncidentUpdateEntity>;
 }
 export { IncidentUpdateEntity };
