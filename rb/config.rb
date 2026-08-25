@@ -28,6 +28,7 @@ module StatuspageConfig
           "options" => {
             "active" => false,
           },
+          "transport" => "base",
         },
       },
       "options" => {
