@@ -878,12 +878,22 @@
             },
             {
               "active": true,
+              "name": "id",
+              "req": false,
+              "type": "`$STRING`"
+            },
+            {
+              "active": true,
               "name": "incidents",
               "req": false,
               "short": "Related incidents",
               "type": "`$OBJECT`"
             }
           ],
+          "id": {
+            "field": "id",
+            "name": "id"
+          },
           "name": "component_group_uptime",
           "op": {
             "load": {
@@ -2137,7 +2147,18 @@
           "alias": {
             "field": {}
           },
-          "fields": [],
+          "fields": [
+            {
+              "active": true,
+              "name": "id",
+              "req": false,
+              "type": "`$STRING`"
+            }
+          ],
+          "id": {
+            "field": "id",
+            "name": "id"
+          },
           "name": "incident_postmortem",
           "op": {
             "remove": {
@@ -5930,6 +5951,12 @@
           "fields": [
             {
               "active": true,
+              "name": "id",
+              "req": false,
+              "type": "`$STRING`"
+            },
+            {
+              "active": true,
               "name": "pages",
               "req": false,
               "short": "Pages accessible by the user.",
@@ -5943,6 +5970,10 @@
               "type": "`$STRING`"
             }
           ],
+          "id": {
+            "field": "id",
+            "name": "id"
+          },
           "name": "permission",
           "op": {
             "load": {

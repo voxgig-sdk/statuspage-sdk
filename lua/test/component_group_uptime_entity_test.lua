@@ -44,10 +44,14 @@ describe("ComponentGroupUptimeEntity", function()
 
     -- LOAD
     local component_group_uptime_ref01_ent = client:ComponentGroupUptime(nil)
-    local component_group_uptime_ref01_match_dt0 = {}
+    local component_group_uptime_ref01_match_dt0 = {
+      id = component_group_uptime_ref01_data["id"],
+    }
     local component_group_uptime_ref01_data_dt0_loaded, err = component_group_uptime_ref01_ent:load(component_group_uptime_ref01_match_dt0, nil)
     assert.is_nil(err)
-    assert.is_not_nil(component_group_uptime_ref01_data_dt0_loaded)
+    local component_group_uptime_ref01_data_dt0_load_result = helpers.to_map(type(component_group_uptime_ref01_data_dt0_loaded) == 'table' and component_group_uptime_ref01_data_dt0_loaded.data_get and component_group_uptime_ref01_data_dt0_loaded:data_get() or component_group_uptime_ref01_data_dt0_loaded)
+    assert.is_not_nil(component_group_uptime_ref01_data_dt0_load_result)
+    assert.are.equal(component_group_uptime_ref01_data_dt0_load_result["id"], component_group_uptime_ref01_data["id"])
 
   end)
 end)

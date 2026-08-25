@@ -62,16 +62,23 @@ describe('PermissionEntity', async () => {
     // UPDATE
     const permission_ref01_ent = client.Permission()
     const permission_ref01_data_up0: any = {}
+    permission_ref01_data_up0.id = permission_ref01_data.id
     permission_ref01_data_up0 ['organization_id'] = setup.idmap['organization_id']
 
     const permission_ref01_markdef_up0 = { name: 'user_id', value: 'Mark01-permission_ref01_' + setup.now }
     ;(permission_ref01_data_up0 as any)[permission_ref01_markdef_up0.name] = permission_ref01_markdef_up0.value
 
     const permission_ref01_resdata_up0 = (await permission_ref01_ent.update(permission_ref01_data_up0)).data()
-    assert(null != permission_ref01_resdata_up0)
+    assert(permission_ref01_resdata_up0.id === permission_ref01_data_up0.id)
 
     assert((permission_ref01_resdata_up0 as any)[permission_ref01_markdef_up0.name] === permission_ref01_markdef_up0.value)
 
+
+    // LOAD
+    const permission_ref01_match_dt0: any = {}
+    permission_ref01_match_dt0.id = permission_ref01_data.id
+    const permission_ref01_data_dt0 = (await permission_ref01_ent.load(permission_ref01_match_dt0)).data()
+    assert(permission_ref01_data_dt0.id === permission_ref01_data.id)
 
 
   })

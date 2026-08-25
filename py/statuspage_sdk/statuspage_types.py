@@ -97,6 +97,7 @@ class ComponentRemoveMatch(TypedDict):
 
 class ComponentGroupUptime(TypedDict, total=False):
     component_id: str
+    id: str
     incidents: dict
 
 
@@ -292,8 +293,8 @@ class IncidentRemoveMatch(TypedDict):
     page_id: str
 
 
-class IncidentPostmortem(TypedDict):
-    pass
+class IncidentPostmortem(TypedDict, total=False):
+    id: str
 
 
 class IncidentPostmortemRemoveMatch(TypedDict):
@@ -829,6 +830,7 @@ class PageAccessUserRemoveMatch(PageAccessUserRemoveMatchRequired, total=False):
 
 
 class Permission(TypedDict, total=False):
+    id: str
     pages: dict
     user_id: str
 

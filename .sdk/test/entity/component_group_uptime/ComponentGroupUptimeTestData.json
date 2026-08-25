@@ -3,21 +3,21 @@
     "component_group_uptime": {
       "COMPONENT_GROUP_UPTIME00": {
         "component_id": "COMPONENT01",
+        "id": "COMPONENT_GROUP_UPTIME00",
         "incidents": {},
-        "page_id": "PAGE01",
-        "id": "COMPONENT_GROUP_UPTIME00"
+        "page_id": "PAGE01"
       },
       "COMPONENT_GROUP_UPTIME01": {
         "component_id": "COMPONENT01",
+        "id": "COMPONENT_GROUP_UPTIME01",
         "incidents": {},
-        "page_id": "PAGE01",
-        "id": "COMPONENT_GROUP_UPTIME01"
+        "page_id": "PAGE01"
       },
       "COMPONENT_GROUP_UPTIME02": {
         "component_id": "COMPONENT01",
+        "id": "COMPONENT_GROUP_UPTIME02",
         "incidents": {},
-        "page_id": "PAGE01",
-        "id": "COMPONENT_GROUP_UPTIME02"
+        "page_id": "PAGE01"
       }
     }
   },

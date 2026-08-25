@@ -48,9 +48,13 @@ class ComponentGroupUptimeEntityTest extends TestCase
 
         // LOAD
         $component_group_uptime_ref01_ent = $client->ComponentGroupUptime(null);
-        $component_group_uptime_ref01_match_dt0 = [];
+        $component_group_uptime_ref01_match_dt0 = [
+            "id" => $component_group_uptime_ref01_data["id"],
+        ];
         $component_group_uptime_ref01_data_dt0_loaded = $component_group_uptime_ref01_ent->load($component_group_uptime_ref01_match_dt0, null);
-        $this->assertNotNull($component_group_uptime_ref01_data_dt0_loaded);
+        $component_group_uptime_ref01_data_dt0_load_result = Helpers::to_map(is_object($component_group_uptime_ref01_data_dt0_loaded) && method_exists($component_group_uptime_ref01_data_dt0_loaded, 'data_get') ? $component_group_uptime_ref01_data_dt0_loaded->data_get() : $component_group_uptime_ref01_data_dt0_loaded);
+        $this->assertNotNull($component_group_uptime_ref01_data_dt0_load_result);
+        $this->assertEquals($component_group_uptime_ref01_data_dt0_load_result["id"], $component_group_uptime_ref01_data["id"]);
 
     }
 }

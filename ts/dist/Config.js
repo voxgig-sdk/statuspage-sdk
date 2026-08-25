@@ -816,6 +816,10 @@ class Config {
                     "type": "`$STRING`"
                 },
                 {
+                    "name": "id",
+                    "type": "`$STRING`"
+                },
+                {
                     "name": "incidents",
                     "short": "Related incidents",
                     "type": "`$OBJECT`"
@@ -1899,7 +1903,12 @@ class Config {
             }
         },
         "incident_postmortem": {
-            "fields": [],
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "`$STRING`"
+                }
+            ],
             "name": "incident_postmortem",
             "op": {
                 "remove": {
@@ -5211,6 +5220,10 @@ class Config {
         },
         "permission": {
             "fields": [
+                {
+                    "name": "id",
+                    "type": "`$STRING`"
+                },
                 {
                     "name": "pages",
                     "short": "Pages accessible by the user.",

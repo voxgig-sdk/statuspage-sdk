@@ -98,6 +98,7 @@ class ComponentRemoveMatch
 class ComponentGroupUptime
 {
     public ?string $component_id = null;
+    public ?string $id = null;
     public ?array $incidents = null;
 }
 
@@ -304,6 +305,7 @@ class IncidentRemoveMatch
 /** IncidentPostmortem entity data model. */
 class IncidentPostmortem
 {
+    public ?string $id = null;
 }
 
 /** Request payload for IncidentPostmortem#remove. */
@@ -861,6 +863,7 @@ class PageAccessUserRemoveMatch
 /** Permission entity data model. */
 class Permission
 {
+    public ?string $id = null;
     public ?array $pages = null;
     public ?string $user_id = null;
 }

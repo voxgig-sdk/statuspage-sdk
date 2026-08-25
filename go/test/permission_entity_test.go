@@ -63,6 +63,7 @@ func TestPermissionEntity(t *testing.T) {
 		// UPDATE
 		permissionRef01Ent := client.Permission(nil)
 		permissionRef01DataUp0Up := map[string]any{
+			"id": permissionRef01Data["id"],
 			"organization_id": setup.idmap["organization_id"],
 		}
 
@@ -78,18 +79,27 @@ func TestPermissionEntity(t *testing.T) {
 		if permissionRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}
+		if permissionRef01ResdataUp0["id"] != permissionRef01DataUp0Up["id"] {
+			t.Fatal("expected update result id to match")
+		}
 		if permissionRef01ResdataUp0[permissionRef01MarkdefUp0Name] != permissionRef01MarkdefUp0Value {
 			t.Fatalf("expected %s to be updated, got %v", permissionRef01MarkdefUp0Name, permissionRef01ResdataUp0[permissionRef01MarkdefUp0Name])
 		}
 
 		// LOAD
-		permissionRef01MatchDt0 := map[string]any{}
+		permissionRef01MatchDt0 := map[string]any{
+			"id": permissionRef01Data["id"],
+		}
 		permissionRef01DataDt0Loaded, err := permissionRef01Ent.Load(permissionRef01MatchDt0, nil)
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		if permissionRef01DataDt0Loaded == nil {
-			t.Fatal("expected load result to be non-nil")
+		permissionRef01DataDt0LoadResult := core.ToMapAny(entityData(permissionRef01DataDt0Loaded))
+		if permissionRef01DataDt0LoadResult == nil {
+			t.Fatal("expected load result to be a map")
+		}
+		if permissionRef01DataDt0LoadResult["id"] != permissionRef01Data["id"] {
+			t.Fatal("expected load result id to match")
 		}
 
 	})

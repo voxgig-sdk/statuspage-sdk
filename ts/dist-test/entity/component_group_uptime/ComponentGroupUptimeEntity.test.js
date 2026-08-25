@@ -72,9 +72,12 @@ const utility_1 = require("../../utility");
         const isempty = struct.isempty;
         const select = struct.select;
         let component_group_uptime_ref01_data = Object.values(setup.data.existing.component_group_uptime)[0];
-        // LOAD: skipped — no entity id field and load requires path params.
-        // Entity-var is declared here so later flow steps still compile.
+        // LOAD
         const component_group_uptime_ref01_ent = client.ComponentGroupUptime();
+        const component_group_uptime_ref01_match_dt0 = {};
+        component_group_uptime_ref01_match_dt0.id = component_group_uptime_ref01_data.id;
+        const component_group_uptime_ref01_data_dt0 = (await component_group_uptime_ref01_ent.load(component_group_uptime_ref01_match_dt0)).data();
+        (0, node_assert_1.default)(component_group_uptime_ref01_data_dt0.id === component_group_uptime_ref01_data.id);
     });
 });
 function basicSetup(extra) {

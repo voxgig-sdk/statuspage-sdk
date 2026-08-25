@@ -48,9 +48,13 @@ class TestComponentGroupUptimeEntity:
 
         # LOAD
         component_group_uptime_ref01_ent = client.ComponentGroupUptime(None)
-        component_group_uptime_ref01_match_dt0 = {}
+        component_group_uptime_ref01_match_dt0 = {
+            "id": component_group_uptime_ref01_data["id"],
+        }
         component_group_uptime_ref01_data_dt0_loaded = component_group_uptime_ref01_ent.load(component_group_uptime_ref01_match_dt0, None)
-        assert component_group_uptime_ref01_data_dt0_loaded is not None
+        component_group_uptime_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(component_group_uptime_ref01_data_dt0_loaded))
+        assert component_group_uptime_ref01_data_dt0_load_result is not None
+        assert component_group_uptime_ref01_data_dt0_load_result["id"] == component_group_uptime_ref01_data["id"]
 
 
 

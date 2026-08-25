@@ -807,6 +807,10 @@ func MakeConfig() map[string]any {
 						"type": "`$STRING`",
 					},
 					map[string]any{
+						"name": "id",
+						"type": "`$STRING`",
+					},
+					map[string]any{
 						"name": "incidents",
 						"short": "Related incidents",
 						"type": "`$OBJECT`",
@@ -1890,7 +1894,12 @@ func MakeConfig() map[string]any {
 				},
 			},
 			"incident_postmortem": map[string]any{
-				"fields": []any{},
+				"fields": []any{
+					map[string]any{
+						"name": "id",
+						"type": "`$STRING`",
+					},
+				},
 				"name": "incident_postmortem",
 				"op": map[string]any{
 					"remove": map[string]any{
@@ -5202,6 +5211,10 @@ func MakeConfig() map[string]any {
 			},
 			"permission": map[string]any{
 				"fields": []any{
+					map[string]any{
+						"name": "id",
+						"type": "`$STRING`",
+					},
 					map[string]any{
 						"name": "pages",
 						"short": "Pages accessible by the user.",

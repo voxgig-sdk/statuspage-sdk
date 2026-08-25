@@ -267,6 +267,7 @@ component_group_uptime = client.ComponentGroupUptime
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `component_id` | `String` | No | Component identifier |
+| `id` | `String` | No |  |
 | `incidents` | `Hash` | No | Related incidents |
 
 ### Operations
@@ -572,6 +573,12 @@ Return the entity name.
 ```ruby
 incident_postmortem = client.IncidentPostmortem
 ```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `String` | No |  |
 
 ### Operations
 
@@ -1356,6 +1363,7 @@ permission = client.Permission
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `String` | No |  |
 | `pages` | `Hash` | No | Pages accessible by the user. |
 | `user_id` | `String` | No | User identifier |
 

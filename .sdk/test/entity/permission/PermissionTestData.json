@@ -2,22 +2,22 @@
   "existing": {
     "permission": {
       "PERMISSION00": {
+        "id": "PERMISSION00",
         "pages": {},
         "user_id": "USER01",
-        "organization_id": "ORGANIZATION01",
-        "id": "PERMISSION00"
+        "organization_id": "ORGANIZATION01"
       },
       "PERMISSION01": {
+        "id": "PERMISSION01",
         "pages": {},
         "user_id": "USER01",
-        "organization_id": "ORGANIZATION01",
-        "id": "PERMISSION01"
+        "organization_id": "ORGANIZATION01"
       },
       "PERMISSION02": {
+        "id": "PERMISSION02",
         "pages": {},
         "user_id": "USER01",
-        "organization_id": "ORGANIZATION01",
-        "id": "PERMISSION02"
+        "organization_id": "ORGANIZATION01"
       }
     }
   },

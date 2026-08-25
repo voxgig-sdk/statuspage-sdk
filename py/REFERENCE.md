@@ -262,6 +262,7 @@ component_group_uptime = client.ComponentGroupUptime()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `component_id` | `str` | No | Component identifier |
+| `id` | `str` | No |  |
 | `incidents` | `dict` | No | Related incidents |
 
 ### Operations
@@ -568,6 +569,12 @@ Return the entity name.
 ```python
 incident_postmortem = client.IncidentPostmortem()
 ```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `str` | No |  |
 
 ### Operations
 
@@ -1355,6 +1362,7 @@ permission = client.Permission()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `str` | No |  |
 | `pages` | `dict` | No | Pages accessible by the user. |
 | `user_id` | `str` | No | User identifier |
 

@@ -380,6 +380,7 @@ API path: `/pages/{page_id}/components/{component_id}/page_access_groups`
 | Field | Description |
 | --- | --- |
 | `component_id` | Component identifier |
+| `id` |  |
 | `incidents` | Related incidents |
 
 Operations: load.
@@ -449,6 +450,7 @@ API path: `/pages/{page_id}/incidents`
 
 | Field | Description |
 | --- | --- |
+| `id` |  |
 
 Operations: remove.
 
@@ -650,6 +652,7 @@ API path: `/pages/{page_id}/page_access_users/{page_access_user_id}/components`
 
 | Field | Description |
 | --- | --- |
+| `id` |  |
 | `pages` | Pages accessible by the user. |
 | `user_id` | User identifier |
 
@@ -821,6 +824,7 @@ Create an instance: `const component_group_uptime = client.ComponentGroupUptime(
 | Field | Type | Description |
 | --- | --- | --- |
 | `component_id` | `string` | Component identifier |
+| `id` | `string` |  |
 | `incidents` | `Record<string, any>` | Related incidents |
 
 #### Example: Load
@@ -962,6 +966,12 @@ Create an instance: `const incident_postmortem = client.IncidentPostmortem()`
 | Method | Description |
 | --- | --- |
 | `remove(match)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
 
 
 ### IncidentSubscriber
@@ -1362,6 +1372,7 @@ Create an instance: `const permission = client.Permission()`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `id` | `string` |  |
 | `pages` | `Record<string, any>` | Pages accessible by the user. |
 | `user_id` | `string` | User identifier |
 

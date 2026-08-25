@@ -344,11 +344,15 @@ declare class Config {
             };
         };
         component_group_uptime: {
-            fields: {
+            fields: ({
                 name: string;
                 short: string;
                 type: string;
-            }[];
+            } | {
+                name: string;
+                type: string;
+                short?: undefined;
+            })[];
             name: string;
             op: {
                 load: {
@@ -821,7 +825,10 @@ declare class Config {
             };
         };
         incident_postmortem: {
-            fields: never[];
+            fields: {
+                name: string;
+                type: string;
+            }[];
             name: string;
             op: {
                 remove: {
@@ -2380,11 +2387,15 @@ declare class Config {
             };
         };
         permission: {
-            fields: {
+            fields: ({
+                name: string;
+                type: string;
+                short?: undefined;
+            } | {
                 name: string;
                 short: string;
                 type: string;
-            }[];
+            })[];
             name: string;
             op: {
                 load: {

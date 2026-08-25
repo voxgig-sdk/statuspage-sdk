@@ -49,6 +49,7 @@ class TestPermissionEntity:
         # UPDATE
         permission_ref01_ent = client.Permission(None)
         permission_ref01_data_up0_up = {
+            "id": permission_ref01_data["id"],
             "organization_id": setup["idmap"]["organization_id"],
         }
 
@@ -58,12 +59,17 @@ class TestPermissionEntity:
 
         permission_ref01_resdata_up0 = helpers.to_map(runner.entity_data(permission_ref01_ent.update(permission_ref01_data_up0_up, None)))
         assert permission_ref01_resdata_up0 is not None
+        assert permission_ref01_resdata_up0["id"] == permission_ref01_data_up0_up["id"]
         assert permission_ref01_resdata_up0[permission_ref01_markdef_up0_name] == permission_ref01_markdef_up0_value
 
         # LOAD
-        permission_ref01_match_dt0 = {}
+        permission_ref01_match_dt0 = {
+            "id": permission_ref01_data["id"],
+        }
         permission_ref01_data_dt0_loaded = permission_ref01_ent.load(permission_ref01_match_dt0, None)
-        assert permission_ref01_data_dt0_loaded is not None
+        permission_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(permission_ref01_data_dt0_loaded))
+        assert permission_ref01_data_dt0_load_result is not None
+        assert permission_ref01_data_dt0_load_result["id"] == permission_ref01_data["id"]
 
 
 

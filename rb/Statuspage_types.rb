@@ -251,10 +251,14 @@ ComponentRemoveMatch = Struct.new(
 # @!attribute [rw] component_id
 #   @return [String, nil]
 #
+# @!attribute [rw] id
+#   @return [String, nil]
+#
 # @!attribute [rw] incidents
 #   @return [Hash, nil]
 ComponentGroupUptime = Struct.new(
   :component_id,
+  :id,
   :incidents,
   keyword_init: true
 )
@@ -865,8 +869,13 @@ IncidentRemoveMatch = Struct.new(
 )
 
 # IncidentPostmortem entity data model.
-class IncidentPostmortem
-end
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+IncidentPostmortem = Struct.new(
+  :id,
+  keyword_init: true
+)
 
 # Request payload for IncidentPostmortem#remove.
 #
@@ -2537,12 +2546,16 @@ PageAccessUserRemoveMatch = Struct.new(
 
 # Permission entity data model.
 #
+# @!attribute [rw] id
+#   @return [String, nil]
+#
 # @!attribute [rw] pages
 #   @return [Hash, nil]
 #
 # @!attribute [rw] user_id
 #   @return [String, nil]
 Permission = Struct.new(
+  :id,
   :pages,
   :user_id,
   keyword_init: true

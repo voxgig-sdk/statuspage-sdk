@@ -45,6 +45,7 @@ describe("PermissionEntity", function()
     -- UPDATE
     local permission_ref01_ent = client:Permission(nil)
     local permission_ref01_data_up0_up = {
+      id = permission_ref01_data["id"],
       ["organization_id"] = setup.idmap["organization_id"],
     }
 
@@ -56,13 +57,18 @@ describe("PermissionEntity", function()
     assert.is_nil(err)
     local permission_ref01_resdata_up0 = helpers.to_map(type(permission_ref01_resdata_up0_result) == 'table' and permission_ref01_resdata_up0_result.data_get and permission_ref01_resdata_up0_result:data_get() or permission_ref01_resdata_up0_result)
     assert.is_not_nil(permission_ref01_resdata_up0)
+    assert.are.equal(permission_ref01_resdata_up0["id"], permission_ref01_data_up0_up["id"])
     assert.are.equal(permission_ref01_resdata_up0[permission_ref01_markdef_up0_name], permission_ref01_markdef_up0_value)
 
     -- LOAD
-    local permission_ref01_match_dt0 = {}
+    local permission_ref01_match_dt0 = {
+      id = permission_ref01_data["id"],
+    }
     local permission_ref01_data_dt0_loaded, err = permission_ref01_ent:load(permission_ref01_match_dt0, nil)
     assert.is_nil(err)
-    assert.is_not_nil(permission_ref01_data_dt0_loaded)
+    local permission_ref01_data_dt0_load_result = helpers.to_map(type(permission_ref01_data_dt0_loaded) == 'table' and permission_ref01_data_dt0_loaded.data_get and permission_ref01_data_dt0_loaded:data_get() or permission_ref01_data_dt0_loaded)
+    assert.is_not_nil(permission_ref01_data_dt0_load_result)
+    assert.are.equal(permission_ref01_data_dt0_load_result["id"], permission_ref01_data["id"])
 
   end)
 end)

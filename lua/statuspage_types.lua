@@ -72,6 +72,7 @@
 
 ---@class ComponentGroupUptime
 ---@field component_id? string
+---@field id? string
 ---@field incidents? table
 
 ---@class ComponentGroupUptimeLoadMatch
@@ -236,6 +237,7 @@
 ---@field page_id string
 
 ---@class IncidentPostmortem
+---@field id? string
 
 ---@class IncidentPostmortemRemoveMatch
 ---@field id string
@@ -682,6 +684,7 @@
 ---@field metric_id? string
 
 ---@class Permission
+---@field id? string
 ---@field pages? table
 ---@field user_id? string
 

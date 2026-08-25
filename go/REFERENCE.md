@@ -287,6 +287,7 @@ fmt.Println(componentGroupUptime.GetName()) // "component_group_uptime"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `component_id` | `string` | No | Component identifier |
+| `id` | `string` | No |  |
 | `incidents` | `map[string]any` | No | Related incidents |
 
 ### Operations
@@ -621,6 +622,12 @@ Return the entity name.
 incidentPostmortem := client.IncidentPostmortem(nil)
 fmt.Println(incidentPostmortem.GetName()) // "incident_postmortem"
 ```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | No |  |
 
 ### Operations
 
@@ -1472,6 +1479,7 @@ fmt.Println(permission.GetName()) // "permission"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `string` | No |  |
 | `pages` | `map[string]any` | No | Pages accessible by the user. |
 | `user_id` | `string` | No | User identifier |
 

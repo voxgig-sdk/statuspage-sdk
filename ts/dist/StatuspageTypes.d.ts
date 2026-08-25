@@ -70,6 +70,7 @@ export interface ComponentRemoveMatch {
 }
 export interface ComponentGroupUptime {
     component_id?: string;
+    id?: string;
     incidents?: Record<string, any>;
 }
 export interface ComponentGroupUptimeLoadMatch {
@@ -236,6 +237,7 @@ export interface IncidentRemoveMatch {
     page_id: string;
 }
 export interface IncidentPostmortem {
+    id?: string;
 }
 export interface IncidentPostmortemRemoveMatch {
     id: string;
@@ -698,6 +700,7 @@ export interface PageAccessUserRemoveMatch {
     [action: string]: any;
 }
 export interface Permission {
+    id?: string;
     pages?: Record<string, any>;
     user_id?: string;
 }

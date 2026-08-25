@@ -340,6 +340,7 @@ API path: `/pages/{page_id}/components/{component_id}/page_access_groups`
 | Field | Description |
 | --- | --- |
 | `"component_id"` | Component identifier |
+| `"id"` |  |
 | `"incidents"` | Related incidents |
 
 Operations: Load.
@@ -409,6 +410,7 @@ API path: `/pages/{page_id}/incidents`
 
 | Field | Description |
 | --- | --- |
+| `"id"` |  |
 
 Operations: Remove.
 
@@ -610,6 +612,7 @@ API path: `/pages/{page_id}/page_access_users/{page_access_user_id}/components`
 
 | Field | Description |
 | --- | --- |
+| `"id"` |  |
 | `"pages"` | Pages accessible by the user. |
 | `"user_id"` | User identifier |
 
@@ -793,6 +796,7 @@ Create an instance: `componentGroupUptime := client.ComponentGroupUptime(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `component_id` | `string` | Component identifier |
+| `id` | `string` |  |
 | `incidents` | `map[string]any` | Related incidents |
 
 #### Example: Load
@@ -962,6 +966,12 @@ Create an instance: `incidentPostmortem := client.IncidentPostmortem(nil)`
 | Method | Description |
 | --- | --- |
 | `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
 
 
 ### IncidentSubscriber
@@ -1430,6 +1440,7 @@ Create an instance: `permission := client.Permission(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `id` | `string` |  |
 | `pages` | `map[string]any` | Pages accessible by the user. |
 | `user_id` | `string` | User identifier |
 

@@ -824,6 +824,10 @@ def make_config():
             "type": "`$STRING`",
           },
           {
+            "name": "id",
+            "type": "`$STRING`",
+          },
+          {
             "name": "incidents",
             "short": "Related incidents",
             "type": "`$OBJECT`",
@@ -1907,7 +1911,12 @@ def make_config():
         },
       },
       "incident_postmortem": {
-        "fields": [],
+        "fields": [
+          {
+            "name": "id",
+            "type": "`$STRING`",
+          },
+        ],
         "name": "incident_postmortem",
         "op": {
           "remove": {
@@ -5219,6 +5228,10 @@ def make_config():
       },
       "permission": {
         "fields": [
+          {
+            "name": "id",
+            "type": "`$STRING`",
+          },
           {
             "name": "pages",
             "short": "Pages accessible by the user.",

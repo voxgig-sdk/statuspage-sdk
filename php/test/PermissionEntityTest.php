@@ -49,6 +49,7 @@ class PermissionEntityTest extends TestCase
         // UPDATE
         $permission_ref01_ent = $client->Permission(null);
         $permission_ref01_data_up0_up = [
+            "id" => $permission_ref01_data["id"],
             "organization_id" => $setup["idmap"]["organization_id"],
         ];
 
@@ -59,12 +60,17 @@ class PermissionEntityTest extends TestCase
         $permission_ref01_resdata_up0_result = $permission_ref01_ent->update($permission_ref01_data_up0_up, null);
         $permission_ref01_resdata_up0 = Helpers::to_map(is_object($permission_ref01_resdata_up0_result) && method_exists($permission_ref01_resdata_up0_result, 'data_get') ? $permission_ref01_resdata_up0_result->data_get() : $permission_ref01_resdata_up0_result);
         $this->assertNotNull($permission_ref01_resdata_up0);
+        $this->assertEquals($permission_ref01_resdata_up0["id"], $permission_ref01_data_up0_up["id"]);
         $this->assertEquals($permission_ref01_resdata_up0[$permission_ref01_markdef_up0_name], $permission_ref01_markdef_up0_value);
 
         // LOAD
-        $permission_ref01_match_dt0 = [];
+        $permission_ref01_match_dt0 = [
+            "id" => $permission_ref01_data["id"],
+        ];
         $permission_ref01_data_dt0_loaded = $permission_ref01_ent->load($permission_ref01_match_dt0, null);
-        $this->assertNotNull($permission_ref01_data_dt0_loaded);
+        $permission_ref01_data_dt0_load_result = Helpers::to_map(is_object($permission_ref01_data_dt0_loaded) && method_exists($permission_ref01_data_dt0_loaded, 'data_get') ? $permission_ref01_data_dt0_loaded->data_get() : $permission_ref01_data_dt0_loaded);
+        $this->assertNotNull($permission_ref01_data_dt0_load_result);
+        $this->assertEquals($permission_ref01_data_dt0_load_result["id"], $permission_ref01_data["id"]);
 
     }
 }

@@ -91,6 +91,7 @@ type ComponentRemoveMatch struct {
 // ComponentGroupUptime is the typed data model for the component_group_uptime entity.
 type ComponentGroupUptime struct {
 	ComponentId *string `json:"component_id,omitempty"`
+	Id *string `json:"id,omitempty"`
 	Incidents *map[string]any `json:"incidents,omitempty"`
 }
 
@@ -283,6 +284,7 @@ type IncidentRemoveMatch struct {
 
 // IncidentPostmortem is the typed data model for the incident_postmortem entity.
 type IncidentPostmortem struct {
+	Id *string `json:"id,omitempty"`
 }
 
 // IncidentPostmortemRemoveMatch is the typed request payload for IncidentPostmortem.RemoveTyped.
@@ -803,6 +805,7 @@ type PageAccessUserRemoveMatch struct {
 
 // Permission is the typed data model for the permission entity.
 type Permission struct {
+	Id *string `json:"id,omitempty"`
 	Pages *map[string]any `json:"pages,omitempty"`
 	UserId *string `json:"user_id,omitempty"`
 }

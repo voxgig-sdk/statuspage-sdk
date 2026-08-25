@@ -448,6 +448,7 @@ const component_group_uptime = client.ComponentGroupUptime()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `component_id` | `string` | No | Component identifier |
+| `id` | `string` | No |  |
 | `incidents` | `Record<string, any>` | No | Related incidents |
 
 ### Operations
@@ -770,6 +771,12 @@ Return a copy of the entity options.
 ```ts
 const incident_postmortem = client.IncidentPostmortem()
 ```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | No |  |
 
 ### Operations
 
@@ -1608,6 +1615,7 @@ const permission = client.Permission()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `string` | No |  |
 | `pages` | `Record<string, any>` | No | Pages accessible by the user. |
 | `user_id` | `string` | No | User identifier |
 

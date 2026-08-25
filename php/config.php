@@ -829,6 +829,10 @@ class StatuspageConfig
               'type' => '`$STRING`',
             ],
             [
+              'name' => 'id',
+              'type' => '`$STRING`',
+            ],
+            [
               'name' => 'incidents',
               'short' => 'Related incidents',
               'type' => '`$OBJECT`',
@@ -1912,7 +1916,12 @@ class StatuspageConfig
           ],
         ],
         'incident_postmortem' => [
-          'fields' => [],
+          'fields' => [
+            [
+              'name' => 'id',
+              'type' => '`$STRING`',
+            ],
+          ],
           'name' => 'incident_postmortem',
           'op' => [
             'remove' => [
@@ -5224,6 +5233,10 @@ class StatuspageConfig
         ],
         'permission' => [
           'fields' => [
+            [
+              'name' => 'id',
+              'type' => '`$STRING`',
+            ],
             [
               'name' => 'pages',
               'short' => 'Pages accessible by the user.',

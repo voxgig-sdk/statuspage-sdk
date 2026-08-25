@@ -264,6 +264,7 @@ local component_group_uptime = client:ComponentGroupUptime(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `component_id` | `string` | No | Component identifier |
+| `id` | `string` | No |  |
 | `incidents` | `table` | No | Related incidents |
 
 ### Operations
@@ -569,6 +570,12 @@ Return the entity name.
 ```lua
 local incident_postmortem = client:IncidentPostmortem(nil)
 ```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | No |  |
 
 ### Operations
 
@@ -1353,6 +1360,7 @@ local permission = client:Permission(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `string` | No |  |
 | `pages` | `table` | No | Pages accessible by the user. |
 | `user_id` | `string` | No | User identifier |
 
