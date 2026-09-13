@@ -45,6 +45,8 @@ class ComponentListMatchRequired(TypedDict):
 
 class ComponentListMatch(ComponentListMatchRequired, total=False):
     page_access_group_id: str
+    page: int
+    per_page: int
     page_access_user_id: str
 
 
@@ -101,9 +103,14 @@ class ComponentGroupUptime(TypedDict, total=False):
     incidents: dict
 
 
-class ComponentGroupUptimeLoadMatch(TypedDict):
+class ComponentGroupUptimeLoadMatchRequired(TypedDict):
     id: str
     page_id: str
+
+
+class ComponentGroupUptimeLoadMatch(ComponentGroupUptimeLoadMatchRequired, total=False):
+    end: Any
+    start: Any
 
 
 class GroupComponentRequired(TypedDict):
@@ -126,8 +133,13 @@ class GroupComponentLoadMatch(TypedDict):
     page_id: str
 
 
-class GroupComponentListMatch(TypedDict):
+class GroupComponentListMatchRequired(TypedDict):
     page_id: str
+
+
+class GroupComponentListMatch(GroupComponentListMatchRequired, total=False):
+    page: int
+    per_page: int
 
 
 class GroupComponentCreateDataRequired(TypedDict):
@@ -208,8 +220,14 @@ class IncidentLoadMatch(TypedDict):
     page_id: str
 
 
-class IncidentListMatch(TypedDict):
+class IncidentListMatchRequired(TypedDict):
     page_id: str
+
+
+class IncidentListMatch(IncidentListMatchRequired, total=False):
+    limit: int
+    page: int
+    q: str
 
 
 class IncidentCreateDataRequired(TypedDict):
@@ -328,8 +346,13 @@ class IncidentTemplate(IncidentTemplateRequired, total=False):
     update_status: str
 
 
-class IncidentTemplateListMatch(TypedDict):
+class IncidentTemplateListMatchRequired(TypedDict):
     page_id: str
+
+
+class IncidentTemplateListMatch(IncidentTemplateListMatchRequired, total=False):
+    page: int
+    per_page: int
 
 
 class IncidentTemplateCreateDataRequired(TypedDict):
@@ -419,12 +442,19 @@ class MetricLoadMatchRequired(TypedDict):
 
 class MetricLoadMatch(MetricLoadMatchRequired, total=False):
     metrics_provider_id: str
+    page: int
+    per_page: int
     id: str
 
 
-class MetricListMatch(TypedDict):
+class MetricListMatchRequired(TypedDict):
     page_access_user_id: str
     page_id: str
+
+
+class MetricListMatch(MetricListMatchRequired, total=False):
+    page: int
+    per_page: int
 
 
 class MetricCreateDataRequired(TypedDict):
@@ -714,8 +744,13 @@ class PageAccessGroupLoadMatch(TypedDict):
     page_id: str
 
 
-class PageAccessGroupListMatch(TypedDict):
+class PageAccessGroupListMatchRequired(TypedDict):
     id: str
+
+
+class PageAccessGroupListMatch(PageAccessGroupListMatchRequired, total=False):
+    page: int
+    per_page: int
 
 
 class PageAccessGroupCreateDataRequired(TypedDict):
@@ -781,8 +816,14 @@ class PageAccessUserLoadMatch(TypedDict):
     page_id: str
 
 
-class PageAccessUserListMatch(TypedDict):
+class PageAccessUserListMatchRequired(TypedDict):
     id: str
+
+
+class PageAccessUserListMatch(PageAccessUserListMatchRequired, total=False):
+    email: str
+    page: int
+    per_page: int
 
 
 class PageAccessUserCreateDataRequired(TypedDict):
@@ -966,7 +1007,15 @@ class SubscriberListMatchRequired(TypedDict):
 
 
 class SubscriberListMatch(SubscriberListMatchRequired, total=False):
+    limit: int
+    page: int
+    q: str
+    sort_direction: str
+    sort_field: str
+    state: str
+    type: str
     incident_id: str
+    per_page: int
 
 
 class SubscriberCreateDataRequired(TypedDict):
@@ -1043,6 +1092,7 @@ class SubscriberRemoveMatchRequired(TypedDict):
 
 class SubscriberRemoveMatch(SubscriberRemoveMatchRequired, total=False):
     incident_id: str
+    skip_unsubscription_notification: bool
 
 
 class UserRequired(TypedDict):
@@ -1059,8 +1109,13 @@ class User(UserRequired, total=False):
     updated_at: str
 
 
-class UserListMatch(TypedDict):
+class UserListMatchRequired(TypedDict):
     organization_id: str
+
+
+class UserListMatch(UserListMatchRequired, total=False):
+    page: int
+    per_page: int
 
 
 class UserCreateDataRequired(TypedDict):

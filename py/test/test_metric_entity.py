@@ -180,7 +180,7 @@ def _metric_basic_setup(extra):
         "STATUSPAGE_TEST_METRIC_ENTID": idmap,
         "STATUSPAGE_TEST_LIVE": "FALSE",
         "STATUSPAGE_TEST_EXPLAIN": "FALSE",
-        "STATUSPAGE_APIKEY": "NONE",
+        "STATUSPAGE_APIKEY": "",
     })
 
     idmap_resolved = helpers.to_map(
@@ -192,6 +192,10 @@ def _metric_basic_setup(extra):
 
     if env.get("STATUSPAGE_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
+            # FIRST, so the generated fields below win: sdk-test-control.json's
+            # test.client.options adds to the live client, it does not
+            # redirect it.
+            runner.live_client_options(),
             {
                 "apikey": env.get("STATUSPAGE_APIKEY"),
             },

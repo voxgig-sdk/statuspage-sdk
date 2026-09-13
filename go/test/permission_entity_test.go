@@ -51,7 +51,7 @@ func TestPermissionEntity(t *testing.T) {
 		client := setup.client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
-		permissionRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath("existing.permission", setup.data)))
+		permissionRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.permission")))
 		var permissionRef01Data map[string]any
 		if len(permissionRef01DataRaw) > 0 {
 			permissionRef01Data = core.ToMapAny(permissionRef01DataRaw[0][1])
@@ -129,7 +129,7 @@ func permissionBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"permission01", "permission02", "permission03", "organization01", "organization02", "organization03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -149,7 +149,7 @@ func permissionBasicSetup(extra map[string]any) *entityTestSetup {
 		"STATUSPAGE_TEST_PERMISSION_ENTID": idmap,
 		"STATUSPAGE_TEST_LIVE":      "FALSE",
 		"STATUSPAGE_TEST_EXPLAIN":   "FALSE",
-		"STATUSPAGE_APIKEY":         "NONE",
+		"STATUSPAGE_APIKEY":         "",
 	})
 
 	idmapResolved := core.ToMapAny(env["STATUSPAGE_TEST_PERMISSION_ENTID"])
@@ -162,11 +162,23 @@ func permissionBasicSetup(extra map[string]any) *entityTestSetup {
 	}
 
 	if env["STATUSPAGE_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
 				"apikey": env["STATUSPAGE_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewStatuspageSDK(core.ToMapAny(mergedOpts))
 	}

@@ -17,6 +17,7 @@ main: kit: entity: component: {
       type: "`$OBJECT`"
     }
     {
+      format: "date-time"
       name: "created_at"
       req: false
       type: "`$STRING`"
@@ -64,6 +65,7 @@ main: kit: entity: component: {
       type: "`$STRING`"
     }
     {
+      format: "int32"
       name: "position"
       req: false
       short: "Order the component will appear on the page"
@@ -76,6 +78,7 @@ main: kit: entity: component: {
       type: "`$BOOLEAN`"
     }
     {
+      format: "date"
       name: "start_date"
       req: false
       short: "The date this component started being used"
@@ -88,6 +91,7 @@ main: kit: entity: component: {
       type: "`$STRING`"
     }
     {
+      format: "date-time"
       name: "updated_at"
       req: false
       type: "`$STRING`"
@@ -125,18 +129,28 @@ main: kit: entity: component: {
           }
           method: "POST"
           orig: "/pages/{page_id}/components/{component_id}/page_access_groups"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
-            "{id}"
-            "page_access_groups"
-          ]
           rename: {
             param: {
               component_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_groups"
+            }
+          ]
           select: {
             "$action": "page_access_group"
             exist: [
@@ -170,18 +184,28 @@ main: kit: entity: component: {
           }
           method: "POST"
           orig: "/pages/{page_id}/components/{component_id}/page_access_users"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
-            "{id}"
-            "page_access_users"
-          ]
           rename: {
             param: {
               component_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_users"
+            }
+          ]
           select: {
             "$action": "page_access_user"
             exist: [
@@ -208,10 +232,16 @@ main: kit: entity: component: {
           }
           method: "POST"
           orig: "/pages/{page_id}/components"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
           ]
           select: {
             exist: [
@@ -267,12 +297,22 @@ main: kit: entity: component: {
           }
           method: "GET"
           orig: "/pages/{page_id}/page_access_groups/{page_access_group_id}/components"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_groups"
-            "{page_access_group_id}"
-            "components"
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_groups"
+            }
+            {
+              var: "page_access_group_id"
+            }
+            {
+              lit: "components"
+            }
           ]
           select: {
             exist: [
@@ -324,12 +364,22 @@ main: kit: entity: component: {
           }
           method: "GET"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/components"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{page_access_user_id}"
-            "components"
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "page_access_user_id"
+            }
+            {
+              lit: "components"
+            }
           ]
           select: {
             exist: [
@@ -374,10 +424,16 @@ main: kit: entity: component: {
           }
           method: "GET"
           orig: "/pages/{page_id}/components"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
           ]
           select: {
             exist: [
@@ -433,18 +489,28 @@ main: kit: entity: component: {
           }
           method: "GET"
           orig: "/pages/{page_id}/components/{component_id}/uptime"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
-            "{id}"
-            "uptime"
-          ]
           rename: {
             param: {
               component_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "uptime"
+            }
+          ]
           select: {
             "$action": "uptime"
             exist: [
@@ -480,17 +546,25 @@ main: kit: entity: component: {
           }
           method: "GET"
           orig: "/pages/{page_id}/components/{component_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
-            "{id}"
-          ]
           rename: {
             param: {
               component_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -528,17 +602,25 @@ main: kit: entity: component: {
           }
           method: "PATCH"
           orig: "/pages/{page_id}/components/{component_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
-            "{id}"
-          ]
           rename: {
             param: {
               component_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -578,17 +660,25 @@ main: kit: entity: component: {
           }
           method: "DELETE"
           orig: "/pages/{page_id}/components/{component_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
-            "{id}"
-          ]
           rename: {
             param: {
               component_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -621,18 +711,28 @@ main: kit: entity: component: {
           }
           method: "DELETE"
           orig: "/pages/{page_id}/components/{component_id}/page_access_groups"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
-            "{id}"
-            "page_access_groups"
-          ]
           rename: {
             param: {
               component_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_groups"
+            }
+          ]
           select: {
             "$action": "page_access_group"
             exist: [
@@ -666,18 +766,28 @@ main: kit: entity: component: {
           }
           method: "DELETE"
           orig: "/pages/{page_id}/components/{component_id}/page_access_users"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
-            "{id}"
-            "page_access_users"
-          ]
           rename: {
             param: {
               component_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_users"
+            }
+          ]
           select: {
             "$action": "page_access_user"
             exist: [
@@ -716,17 +826,25 @@ main: kit: entity: component: {
           }
           method: "PUT"
           orig: "/pages/{page_id}/components/{component_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "components"
-            "{id}"
-          ]
           rename: {
             param: {
               component_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"

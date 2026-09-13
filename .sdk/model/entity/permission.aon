@@ -55,17 +55,25 @@ main: kit: entity: permission: {
           }
           method: "GET"
           orig: "/organizations/{organization_id}/permissions/{user_id}"
-          parts: [
-            "organizations"
-            "{organization_id}"
-            "permissions"
-            "{id}"
-          ]
           rename: {
             param: {
               user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "organizations"
+            }
+            {
+              var: "organization_id"
+            }
+            {
+              lit: "permissions"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -103,17 +111,25 @@ main: kit: entity: permission: {
           }
           method: "PUT"
           orig: "/organizations/{organization_id}/permissions/{user_id}"
-          parts: [
-            "organizations"
-            "{organization_id}"
-            "permissions"
-            "{id}"
-          ]
           rename: {
             param: {
               user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "organizations"
+            }
+            {
+              var: "organization_id"
+            }
+            {
+              lit: "permissions"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"

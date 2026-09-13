@@ -138,15 +138,17 @@ function page_access_group_direct_setup($mockres)
     $env = Runner::env_override([
         "STATUSPAGE_TEST_PAGE_ACCESS_GROUP_ENTID" => [],
         "STATUSPAGE_TEST_LIVE" => "FALSE",
-        "STATUSPAGE_APIKEY" => "NONE",
+        "STATUSPAGE_APIKEY" => "",
     ]);
 
     $live = $env["STATUSPAGE_TEST_LIVE"] === "TRUE";
 
     if ($live) {
-        $merged_opts = [
+        // Merged so the generated fields win: sdk-test-control.json's
+        // test.client.options adds to the live client, it does not redirect it.
+        $merged_opts = array_merge(Runner::live_client_options(), [
             "apikey" => $env["STATUSPAGE_APIKEY"],
-        ];
+        ]);
         $client = new StatuspageSDK($merged_opts);
         return [
             "client" => $client,

@@ -51,7 +51,7 @@ func TestPostmortemEntity(t *testing.T) {
 		client := setup.client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
-		postmortemRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath("existing.postmortem", setup.data)))
+		postmortemRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.postmortem")))
 		var postmortemRef01Data map[string]any
 		if len(postmortemRef01DataRaw) > 0 {
 			postmortemRef01Data = core.ToMapAny(postmortemRef01DataRaw[0][1])
@@ -119,7 +119,7 @@ func postmortemBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"postmortem01", "postmortem02", "postmortem03", "page01", "page02", "page03", "incident01", "incident02", "incident03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -139,7 +139,7 @@ func postmortemBasicSetup(extra map[string]any) *entityTestSetup {
 		"STATUSPAGE_TEST_POSTMORTEM_ENTID": idmap,
 		"STATUSPAGE_TEST_LIVE":      "FALSE",
 		"STATUSPAGE_TEST_EXPLAIN":   "FALSE",
-		"STATUSPAGE_APIKEY":         "NONE",
+		"STATUSPAGE_APIKEY":         "",
 	})
 
 	idmapResolved := core.ToMapAny(env["STATUSPAGE_TEST_POSTMORTEM_ENTID"])
@@ -152,11 +152,23 @@ func postmortemBasicSetup(extra map[string]any) *entityTestSetup {
 	}
 
 	if env["STATUSPAGE_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
 				"apikey": env["STATUSPAGE_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewStatuspageSDK(core.ToMapAny(mergedOpts))
 	}

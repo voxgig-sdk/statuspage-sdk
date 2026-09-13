@@ -79,7 +79,7 @@ def incident_subscriber_basic_setup(extra)
     "STATUSPAGE_TEST_INCIDENT_SUBSCRIBER_ENTID" => idmap,
     "STATUSPAGE_TEST_LIVE" => "FALSE",
     "STATUSPAGE_TEST_EXPLAIN" => "FALSE",
-    "STATUSPAGE_APIKEY" => "NONE",
+    "STATUSPAGE_APIKEY" => "",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -90,6 +90,9 @@ def incident_subscriber_basic_setup(extra)
 
   if env["STATUSPAGE_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
+      # FIRST, so the generated fields below win: sdk-test-control.json's
+      # test.client.options adds to the live client, it does not redirect it.
+      Runner.live_client_options,
       {
         "apikey" => env["STATUSPAGE_APIKEY"],
       },

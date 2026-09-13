@@ -12,6 +12,7 @@ main: kit: entity: page_access_user: {
       type: "`$ARRAY`"
     }
     {
+      format: "date-time"
       name: "created_at"
       req: false
       type: "`$STRING`"
@@ -60,6 +61,7 @@ main: kit: entity: page_access_user: {
       type: "`$STRING`"
     }
     {
+      format: "date-time"
       name: "updated_at"
       req: false
       type: "`$STRING`"
@@ -97,18 +99,28 @@ main: kit: entity: page_access_user: {
           }
           method: "POST"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/components"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "components"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "components"
+            }
+          ]
           select: {
             "$action": "component"
             exist: [
@@ -142,18 +154,28 @@ main: kit: entity: page_access_user: {
           }
           method: "POST"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "metrics"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "metrics"
+            }
+          ]
           select: {
             "$action": "metric"
             exist: [
@@ -180,16 +202,22 @@ main: kit: entity: page_access_user: {
           }
           method: "POST"
           orig: "/pages/{page_id}/page_access_users"
-          parts: [
-            "pages"
-            "{id}"
-            "page_access_users"
-          ]
           rename: {
             param: {
               page_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_users"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -244,16 +272,22 @@ main: kit: entity: page_access_user: {
           }
           method: "GET"
           orig: "/pages/{page_id}/page_access_users"
-          parts: [
-            "pages"
-            "{id}"
-            "page_access_users"
-          ]
           rename: {
             param: {
               page_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_users"
+            }
+          ]
           select: {
             exist: [
               "email"
@@ -293,17 +327,25 @@ main: kit: entity: page_access_user: {
           }
           method: "GET"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -341,17 +383,25 @@ main: kit: entity: page_access_user: {
           }
           method: "PATCH"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -384,18 +434,28 @@ main: kit: entity: page_access_user: {
           }
           method: "PATCH"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/components"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "components"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "components"
+            }
+          ]
           select: {
             "$action": "component"
             exist: [
@@ -429,18 +489,28 @@ main: kit: entity: page_access_user: {
           }
           method: "PATCH"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "metrics"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "metrics"
+            }
+          ]
           select: {
             "$action": "metric"
             exist: [
@@ -486,19 +556,31 @@ main: kit: entity: page_access_user: {
           }
           method: "DELETE"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/components/{component_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "components"
-            "{component_id}"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "component_id"
+            }
+          ]
           select: {
             exist: [
               "component_id"
@@ -539,19 +621,31 @@ main: kit: entity: page_access_user: {
           }
           method: "DELETE"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics/{metric_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "metrics"
-            "{metric_id}"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "metrics"
+            }
+            {
+              var: "metric_id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -585,17 +679,25 @@ main: kit: entity: page_access_user: {
           }
           method: "DELETE"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -628,18 +730,28 @@ main: kit: entity: page_access_user: {
           }
           method: "DELETE"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/components"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "components"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "components"
+            }
+          ]
           select: {
             "$action": "component"
             exist: [
@@ -673,18 +785,28 @@ main: kit: entity: page_access_user: {
           }
           method: "DELETE"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "metrics"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "metrics"
+            }
+          ]
           select: {
             "$action": "metric"
             exist: [
@@ -723,17 +845,25 @@ main: kit: entity: page_access_user: {
           }
           method: "PUT"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -766,18 +896,28 @@ main: kit: entity: page_access_user: {
           }
           method: "PUT"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/components"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "components"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "components"
+            }
+          ]
           select: {
             "$action": "component"
             exist: [
@@ -811,18 +951,28 @@ main: kit: entity: page_access_user: {
           }
           method: "PUT"
           orig: "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics"
-          parts: [
-            "pages"
-            "{page_id}"
-            "page_access_users"
-            "{id}"
-            "metrics"
-          ]
           rename: {
             param: {
               page_access_user_id: "id"
             }
           }
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "metrics"
+            }
+          ]
           select: {
             "$action": "metric"
             exist: [

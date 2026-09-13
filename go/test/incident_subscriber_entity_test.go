@@ -52,7 +52,7 @@ func TestIncidentSubscriberEntity(t *testing.T) {
 		// CREATE
 		incidentSubscriberRef01Ent := client.IncidentSubscriber(nil)
 		incidentSubscriberRef01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath([]any{"new", "incident_subscriber"}, setup.data), "incident_subscriber_ref01"))
+			vs.GetPath(setup.data, []any{"new", "incident_subscriber"}), "incident_subscriber_ref01"))
 		incidentSubscriberRef01Data["incident_id"] = setup.idmap["incident01"]
 		incidentSubscriberRef01Data["page_id"] = setup.idmap["page01"]
 		incidentSubscriberRef01Data["subscriber_id"] = setup.idmap["subscriber01"]
@@ -93,7 +93,7 @@ func incident_subscriberBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"incident_subscriber01", "incident_subscriber02", "incident_subscriber03", "page01", "page02", "page03", "incident01", "incident02", "incident03", "subscriber01", "subscriber02", "subscriber03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -113,7 +113,7 @@ func incident_subscriberBasicSetup(extra map[string]any) *entityTestSetup {
 		"STATUSPAGE_TEST_INCIDENT_SUBSCRIBER_ENTID": idmap,
 		"STATUSPAGE_TEST_LIVE":      "FALSE",
 		"STATUSPAGE_TEST_EXPLAIN":   "FALSE",
-		"STATUSPAGE_APIKEY":         "NONE",
+		"STATUSPAGE_APIKEY":         "",
 	})
 
 	idmapResolved := core.ToMapAny(env["STATUSPAGE_TEST_INCIDENT_SUBSCRIBER_ENTID"])
@@ -122,11 +122,23 @@ func incident_subscriberBasicSetup(extra map[string]any) *entityTestSetup {
 	}
 
 	if env["STATUSPAGE_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
 				"apikey": env["STATUSPAGE_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewStatuspageSDK(core.ToMapAny(mergedOpts))
 	}

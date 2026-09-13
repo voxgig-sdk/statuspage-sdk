@@ -73,6 +73,7 @@ module StatuspageConfig
               "type" => "`$OBJECT`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "type" => "`$STRING`",
             },
@@ -112,6 +113,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "int32",
               "name" => "position",
               "short" => "Order the component will appear on the page",
               "type" => "`$INTEGER`",
@@ -122,6 +124,7 @@ module StatuspageConfig
               "type" => "`$BOOLEAN`",
             },
             {
+              "format" => "date",
               "name" => "start_date",
               "short" => "The date this component started being used",
               "type" => "`$STRING`",
@@ -132,10 +135,15 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "component",
           "op" => {
             "create" => {
@@ -164,18 +172,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/components/{component_id}/page_access_groups",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
-                    "{id}",
-                    "page_access_groups",
-                  ],
                   "rename" => {
                     "param" => {
                       "component_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                  ],
                   "select" => {
                     "$action" => "page_access_group",
                     "exist" => [
@@ -187,6 +205,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                    "{id}",
+                    "page_access_groups",
+                  ],
                 },
                 {
                   "args" => {
@@ -210,18 +235,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/components/{component_id}/page_access_users",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
-                    "{id}",
-                    "page_access_users",
-                  ],
                   "rename" => {
                     "param" => {
                       "component_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                  ],
                   "select" => {
                     "$action" => "page_access_user",
                     "exist" => [
@@ -233,6 +268,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                    "{id}",
+                    "page_access_users",
+                  ],
                 },
                 {
                   "args" => {
@@ -249,10 +291,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -265,6 +313,11 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                  ],
                 },
               ],
             },
@@ -308,12 +361,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{page_access_group_id}",
-                    "components",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "page_access_group_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -327,6 +390,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{page_access_group_id}",
+                    "components",
+                  ],
                 },
                 {
                   "args" => {
@@ -364,12 +434,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{page_access_user_id}",
-                    "components",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "page_access_user_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -383,6 +463,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{page_access_user_id}",
+                    "components",
+                  ],
                 },
                 {
                   "args" => {
@@ -413,10 +500,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -429,6 +522,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                  ],
                 },
               ],
             },
@@ -472,18 +570,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/components/{component_id}/uptime",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
-                    "{id}",
-                    "uptime",
-                  ],
                   "rename" => {
                     "param" => {
                       "component_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "uptime",
+                    },
+                  ],
                   "select" => {
                     "$action" => "uptime",
                     "exist" => [
@@ -497,6 +605,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body.related_events`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                    "{id}",
+                    "uptime",
+                  ],
                 },
                 {
                   "args" => {
@@ -520,17 +635,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/components/{component_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "component_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -541,6 +664,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -570,17 +699,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/components/{component_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "component_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -593,6 +730,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -622,17 +765,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/components/{component_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "component_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -643,6 +794,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -666,18 +823,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/components/{component_id}/page_access_groups",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
-                    "{id}",
-                    "page_access_groups",
-                  ],
                   "rename" => {
                     "param" => {
                       "component_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                  ],
                   "select" => {
                     "$action" => "page_access_group",
                     "exist" => [
@@ -689,6 +856,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                    "{id}",
+                    "page_access_groups",
+                  ],
                 },
                 {
                   "args" => {
@@ -712,18 +886,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/components/{component_id}/page_access_users",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
-                    "{id}",
-                    "page_access_users",
-                  ],
                   "rename" => {
                     "param" => {
                       "component_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                  ],
                   "select" => {
                     "$action" => "page_access_user",
                     "exist" => [
@@ -735,6 +919,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                    "{id}",
+                    "page_access_users",
+                  ],
                 },
               ],
             },
@@ -764,17 +955,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/components/{component_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "components",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "component_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -787,6 +986,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "components",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -824,6 +1029,10 @@ module StatuspageConfig
               "type" => "`$OBJECT`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "component_group_uptime",
           "op" => {
             "load" => {
@@ -866,12 +1075,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/component-groups/{id}/uptime",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "component-groups",
-                    "{id}",
-                    "uptime",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "component-groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "uptime",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -885,6 +1104,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body.related_events`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "component-groups",
+                    "{id}",
+                    "uptime",
+                  ],
                 },
               ],
             },
@@ -909,6 +1135,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "type" => "`$STRING`",
             },
@@ -935,10 +1162,15 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "group_component",
           "op" => {
             "create" => {
@@ -960,10 +1192,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/component-groups",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "component-groups",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "component-groups",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -974,6 +1212,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "component-groups",
+                  ],
                 },
               ],
             },
@@ -1010,10 +1253,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/component-groups",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "component-groups",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "component-groups",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -1026,6 +1275,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "component-groups",
+                  ],
                 },
               ],
             },
@@ -1055,11 +1309,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/component-groups/{id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "component-groups",
-                    "{id}",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "component-groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -1071,6 +1333,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "component-groups",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -1100,11 +1368,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/component-groups/{id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "component-groups",
-                    "{id}",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "component-groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -1116,6 +1392,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "component-groups",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -1145,11 +1427,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/component-groups/{id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "component-groups",
-                    "{id}",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "component-groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -1161,6 +1451,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "component-groups",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -1190,11 +1486,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/component-groups/{id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "component-groups",
-                    "{id}",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "component-groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -1206,6 +1510,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "component-groups",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -1246,6 +1556,7 @@ module StatuspageConfig
               "type" => "`$ARRAY`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "short" => "The timestamp when the incident was created at.",
               "type" => "`$STRING`",
@@ -1289,6 +1600,7 @@ module StatuspageConfig
               "type" => "`$OBJECT`",
             },
             {
+              "format" => "date-time",
               "name" => "monitoring_at",
               "short" => "The timestamp when incident entered monitoring state.",
               "type" => "`$STRING`",
@@ -1309,6 +1621,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "postmortem_body_last_updated_at",
               "short" => "The timestamp when the incident postmortem body was last updated at.",
               "type" => "`$STRING`",
@@ -1339,6 +1652,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "resolved_at",
               "short" => "The timestamp when incident was resolved.",
               "type" => "`$STRING`",
@@ -1354,6 +1668,7 @@ module StatuspageConfig
               "type" => "`$BOOLEAN`",
             },
             {
+              "format" => "date-time",
               "name" => "scheduled_for",
               "short" => "The timestamp the incident is scheduled for.",
               "type" => "`$STRING`",
@@ -1364,11 +1679,13 @@ module StatuspageConfig
               "type" => "`$BOOLEAN`",
             },
             {
+              "format" => "date-time",
               "name" => "scheduled_reminded_at",
               "short" => "The timestamp when the scheduled incident reminder was sent at.",
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "scheduled_until",
               "short" => "The timestamp the incident is scheduled until.",
               "type" => "`$STRING`",
@@ -1384,11 +1701,16 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "short" => "The timestamp when the incident was updated at.",
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "incident",
           "op" => {
             "create" => {
@@ -1410,10 +1732,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/incidents",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -1426,6 +1754,11 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                  ],
                 },
               ],
             },
@@ -1468,10 +1801,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incidents",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -1485,6 +1824,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                  ],
                 },
                 {
                   "args" => {
@@ -1517,11 +1861,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incidents/active_maintenance",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "active_maintenance",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "lit" => "active_maintenance",
+                    },
                   ],
                   "select" => {
                     "$action" => "active_maintenance",
@@ -1535,6 +1887,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "active_maintenance",
+                  ],
                 },
                 {
                   "args" => {
@@ -1567,11 +1925,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incidents/scheduled",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "scheduled",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "lit" => "scheduled",
+                    },
                   ],
                   "select" => {
                     "$action" => "scheduled",
@@ -1585,6 +1951,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "scheduled",
+                  ],
                 },
                 {
                   "args" => {
@@ -1617,11 +1989,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incidents/unresolved",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "unresolved",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "lit" => "unresolved",
+                    },
                   ],
                   "select" => {
                     "$action" => "unresolved",
@@ -1635,6 +2015,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "unresolved",
+                  ],
                 },
                 {
                   "args" => {
@@ -1667,11 +2053,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incidents/upcoming",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "upcoming",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "lit" => "upcoming",
+                    },
                   ],
                   "select" => {
                     "$action" => "upcoming",
@@ -1685,6 +2079,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "upcoming",
+                  ],
                 },
               ],
             },
@@ -1714,17 +2114,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "incident_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -1735,6 +2143,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -1764,17 +2178,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "incident_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -1787,6 +2209,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -1816,17 +2244,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "incident_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -1837,6 +2273,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -1866,17 +2308,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "incident_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -1889,6 +2339,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -1908,6 +2364,10 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "incident_postmortem",
           "op" => {
             "remove" => {
@@ -1936,18 +2396,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/postmortem",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{id}",
-                    "postmortem",
-                  ],
                   "rename" => {
                     "param" => {
                       "incident_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "postmortem",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -1958,6 +2428,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{id}",
+                    "postmortem",
+                  ],
                 },
               ],
             },
@@ -2007,14 +2484,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "subscribers",
-                    "{subscriber_id}",
-                    "resend_confirmation",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "var" => "subscriber_id",
+                    },
+                    {
+                      "lit" => "resend_confirmation",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -2027,6 +2518,15 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "subscribers",
+                    "{subscriber_id}",
+                    "resend_confirmation",
+                  ],
                 },
               ],
             },
@@ -2094,6 +2594,10 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "incident_template",
           "op" => {
             "create" => {
@@ -2115,10 +2619,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/incident_templates",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incident_templates",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incident_templates",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -2129,6 +2639,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incident_templates",
+                  ],
                 },
               ],
             },
@@ -2167,10 +2682,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incident_templates",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incident_templates",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incident_templates",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -2183,6 +2704,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incident_templates",
+                  ],
                 },
               ],
             },
@@ -2208,6 +2734,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "short" => "The timestamp when the incident update was created at.",
               "type" => "`$STRING`",
@@ -2223,6 +2750,7 @@ module StatuspageConfig
               "type" => "`$BOOLEAN`",
             },
             {
+              "format" => "date-time",
               "name" => "display_at",
               "short" => "Timestamp when incident update is happened.",
               "type" => "`$STRING`",
@@ -2252,11 +2780,13 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "twitter_updated_at",
               "short" => "The timestamp when twitter updated at.",
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "short" => "The timestamp when the incident update is updated.",
               "type" => "`$STRING`",
@@ -2267,6 +2797,10 @@ module StatuspageConfig
               "type" => "`$BOOLEAN`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "incident_update",
           "op" => {
             "patch" => {
@@ -2302,19 +2836,31 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "incident_updates",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "incident_update_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "incident_updates",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -2328,6 +2874,14 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "incident_updates",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -2364,19 +2918,31 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "incident_updates",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "incident_update_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "incident_updates",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -2390,6 +2956,14 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "incident_updates",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -2406,6 +2980,7 @@ module StatuspageConfig
         "metric" => {
           "fields" => [
             {
+              "format" => "int32",
               "name" => "backfill_percentage",
               "type" => "`$INTEGER`",
             },
@@ -2414,6 +2989,7 @@ module StatuspageConfig
               "type" => "`$BOOLEAN`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "type" => "`$STRING`",
             },
@@ -2424,6 +3000,7 @@ module StatuspageConfig
               "type" => "`$OBJECT`",
             },
             {
+              "format" => "int32",
               "name" => "decimal_places",
               "type" => "`$INTEGER`",
             },
@@ -2438,6 +3015,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "last_fetched_at",
               "type" => "`$STRING`",
             },
@@ -2456,6 +3034,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "most_recent_data_at",
               "type" => "`$STRING`",
             },
@@ -2478,6 +3057,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "type" => "`$STRING`",
             },
@@ -2487,14 +3067,20 @@ module StatuspageConfig
               "type" => "`$BOOLEAN`",
             },
             {
+              "format" => "float",
               "name" => "y_axis_max",
               "type" => "`$NUMBER`",
             },
             {
+              "format" => "float",
               "name" => "y_axis_min",
               "type" => "`$NUMBER`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "metric",
           "op" => {
             "create" => {
@@ -2523,18 +3109,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/metrics/{metric_id}/data",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics",
-                    "{id}",
-                    "data",
-                  ],
                   "rename" => {
                     "param" => {
                       "metric_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "data",
+                    },
+                  ],
                   "select" => {
                     "$action" => "data",
                     "exist" => [
@@ -2546,6 +3142,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body.data`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics",
+                    "{id}",
+                    "data",
+                  ],
                 },
                 {
                   "args" => {
@@ -2569,12 +3172,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics_providers",
-                    "{metrics_provider_id}",
-                    "metrics",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics_providers",
+                    },
+                    {
+                      "var" => "metrics_provider_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -2588,6 +3201,13 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics_providers",
+                    "{metrics_provider_id}",
+                    "metrics",
+                  ],
                 },
                 {
                   "args" => {
@@ -2604,11 +3224,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/metrics/data",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics",
-                    "data",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                    {
+                      "lit" => "data",
+                    },
                   ],
                   "select" => {
                     "$action" => "data",
@@ -2620,6 +3248,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics",
+                    "data",
+                  ],
                 },
               ],
             },
@@ -2663,12 +3297,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{page_access_user_id}",
-                    "metrics",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "page_access_user_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -2682,6 +3326,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{page_access_user_id}",
+                    "metrics",
+                  ],
                 },
               ],
             },
@@ -2725,12 +3376,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics_providers",
-                    "{metrics_provider_id}",
-                    "metrics",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics_providers",
+                    },
+                    {
+                      "var" => "metrics_provider_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -2744,6 +3405,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics_providers",
+                    "{metrics_provider_id}",
+                    "metrics",
+                  ],
                 },
                 {
                   "args" => {
@@ -2774,10 +3442,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/metrics",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -2790,6 +3464,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics",
+                  ],
                 },
                 {
                   "args" => {
@@ -2813,17 +3492,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/metrics/{metric_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "metric_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -2834,6 +3521,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -2863,17 +3556,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/metrics/{metric_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "metric_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -2886,6 +3587,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -2915,17 +3622,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/metrics/{metric_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "metric_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -2936,6 +3651,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -2959,18 +3680,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/metrics/{metric_id}/data",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics",
-                    "{id}",
-                    "data",
-                  ],
                   "rename" => {
                     "param" => {
                       "metric_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "data",
+                    },
+                  ],
                   "select" => {
                     "$action" => "data",
                     "exist" => [
@@ -2982,6 +3713,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics",
+                    "{id}",
+                    "data",
+                  ],
                 },
               ],
             },
@@ -3011,17 +3749,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/metrics/{metric_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "metric_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3034,6 +3780,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -3057,6 +3809,7 @@ module StatuspageConfig
         "metrics_provider" => {
           "fields" => [
             {
+              "format" => "date-time",
               "name" => "created_at",
               "type" => "`$STRING`",
             },
@@ -3070,6 +3823,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "last_revalidated_at",
               "type" => "`$STRING`",
             },
@@ -3082,6 +3836,7 @@ module StatuspageConfig
               "type" => "`$OBJECT`",
             },
             {
+              "format" => "int32",
               "name" => "page_id",
               "type" => "`$INTEGER`",
             },
@@ -3090,10 +3845,15 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "metrics_provider",
           "op" => {
             "create" => {
@@ -3115,10 +3875,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/metrics_providers",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics_providers",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics_providers",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -3131,6 +3897,11 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics_providers",
+                  ],
                 },
               ],
             },
@@ -3153,10 +3924,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/metrics_providers",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics_providers",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics_providers",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -3167,6 +3944,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics_providers",
+                  ],
                 },
               ],
             },
@@ -3196,17 +3978,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics_providers",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "metrics_provider_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics_providers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3217,6 +4007,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics_providers",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -3246,17 +4042,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics_providers",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "metrics_provider_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics_providers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3269,6 +4073,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics_providers",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -3298,17 +4108,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics_providers",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "metrics_provider_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics_providers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3319,6 +4137,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics_providers",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -3348,17 +4172,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "metrics_providers",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "metrics_provider_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "metrics_providers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3371,6 +4203,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "metrics_providers",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -3386,6 +4224,7 @@ module StatuspageConfig
         "page" => {
           "fields" => [
             {
+              "format" => "float",
               "name" => "activity_score",
               "type" => "`$NUMBER`",
             },
@@ -3433,6 +4272,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "short" => "Timestamp the record was created",
               "type" => "`$STRING`",
@@ -3586,6 +4426,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "short" => "Timestamp the record was last updated",
               "type" => "`$STRING`",
@@ -3600,6 +4441,10 @@ module StatuspageConfig
               "type" => "`$BOOLEAN`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "page",
           "op" => {
             "list" => {
@@ -3611,14 +4456,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages",
-                  "parts" => [
-                    "pages",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
                   ],
                   "select" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                  ],
                 },
               ],
             },
@@ -3641,15 +4491,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}",
-                  "parts" => [
-                    "pages",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3659,6 +4513,10 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -3681,15 +4539,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}",
-                  "parts" => [
-                    "pages",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3701,6 +4563,10 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -3723,15 +4589,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}",
-                  "parts" => [
-                    "pages",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3743,6 +4613,10 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -3765,6 +4639,7 @@ module StatuspageConfig
               "type" => "`$ARRAY`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "type" => "`$STRING`",
             },
@@ -3801,10 +4676,15 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "page_access_group",
           "op" => {
             "create" => {
@@ -3833,18 +4713,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{id}",
-                    "components",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_group_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                  ],
                   "select" => {
                     "$action" => "component",
                     "exist" => [
@@ -3856,6 +4746,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{id}",
+                    "components",
+                  ],
                 },
                 {
                   "args" => {
@@ -3872,16 +4769,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/page_access_groups",
-                  "parts" => [
-                    "pages",
-                    "{id}",
-                    "page_access_groups",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3893,6 +4796,11 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{id}",
+                    "page_access_groups",
+                  ],
                 },
               ],
             },
@@ -3929,16 +4837,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/page_access_groups",
-                  "parts" => [
-                    "pages",
-                    "{id}",
-                    "page_access_groups",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -3950,6 +4864,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{id}",
+                    "page_access_groups",
+                  ],
                 },
               ],
             },
@@ -3979,17 +4898,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_group_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -4000,6 +4927,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -4029,17 +4962,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_group_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -4052,6 +4993,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -4075,18 +5022,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{id}",
-                    "components",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_group_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                  ],
                   "select" => {
                     "$action" => "component",
                     "exist" => [
@@ -4098,6 +5055,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{id}",
+                    "components",
+                  ],
                 },
               ],
             },
@@ -4134,19 +5098,31 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}/components/{component_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{id}",
-                    "components",
-                    "{component_id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_group_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "component_id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "component_id",
@@ -4158,6 +5134,14 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{id}",
+                    "components",
+                    "{component_id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -4181,17 +5165,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_group_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -4202,6 +5194,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -4225,18 +5223,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{id}",
-                    "components",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_group_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                  ],
                   "select" => {
                     "$action" => "component",
                     "exist" => [
@@ -4248,6 +5256,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{id}",
+                    "components",
+                  ],
                 },
               ],
             },
@@ -4277,17 +5292,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_group_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -4300,6 +5323,12 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -4323,18 +5352,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_groups",
-                    "{id}",
-                    "components",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_group_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_groups",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                  ],
                   "select" => {
                     "$action" => "component",
                     "exist" => [
@@ -4346,6 +5385,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_groups",
+                    "{id}",
+                    "components",
+                  ],
                 },
               ],
             },
@@ -4371,6 +5417,7 @@ module StatuspageConfig
               "type" => "`$ARRAY`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "type" => "`$STRING`",
             },
@@ -4411,10 +5458,15 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "page_access_user",
           "op" => {
             "create" => {
@@ -4443,18 +5495,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "components",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                  ],
                   "select" => {
                     "$action" => "component",
                     "exist" => [
@@ -4466,6 +5528,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "components",
+                  ],
                 },
                 {
                   "args" => {
@@ -4489,18 +5558,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "metrics",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                  ],
                   "select" => {
                     "$action" => "metric",
                     "exist" => [
@@ -4512,6 +5591,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "metrics",
+                  ],
                 },
                 {
                   "args" => {
@@ -4528,16 +5614,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/page_access_users",
-                  "parts" => [
-                    "pages",
-                    "{id}",
-                    "page_access_users",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -4549,6 +5641,11 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{id}",
+                    "page_access_users",
+                  ],
                 },
               ],
             },
@@ -4591,16 +5688,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/page_access_users",
-                  "parts" => [
-                    "pages",
-                    "{id}",
-                    "page_access_users",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "email",
@@ -4613,6 +5716,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{id}",
+                    "page_access_users",
+                  ],
                 },
               ],
             },
@@ -4642,17 +5750,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -4663,6 +5779,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -4692,17 +5814,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -4713,6 +5843,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -4736,18 +5872,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "components",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                  ],
                   "select" => {
                     "$action" => "component",
                     "exist" => [
@@ -4759,6 +5905,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "components",
+                  ],
                 },
                 {
                   "args" => {
@@ -4782,18 +5935,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "metrics",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                  ],
                   "select" => {
                     "$action" => "metric",
                     "exist" => [
@@ -4805,6 +5968,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "metrics",
+                  ],
                 },
               ],
             },
@@ -4841,19 +6011,31 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/components/{component_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "components",
-                    "{component_id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                    {
+                      "var" => "component_id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "component_id",
@@ -4865,6 +6047,14 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "components",
+                    "{component_id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -4895,19 +6085,31 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics/{metric_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "metrics",
-                    "{metric_id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                    {
+                      "var" => "metric_id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -4919,6 +6121,14 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "metrics",
+                    "{metric_id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -4942,17 +6152,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -4963,6 +6181,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -4986,18 +6210,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "components",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                  ],
                   "select" => {
                     "$action" => "component",
                     "exist" => [
@@ -5009,6 +6243,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "components",
+                  ],
                 },
                 {
                   "args" => {
@@ -5032,18 +6273,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "metrics",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                  ],
                   "select" => {
                     "$action" => "metric",
                     "exist" => [
@@ -5055,6 +6306,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "metrics",
+                  ],
                 },
               ],
             },
@@ -5084,17 +6342,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -5105,6 +6371,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -5128,18 +6400,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "components",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "components",
+                    },
+                  ],
                   "select" => {
                     "$action" => "component",
                     "exist" => [
@@ -5151,6 +6433,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "components",
+                  ],
                 },
                 {
                   "args" => {
@@ -5174,18 +6463,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "page_access_users",
-                    "{id}",
-                    "metrics",
-                  ],
                   "rename" => {
                     "param" => {
                       "page_access_user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "page_access_users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "metrics",
+                    },
+                  ],
                   "select" => {
                     "$action" => "metric",
                     "exist" => [
@@ -5197,6 +6496,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "page_access_users",
+                    "{id}",
+                    "metrics",
+                  ],
                 },
               ],
             },
@@ -5234,6 +6540,10 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "permission",
           "op" => {
             "load" => {
@@ -5262,17 +6572,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/organizations/{organization_id}/permissions/{user_id}",
-                  "parts" => [
-                    "organizations",
-                    "{organization_id}",
-                    "permissions",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "organizations",
+                    },
+                    {
+                      "var" => "organization_id",
+                    },
+                    {
+                      "lit" => "permissions",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -5283,6 +6601,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body.data`",
                   },
+                  "parts" => [
+                    "organizations",
+                    "{organization_id}",
+                    "permissions",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -5312,17 +6636,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/organizations/{organization_id}/permissions/{user_id}",
-                  "parts" => [
-                    "organizations",
-                    "{organization_id}",
-                    "permissions",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "organizations",
+                    },
+                    {
+                      "var" => "organization_id",
+                    },
+                    {
+                      "lit" => "permissions",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -5333,6 +6665,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body.data`",
                   },
+                  "parts" => [
+                    "organizations",
+                    "{organization_id}",
+                    "permissions",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -5358,14 +6696,17 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "body_draft_updated_at",
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "body_updated_at",
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "type" => "`$STRING`",
             },
@@ -5400,10 +6741,12 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "published_at",
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "type" => "`$STRING`",
             },
@@ -5436,12 +6779,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/postmortem",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "postmortem",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "postmortem",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -5453,6 +6806,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "postmortem",
+                  ],
                 },
               ],
             },
@@ -5482,12 +6842,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/postmortem",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "postmortem",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "postmortem",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -5501,6 +6871,13 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "postmortem",
+                  ],
                 },
                 {
                   "args" => {
@@ -5524,13 +6901,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/postmortem/publish",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "postmortem",
-                    "publish",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "postmortem",
+                    },
+                    {
+                      "lit" => "publish",
+                    },
                   ],
                   "select" => {
                     "$action" => "publish",
@@ -5545,6 +6934,14 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "postmortem",
+                    "publish",
+                  ],
                 },
                 {
                   "args" => {
@@ -5568,13 +6965,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/postmortem/revert",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "postmortem",
-                    "revert",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "postmortem",
+                    },
+                    {
+                      "lit" => "revert",
+                    },
                   ],
                   "select" => {
                     "$action" => "revert",
@@ -5587,6 +6996,14 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "postmortem",
+                    "revert",
+                  ],
                 },
               ],
             },
@@ -5658,10 +7075,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/status_embed_config",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "status_embed_config",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "status_embed_config",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -5672,6 +7095,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "status_embed_config",
+                  ],
                 },
               ],
             },
@@ -5694,10 +7122,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/status_embed_config",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "status_embed_config",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "status_embed_config",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -5710,6 +7144,11 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "status_embed_config",
+                  ],
                 },
               ],
             },
@@ -5732,10 +7171,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PUT",
                   "orig" => "/pages/{page_id}/status_embed_config",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "status_embed_config",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "status_embed_config",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -5748,6 +7193,11 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "status_embed_config",
+                  ],
                 },
               ],
             },
@@ -5773,6 +7223,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "created_at",
               "type" => "`$STRING`",
             },
@@ -5782,6 +7233,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "int32",
               "name" => "email",
               "short" => "The email address to use to contact the subscriber.",
               "type" => "`$STRING`",
@@ -5797,6 +7249,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "int32",
               "name" => "integration_partner",
               "short" => "The number of integration partners found by the query.",
               "type" => "`$INTEGER`",
@@ -5827,11 +7280,13 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "purge_at",
               "short" => "The timestamp when a quarantined subscriber will be purged (unsubscribed).",
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "quarantined_at",
               "short" => "The timestamp when the subscriber was quarantined due to an issue reaching them.",
               "type" => "`$STRING`",
@@ -5847,11 +7302,13 @@ module StatuspageConfig
               "type" => "`$BOOLEAN`",
             },
             {
+              "format" => "int32",
               "name" => "slack",
               "short" => "The number of Slack subscribers found by the query.",
               "type" => "`$INTEGER`",
             },
             {
+              "format" => "int32",
               "name" => "sms",
               "short" => "The number of Webhook subscribers found by the query.",
               "type" => "`$INTEGER`",
@@ -5872,6 +7329,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "int32",
               "name" => "teams",
               "short" => "The number of MS teams subscribers found by the query.",
               "type" => "`$INTEGER`",
@@ -5882,6 +7340,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "int32",
               "name" => "webhook",
               "short" => "The number of SMS subscribers found by the query.",
               "type" => "`$INTEGER`",
@@ -5892,6 +7351,10 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "subscriber",
           "op" => {
             "create" => {
@@ -5920,18 +7383,28 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "{id}",
-                    "resend_confirmation",
-                  ],
                   "rename" => {
                     "param" => {
                       "subscriber_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                    {
+                      "lit" => "resend_confirmation",
+                    },
+                  ],
                   "select" => {
                     "$action" => "resend_confirmation",
                     "exist" => [
@@ -5943,6 +7416,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "{id}",
+                    "resend_confirmation",
+                  ],
                 },
                 {
                   "args" => {
@@ -5966,12 +7446,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/subscribers",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "subscribers",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -5985,6 +7475,13 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "subscribers",
+                  ],
                 },
                 {
                   "args" => {
@@ -6001,10 +7498,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/subscribers",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -6017,6 +7520,11 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                  ],
                 },
                 {
                   "args" => {
@@ -6033,11 +7541,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/subscribers/reactivate",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "reactivate",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "lit" => "reactivate",
+                    },
                   ],
                   "select" => {
                     "$action" => "reactivate",
@@ -6049,6 +7565,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "reactivate",
+                  ],
                 },
                 {
                   "args" => {
@@ -6065,11 +7587,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/subscribers/resend_confirmation",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "resend_confirmation",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "lit" => "resend_confirmation",
+                    },
                   ],
                   "select" => {
                     "$action" => "resend_confirmation",
@@ -6081,6 +7611,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "resend_confirmation",
+                  ],
                 },
                 {
                   "args" => {
@@ -6097,11 +7633,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/pages/{page_id}/subscribers/unsubscribe",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "unsubscribe",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "lit" => "unsubscribe",
+                    },
                   ],
                   "select" => {
                     "$action" => "unsubscribe",
@@ -6113,6 +7657,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "unsubscribe",
+                  ],
                 },
               ],
             },
@@ -6183,10 +7733,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/subscribers",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -6204,6 +7760,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                  ],
                 },
                 {
                   "args" => {
@@ -6241,12 +7802,22 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/subscribers",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "subscribers",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -6260,6 +7831,13 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "subscribers",
+                  ],
                 },
                 {
                   "args" => {
@@ -6290,11 +7868,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/subscribers/unsubscribed",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "unsubscribed",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "lit" => "unsubscribed",
+                    },
                   ],
                   "select" => {
                     "$action" => "unsubscribed",
@@ -6308,6 +7894,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "unsubscribed",
+                  ],
                 },
               ],
             },
@@ -6344,19 +7936,31 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "subscribers",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "subscriber_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -6368,6 +7972,14 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "subscribers",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -6399,11 +8011,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/subscribers/count",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "count",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "lit" => "count",
+                    },
                   ],
                   "select" => {
                     "$action" => "count",
@@ -6417,6 +8037,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "count",
+                  ],
                 },
                 {
                   "args" => {
@@ -6440,17 +8066,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/subscribers/{subscriber_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "subscriber_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -6461,6 +8095,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -6477,11 +8117,19 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/pages/{page_id}/subscribers/histogram_by_state",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "histogram_by_state",
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "lit" => "histogram_by_state",
+                    },
                   ],
                   "select" => {
                     "$action" => "histogram_by_state",
@@ -6493,6 +8141,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "histogram_by_state",
+                  ],
                 },
               ],
             },
@@ -6529,19 +8183,31 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "incidents",
-                    "{incident_id}",
-                    "subscribers",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "subscriber_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "incidents",
+                    },
+                    {
+                      "var" => "incident_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -6553,6 +8219,14 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "incidents",
+                    "{incident_id}",
+                    "subscribers",
+                    "{id}",
+                  ],
                 },
                 {
                   "args" => {
@@ -6584,17 +8258,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/pages/{page_id}/subscribers/{subscriber_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "subscriber_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -6606,6 +8288,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -6635,17 +8323,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "PATCH",
                   "orig" => "/pages/{page_id}/subscribers/{subscriber_id}",
-                  "parts" => [
-                    "pages",
-                    "{page_id}",
-                    "subscribers",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "subscriber_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "pages",
+                    },
+                    {
+                      "var" => "page_id",
+                    },
+                    {
+                      "lit" => "subscribers",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -6656,6 +8352,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "pages",
+                    "{page_id}",
+                    "subscribers",
+                    "{id}",
+                  ],
                 },
               ],
             },
@@ -6675,6 +8377,7 @@ module StatuspageConfig
         "user" => {
           "fields" => [
             {
+              "format" => "date-time",
               "name" => "created_at",
               "type" => "`$STRING`",
             },
@@ -6702,6 +8405,7 @@ module StatuspageConfig
               "type" => "`$STRING`",
             },
             {
+              "format" => "date-time",
               "name" => "updated_at",
               "type" => "`$STRING`",
             },
@@ -6711,6 +8415,10 @@ module StatuspageConfig
               "type" => "`$OBJECT`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "user",
           "op" => {
             "create" => {
@@ -6732,10 +8440,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/organizations/{organization_id}/users",
-                  "parts" => [
-                    "organizations",
-                    "{organization_id}",
-                    "users",
+                  "segments" => [
+                    {
+                      "lit" => "organizations",
+                    },
+                    {
+                      "var" => "organization_id",
+                    },
+                    {
+                      "lit" => "users",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -6748,6 +8462,11 @@ module StatuspageConfig
                     },
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "organizations",
+                    "{organization_id}",
+                    "users",
+                  ],
                 },
               ],
             },
@@ -6784,10 +8503,16 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/organizations/{organization_id}/users",
-                  "parts" => [
-                    "organizations",
-                    "{organization_id}",
-                    "users",
+                  "segments" => [
+                    {
+                      "lit" => "organizations",
+                    },
+                    {
+                      "var" => "organization_id",
+                    },
+                    {
+                      "lit" => "users",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -6800,6 +8525,11 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "organizations",
+                    "{organization_id}",
+                    "users",
+                  ],
                 },
               ],
             },
@@ -6829,17 +8559,25 @@ module StatuspageConfig
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/organizations/{organization_id}/users/{user_id}",
-                  "parts" => [
-                    "organizations",
-                    "{organization_id}",
-                    "users",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "user_id" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "organizations",
+                    },
+                    {
+                      "var" => "organization_id",
+                    },
+                    {
+                      "lit" => "users",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -6850,6 +8588,12 @@ module StatuspageConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "organizations",
+                    "{organization_id}",
+                    "users",
+                    "{id}",
+                  ],
                 },
               ],
             },

@@ -41,6 +41,8 @@ type ComponentLoadMatch struct {
 type ComponentListMatch struct {
 	PageAccessGroupId *string `json:"page_access_group_id,omitempty"`
 	PageId string `json:"page_id"`
+	Page *int `json:"page,omitempty"`
+	PerPage *int `json:"per_page,omitempty"`
 	PageAccessUserId *string `json:"page_access_user_id,omitempty"`
 }
 
@@ -99,6 +101,8 @@ type ComponentGroupUptime struct {
 type ComponentGroupUptimeLoadMatch struct {
 	Id string `json:"id"`
 	PageId string `json:"page_id"`
+	End *any `json:"end,omitempty"`
+	Start *any `json:"start,omitempty"`
 }
 
 // GroupComponent is the typed data model for the group_component entity.
@@ -123,6 +127,8 @@ type GroupComponentLoadMatch struct {
 // GroupComponentListMatch is the typed request payload for GroupComponent.ListTyped.
 type GroupComponentListMatch struct {
 	PageId string `json:"page_id"`
+	Page *int `json:"page,omitempty"`
+	PerPage *int `json:"per_page,omitempty"`
 }
 
 // GroupComponentCreateData is the typed request payload for GroupComponent.CreateTyped.
@@ -202,6 +208,9 @@ type IncidentLoadMatch struct {
 // IncidentListMatch is the typed request payload for Incident.ListTyped.
 type IncidentListMatch struct {
 	PageId string `json:"page_id"`
+	Limit *int `json:"limit,omitempty"`
+	Page *int `json:"page,omitempty"`
+	Q *string `json:"q,omitempty"`
 }
 
 // IncidentCreateData is the typed request payload for Incident.CreateTyped.
@@ -321,6 +330,8 @@ type IncidentTemplate struct {
 // IncidentTemplateListMatch is the typed request payload for IncidentTemplate.ListTyped.
 type IncidentTemplateListMatch struct {
 	PageId string `json:"page_id"`
+	Page *int `json:"page,omitempty"`
+	PerPage *int `json:"per_page,omitempty"`
 }
 
 // IncidentTemplateCreateData is the typed request payload for IncidentTemplate.CreateTyped.
@@ -403,6 +414,8 @@ type Metric struct {
 type MetricLoadMatch struct {
 	MetricsProviderId *string `json:"metrics_provider_id,omitempty"`
 	PageId string `json:"page_id"`
+	Page *int `json:"page,omitempty"`
+	PerPage *int `json:"per_page,omitempty"`
 	Id *string `json:"id,omitempty"`
 }
 
@@ -410,6 +423,8 @@ type MetricLoadMatch struct {
 type MetricListMatch struct {
 	PageAccessUserId string `json:"page_access_user_id"`
 	PageId string `json:"page_id"`
+	Page *int `json:"page,omitempty"`
+	PerPage *int `json:"per_page,omitempty"`
 }
 
 // MetricCreateData is the typed request payload for Metric.CreateTyped.
@@ -702,6 +717,8 @@ type PageAccessGroupLoadMatch struct {
 // PageAccessGroupListMatch is the typed request payload for PageAccessGroup.ListTyped.
 type PageAccessGroupListMatch struct {
 	Id string `json:"id"`
+	Page *int `json:"page,omitempty"`
+	PerPage *int `json:"per_page,omitempty"`
 }
 
 // PageAccessGroupCreateData is the typed request payload for PageAccessGroup.CreateTyped.
@@ -763,6 +780,9 @@ type PageAccessUserLoadMatch struct {
 // PageAccessUserListMatch is the typed request payload for PageAccessUser.ListTyped.
 type PageAccessUserListMatch struct {
 	Id string `json:"id"`
+	Email *string `json:"email,omitempty"`
+	Page *int `json:"page,omitempty"`
+	PerPage *int `json:"per_page,omitempty"`
 }
 
 // PageAccessUserCreateData is the typed request payload for PageAccessUser.CreateTyped.
@@ -931,7 +951,15 @@ type SubscriberLoadMatch struct {
 // SubscriberListMatch is the typed request payload for Subscriber.ListTyped.
 type SubscriberListMatch struct {
 	PageId string `json:"page_id"`
+	Limit *int `json:"limit,omitempty"`
+	Page *int `json:"page,omitempty"`
+	Q *string `json:"q,omitempty"`
+	SortDirection *string `json:"sort_direction,omitempty"`
+	SortField *string `json:"sort_field,omitempty"`
+	State *string `json:"state,omitempty"`
+	Type *string `json:"type,omitempty"`
 	IncidentId *string `json:"incident_id,omitempty"`
+	PerPage *int `json:"per_page,omitempty"`
 }
 
 // SubscriberCreateData is the typed request payload for Subscriber.CreateTyped.
@@ -1002,6 +1030,7 @@ type SubscriberRemoveMatch struct {
 	Id string `json:"id"`
 	IncidentId *string `json:"incident_id,omitempty"`
 	PageId string `json:"page_id"`
+	SkipUnsubscriptionNotification *bool `json:"skip_unsubscription_notification,omitempty"`
 }
 
 // User is the typed data model for the user entity.
@@ -1019,6 +1048,8 @@ type User struct {
 // UserListMatch is the typed request payload for User.ListTyped.
 type UserListMatch struct {
 	OrganizationId string `json:"organization_id"`
+	Page *int `json:"page,omitempty"`
+	PerPage *int `json:"per_page,omitempty"`
 }
 
 // UserCreateData is the typed request payload for User.CreateTyped.

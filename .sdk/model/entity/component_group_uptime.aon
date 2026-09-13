@@ -71,12 +71,22 @@ main: kit: entity: component_group_uptime: {
           }
           method: "GET"
           orig: "/pages/{page_id}/component-groups/{id}/uptime"
-          parts: [
-            "pages"
-            "{page_id}"
-            "component-groups"
-            "{id}"
-            "uptime"
+          segments: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "component-groups"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "uptime"
+            }
           ]
           select: {
             exist: [

@@ -61,6 +61,7 @@ local function make_config()
             ["type"] = "`$OBJECT`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
           },
@@ -100,6 +101,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "int32",
             ["name"] = "position",
             ["short"] = "Order the component will appear on the page",
             ["type"] = "`$INTEGER`",
@@ -110,6 +112,7 @@ local function make_config()
             ["type"] = "`$BOOLEAN`",
           },
           {
+            ["format"] = "date",
             ["name"] = "start_date",
             ["short"] = "The date this component started being used",
             ["type"] = "`$STRING`",
@@ -120,9 +123,14 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["type"] = "`$STRING`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "component",
         ["op"] = {
@@ -152,16 +160,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/page_access_groups",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
-                  "{id}",
-                  "page_access_groups",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["component_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
                   },
                 },
                 ["select"] = {
@@ -174,6 +192,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
+                  "{id}",
+                  "page_access_groups",
                 },
               },
               {
@@ -198,16 +223,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/page_access_users",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
-                  "{id}",
-                  "page_access_users",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["component_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
                   },
                 },
                 ["select"] = {
@@ -220,6 +255,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
+                  "{id}",
+                  "page_access_users",
                 },
               },
               {
@@ -237,10 +279,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -252,6 +300,11 @@ local function make_config()
                     ["component"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
                 },
               },
             },
@@ -296,12 +349,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{page_access_group_id}",
-                  "components",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "page_access_group_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -314,6 +377,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{page_access_group_id}",
+                  "components",
                 },
               },
               {
@@ -352,12 +422,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{page_access_user_id}",
-                  "components",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "page_access_user_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -370,6 +450,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{page_access_user_id}",
+                  "components",
                 },
               },
               {
@@ -401,10 +488,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -416,6 +509,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
                 },
               },
             },
@@ -460,16 +558,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/uptime",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
-                  "{id}",
-                  "uptime",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["component_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "uptime",
                   },
                 },
                 ["select"] = {
@@ -484,6 +592,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body.related_events`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
+                  "{id}",
+                  "uptime",
                 },
               },
               {
@@ -508,15 +623,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/components/{component_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["component_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -528,6 +651,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
+                  "{id}",
                 },
               },
             },
@@ -558,15 +687,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/components/{component_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["component_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -580,6 +717,12 @@ local function make_config()
                     ["component"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
+                  "{id}",
                 },
               },
             },
@@ -610,15 +753,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/components/{component_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["component_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -630,6 +781,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
+                  "{id}",
                 },
               },
               {
@@ -654,16 +811,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/page_access_groups",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
-                  "{id}",
-                  "page_access_groups",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["component_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
                   },
                 },
                 ["select"] = {
@@ -676,6 +843,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
+                  "{id}",
+                  "page_access_groups",
                 },
               },
               {
@@ -700,16 +874,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/components/{component_id}/page_access_users",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
-                  "{id}",
-                  "page_access_users",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["component_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
                   },
                 },
                 ["select"] = {
@@ -722,6 +906,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
+                  "{id}",
+                  "page_access_users",
                 },
               },
             },
@@ -752,15 +943,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/components/{component_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "components",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["component_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -774,6 +973,12 @@ local function make_config()
                     ["component"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "components",
+                  "{id}",
                 },
               },
             },
@@ -811,6 +1016,10 @@ local function make_config()
             ["short"] = "Related incidents",
             ["type"] = "`$OBJECT`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "component_group_uptime",
         ["op"] = {
@@ -854,12 +1063,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}/uptime",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "component-groups",
-                  "{id}",
-                  "uptime",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "component-groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "uptime",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -872,6 +1091,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body.related_events`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "component-groups",
+                  "{id}",
+                  "uptime",
                 },
               },
             },
@@ -897,6 +1123,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
           },
@@ -923,9 +1150,14 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["type"] = "`$STRING`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "group_component",
         ["op"] = {
@@ -948,10 +1180,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/component-groups",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "component-groups",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "component-groups",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -961,6 +1199,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "component-groups",
                 },
               },
             },
@@ -998,10 +1241,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/component-groups",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "component-groups",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "component-groups",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -1013,6 +1262,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "component-groups",
                 },
               },
             },
@@ -1043,11 +1297,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "component-groups",
-                  "{id}",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "component-groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -1058,6 +1320,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "component-groups",
+                  "{id}",
                 },
               },
             },
@@ -1088,11 +1356,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "component-groups",
-                  "{id}",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "component-groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -1103,6 +1379,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "component-groups",
+                  "{id}",
                 },
               },
             },
@@ -1133,11 +1415,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "component-groups",
-                  "{id}",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "component-groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -1148,6 +1438,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "component-groups",
+                  "{id}",
                 },
               },
             },
@@ -1178,11 +1474,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/component-groups/{id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "component-groups",
-                  "{id}",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "component-groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -1193,6 +1497,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "component-groups",
+                  "{id}",
                 },
               },
             },
@@ -1234,6 +1544,7 @@ local function make_config()
             ["type"] = "`$ARRAY`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["short"] = "The timestamp when the incident was created at.",
             ["type"] = "`$STRING`",
@@ -1277,6 +1588,7 @@ local function make_config()
             ["type"] = "`$OBJECT`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "monitoring_at",
             ["short"] = "The timestamp when incident entered monitoring state.",
             ["type"] = "`$STRING`",
@@ -1297,6 +1609,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "postmortem_body_last_updated_at",
             ["short"] = "The timestamp when the incident postmortem body was last updated at.",
             ["type"] = "`$STRING`",
@@ -1327,6 +1640,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "resolved_at",
             ["short"] = "The timestamp when incident was resolved.",
             ["type"] = "`$STRING`",
@@ -1342,6 +1656,7 @@ local function make_config()
             ["type"] = "`$BOOLEAN`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "scheduled_for",
             ["short"] = "The timestamp the incident is scheduled for.",
             ["type"] = "`$STRING`",
@@ -1352,11 +1667,13 @@ local function make_config()
             ["type"] = "`$BOOLEAN`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "scheduled_reminded_at",
             ["short"] = "The timestamp when the scheduled incident reminder was sent at.",
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "scheduled_until",
             ["short"] = "The timestamp the incident is scheduled until.",
             ["type"] = "`$STRING`",
@@ -1372,10 +1689,15 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["short"] = "The timestamp when the incident was updated at.",
             ["type"] = "`$STRING`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "incident",
         ["op"] = {
@@ -1398,10 +1720,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/incidents",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -1413,6 +1741,11 @@ local function make_config()
                     ["incident"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
                 },
               },
             },
@@ -1456,10 +1789,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -1472,6 +1811,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
                 },
               },
               {
@@ -1505,11 +1849,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/active_maintenance",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "active_maintenance",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["lit"] = "active_maintenance",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "active_maintenance",
@@ -1522,6 +1874,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "active_maintenance",
                 },
               },
               {
@@ -1555,11 +1913,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/scheduled",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "scheduled",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["lit"] = "scheduled",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "scheduled",
@@ -1572,6 +1938,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "scheduled",
                 },
               },
               {
@@ -1605,11 +1977,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/unresolved",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "unresolved",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["lit"] = "unresolved",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "unresolved",
@@ -1622,6 +2002,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "unresolved",
                 },
               },
               {
@@ -1655,11 +2041,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/upcoming",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "upcoming",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["lit"] = "upcoming",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "upcoming",
@@ -1672,6 +2066,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "upcoming",
                 },
               },
             },
@@ -1702,15 +2102,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["incident_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -1722,6 +2130,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{id}",
                 },
               },
             },
@@ -1752,15 +2166,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["incident_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -1774,6 +2196,12 @@ local function make_config()
                     ["incident"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{id}",
                 },
               },
             },
@@ -1804,15 +2232,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["incident_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -1824,6 +2260,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{id}",
                 },
               },
             },
@@ -1854,15 +2296,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["incident_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -1876,6 +2326,12 @@ local function make_config()
                     ["incident"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{id}",
                 },
               },
             },
@@ -1895,6 +2351,10 @@ local function make_config()
             ["name"] = "id",
             ["type"] = "`$STRING`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "incident_postmortem",
         ["op"] = {
@@ -1924,16 +2384,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{id}",
-                  "postmortem",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["incident_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "postmortem",
                   },
                 },
                 ["select"] = {
@@ -1945,6 +2415,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{id}",
+                  "postmortem",
                 },
               },
             },
@@ -1995,14 +2472,28 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "subscribers",
-                  "{subscriber_id}",
-                  "resend_confirmation",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["var"] = "subscriber_id",
+                  },
+                  {
+                    ["lit"] = "resend_confirmation",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -2014,6 +2505,15 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "subscribers",
+                  "{subscriber_id}",
+                  "resend_confirmation",
                 },
               },
             },
@@ -2082,6 +2582,10 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
         },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
+        },
         ["name"] = "incident_template",
         ["op"] = {
           ["create"] = {
@@ -2103,10 +2607,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/incident_templates",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incident_templates",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incident_templates",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -2116,6 +2626,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incident_templates",
                 },
               },
             },
@@ -2155,10 +2670,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incident_templates",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incident_templates",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incident_templates",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -2170,6 +2691,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incident_templates",
                 },
               },
             },
@@ -2196,6 +2722,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["short"] = "The timestamp when the incident update was created at.",
             ["type"] = "`$STRING`",
@@ -2211,6 +2738,7 @@ local function make_config()
             ["type"] = "`$BOOLEAN`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "display_at",
             ["short"] = "Timestamp when incident update is happened.",
             ["type"] = "`$STRING`",
@@ -2240,11 +2768,13 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "twitter_updated_at",
             ["short"] = "The timestamp when twitter updated at.",
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["short"] = "The timestamp when the incident update is updated.",
             ["type"] = "`$STRING`",
@@ -2254,6 +2784,10 @@ local function make_config()
             ["short"] = "Controls whether to create twitter update.",
             ["type"] = "`$BOOLEAN`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "incident_update",
         ["op"] = {
@@ -2290,17 +2824,29 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "incident_updates",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["incident_update_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "incident_updates",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -2315,6 +2861,14 @@ local function make_config()
                     ["incident_update"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "incident_updates",
+                  "{id}",
                 },
               },
             },
@@ -2352,17 +2906,29 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "incident_updates",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["incident_update_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "incident_updates",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -2377,6 +2943,14 @@ local function make_config()
                     ["incident_update"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "incident_updates",
+                  "{id}",
                 },
               },
             },
@@ -2394,6 +2968,7 @@ local function make_config()
       ["metric"] = {
         ["fields"] = {
           {
+            ["format"] = "int32",
             ["name"] = "backfill_percentage",
             ["type"] = "`$INTEGER`",
           },
@@ -2402,6 +2977,7 @@ local function make_config()
             ["type"] = "`$BOOLEAN`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
           },
@@ -2412,6 +2988,7 @@ local function make_config()
             ["type"] = "`$OBJECT`",
           },
           {
+            ["format"] = "int32",
             ["name"] = "decimal_places",
             ["type"] = "`$INTEGER`",
           },
@@ -2426,6 +3003,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "last_fetched_at",
             ["type"] = "`$STRING`",
           },
@@ -2444,6 +3022,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "most_recent_data_at",
             ["type"] = "`$STRING`",
           },
@@ -2466,6 +3045,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["type"] = "`$STRING`",
           },
@@ -2475,13 +3055,19 @@ local function make_config()
             ["type"] = "`$BOOLEAN`",
           },
           {
+            ["format"] = "float",
             ["name"] = "y_axis_max",
             ["type"] = "`$NUMBER`",
           },
           {
+            ["format"] = "float",
             ["name"] = "y_axis_min",
             ["type"] = "`$NUMBER`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "metric",
         ["op"] = {
@@ -2511,16 +3097,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}/data",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics",
-                  "{id}",
-                  "data",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metric_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "data",
                   },
                 },
                 ["select"] = {
@@ -2533,6 +3129,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body.data`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics",
+                  "{id}",
+                  "data",
                 },
               },
               {
@@ -2557,12 +3160,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics_providers",
-                  "{metrics_provider_id}",
-                  "metrics",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics_providers",
+                  },
+                  {
+                    ["var"] = "metrics_provider_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -2575,6 +3188,13 @@ local function make_config()
                     ["metric"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics_providers",
+                  "{metrics_provider_id}",
+                  "metrics",
                 },
               },
               {
@@ -2592,11 +3212,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/metrics/data",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics",
-                  "data",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
+                  {
+                    ["lit"] = "data",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "data",
@@ -2607,6 +3235,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics",
+                  "data",
                 },
               },
             },
@@ -2651,12 +3285,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{page_access_user_id}",
-                  "metrics",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "page_access_user_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -2669,6 +3313,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{page_access_user_id}",
+                  "metrics",
                 },
               },
             },
@@ -2713,12 +3364,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics_providers",
-                  "{metrics_provider_id}",
-                  "metrics",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics_providers",
+                  },
+                  {
+                    ["var"] = "metrics_provider_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -2731,6 +3392,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics_providers",
+                  "{metrics_provider_id}",
+                  "metrics",
                 },
               },
               {
@@ -2762,10 +3430,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -2777,6 +3451,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics",
                 },
               },
               {
@@ -2801,15 +3480,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metric_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -2821,6 +3508,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics",
+                  "{id}",
                 },
               },
             },
@@ -2851,15 +3544,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metric_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -2873,6 +3574,12 @@ local function make_config()
                     ["metric"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics",
+                  "{id}",
                 },
               },
             },
@@ -2903,15 +3610,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metric_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -2923,6 +3638,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics",
+                  "{id}",
                 },
               },
               {
@@ -2947,16 +3668,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}/data",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics",
-                  "{id}",
-                  "data",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metric_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "data",
                   },
                 },
                 ["select"] = {
@@ -2969,6 +3700,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics",
+                  "{id}",
+                  "data",
                 },
               },
             },
@@ -2999,15 +3737,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/metrics/{metric_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metric_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -3021,6 +3767,12 @@ local function make_config()
                     ["metric"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics",
+                  "{id}",
                 },
               },
             },
@@ -3045,6 +3797,7 @@ local function make_config()
       ["metrics_provider"] = {
         ["fields"] = {
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
           },
@@ -3058,6 +3811,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "last_revalidated_at",
             ["type"] = "`$STRING`",
           },
@@ -3070,6 +3824,7 @@ local function make_config()
             ["type"] = "`$OBJECT`",
           },
           {
+            ["format"] = "int32",
             ["name"] = "page_id",
             ["type"] = "`$INTEGER`",
           },
@@ -3078,9 +3833,14 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["type"] = "`$STRING`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "metrics_provider",
         ["op"] = {
@@ -3103,10 +3863,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/metrics_providers",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics_providers",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics_providers",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -3118,6 +3884,11 @@ local function make_config()
                     ["metrics_provider"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics_providers",
                 },
               },
             },
@@ -3141,10 +3912,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics_providers",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics_providers",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics_providers",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -3154,6 +3931,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics_providers",
                 },
               },
             },
@@ -3184,15 +3966,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics_providers",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metrics_provider_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics_providers",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -3204,6 +3994,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics_providers",
+                  "{id}",
                 },
               },
             },
@@ -3234,15 +4030,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics_providers",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metrics_provider_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics_providers",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -3256,6 +4060,12 @@ local function make_config()
                     ["metrics_provider"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics_providers",
+                  "{id}",
                 },
               },
             },
@@ -3286,15 +4096,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics_providers",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metrics_provider_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics_providers",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -3306,6 +4124,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics_providers",
+                  "{id}",
                 },
               },
             },
@@ -3336,15 +4160,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "metrics_providers",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["metrics_provider_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "metrics_providers",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -3358,6 +4190,12 @@ local function make_config()
                     ["metrics_provider"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "metrics_providers",
+                  "{id}",
                 },
               },
             },
@@ -3374,6 +4212,7 @@ local function make_config()
       ["page"] = {
         ["fields"] = {
           {
+            ["format"] = "float",
             ["name"] = "activity_score",
             ["type"] = "`$NUMBER`",
           },
@@ -3421,6 +4260,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["short"] = "Timestamp the record was created",
             ["type"] = "`$STRING`",
@@ -3574,6 +4414,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["short"] = "Timestamp the record was last updated",
             ["type"] = "`$STRING`",
@@ -3588,6 +4429,10 @@ local function make_config()
             ["type"] = "`$BOOLEAN`",
           },
         },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
+        },
         ["name"] = "page",
         ["op"] = {
           ["list"] = {
@@ -3599,13 +4444,18 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages",
-                ["parts"] = {
-                  "pages",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
                 },
                 ["select"] = {},
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
                 },
               },
             },
@@ -3629,13 +4479,17 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}",
-                ["parts"] = {
-                  "pages",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -3646,6 +4500,10 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{id}",
                 },
               },
             },
@@ -3669,13 +4527,17 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}",
-                ["parts"] = {
-                  "pages",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -3688,6 +4550,10 @@ local function make_config()
                     ["page"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{id}",
                 },
               },
             },
@@ -3711,13 +4577,17 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}",
-                ["parts"] = {
-                  "pages",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -3730,6 +4600,10 @@ local function make_config()
                     ["page"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{id}",
                 },
               },
             },
@@ -3753,6 +4627,7 @@ local function make_config()
             ["type"] = "`$ARRAY`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
           },
@@ -3789,9 +4664,14 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["type"] = "`$STRING`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "page_access_group",
         ["op"] = {
@@ -3821,16 +4701,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{id}",
-                  "components",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_group_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
                   },
                 },
                 ["select"] = {
@@ -3843,6 +4733,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{id}",
+                  "components",
                 },
               },
               {
@@ -3860,14 +4757,20 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_groups",
-                ["parts"] = {
-                  "pages",
-                  "{id}",
-                  "page_access_groups",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
                   },
                 },
                 ["select"] = {
@@ -3880,6 +4783,11 @@ local function make_config()
                     ["page_access_group"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{id}",
+                  "page_access_groups",
                 },
               },
             },
@@ -3917,14 +4825,20 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_groups",
-                ["parts"] = {
-                  "pages",
-                  "{id}",
-                  "page_access_groups",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
                   },
                 },
                 ["select"] = {
@@ -3937,6 +4851,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{id}",
+                  "page_access_groups",
                 },
               },
             },
@@ -3967,15 +4886,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_group_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -3987,6 +4914,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{id}",
                 },
               },
             },
@@ -4017,15 +4950,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_group_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -4039,6 +4980,12 @@ local function make_config()
                     ["page_access_group"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{id}",
                 },
               },
               {
@@ -4063,16 +5010,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{id}",
-                  "components",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_group_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
                   },
                 },
                 ["select"] = {
@@ -4085,6 +5042,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{id}",
+                  "components",
                 },
               },
             },
@@ -4122,17 +5086,29 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components/{component_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{id}",
-                  "components",
-                  "{component_id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_group_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "component_id",
                   },
                 },
                 ["select"] = {
@@ -4145,6 +5121,14 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{id}",
+                  "components",
+                  "{component_id}",
                 },
               },
               {
@@ -4169,15 +5153,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_group_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -4189,6 +5181,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{id}",
                 },
               },
               {
@@ -4213,16 +5211,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{id}",
-                  "components",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_group_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
                   },
                 },
                 ["select"] = {
@@ -4235,6 +5243,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{id}",
+                  "components",
                 },
               },
             },
@@ -4265,15 +5280,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_group_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -4287,6 +5310,12 @@ local function make_config()
                     ["page_access_group"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{id}",
                 },
               },
               {
@@ -4311,16 +5340,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_groups",
-                  "{id}",
-                  "components",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_group_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_groups",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
                   },
                 },
                 ["select"] = {
@@ -4333,6 +5372,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_groups",
+                  "{id}",
+                  "components",
                 },
               },
             },
@@ -4359,6 +5405,7 @@ local function make_config()
             ["type"] = "`$ARRAY`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
           },
@@ -4399,9 +5446,14 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["type"] = "`$STRING`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "page_access_user",
         ["op"] = {
@@ -4431,16 +5483,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "components",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
                   },
                 },
                 ["select"] = {
@@ -4453,6 +5515,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "components",
                 },
               },
               {
@@ -4477,16 +5546,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "metrics",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "metrics",
                   },
                 },
                 ["select"] = {
@@ -4499,6 +5578,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "metrics",
                 },
               },
               {
@@ -4516,14 +5602,20 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/page_access_users",
-                ["parts"] = {
-                  "pages",
-                  "{id}",
-                  "page_access_users",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
                   },
                 },
                 ["select"] = {
@@ -4536,6 +5628,11 @@ local function make_config()
                     ["page_access_user"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{id}",
+                  "page_access_users",
                 },
               },
             },
@@ -4579,14 +5676,20 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_users",
-                ["parts"] = {
-                  "pages",
-                  "{id}",
-                  "page_access_users",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
                   },
                 },
                 ["select"] = {
@@ -4600,6 +5703,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{id}",
+                  "page_access_users",
                 },
               },
             },
@@ -4630,15 +5738,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -4650,6 +5766,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
                 },
               },
             },
@@ -4680,15 +5802,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -4700,6 +5830,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
                 },
               },
               {
@@ -4724,16 +5860,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "components",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
                   },
                 },
                 ["select"] = {
@@ -4746,6 +5892,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "components",
                 },
               },
               {
@@ -4770,16 +5923,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "metrics",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "metrics",
                   },
                 },
                 ["select"] = {
@@ -4792,6 +5955,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "metrics",
                 },
               },
             },
@@ -4829,17 +5999,29 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components/{component_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "components",
-                  "{component_id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
+                  },
+                  {
+                    ["var"] = "component_id",
                   },
                 },
                 ["select"] = {
@@ -4852,6 +6034,14 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "components",
+                  "{component_id}",
                 },
               },
               {
@@ -4883,17 +6073,29 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics/{metric_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "metrics",
-                  "{metric_id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "metrics",
+                  },
+                  {
+                    ["var"] = "metric_id",
                   },
                 },
                 ["select"] = {
@@ -4906,6 +6108,14 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "metrics",
+                  "{metric_id}",
                 },
               },
               {
@@ -4930,15 +6140,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -4950,6 +6168,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
                 },
               },
               {
@@ -4974,16 +6198,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "components",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
                   },
                 },
                 ["select"] = {
@@ -4996,6 +6230,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "components",
                 },
               },
               {
@@ -5020,16 +6261,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "metrics",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "metrics",
                   },
                 },
                 ["select"] = {
@@ -5042,6 +6293,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "metrics",
                 },
               },
             },
@@ -5072,15 +6330,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -5092,6 +6358,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
                 },
               },
               {
@@ -5116,16 +6388,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "components",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "components",
                   },
                 },
                 ["select"] = {
@@ -5138,6 +6420,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "components",
                 },
               },
               {
@@ -5162,16 +6451,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "page_access_users",
-                  "{id}",
-                  "metrics",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["page_access_user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "page_access_users",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "metrics",
                   },
                 },
                 ["select"] = {
@@ -5184,6 +6483,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "page_access_users",
+                  "{id}",
+                  "metrics",
                 },
               },
             },
@@ -5222,6 +6528,10 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
         },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
+        },
         ["name"] = "permission",
         ["op"] = {
           ["load"] = {
@@ -5250,15 +6560,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/organizations/{organization_id}/permissions/{user_id}",
-                ["parts"] = {
-                  "organizations",
-                  "{organization_id}",
-                  "permissions",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "organizations",
+                  },
+                  {
+                    ["var"] = "organization_id",
+                  },
+                  {
+                    ["lit"] = "permissions",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -5270,6 +6588,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body.data`",
+                },
+                ["parts"] = {
+                  "organizations",
+                  "{organization_id}",
+                  "permissions",
+                  "{id}",
                 },
               },
             },
@@ -5300,15 +6624,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/organizations/{organization_id}/permissions/{user_id}",
-                ["parts"] = {
-                  "organizations",
-                  "{organization_id}",
-                  "permissions",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "organizations",
+                  },
+                  {
+                    ["var"] = "organization_id",
+                  },
+                  {
+                    ["lit"] = "permissions",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -5320,6 +6652,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body.data`",
+                },
+                ["parts"] = {
+                  "organizations",
+                  "{organization_id}",
+                  "permissions",
+                  "{id}",
                 },
               },
             },
@@ -5346,14 +6684,17 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "body_draft_updated_at",
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "body_updated_at",
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
           },
@@ -5388,10 +6729,12 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "published_at",
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["type"] = "`$STRING`",
           },
@@ -5424,12 +6767,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "postmortem",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "postmortem",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -5440,6 +6793,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "postmortem",
                 },
               },
             },
@@ -5470,12 +6830,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "postmortem",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "postmortem",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -5488,6 +6858,13 @@ local function make_config()
                     ["postmortem"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "postmortem",
                 },
               },
               {
@@ -5512,13 +6889,25 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem/publish",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "postmortem",
-                  "publish",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "postmortem",
+                  },
+                  {
+                    ["lit"] = "publish",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "publish",
@@ -5532,6 +6921,14 @@ local function make_config()
                     ["postmortem"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "postmortem",
+                  "publish",
                 },
               },
               {
@@ -5556,13 +6953,25 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/postmortem/revert",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "postmortem",
-                  "revert",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "postmortem",
+                  },
+                  {
+                    ["lit"] = "revert",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "revert",
@@ -5574,6 +6983,14 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "postmortem",
+                  "revert",
                 },
               },
             },
@@ -5646,10 +7063,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/status_embed_config",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "status_embed_config",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "status_embed_config",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -5659,6 +7082,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "status_embed_config",
                 },
               },
             },
@@ -5682,10 +7110,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/status_embed_config",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "status_embed_config",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "status_embed_config",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -5697,6 +7131,11 @@ local function make_config()
                     ["status_embed_config"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "status_embed_config",
                 },
               },
             },
@@ -5720,10 +7159,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/pages/{page_id}/status_embed_config",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "status_embed_config",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "status_embed_config",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -5735,6 +7180,11 @@ local function make_config()
                     ["status_embed_config"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "status_embed_config",
                 },
               },
             },
@@ -5761,6 +7211,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
           },
@@ -5770,6 +7221,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "int32",
             ["name"] = "email",
             ["short"] = "The email address to use to contact the subscriber.",
             ["type"] = "`$STRING`",
@@ -5785,6 +7237,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "int32",
             ["name"] = "integration_partner",
             ["short"] = "The number of integration partners found by the query.",
             ["type"] = "`$INTEGER`",
@@ -5815,11 +7268,13 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "purge_at",
             ["short"] = "The timestamp when a quarantined subscriber will be purged (unsubscribed).",
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "quarantined_at",
             ["short"] = "The timestamp when the subscriber was quarantined due to an issue reaching them.",
             ["type"] = "`$STRING`",
@@ -5835,11 +7290,13 @@ local function make_config()
             ["type"] = "`$BOOLEAN`",
           },
           {
+            ["format"] = "int32",
             ["name"] = "slack",
             ["short"] = "The number of Slack subscribers found by the query.",
             ["type"] = "`$INTEGER`",
           },
           {
+            ["format"] = "int32",
             ["name"] = "sms",
             ["short"] = "The number of Webhook subscribers found by the query.",
             ["type"] = "`$INTEGER`",
@@ -5860,6 +7317,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "int32",
             ["name"] = "teams",
             ["short"] = "The number of MS teams subscribers found by the query.",
             ["type"] = "`$INTEGER`",
@@ -5870,6 +7328,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "int32",
             ["name"] = "webhook",
             ["short"] = "The number of SMS subscribers found by the query.",
             ["type"] = "`$INTEGER`",
@@ -5879,6 +7338,10 @@ local function make_config()
             ["short"] = "The workspace name of the slack subscriber.",
             ["type"] = "`$STRING`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "subscriber",
         ["op"] = {
@@ -5908,16 +7371,26 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "{id}",
-                  "resend_confirmation",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["subscriber_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["var"] = "id",
+                  },
+                  {
+                    ["lit"] = "resend_confirmation",
                   },
                 },
                 ["select"] = {
@@ -5930,6 +7403,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "{id}",
+                  "resend_confirmation",
                 },
               },
               {
@@ -5954,12 +7434,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "subscribers",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -5972,6 +7462,13 @@ local function make_config()
                     ["subscriber"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "subscribers",
                 },
               },
               {
@@ -5989,10 +7486,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -6004,6 +7507,11 @@ local function make_config()
                     ["subscriber"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
                 },
               },
               {
@@ -6021,11 +7529,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers/reactivate",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "reactivate",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["lit"] = "reactivate",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "reactivate",
@@ -6036,6 +7552,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "reactivate",
                 },
               },
               {
@@ -6053,11 +7575,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers/resend_confirmation",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "resend_confirmation",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["lit"] = "resend_confirmation",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "resend_confirmation",
@@ -6068,6 +7598,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "resend_confirmation",
                 },
               },
               {
@@ -6085,11 +7621,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/pages/{page_id}/subscribers/unsubscribe",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "unsubscribe",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["lit"] = "unsubscribe",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "unsubscribe",
@@ -6100,6 +7644,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "unsubscribe",
                 },
               },
             },
@@ -6171,10 +7721,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -6191,6 +7747,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
                 },
               },
               {
@@ -6229,12 +7790,22 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "subscribers",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -6247,6 +7818,13 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "subscribers",
                 },
               },
               {
@@ -6278,11 +7856,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers/unsubscribed",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "unsubscribed",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["lit"] = "unsubscribed",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "unsubscribed",
@@ -6295,6 +7881,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "unsubscribed",
                 },
               },
             },
@@ -6332,17 +7924,29 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "subscribers",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["subscriber_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -6355,6 +7959,14 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "subscribers",
+                  "{id}",
                 },
               },
               {
@@ -6387,11 +7999,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers/count",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "count",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["lit"] = "count",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "count",
@@ -6404,6 +8024,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "count",
                 },
               },
               {
@@ -6428,15 +8054,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers/{subscriber_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["subscriber_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -6448,6 +8082,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "{id}",
                 },
               },
               {
@@ -6465,11 +8105,19 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/pages/{page_id}/subscribers/histogram_by_state",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "histogram_by_state",
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["lit"] = "histogram_by_state",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "histogram_by_state",
@@ -6480,6 +8128,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "histogram_by_state",
                 },
               },
             },
@@ -6517,17 +8171,29 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "incidents",
-                  "{incident_id}",
-                  "subscribers",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["subscriber_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "incidents",
+                  },
+                  {
+                    ["var"] = "incident_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -6540,6 +8206,14 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "incidents",
+                  "{incident_id}",
+                  "subscribers",
+                  "{id}",
                 },
               },
               {
@@ -6572,15 +8246,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/pages/{page_id}/subscribers/{subscriber_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["subscriber_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -6593,6 +8275,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "{id}",
                 },
               },
             },
@@ -6623,15 +8311,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "PATCH",
                 ["orig"] = "/pages/{page_id}/subscribers/{subscriber_id}",
-                ["parts"] = {
-                  "pages",
-                  "{page_id}",
-                  "subscribers",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["subscriber_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "pages",
+                  },
+                  {
+                    ["var"] = "page_id",
+                  },
+                  {
+                    ["lit"] = "subscribers",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -6643,6 +8339,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "pages",
+                  "{page_id}",
+                  "subscribers",
+                  "{id}",
                 },
               },
             },
@@ -6663,6 +8365,7 @@ local function make_config()
       ["user"] = {
         ["fields"] = {
           {
+            ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
           },
@@ -6690,6 +8393,7 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
+            ["format"] = "date-time",
             ["name"] = "updated_at",
             ["type"] = "`$STRING`",
           },
@@ -6698,6 +8402,10 @@ local function make_config()
             ["req"] = true,
             ["type"] = "`$OBJECT`",
           },
+        },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
         },
         ["name"] = "user",
         ["op"] = {
@@ -6720,10 +8428,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/organizations/{organization_id}/users",
-                ["parts"] = {
-                  "organizations",
-                  "{organization_id}",
-                  "users",
+                ["segments"] = {
+                  {
+                    ["lit"] = "organizations",
+                  },
+                  {
+                    ["var"] = "organization_id",
+                  },
+                  {
+                    ["lit"] = "users",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -6735,6 +8449,11 @@ local function make_config()
                     ["user"] = "`reqdata`",
                   },
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "organizations",
+                  "{organization_id}",
+                  "users",
                 },
               },
             },
@@ -6772,10 +8491,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/organizations/{organization_id}/users",
-                ["parts"] = {
-                  "organizations",
-                  "{organization_id}",
-                  "users",
+                ["segments"] = {
+                  {
+                    ["lit"] = "organizations",
+                  },
+                  {
+                    ["var"] = "organization_id",
+                  },
+                  {
+                    ["lit"] = "users",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -6787,6 +8512,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "organizations",
+                  "{organization_id}",
+                  "users",
                 },
               },
             },
@@ -6817,15 +8547,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/organizations/{organization_id}/users/{user_id}",
-                ["parts"] = {
-                  "organizations",
-                  "{organization_id}",
-                  "users",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["user_id"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "organizations",
+                  },
+                  {
+                    ["var"] = "organization_id",
+                  },
+                  {
+                    ["lit"] = "users",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -6837,6 +8575,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "organizations",
+                  "{organization_id}",
+                  "users",
+                  "{id}",
                 },
               },
             },

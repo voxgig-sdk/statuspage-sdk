@@ -94,11 +94,19 @@ ComponentLoadMatch = Struct.new(
 # @!attribute [rw] page_id
 #   @return [String]
 #
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] per_page
+#   @return [Integer, nil]
+#
 # @!attribute [rw] page_access_user_id
 #   @return [String, nil]
 ComponentListMatch = Struct.new(
   :page_access_group_id,
   :page_id,
+  :page,
+  :per_page,
   :page_access_user_id,
   keyword_init: true
 )
@@ -270,9 +278,17 @@ ComponentGroupUptime = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] end
+#   @return [Object, nil]
+#
+# @!attribute [rw] start
+#   @return [Object, nil]
 ComponentGroupUptimeLoadMatch = Struct.new(
   :id,
   :page_id,
+  :end,
+  :start,
   keyword_init: true
 )
 
@@ -334,8 +350,16 @@ GroupComponentLoadMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] per_page
+#   @return [Integer, nil]
 GroupComponentListMatch = Struct.new(
   :page_id,
+  :page,
+  :per_page,
   keyword_init: true
 )
 
@@ -584,8 +608,20 @@ IncidentLoadMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] limit
+#   @return [Integer, nil]
+#
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] q
+#   @return [String, nil]
 IncidentListMatch = Struct.new(
   :page_id,
+  :limit,
+  :page,
+  :q,
   keyword_init: true
 )
 
@@ -960,8 +996,16 @@ IncidentTemplate = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] per_page
+#   @return [Integer, nil]
 IncidentTemplateListMatch = Struct.new(
   :page_id,
+  :page,
+  :per_page,
   keyword_init: true
 )
 
@@ -1233,11 +1277,19 @@ Metric = Struct.new(
 # @!attribute [rw] page_id
 #   @return [String]
 #
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] per_page
+#   @return [Integer, nil]
+#
 # @!attribute [rw] id
 #   @return [String, nil]
 MetricLoadMatch = Struct.new(
   :metrics_provider_id,
   :page_id,
+  :page,
+  :per_page,
   :id,
   keyword_init: true
 )
@@ -1249,9 +1301,17 @@ MetricLoadMatch = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] per_page
+#   @return [Integer, nil]
 MetricListMatch = Struct.new(
   :page_access_user_id,
   :page_id,
+  :page,
+  :per_page,
   keyword_init: true
 )
 
@@ -2242,8 +2302,16 @@ PageAccessGroupLoadMatch = Struct.new(
 #
 # @!attribute [rw] id
 #   @return [String]
+#
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] per_page
+#   @return [Integer, nil]
 PageAccessGroupListMatch = Struct.new(
   :id,
+  :page,
+  :per_page,
   keyword_init: true
 )
 
@@ -2420,8 +2488,20 @@ PageAccessUserLoadMatch = Struct.new(
 #
 # @!attribute [rw] id
 #   @return [String]
+#
+# @!attribute [rw] email
+#   @return [String, nil]
+#
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] per_page
+#   @return [Integer, nil]
 PageAccessUserListMatch = Struct.new(
   :id,
+  :email,
+  :page,
+  :per_page,
   keyword_init: true
 )
 
@@ -2928,11 +3008,43 @@ SubscriberLoadMatch = Struct.new(
 # @!attribute [rw] page_id
 #   @return [String]
 #
+# @!attribute [rw] limit
+#   @return [Integer, nil]
+#
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] q
+#   @return [String, nil]
+#
+# @!attribute [rw] sort_direction
+#   @return [String, nil]
+#
+# @!attribute [rw] sort_field
+#   @return [String, nil]
+#
+# @!attribute [rw] state
+#   @return [String, nil]
+#
+# @!attribute [rw] type
+#   @return [String, nil]
+#
 # @!attribute [rw] incident_id
 #   @return [String, nil]
+#
+# @!attribute [rw] per_page
+#   @return [Integer, nil]
 SubscriberListMatch = Struct.new(
   :page_id,
+  :limit,
+  :page,
+  :q,
+  :sort_direction,
+  :sort_field,
+  :state,
+  :type,
   :incident_id,
+  :per_page,
   keyword_init: true
 )
 
@@ -3176,10 +3288,14 @@ SubscriberUpdateData = Struct.new(
 #
 # @!attribute [rw] page_id
 #   @return [String]
+#
+# @!attribute [rw] skip_unsubscription_notification
+#   @return [Boolean, nil]
 SubscriberRemoveMatch = Struct.new(
   :id,
   :incident_id,
   :page_id,
+  :skip_unsubscription_notification,
   keyword_init: true
 )
 
@@ -3224,8 +3340,16 @@ User = Struct.new(
 #
 # @!attribute [rw] organization_id
 #   @return [String]
+#
+# @!attribute [rw] page
+#   @return [Integer, nil]
+#
+# @!attribute [rw] per_page
+#   @return [Integer, nil]
 UserListMatch = Struct.new(
   :organization_id,
+  :page,
+  :per_page,
   keyword_init: true
 )
 

@@ -24,6 +24,8 @@ export interface ComponentLoadMatch {
 export interface ComponentListMatch {
     page_access_group_id?: string;
     page_id: string;
+    page?: number;
+    per_page?: number;
     page_access_user_id?: string;
 }
 export interface ComponentCreateData {
@@ -76,6 +78,8 @@ export interface ComponentGroupUptime {
 export interface ComponentGroupUptimeLoadMatch {
     id: string;
     page_id: string;
+    end?: any;
+    start?: any;
 }
 export interface GroupComponent {
     component_group: Record<string, any>;
@@ -94,6 +98,8 @@ export interface GroupComponentLoadMatch {
 }
 export interface GroupComponentListMatch {
     page_id: string;
+    page?: number;
+    per_page?: number;
 }
 export interface GroupComponentCreateData {
     page_id: string;
@@ -161,6 +167,9 @@ export interface IncidentLoadMatch {
 }
 export interface IncidentListMatch {
     page_id: string;
+    limit?: number;
+    page?: number;
+    q?: string;
     $action?: string;
     [action: string]: any;
 }
@@ -264,6 +273,8 @@ export interface IncidentTemplate {
 }
 export interface IncidentTemplateListMatch {
     page_id: string;
+    page?: number;
+    per_page?: number;
 }
 export interface IncidentTemplateCreateData {
     page_id: string;
@@ -336,11 +347,15 @@ export interface Metric {
 export interface MetricLoadMatch {
     metrics_provider_id?: string;
     page_id: string;
+    page?: number;
+    per_page?: number;
     id?: string;
 }
 export interface MetricListMatch {
     page_access_user_id: string;
     page_id: string;
+    page?: number;
+    per_page?: number;
 }
 export interface MetricCreateData {
     metrics_provider_id: string;
@@ -605,6 +620,8 @@ export interface PageAccessGroupLoadMatch {
 }
 export interface PageAccessGroupListMatch {
     id: string;
+    page?: number;
+    per_page?: number;
 }
 export interface PageAccessGroupCreateData {
     id: string;
@@ -660,6 +677,9 @@ export interface PageAccessUserLoadMatch {
 }
 export interface PageAccessUserListMatch {
     id: string;
+    email?: string;
+    page?: number;
+    per_page?: number;
 }
 export interface PageAccessUserCreateData {
     id: string;
@@ -808,7 +828,15 @@ export interface SubscriberLoadMatch {
 }
 export interface SubscriberListMatch {
     page_id: string;
+    limit?: number;
+    page?: number;
+    q?: string;
+    sort_direction?: string;
+    sort_field?: string;
+    state?: string;
+    type?: string;
     incident_id?: string;
+    per_page?: number;
     $action?: string;
     [action: string]: any;
 }
@@ -877,6 +905,7 @@ export interface SubscriberRemoveMatch {
     id: string;
     incident_id?: string;
     page_id: string;
+    skip_unsubscription_notification?: boolean;
 }
 export interface User {
     created_at?: string;
@@ -890,6 +919,8 @@ export interface User {
 }
 export interface UserListMatch {
     organization_id: string;
+    page?: number;
+    per_page?: number;
 }
 export interface UserCreateData {
     organization_id: string;

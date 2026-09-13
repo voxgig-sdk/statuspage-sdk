@@ -37,6 +37,8 @@ export interface ComponentLoadMatch {
 export interface ComponentListMatch {
   page_access_group_id?: string
   page_id: string
+  page?: number
+  per_page?: number
   page_access_user_id?: string
 }
 
@@ -102,6 +104,8 @@ export interface ComponentGroupUptime {
 export interface ComponentGroupUptimeLoadMatch {
   id: string
   page_id: string
+  end?: any
+  start?: any
 }
 
 export interface GroupComponent {
@@ -123,6 +127,8 @@ export interface GroupComponentLoadMatch {
 
 export interface GroupComponentListMatch {
   page_id: string
+  page?: number
+  per_page?: number
 }
 
 export interface GroupComponentCreateData {
@@ -196,6 +202,9 @@ export interface IncidentLoadMatch {
 
 export interface IncidentListMatch {
   page_id: string
+  limit?: number
+  page?: number
+  q?: string
 
   // Selects a custom action instead of the plain list:
   //   'active_maintenance' | 'scheduled' | 'unresolved' | 'upcoming'
@@ -312,6 +321,8 @@ export interface IncidentTemplate {
 
 export interface IncidentTemplateListMatch {
   page_id: string
+  page?: number
+  per_page?: number
 }
 
 export interface IncidentTemplateCreateData {
@@ -389,12 +400,16 @@ export interface Metric {
 export interface MetricLoadMatch {
   metrics_provider_id?: string
   page_id: string
+  page?: number
+  per_page?: number
   id?: string
 }
 
 export interface MetricListMatch {
   page_access_user_id: string
   page_id: string
+  page?: number
+  per_page?: number
 }
 
 export interface MetricCreateData {
@@ -683,6 +698,8 @@ export interface PageAccessGroupLoadMatch {
 
 export interface PageAccessGroupListMatch {
   id: string
+  page?: number
+  per_page?: number
 }
 
 export interface PageAccessGroupCreateData {
@@ -756,6 +773,9 @@ export interface PageAccessUserLoadMatch {
 
 export interface PageAccessUserListMatch {
   id: string
+  email?: string
+  page?: number
+  per_page?: number
 }
 
 export interface PageAccessUserCreateData {
@@ -939,7 +959,15 @@ export interface SubscriberLoadMatch {
 
 export interface SubscriberListMatch {
   page_id: string
+  limit?: number
+  page?: number
+  q?: string
+  sort_direction?: string
+  sort_field?: string
+  state?: string
+  type?: string
   incident_id?: string
+  per_page?: number
 
   // Selects a custom action instead of the plain list:
   //   'unsubscribed'
@@ -1019,6 +1047,7 @@ export interface SubscriberRemoveMatch {
   id: string
   incident_id?: string
   page_id: string
+  skip_unsubscription_notification?: boolean
 }
 
 export interface User {
@@ -1034,6 +1063,8 @@ export interface User {
 
 export interface UserListMatch {
   organization_id: string
+  page?: number
+  per_page?: number
 }
 
 export interface UserCreateData {

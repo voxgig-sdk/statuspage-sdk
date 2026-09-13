@@ -30,6 +30,8 @@
 ---@class ComponentListMatch
 ---@field page_access_group_id? string
 ---@field page_id string
+---@field page? number
+---@field per_page? number
 ---@field page_access_user_id? string
 
 ---@class ComponentCreateData
@@ -78,6 +80,8 @@
 ---@class ComponentGroupUptimeLoadMatch
 ---@field id string
 ---@field page_id string
+---@field end? any
+---@field start? any
 
 ---@class GroupComponent
 ---@field component_group table
@@ -96,6 +100,8 @@
 
 ---@class GroupComponentListMatch
 ---@field page_id string
+---@field page? number
+---@field per_page? number
 
 ---@class GroupComponentCreateData
 ---@field page_id string
@@ -163,6 +169,9 @@
 
 ---@class IncidentListMatch
 ---@field page_id string
+---@field limit? number
+---@field page? number
+---@field q? string
 
 ---@class IncidentCreateData
 ---@field page_id string
@@ -264,6 +273,8 @@
 
 ---@class IncidentTemplateListMatch
 ---@field page_id string
+---@field page? number
+---@field per_page? number
 
 ---@class IncidentTemplateCreateData
 ---@field page_id string
@@ -336,11 +347,15 @@
 ---@class MetricLoadMatch
 ---@field metrics_provider_id? string
 ---@field page_id string
+---@field page? number
+---@field per_page? number
 ---@field id? string
 
 ---@class MetricListMatch
 ---@field page_access_user_id string
 ---@field page_id string
+---@field page? number
+---@field per_page? number
 
 ---@class MetricCreateData
 ---@field metrics_provider_id string
@@ -601,6 +616,8 @@
 
 ---@class PageAccessGroupListMatch
 ---@field id string
+---@field page? number
+---@field per_page? number
 
 ---@class PageAccessGroupCreateData
 ---@field id string
@@ -650,6 +667,9 @@
 
 ---@class PageAccessUserListMatch
 ---@field id string
+---@field email? string
+---@field page? number
+---@field per_page? number
 
 ---@class PageAccessUserCreateData
 ---@field id string
@@ -788,7 +808,15 @@
 
 ---@class SubscriberListMatch
 ---@field page_id string
+---@field limit? number
+---@field page? number
+---@field q? string
+---@field sort_direction? string
+---@field sort_field? string
+---@field state? string
+---@field type? string
 ---@field incident_id? string
+---@field per_page? number
 
 ---@class SubscriberCreateData
 ---@field incident_id? string
@@ -853,6 +881,7 @@
 ---@field id string
 ---@field incident_id? string
 ---@field page_id string
+---@field skip_unsubscription_notification? boolean
 
 ---@class User
 ---@field created_at? string
@@ -866,6 +895,8 @@
 
 ---@class UserListMatch
 ---@field organization_id string
+---@field page? number
+---@field per_page? number
 
 ---@class UserCreateData
 ---@field organization_id string

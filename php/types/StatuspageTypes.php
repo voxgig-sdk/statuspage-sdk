@@ -44,6 +44,8 @@ class ComponentListMatch
 {
     public ?string $page_access_group_id = null;
     public string $page_id;
+    public ?int $page = null;
+    public ?int $per_page = null;
     public ?string $page_access_user_id = null;
 }
 
@@ -107,6 +109,8 @@ class ComponentGroupUptimeLoadMatch
 {
     public string $id;
     public string $page_id;
+    public mixed $end = null;
+    public mixed $start = null;
 }
 
 /** GroupComponent entity data model. */
@@ -134,6 +138,8 @@ class GroupComponentLoadMatch
 class GroupComponentListMatch
 {
     public string $page_id;
+    public ?int $page = null;
+    public ?int $per_page = null;
 }
 
 /** Request payload for GroupComponent#create. */
@@ -219,6 +225,9 @@ class IncidentLoadMatch
 class IncidentListMatch
 {
     public string $page_id;
+    public ?int $limit = null;
+    public ?int $page = null;
+    public ?string $q = null;
 }
 
 /** Request payload for Incident#create. */
@@ -347,6 +356,8 @@ class IncidentTemplate
 class IncidentTemplateListMatch
 {
     public string $page_id;
+    public ?int $page = null;
+    public ?int $per_page = null;
 }
 
 /** Request payload for IncidentTemplate#create. */
@@ -434,6 +445,8 @@ class MetricLoadMatch
 {
     public ?string $metrics_provider_id = null;
     public string $page_id;
+    public ?int $page = null;
+    public ?int $per_page = null;
     public ?string $id = null;
 }
 
@@ -442,6 +455,8 @@ class MetricListMatch
 {
     public string $page_access_user_id;
     public string $page_id;
+    public ?int $page = null;
+    public ?int $per_page = null;
 }
 
 /** Request payload for Metric#create. */
@@ -750,6 +765,8 @@ class PageAccessGroupLoadMatch
 class PageAccessGroupListMatch
 {
     public string $id;
+    public ?int $page = null;
+    public ?int $per_page = null;
 }
 
 /** Request payload for PageAccessGroup#create. */
@@ -817,6 +834,9 @@ class PageAccessUserLoadMatch
 class PageAccessUserListMatch
 {
     public string $id;
+    public ?string $email = null;
+    public ?int $page = null;
+    public ?int $per_page = null;
 }
 
 /** Request payload for PageAccessUser#create. */
@@ -1000,7 +1020,15 @@ class SubscriberLoadMatch
 class SubscriberListMatch
 {
     public string $page_id;
+    public ?int $limit = null;
+    public ?int $page = null;
+    public ?string $q = null;
+    public ?string $sort_direction = null;
+    public ?string $sort_field = null;
+    public ?string $state = null;
+    public ?string $type = null;
     public ?string $incident_id = null;
+    public ?int $per_page = null;
 }
 
 /** Request payload for Subscriber#create. */
@@ -1074,6 +1102,7 @@ class SubscriberRemoveMatch
     public string $id;
     public ?string $incident_id = null;
     public string $page_id;
+    public ?bool $skip_unsubscription_notification = null;
 }
 
 /** User entity data model. */
@@ -1093,6 +1122,8 @@ class User
 class UserListMatch
 {
     public string $organization_id;
+    public ?int $page = null;
+    public ?int $per_page = null;
 }
 
 /** Request payload for User#create. */

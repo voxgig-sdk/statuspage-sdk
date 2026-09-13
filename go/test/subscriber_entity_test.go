@@ -101,7 +101,7 @@ func TestSubscriberEntity(t *testing.T) {
 		// CREATE
 		subscriberRef01Ent := client.Subscriber(nil)
 		subscriberRef01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath([]any{"new", "subscriber"}, setup.data), "subscriber_ref01"))
+			vs.GetPath(setup.data, []any{"new", "subscriber"}), "subscriber_ref01"))
 		subscriberRef01Data["incident_id"] = setup.idmap["incident01"]
 		subscriberRef01Data["page_id"] = setup.idmap["page01"]
 
@@ -232,7 +232,7 @@ func subscriberBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"subscriber01", "subscriber02", "subscriber03", "page01", "page02", "page03", "incident01", "incident02", "incident03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -252,7 +252,7 @@ func subscriberBasicSetup(extra map[string]any) *entityTestSetup {
 		"STATUSPAGE_TEST_SUBSCRIBER_ENTID": idmap,
 		"STATUSPAGE_TEST_LIVE":      "FALSE",
 		"STATUSPAGE_TEST_EXPLAIN":   "FALSE",
-		"STATUSPAGE_APIKEY":         "NONE",
+		"STATUSPAGE_APIKEY":         "",
 	})
 
 	idmapResolved := core.ToMapAny(env["STATUSPAGE_TEST_SUBSCRIBER_ENTID"])
@@ -265,11 +265,23 @@ func subscriberBasicSetup(extra map[string]any) *entityTestSetup {
 	}
 
 	if env["STATUSPAGE_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
 				"apikey": env["STATUSPAGE_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewStatuspageSDK(core.ToMapAny(mergedOpts))
 	}
