@@ -40,6 +40,8 @@ const node_path_1 = __importDefault(require("node:path"));
 const Fs = __importStar(require("node:fs"));
 const node_test_1 = require("node:test");
 const node_assert_1 = __importDefault(require("node:assert"));
+const live_runner_1 = require("../../live-runner");
+const live_entity_1 = require("../../live-entity");
 const __1 = require("../../..");
 const utility_1 = require("../../utility");
 // AFTER the imports on purpose: TypeScript hoists `import` above any
@@ -59,16 +61,12 @@ const utility_1 = require("../../utility");
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.STATUSPAGE_TEST_LIVE;
         for (const op of ['create']) {
-            if ((0, utility_1.maybeSkipControl)(t, 'entityOp', 'incident_subscriber.' + op, live))
+            if (!live && (0, utility_1.maybeSkipControl)(t, 'entityOp', 'incident_subscriber.' + op, live))
                 return;
         }
         const setup = basicSetup();
-        // The basic flow consumes synthetic IDs and field values from the
-        // fixture (entity TestData.json). Those don't exist on the live API.
-        // Skip live runs unless the user provided a real ENTID env override.
-        if (setup.syntheticOnly) {
-            t.skip('live entity test uses synthetic IDs from fixture — set STATUSPAGE_TEST_INCIDENT_SUBSCRIBER_ENTID JSON to run live');
-            return;
+        if (setup.live) {
+            return (0, live_entity_1.runLiveEntity)(setup, { "active": true, "alias": { "field": {} }, "fields": [], "name": "incident_subscriber", "op": { "create": { "input": "data", "name": "create", "points": [{ "active": true, "args": { "params": [{ "active": true, "kind": "param", "name": "incident_id", "orig": "incident_id", "reqd": true, "type": "`$STRING`", "index$": 0 }, { "active": true, "kind": "param", "name": "page_id", "orig": "page_id", "reqd": true, "type": "`$STRING`", "index$": 1 }, { "active": true, "kind": "param", "name": "subscriber_id", "orig": "subscriber_id", "reqd": true, "type": "`$STRING`", "index$": 2 }] }, "contract": { "id": "POST /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation", "json": "{\"operationId\":\"postPagesPageIdIncidentsIncidentIdSubscribersSubscriberIdResendConfirmation\",\"parameters\":[{\"description\":\"Page identifier\",\"in\":\"path\",\"name\":\"page_id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Incident Identifier\",\"in\":\"path\",\"name\":\"incident_id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Subscriber Identifier\",\"in\":\"path\",\"name\":\"subscriber_id\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"201\":{\"description\":\"Resend confirmation to an incident subscriber\"}},\"security\":[{\"api_key\":[]}],\"securitySchemes\":{\"api_key\":{\"description\":\"#### Obtaining your API Key\\n\\nAuthentication is done via an API token provided in the Statuspage management interface.\\n\\n  1. Log in to your account at https://manage.statuspage.io/login.\\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\\n  3. Click **API info**.\\n\\n### Passing your API key in an authorization header\\n\\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\\nlisted on the API page, we can fetch your page profile.\\n\\n    curl -H \\\"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\\\" \\\\\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\\n\\n### Passing your API key in a query param\\n\\n    curl \\\"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\\\"\\n\",\"in\":\"header\",\"name\":\"Authorization\",\"type\":\"apiKey\"}},\"securitySource\":\"definition\"}", "source": "openapi3", "version": 1 }, "kind": "http", "method": "POST", "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation", "segments": [{ "lit": "pages" }, { "var": "page_id" }, { "lit": "incidents" }, { "var": "incident_id" }, { "lit": "subscribers" }, { "var": "subscriber_id" }, { "lit": "resend_confirmation" }], "select": { "exist": ["incident_id", "page_id", "subscriber_id"] }, "transform": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "create" } }, "relations": { "ancestors": [["page", "incident", "subscriber"]] }, "key$": "incident_subscriber", "name__orig": "incident_subscriber", "Name": "IncidentSubscriber", "name_": "incident_subscriber", "name-": "incident-subscriber", "NAME": "INCIDENT_SUBSCRIBER", "index$": 5 }, { "active": true, "entity": "incident_subscriber", "key$": "BasicIncidentSubscriberFlow", "kind": "basic", "name": "BasicIncidentSubscriberFlow", "param": {}, "step": [{ "active": true, "data": {}, "input": { "ref": "incident_subscriber_ref01" }, "match": { "incident_id": "incident01", "page_id": "page01", "subscriber_id": "subscriber01" }, "op": "create", "spec": [], "valid": [], "index$": 0 }] }, 'IncidentSubscriber');
         }
         const client = setup.client;
         const struct = setup.struct;
@@ -104,12 +102,6 @@ function basicSetup(extra) {
                 '`$VAL`': ['`$FORMAT`', 'upper', '`$COPY`']
             }]
     });
-    // Detect whether the user provided a real ENTID JSON via env var. The
-    // basic flow consumes synthetic IDs from the fixture file; without an
-    // override those synthetic IDs reach the live API and 4xx. Surface this
-    // to the test so it can skip rather than fail.
-    const idmapEnvVal = process.env['STATUSPAGE_TEST_INCIDENT_SUBSCRIBER_ENTID'];
-    const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{');
     const env = (0, utility_1.envOverride)({
         'STATUSPAGE_TEST_INCIDENT_SUBSCRIBER_ENTID': idmap,
         'STATUSPAGE_TEST_LIVE': 'FALSE',
@@ -118,7 +110,13 @@ function basicSetup(extra) {
     });
     idmap = env['STATUSPAGE_TEST_INCIDENT_SUBSCRIBER_ENTID'];
     const live = 'TRUE' === env.STATUSPAGE_TEST_LIVE;
+    const transport = (0, live_runner_1.createLiveTransport)();
     if (live) {
+        const rawIds = process.env['STATUSPAGE_TEST_INCIDENT_SUBSCRIBER_ENTID'];
+        idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {};
+        if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+            throw new Error('Live ENTID must be a JSON object');
+        }
         client = new __1.StatuspageSDK(merge([
             // FIRST, so the generated fields below win: sdk-test-control.json's
             // test.client.options adds to the live client, it does not redirect it.
@@ -131,7 +129,8 @@ function basicSetup(extra) {
             // argument at all - so a bare 'extra' silently discarded the apikey
             // and server values above and handed the SDK undefined. Harmless
             // while there was nothing in that object; not harmless now.
-            extra || {}
+            extra || {},
+            { system: { fetch: transport.fetch } }
         ]));
     }
     const setup = {
@@ -143,7 +142,7 @@ function basicSetup(extra) {
         data: entityData,
         explain: 'TRUE' === env.STATUSPAGE_TEST_EXPLAIN,
         live,
-        syntheticOnly: live && !idmapOverridden,
+        transport,
         now: Date.now(),
     };
     return setup;

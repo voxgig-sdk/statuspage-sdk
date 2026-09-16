@@ -391,7 +391,6 @@ type Metric struct {
 	BackfillPercentage *int `json:"backfill_percentage,omitempty"`
 	Backfilled *bool `json:"backfilled,omitempty"`
 	CreatedAt *string `json:"created_at,omitempty"`
-	Data map[string]any `json:"data"`
 	DecimalPlaces *int `json:"decimal_places,omitempty"`
 	Display *bool `json:"display,omitempty"`
 	Id *string `json:"id,omitempty"`
@@ -434,7 +433,6 @@ type MetricCreateData struct {
 	BackfillPercentage *int `json:"backfill_percentage,omitempty"`
 	Backfilled *bool `json:"backfilled,omitempty"`
 	CreatedAt *string `json:"created_at,omitempty"`
-	Data map[string]any `json:"data"`
 	DecimalPlaces *int `json:"decimal_places,omitempty"`
 	Display *bool `json:"display,omitempty"`
 	Id *string `json:"id,omitempty"`
@@ -459,7 +457,6 @@ type MetricUpdateData struct {
 	BackfillPercentage *int `json:"backfill_percentage,omitempty"`
 	Backfilled *bool `json:"backfilled,omitempty"`
 	CreatedAt *string `json:"created_at,omitempty"`
-	Data *map[string]any `json:"data,omitempty"`
 	DecimalPlaces *int `json:"decimal_places,omitempty"`
 	Display *bool `json:"display,omitempty"`
 	LastFetchedAt *string `json:"last_fetched_at,omitempty"`
@@ -758,12 +755,10 @@ type PageAccessGroupRemoveMatch struct {
 
 // PageAccessUser is the typed data model for the page_access_user entity.
 type PageAccessUser struct {
-	ComponentIds []any `json:"component_ids"`
 	CreatedAt *string `json:"created_at,omitempty"`
 	Email *string `json:"email,omitempty"`
 	ExternalLogin *string `json:"external_login,omitempty"`
 	Id *string `json:"id,omitempty"`
-	MetricIds []any `json:"metric_ids"`
 	PageAccessGroupId *string `json:"page_access_group_id,omitempty"`
 	PageAccessGroupIds *string `json:"page_access_group_ids,omitempty"`
 	PageAccessUser *map[string]any `json:"page_access_user,omitempty"`
@@ -788,11 +783,9 @@ type PageAccessUserListMatch struct {
 // PageAccessUserCreateData is the typed request payload for PageAccessUser.CreateTyped.
 type PageAccessUserCreateData struct {
 	Id string `json:"id"`
-	ComponentIds []any `json:"component_ids"`
 	CreatedAt *string `json:"created_at,omitempty"`
 	Email *string `json:"email,omitempty"`
 	ExternalLogin *string `json:"external_login,omitempty"`
-	MetricIds []any `json:"metric_ids"`
 	PageAccessGroupId *string `json:"page_access_group_id,omitempty"`
 	PageAccessGroupIds *string `json:"page_access_group_ids,omitempty"`
 	PageAccessUser *map[string]any `json:"page_access_user,omitempty"`
@@ -804,11 +797,9 @@ type PageAccessUserCreateData struct {
 type PageAccessUserUpdateData struct {
 	Id string `json:"id"`
 	PageId string `json:"page_id"`
-	ComponentIds *[]any `json:"component_ids,omitempty"`
 	CreatedAt *string `json:"created_at,omitempty"`
 	Email *string `json:"email,omitempty"`
 	ExternalLogin *string `json:"external_login,omitempty"`
-	MetricIds *[]any `json:"metric_ids,omitempty"`
 	PageAccessGroupId *string `json:"page_access_group_id,omitempty"`
 	PageAccessGroupIds *string `json:"page_access_group_ids,omitempty"`
 	PageAccessUser *map[string]any `json:"page_access_user,omitempty"`
@@ -920,7 +911,6 @@ type Subscriber struct {
 	Email *string `json:"email,omitempty"`
 	Endpoint *string `json:"endpoint,omitempty"`
 	Id *string `json:"id,omitempty"`
-	IntegrationPartner *int `json:"integration_partner,omitempty"`
 	Mode *string `json:"mode,omitempty"`
 	ObfuscatedChannelName *string `json:"obfuscated_channel_name,omitempty"`
 	PageAccessUserId *string `json:"page_access_user_id,omitempty"`
@@ -929,15 +919,7 @@ type Subscriber struct {
 	PurgeAt *string `json:"purge_at,omitempty"`
 	QuarantinedAt *string `json:"quarantined_at,omitempty"`
 	SkipConfirmationNotification *bool `json:"skip_confirmation_notification,omitempty"`
-	SkipUnsubscriptionNotification *bool `json:"skip_unsubscription_notification,omitempty"`
-	Slack *int `json:"slack,omitempty"`
-	Sms *int `json:"sms,omitempty"`
-	State *string `json:"state,omitempty"`
 	Subscriber *map[string]any `json:"subscriber,omitempty"`
-	Subscribers string `json:"subscribers"`
-	Teams *int `json:"teams,omitempty"`
-	Type *string `json:"type,omitempty"`
-	Webhook *int `json:"webhook,omitempty"`
 	WorkspaceName *string `json:"workspace_name,omitempty"`
 }
 
@@ -973,7 +955,6 @@ type SubscriberCreateData struct {
 	Email *string `json:"email,omitempty"`
 	Endpoint *string `json:"endpoint,omitempty"`
 	Id *string `json:"id,omitempty"`
-	IntegrationPartner *int `json:"integration_partner,omitempty"`
 	Mode *string `json:"mode,omitempty"`
 	ObfuscatedChannelName *string `json:"obfuscated_channel_name,omitempty"`
 	PageAccessUserId *string `json:"page_access_user_id,omitempty"`
@@ -982,15 +963,7 @@ type SubscriberCreateData struct {
 	PurgeAt *string `json:"purge_at,omitempty"`
 	QuarantinedAt *string `json:"quarantined_at,omitempty"`
 	SkipConfirmationNotification *bool `json:"skip_confirmation_notification,omitempty"`
-	SkipUnsubscriptionNotification *bool `json:"skip_unsubscription_notification,omitempty"`
-	Slack *int `json:"slack,omitempty"`
-	Sms *int `json:"sms,omitempty"`
-	State *string `json:"state,omitempty"`
 	Subscriber *map[string]any `json:"subscriber,omitempty"`
-	Subscribers string `json:"subscribers"`
-	Teams *int `json:"teams,omitempty"`
-	Type *string `json:"type,omitempty"`
-	Webhook *int `json:"webhook,omitempty"`
 	WorkspaceName *string `json:"workspace_name,omitempty"`
 }
 
@@ -1004,7 +977,6 @@ type SubscriberUpdateData struct {
 	DisplayPhoneNumber *string `json:"display_phone_number,omitempty"`
 	Email *string `json:"email,omitempty"`
 	Endpoint *string `json:"endpoint,omitempty"`
-	IntegrationPartner *int `json:"integration_partner,omitempty"`
 	Mode *string `json:"mode,omitempty"`
 	ObfuscatedChannelName *string `json:"obfuscated_channel_name,omitempty"`
 	PageAccessUserId *string `json:"page_access_user_id,omitempty"`
@@ -1013,15 +985,7 @@ type SubscriberUpdateData struct {
 	PurgeAt *string `json:"purge_at,omitempty"`
 	QuarantinedAt *string `json:"quarantined_at,omitempty"`
 	SkipConfirmationNotification *bool `json:"skip_confirmation_notification,omitempty"`
-	SkipUnsubscriptionNotification *bool `json:"skip_unsubscription_notification,omitempty"`
-	Slack *int `json:"slack,omitempty"`
-	Sms *int `json:"sms,omitempty"`
-	State *string `json:"state,omitempty"`
 	Subscriber *map[string]any `json:"subscriber,omitempty"`
-	Subscribers *string `json:"subscribers,omitempty"`
-	Teams *int `json:"teams,omitempty"`
-	Type *string `json:"type,omitempty"`
-	Webhook *int `json:"webhook,omitempty"`
 	WorkspaceName *string `json:"workspace_name,omitempty"`
 }
 

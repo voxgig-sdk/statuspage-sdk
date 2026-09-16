@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>IncidentTemplate | Statuspage API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">Statuspage API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/statuspage-sdk">voxgig-sdk/statuspage-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">Statuspage API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/component.html">Component</a>
+<a href="../api/component_group_uptime.html">ComponentGroupUptime</a>
+<a href="../api/group_component.html">GroupComponent</a>
+<a href="../api/incident.html">Incident</a>
+<a href="../api/incident_postmortem.html">IncidentPostmortem</a>
+<a href="../api/incident_subscriber.html">IncidentSubscriber</a>
+<a aria-current="page" href="../api/incident_template.html">IncidentTemplate</a><div class="nav-sections"><a class="nav-section" href="#post-pagespage_idincident_templates">POST /pages/{page_id}/incident_templates</a>
+<a class="nav-section" href="#get-pagespage_idincident_templates">GET /pages/{page_id}/incident_templates</a></div>
+<a href="../api/incident_update.html">IncidentUpdate</a>
+<a href="../api/metric.html">Metric</a>
+<a href="../api/metrics_provider.html">MetricsProvider</a>
+<a href="../api/page.html">Page</a>
+<a href="../api/page_access_group.html">PageAccessGroup</a>
+<a href="../api/page_access_user.html">PageAccessUser</a>
+<a href="../api/permission.html">Permission</a>
+<a href="../api/postmortem.html">Postmortem</a>
+<a href="../api/status_embed_config.html">StatusEmbedConfig</a>
+<a href="../api/subscriber.html">Subscriber</a>
+<a href="../api/user.html">User</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/go.html">Golang</a>
+<a href="../sdks/lua.html">Lua</a>
+<a href="../sdks/php.html">PHP</a>
+<a href="../sdks/py.html">Python</a>
+<a href="../sdks/rb.html">Ruby</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
+<a href="../tools/go-mcp.html">Go MCP server</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="incidenttemplate">IncidentTemplate</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idincident_templates"><code>/pages/{page_id}/incident_templates</code></a></td>
+<td><code>create</code></td>
+<td>Create a template</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idincident_templates"><code>/pages/{page_id}/incident_templates</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of templates</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the incident or maintenance update to be applied when selecting this template</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Affected components</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier of Template Group this template belongs to</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Template Identifier</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the template, as shown in the list on the &quot;Templates&quot; tab of the &quot;Incidents&quot; page</td>
+</tr>
+<tr>
+<td><code>should_send_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Whether the &quot;deliver notifications&quot; checkbox should be selected when selecting this template</td>
+</tr>
+<tr>
+<td><code>should_tweet</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Whether the &quot;tweet update&quot; checkbox should be selected when selecting this template</td>
+</tr>
+<tr>
+<td><code>template</code></td>
+<td><code>object</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title to be applied to the incident or maintenance when selecting this template</td>
+</tr>
+<tr>
+<td><code>update_status</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The status the incident or maintenance should transition to when selecting this template</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create">create</h2>
+<h3 id="post-pagespage_idincident_templates" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/incident_templates</h3>
+<p>Operation ID: <code>postPagesPageIdIncidentTemplates</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
+<h4 id="request-body">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>template</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>template.body</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The initial message, created as the first incident or maintenance update.</td>
+</tr>
+<tr>
+<td><code>template.component_ids</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>List of component_ids affected by this incident</td>
+</tr>
+<tr>
+<td><code>template.group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier of Template Group this template belongs to</td>
+</tr>
+<tr>
+<td><code>template.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Name of the template, as shown in the list on the &quot;Templates&quot; tab of the &quot;Incidents&quot; page</td>
+</tr>
+<tr>
+<td><code>template.should_send_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Whether the &quot;deliver notifications&quot; checkbox should be selected when selecting this template</td>
+</tr>
+<tr>
+<td><code>template.should_tweet</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Whether the &quot;tweet update&quot; checkbox should be selected when selecting this template</td>
+</tr>
+<tr>
+<td><code>template.title</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Title to be applied to the incident or maintenance when selecting this template</td>
+</tr>
+<tr>
+<td><code>template.update_status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The status the incident or maintenance should transition to when selecting this template</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses">Responses</h4>
+<h5 id="201-create-a-template" class="status" data-status="2xx">201: Create a template</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the incident or maintenance update to be applied when selecting this template</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components</td>
+</tr>
+<tr>
+<td><code>components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier of Template Group this template belongs to</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Template Identifier</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the template, as shown in the list on the &quot;Templates&quot; tab of the &quot;Incidents&quot; page</td>
+</tr>
+<tr>
+<td><code>should_send_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Whether the &quot;deliver notifications&quot; checkbox should be selected when selecting this template</td>
+</tr>
+<tr>
+<td><code>should_tweet</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Whether the &quot;tweet update&quot; checkbox should be selected when selecting this template</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title to be applied to the incident or maintenance when selecting this template</td>
+</tr>
+<tr>
+<td><code>update_status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The status the incident or maintenance should transition to when selecting this template</td>
+</tr>
+</tbody>
+</table>
+<h5 id="400-bad-request" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-pagespage_idincident_templates" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incident_templates</h3>
+<p>Operation ID: <code>getPagesPageIdIncidentTemplates</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. |</p>
+<h4 id="responses-1">Responses</h4>
+<h5 id="200-get-a-list-of-templates" class="status" data-status="2xx">200: Get a list of templates</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the incident or maintenance update to be applied when selecting this template</td>
+</tr>
+<tr>
+<td><code>[].components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components</td>
+</tr>
+<tr>
+<td><code>[].components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>[].components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>[].components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>[].components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>[].components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>[].components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>[].components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>[].components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>[].components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier of Template Group this template belongs to</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Template Identifier</td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the template, as shown in the list on the &quot;Templates&quot; tab of the &quot;Incidents&quot; page</td>
+</tr>
+<tr>
+<td><code>[].should_send_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Whether the &quot;deliver notifications&quot; checkbox should be selected when selecting this template</td>
+</tr>
+<tr>
+<td><code>[].should_tweet</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Whether the &quot;tweet update&quot; checkbox should be selected when selecting this template</td>
+</tr>
+<tr>
+<td><code>[].title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title to be applied to the incident or maintenance when selecting this template</td>
+</tr>
+<tr>
+<td><code>[].update_status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The status the incident or maintenance should transition to when selecting this template</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-1" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

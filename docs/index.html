@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Statuspage API | Statuspage API</title><link rel="stylesheet" href="assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="index.html">Statuspage API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/statuspage-sdk">voxgig-sdk/statuspage-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details open><summary>Overview</summary><a aria-current="page" href="index.html">Statuspage API</a></details>
+<details><summary>API</summary><a href="api/index.html">API overview</a>
+<a href="api/component.html">Component</a>
+<a href="api/component_group_uptime.html">ComponentGroupUptime</a>
+<a href="api/group_component.html">GroupComponent</a>
+<a href="api/incident.html">Incident</a>
+<a href="api/incident_postmortem.html">IncidentPostmortem</a>
+<a href="api/incident_subscriber.html">IncidentSubscriber</a>
+<a href="api/incident_template.html">IncidentTemplate</a>
+<a href="api/incident_update.html">IncidentUpdate</a>
+<a href="api/metric.html">Metric</a>
+<a href="api/metrics_provider.html">MetricsProvider</a>
+<a href="api/page.html">Page</a>
+<a href="api/page_access_group.html">PageAccessGroup</a>
+<a href="api/page_access_user.html">PageAccessUser</a>
+<a href="api/permission.html">Permission</a>
+<a href="api/postmortem.html">Postmortem</a>
+<a href="api/status_embed_config.html">StatusEmbedConfig</a>
+<a href="api/subscriber.html">Subscriber</a>
+<a href="api/user.html">User</a></details>
+<details><summary>Guides</summary><a href="guides/authentication.html">Authentication</a>
+<a href="guides/first-call.html">Make your first API call</a>
+<a href="guides/errors.html">Handle errors</a>
+<a href="guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="sdks/go.html">Golang</a>
+<a href="sdks/lua.html">Lua</a>
+<a href="sdks/php.html">PHP</a>
+<a href="sdks/py.html">Python</a>
+<a href="sdks/rb.html">Ruby</a>
+<a href="sdks/ts.html">TypeScript</a></details>
+<details><summary>Tools</summary><a href="tools/go-cli.html">Go CLI</a>
+<a href="tools/go-mcp.html">Go MCP server</a></details>
+<details><summary>Features</summary><a href="features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="features/paging.html">Pagination signals for list operations</a>
+<a href="features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>Overview</div><h1 id="statuspage-api">Statuspage API</h1>
+<h1 id="code-of-conduct-please-don39t-abuse-the-api-and-please-report-all-feature-requests-and-issues-to-httpssupportatlassiancomcontact--rate-limiting-each-api-token-is-limited-to-1-request--second-as-measured-on-a-60-second-rolling-window-to-get-this-limit-increased-please-contact-us-at-httpssupportatlassiancomcontact-error-codes-420-or-429-indicate-that-you-have-exceeded-the-rate-limit-and-the-request-has-been-rejected--basics--https-it39s-required--url-prefix-in-order-to-maintain-version-integrity-into-the-future-the-api-is-versioned-all-calls-currently-begin-with-the-following-prefix-httpsapistatuspageiov1--restful-interface-wherever-possible-the-api-seeks-to-implement-repeatable-patterns-with-logical-representative-urls-and-descriptive-http-verbs-below-are-some-examples-and-conventions-you-will-see-throughout-the-documentation--collections-are-buckets-httpsapistatuspageiov1pagesasdf123incidentsjson--elements-have-unique-ids-httpsapistatuspageiov1pagesasdf123incidentsjklm456json--get-will-retrieve-information-about-a-collectionelement--post-will-create-an-element-in-a-collection--patch-will-update-a-single-element--put-will-replace-a-single-element-in-a-collection-rarely-used--delete-will-destroy-a-single-element--sending-data-information-can-be-sent-in-the-body-as-form-urlencoded-or-json-but-make-sure-the-content-type-header-matches-the-body-structure-or-the-server-gremlins-will-be-angry-all-examples-are-provided-in-json-format-however-they-can-easily-be-converted-to-form-encoding-if-required-some-examples-of-how-to-convert-things-are-below--json-123-quotincidentquot-123-quotnamequot-quottest-incidentquot-quotcomponentsquot-quot8kbf7d35c070quot-quotvtnh60py4yd7quot-125-125--form-encoded-using-curl-as-an-example-curl--x-post-httpsapistatuspageiov1example---d-quotincidentnametest-incidentquot---d-quotincidentcomponents8kbf7d35c070quot---d-quotincidentcomponentsvtnh60py4yd7quot--authentication-lt---redoc-inject-ltsecurity-definitionsgt---gt">Code of Conduct Please don't abuse the API, and please report all feature requests and issues to https://support.atlassian.com/contact # Rate Limiting Each API token is limited to 1 request / second as measured on a 60 second rolling window. To get this limit increased, please contact us at https://support.atlassian.com/contact Error codes 420 or 429 indicate that you have exceeded the rate limit and the request has been rejected. # Basics ## HTTPS It's required ## URL Prefix In order to maintain version integrity into the future, the API is versioned. All calls currently begin with the following prefix: https://api.statuspage.io/v1/ ## RESTful Interface Wherever possible, the API seeks to implement repeatable patterns with logical, representative URLs and descriptive HTTP verbs. Below are some examples and conventions you will see throughout the documentation. * Collections are buckets: https://api.statuspage.io/v1/pages/asdf123/incidents.json * Elements have unique IDs: https://api.statuspage.io/v1/pages/asdf123/incidents/jklm456.json * GET will retrieve information about a collection/element * POST will create an element in a collection * PATCH will update a single element * PUT will replace a single element in a collection (rarely used) * DELETE will destroy a single element ## Sending Data Information can be sent in the body as form urlencoded or JSON, but make sure the Content-Type header matches the body structure or the server gremlins will be angry. All examples are provided in JSON format, however they can easily be converted to form encoding if required. Some examples of how to convert things are below: // JSON { &quot;incident&quot;: { &quot;name&quot;: &quot;test incident&quot;, &quot;components&quot;: [&quot;8kbf7d35c070&quot;, &quot;vtnh60py4yd7&quot;] } } // Form Encoded (using curl as an example): curl -X POST https://api.statuspage.io/v1/example \ -d &quot;incident[name]=test incident&quot; \ -d &quot;incident[components][]=8kbf7d35c070&quot; \ -d &quot;incident[components][]=vtnh60py4yd7&quot; # Authentication &lt;!-- ReDoc-Inject: &lt;security-definitions&gt; --&gt;</h1>
+</main></div>
+<script src="assets/search.js" defer></script></body></html>

@@ -410,11 +410,7 @@ class IncidentUpdateUpdateData(IncidentUpdateUpdateDataRequired, total=False):
     wants_twitter_update: bool
 
 
-class MetricRequired(TypedDict):
-    data: dict
-
-
-class Metric(MetricRequired, total=False):
+class Metric(TypedDict, total=False):
     backfill_percentage: int
     backfilled: bool
     created_at: str
@@ -460,7 +456,6 @@ class MetricListMatch(MetricListMatchRequired, total=False):
 class MetricCreateDataRequired(TypedDict):
     metrics_provider_id: str
     page_id: str
-    data: dict
 
 
 class MetricCreateData(MetricCreateDataRequired, total=False):
@@ -493,7 +488,6 @@ class MetricUpdateData(MetricUpdateDataRequired, total=False):
     backfill_percentage: int
     backfilled: bool
     created_at: str
-    data: dict
     decimal_places: int
     display: bool
     last_fetched_at: str
@@ -794,12 +788,7 @@ class PageAccessGroupRemoveMatch(PageAccessGroupRemoveMatchRequired, total=False
     component_id: str
 
 
-class PageAccessUserRequired(TypedDict):
-    component_ids: list
-    metric_ids: list
-
-
-class PageAccessUser(PageAccessUserRequired, total=False):
+class PageAccessUser(TypedDict, total=False):
     created_at: str
     email: str
     external_login: str
@@ -828,8 +817,6 @@ class PageAccessUserListMatch(PageAccessUserListMatchRequired, total=False):
 
 class PageAccessUserCreateDataRequired(TypedDict):
     id: str
-    component_ids: list
-    metric_ids: list
 
 
 class PageAccessUserCreateData(PageAccessUserCreateDataRequired, total=False):
@@ -849,11 +836,9 @@ class PageAccessUserUpdateDataRequired(TypedDict):
 
 
 class PageAccessUserUpdateData(PageAccessUserUpdateDataRequired, total=False):
-    component_ids: list
     created_at: str
     email: str
     external_login: str
-    metric_ids: list
     page_access_group_id: str
     page_access_group_ids: str
     page_access_user: dict
@@ -961,11 +946,7 @@ class StatusEmbedConfigUpdateData(StatusEmbedConfigUpdateDataRequired, total=Fal
     status_embed_config: dict
 
 
-class SubscriberRequired(TypedDict):
-    subscribers: str
-
-
-class Subscriber(SubscriberRequired, total=False):
+class Subscriber(TypedDict, total=False):
     component_ids: list
     components: str
     created_at: str
@@ -973,7 +954,6 @@ class Subscriber(SubscriberRequired, total=False):
     email: str
     endpoint: str
     id: str
-    integration_partner: int
     mode: str
     obfuscated_channel_name: str
     page_access_user_id: str
@@ -982,14 +962,7 @@ class Subscriber(SubscriberRequired, total=False):
     purge_at: str
     quarantined_at: str
     skip_confirmation_notification: bool
-    skip_unsubscription_notification: bool
-    slack: int
-    sms: int
-    state: str
     subscriber: dict
-    teams: int
-    type: str
-    webhook: int
     workspace_name: str
 
 
@@ -1020,7 +993,6 @@ class SubscriberListMatch(SubscriberListMatchRequired, total=False):
 
 class SubscriberCreateDataRequired(TypedDict):
     page_id: str
-    subscribers: str
 
 
 class SubscriberCreateData(SubscriberCreateDataRequired, total=False):
@@ -1032,7 +1004,6 @@ class SubscriberCreateData(SubscriberCreateDataRequired, total=False):
     email: str
     endpoint: str
     id: str
-    integration_partner: int
     mode: str
     obfuscated_channel_name: str
     page_access_user_id: str
@@ -1041,14 +1012,7 @@ class SubscriberCreateData(SubscriberCreateDataRequired, total=False):
     purge_at: str
     quarantined_at: str
     skip_confirmation_notification: bool
-    skip_unsubscription_notification: bool
-    slack: int
-    sms: int
-    state: str
     subscriber: dict
-    teams: int
-    type: str
-    webhook: int
     workspace_name: str
 
 
@@ -1064,7 +1028,6 @@ class SubscriberUpdateData(SubscriberUpdateDataRequired, total=False):
     display_phone_number: str
     email: str
     endpoint: str
-    integration_partner: int
     mode: str
     obfuscated_channel_name: str
     page_access_user_id: str
@@ -1073,15 +1036,7 @@ class SubscriberUpdateData(SubscriberUpdateDataRequired, total=False):
     purge_at: str
     quarantined_at: str
     skip_confirmation_notification: bool
-    skip_unsubscription_notification: bool
-    slack: int
-    sms: int
-    state: str
     subscriber: dict
-    subscribers: str
-    teams: int
-    type: str
-    webhook: int
     workspace_name: str
 
 

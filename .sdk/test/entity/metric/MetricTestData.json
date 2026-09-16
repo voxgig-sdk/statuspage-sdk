@@ -2,74 +2,71 @@
   "existing": {
     "metric": {
       "METRIC00": {
-        "backfill_percentage": "sc8",
+        "backfill_percentage": 190,
         "backfilled": false,
-        "created_at": "sca",
-        "data": {},
-        "decimal_places": "scc",
-        "display": false,
+        "created_at": "sc0",
+        "decimal_places": 193,
+        "display": true,
         "id": "METRIC00",
-        "last_fetched_at": "scf",
+        "last_fetched_at": "sc4",
         "metric": {},
-        "metric_identifier": "sd1",
+        "metric_identifier": "sc6",
         "metrics_provider_id": "METRICS_PROVIDER01",
-        "most_recent_data_at": "sd3",
-        "name": "sd4",
-        "reference_name": "sd5",
-        "suffix": "sd6",
-        "tooltip_description": "sd7",
-        "updated_at": "sd8",
-        "y_axis_hidden": false,
-        "y_axis_max": 218,
-        "y_axis_min": 219,
+        "most_recent_data_at": "sc8",
+        "name": "sc9",
+        "reference_name": "sca",
+        "suffix": "scb",
+        "tooltip_description": "scc",
+        "updated_at": "scd",
+        "y_axis_hidden": true,
+        "y_axis_max": 207,
+        "y_axis_min": 208,
         "page_id": "PAGE01",
         "page_access_user_id": "PAGE_ACCESS_USER01"
       },
       "METRIC01": {
-        "backfill_percentage": "s190",
+        "backfill_percentage": 380,
         "backfilled": false,
-        "created_at": "s192",
-        "data": {},
-        "decimal_places": "s194",
-        "display": false,
+        "created_at": "s17e",
+        "decimal_places": 383,
+        "display": true,
         "id": "METRIC01",
-        "last_fetched_at": "s197",
+        "last_fetched_at": "s182",
         "metric": {},
-        "metric_identifier": "s199",
+        "metric_identifier": "s184",
         "metrics_provider_id": "METRICS_PROVIDER01",
-        "most_recent_data_at": "s19b",
-        "name": "s19c",
-        "reference_name": "s19d",
-        "suffix": "s19e",
-        "tooltip_description": "s19f",
-        "updated_at": "s1a0",
-        "y_axis_hidden": false,
-        "y_axis_max": 418,
-        "y_axis_min": 419,
+        "most_recent_data_at": "s186",
+        "name": "s187",
+        "reference_name": "s188",
+        "suffix": "s189",
+        "tooltip_description": "s18a",
+        "updated_at": "s18b",
+        "y_axis_hidden": true,
+        "y_axis_max": 397,
+        "y_axis_min": 398,
         "page_id": "PAGE01",
         "page_access_user_id": "PAGE_ACCESS_USER01"
       },
       "METRIC02": {
-        "backfill_percentage": "s258",
+        "backfill_percentage": 570,
         "backfilled": false,
-        "created_at": "s25a",
-        "data": {},
-        "decimal_places": "s25c",
-        "display": false,
+        "created_at": "s23c",
+        "decimal_places": 573,
+        "display": true,
         "id": "METRIC02",
-        "last_fetched_at": "s25f",
+        "last_fetched_at": "s240",
         "metric": {},
-        "metric_identifier": "s261",
+        "metric_identifier": "s242",
         "metrics_provider_id": "METRICS_PROVIDER01",
-        "most_recent_data_at": "s263",
-        "name": "s264",
-        "reference_name": "s265",
-        "suffix": "s266",
-        "tooltip_description": "s267",
-        "updated_at": "s268",
-        "y_axis_hidden": false,
-        "y_axis_max": 618,
-        "y_axis_min": 619,
+        "most_recent_data_at": "s244",
+        "name": "s245",
+        "reference_name": "s246",
+        "suffix": "s247",
+        "tooltip_description": "s248",
+        "updated_at": "s249",
+        "y_axis_hidden": true,
+        "y_axis_max": 587,
+        "y_axis_min": 588,
         "page_id": "PAGE01",
         "page_access_user_id": "PAGE_ACCESS_USER01"
       }
@@ -78,25 +75,2063 @@
   "new": {
     "metric": {
       "metric_ref01": {
-        "backfill_percentage": "s320",
+        "backfill_percentage": 760,
         "backfilled": false,
-        "created_at": "s322",
-        "data": {},
-        "decimal_places": "s324",
-        "display": false,
-        "last_fetched_at": "s327",
+        "created_at": "s2fa",
+        "decimal_places": 763,
+        "display": true,
+        "last_fetched_at": "s2fe",
         "metric": {},
-        "metric_identifier": "s329",
+        "metric_identifier": "s300",
         "metrics_provider_id": "METRICS_PROVIDER01",
-        "most_recent_data_at": "s32b",
-        "name": "s32c",
-        "reference_name": "s32d",
-        "suffix": "s32e",
-        "tooltip_description": "s32f",
-        "updated_at": "s330",
-        "y_axis_hidden": false,
-        "y_axis_max": 818,
-        "y_axis_min": 819
+        "most_recent_data_at": "s302",
+        "name": "s303",
+        "reference_name": "s304",
+        "suffix": "s305",
+        "tooltip_description": "s306",
+        "updated_at": "s307",
+        "y_axis_hidden": true,
+        "y_axis_max": 777,
+        "y_axis_min": 778
+      }
+    }
+  },
+  "requests": {
+    "POST /pages/{page_id}/metrics/{metric_id}/data": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "postPagesPageIdMetricsMetricIdData",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Metric Identifier",
+            "in": "path",
+            "name": "metric_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Add data to a metric",
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "timestamp": {
+                        "description": "Time to store the metric against",
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "value": {
+                        "format": "float",
+                        "type": "number"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Add data to a metric",
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "timestamp": {
+                          "format": "int32",
+                          "type": "integer"
+                        },
+                        "value": {
+                          "format": "float",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Add data to a metric"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Method not allowed."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unprocessable entity"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "POST /pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "postPagesPageIdMetricsProvidersMetricsProviderIdMetrics",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Metric Provider Identifier",
+            "in": "path",
+            "name": "metrics_provider_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Create a metric for a metric provider",
+                "properties": {
+                  "metric": {
+                    "properties": {
+                      "application_id": {
+                        "description": "The Identifier for new relic application. Required in the case of NewRelic only",
+                        "type": "string"
+                      },
+                      "decimal_places": {
+                        "description": "How many decimal places to render on the graph",
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "display": {
+                        "description": "Should the metric be displayed",
+                        "type": "boolean"
+                      },
+                      "metric_identifier": {
+                        "description": "The identifier used to look up the metric data from the provider",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of metric",
+                        "type": "string"
+                      },
+                      "suffix": {
+                        "description": "Suffix to describe the units on the graph",
+                        "type": "string"
+                      },
+                      "tooltip_description": {
+                        "type": "string"
+                      },
+                      "transform": {
+                        "description": "The transform to apply to metric before pulling into Statuspage. One of: \"average\", \"count\", \"max\", \"min\", or \"sum\"",
+                        "type": "string"
+                      },
+                      "y_axis_hidden": {
+                        "description": "Should the values on the y axis be hidden on render",
+                        "type": "boolean"
+                      },
+                      "y_axis_max": {
+                        "description": "The upper bound of the y axis",
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "y_axis_min": {
+                        "description": "The lower bound of the y axis",
+                        "format": "int32",
+                        "type": "integer"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Create a metric for a metric provider",
+                  "properties": {
+                    "backfill_percentage": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "backfilled": {
+                      "type": "boolean"
+                    },
+                    "created_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "decimal_places": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "display": {
+                      "description": "Should the metric be displayed",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Metric identifier",
+                      "type": "string"
+                    },
+                    "last_fetched_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "metric_identifier": {
+                      "description": "Metric Display identifier used to look up the metric data from the provider",
+                      "type": "string"
+                    },
+                    "metrics_provider_id": {
+                      "description": "Metric Provider identifier",
+                      "type": "string"
+                    },
+                    "most_recent_data_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Name of metric",
+                      "type": "string"
+                    },
+                    "reference_name": {
+                      "type": "string"
+                    },
+                    "suffix": {
+                      "description": "Suffix to describe the units on the graph",
+                      "type": "string"
+                    },
+                    "tooltip_description": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "y_axis_hidden": {
+                      "description": "Should the values on the y axis be hidden on render",
+                      "type": "boolean"
+                    },
+                    "y_axis_max": {
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "y_axis_min": {
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Create a metric for a metric provider"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Bad request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "You are not authorized to access this resource."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unprocessable entity"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "POST /pages/{page_id}/metrics/data": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "postPagesPageIdMetricsData",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Add data points to metrics",
+                "properties": {
+                  "data": {
+                    "description": "Add data points to metrics",
+                    "properties": {
+                      "metric_id": {
+                        "description": "Metric identifier to add data to",
+                        "items": {
+                          "properties": {
+                            "timestamp": {
+                              "format": "int32",
+                              "type": "integer"
+                            },
+                            "value": {
+                              "format": "float",
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "6s01g43pvdxn": [
+                        {
+                          "timestamp": 1731991208,
+                          "value": 123.456
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "Add data points to metrics",
+                  "properties": {
+                    "metric_id": {
+                      "description": "Metric identifier to add data to",
+                      "items": {
+                        "properties": {
+                          "timestamp": {
+                            "format": "int32",
+                            "type": "integer"
+                          },
+                          "value": {
+                            "format": "float",
+                            "type": "number"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Data Point is submitted and is currently being added to the metrics"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "You are not authorized to access this resource."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Method not allowed."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "GET /pages/{page_id}/page_access_users/{page_access_user_id}/metrics": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getPagesPageIdPageAccessUsersPageAccessUserIdMetrics",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Page Access User Identifier",
+            "in": "path",
+            "name": "page_access_user_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "description": "Create a metric for a metric provider",
+                    "properties": {
+                      "backfill_percentage": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "backfilled": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      "decimal_places": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "display": {
+                        "description": "Should the metric be displayed",
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "description": "Metric identifier",
+                        "type": "string"
+                      },
+                      "last_fetched_at": {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      "metric_identifier": {
+                        "description": "Metric Display identifier used to look up the metric data from the provider",
+                        "type": "string"
+                      },
+                      "metrics_provider_id": {
+                        "description": "Metric Provider identifier",
+                        "type": "string"
+                      },
+                      "most_recent_data_at": {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of metric",
+                        "type": "string"
+                      },
+                      "reference_name": {
+                        "type": "string"
+                      },
+                      "suffix": {
+                        "description": "Suffix to describe the units on the graph",
+                        "type": "string"
+                      },
+                      "tooltip_description": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      "y_axis_hidden": {
+                        "description": "Should the values on the y axis be hidden on render",
+                        "type": "boolean"
+                      },
+                      "y_axis_max": {
+                        "format": "float",
+                        "type": "number"
+                      },
+                      "y_axis_min": {
+                        "format": "float",
+                        "type": "number"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Get metrics for page access user"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "You are not authorized to access this resource."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "GET /pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getPagesPageIdMetricsProvidersMetricsProviderIdMetrics",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Metric Provider Identifier",
+            "in": "path",
+            "name": "metrics_provider_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Create a metric for a metric provider",
+                  "properties": {
+                    "backfill_percentage": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "backfilled": {
+                      "type": "boolean"
+                    },
+                    "created_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "decimal_places": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "display": {
+                      "description": "Should the metric be displayed",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Metric identifier",
+                      "type": "string"
+                    },
+                    "last_fetched_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "metric_identifier": {
+                      "description": "Metric Display identifier used to look up the metric data from the provider",
+                      "type": "string"
+                    },
+                    "metrics_provider_id": {
+                      "description": "Metric Provider identifier",
+                      "type": "string"
+                    },
+                    "most_recent_data_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Name of metric",
+                      "type": "string"
+                    },
+                    "reference_name": {
+                      "type": "string"
+                    },
+                    "suffix": {
+                      "description": "Suffix to describe the units on the graph",
+                      "type": "string"
+                    },
+                    "tooltip_description": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "y_axis_hidden": {
+                      "description": "Should the values on the y axis be hidden on render",
+                      "type": "boolean"
+                    },
+                    "y_axis_max": {
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "y_axis_min": {
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "List metrics for a metric provider"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "You are not authorized to access this resource."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "GET /pages/{page_id}/metrics": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getPagesPageIdMetrics",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Create a metric for a metric provider",
+                  "properties": {
+                    "backfill_percentage": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "backfilled": {
+                      "type": "boolean"
+                    },
+                    "created_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "decimal_places": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "display": {
+                      "description": "Should the metric be displayed",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Metric identifier",
+                      "type": "string"
+                    },
+                    "last_fetched_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "metric_identifier": {
+                      "description": "Metric Display identifier used to look up the metric data from the provider",
+                      "type": "string"
+                    },
+                    "metrics_provider_id": {
+                      "description": "Metric Provider identifier",
+                      "type": "string"
+                    },
+                    "most_recent_data_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Name of metric",
+                      "type": "string"
+                    },
+                    "reference_name": {
+                      "type": "string"
+                    },
+                    "suffix": {
+                      "description": "Suffix to describe the units on the graph",
+                      "type": "string"
+                    },
+                    "tooltip_description": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "y_axis_hidden": {
+                      "description": "Should the values on the y axis be hidden on render",
+                      "type": "boolean"
+                    },
+                    "y_axis_max": {
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "y_axis_min": {
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Get a list of metrics"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "GET /pages/{page_id}/metrics/{metric_id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getPagesPageIdMetricsMetricId",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Metric Identifier",
+            "in": "path",
+            "name": "metric_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Create a metric for a metric provider",
+                  "properties": {
+                    "backfill_percentage": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "backfilled": {
+                      "type": "boolean"
+                    },
+                    "created_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "decimal_places": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "display": {
+                      "description": "Should the metric be displayed",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Metric identifier",
+                      "type": "string"
+                    },
+                    "last_fetched_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "metric_identifier": {
+                      "description": "Metric Display identifier used to look up the metric data from the provider",
+                      "type": "string"
+                    },
+                    "metrics_provider_id": {
+                      "description": "Metric Provider identifier",
+                      "type": "string"
+                    },
+                    "most_recent_data_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Name of metric",
+                      "type": "string"
+                    },
+                    "reference_name": {
+                      "type": "string"
+                    },
+                    "suffix": {
+                      "description": "Suffix to describe the units on the graph",
+                      "type": "string"
+                    },
+                    "tooltip_description": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "y_axis_hidden": {
+                      "description": "Should the values on the y axis be hidden on render",
+                      "type": "boolean"
+                    },
+                    "y_axis_max": {
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "y_axis_min": {
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Get a metric"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "PATCH /pages/{page_id}/metrics/{metric_id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "patchPagesPageIdMetricsMetricId",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Metric Identifier",
+            "in": "path",
+            "name": "metric_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Update a metric",
+                "properties": {
+                  "metric": {
+                    "properties": {
+                      "metric_identifier": {
+                        "description": "Metric Display identifier used to look up the metric data from the provider",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of metric",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Create a metric for a metric provider",
+                  "properties": {
+                    "backfill_percentage": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "backfilled": {
+                      "type": "boolean"
+                    },
+                    "created_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "decimal_places": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "display": {
+                      "description": "Should the metric be displayed",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Metric identifier",
+                      "type": "string"
+                    },
+                    "last_fetched_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "metric_identifier": {
+                      "description": "Metric Display identifier used to look up the metric data from the provider",
+                      "type": "string"
+                    },
+                    "metrics_provider_id": {
+                      "description": "Metric Provider identifier",
+                      "type": "string"
+                    },
+                    "most_recent_data_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Name of metric",
+                      "type": "string"
+                    },
+                    "reference_name": {
+                      "type": "string"
+                    },
+                    "suffix": {
+                      "description": "Suffix to describe the units on the graph",
+                      "type": "string"
+                    },
+                    "tooltip_description": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "y_axis_hidden": {
+                      "description": "Should the values on the y axis be hidden on render",
+                      "type": "boolean"
+                    },
+                    "y_axis_max": {
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "y_axis_min": {
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Update a metric"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unprocessable entity"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "DELETE /pages/{page_id}/metrics/{metric_id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "deletePagesPageIdMetricsMetricId",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Metric Identifier",
+            "in": "path",
+            "name": "metric_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Create a metric for a metric provider",
+                  "properties": {
+                    "backfill_percentage": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "backfilled": {
+                      "type": "boolean"
+                    },
+                    "created_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "decimal_places": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "display": {
+                      "description": "Should the metric be displayed",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Metric identifier",
+                      "type": "string"
+                    },
+                    "last_fetched_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "metric_identifier": {
+                      "description": "Metric Display identifier used to look up the metric data from the provider",
+                      "type": "string"
+                    },
+                    "metrics_provider_id": {
+                      "description": "Metric Provider identifier",
+                      "type": "string"
+                    },
+                    "most_recent_data_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Name of metric",
+                      "type": "string"
+                    },
+                    "reference_name": {
+                      "type": "string"
+                    },
+                    "suffix": {
+                      "description": "Suffix to describe the units on the graph",
+                      "type": "string"
+                    },
+                    "tooltip_description": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "y_axis_hidden": {
+                      "description": "Should the values on the y axis be hidden on render",
+                      "type": "boolean"
+                    },
+                    "y_axis_max": {
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "y_axis_min": {
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Delete a metric"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "DELETE /pages/{page_id}/metrics/{metric_id}/data": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "deletePagesPageIdMetricsMetricIdData",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Metric Identifier",
+            "in": "path",
+            "name": "metric_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Create a metric for a metric provider",
+                  "properties": {
+                    "backfill_percentage": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "backfilled": {
+                      "type": "boolean"
+                    },
+                    "created_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "decimal_places": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "display": {
+                      "description": "Should the metric be displayed",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Metric identifier",
+                      "type": "string"
+                    },
+                    "last_fetched_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "metric_identifier": {
+                      "description": "Metric Display identifier used to look up the metric data from the provider",
+                      "type": "string"
+                    },
+                    "metrics_provider_id": {
+                      "description": "Metric Provider identifier",
+                      "type": "string"
+                    },
+                    "most_recent_data_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Name of metric",
+                      "type": "string"
+                    },
+                    "reference_name": {
+                      "type": "string"
+                    },
+                    "suffix": {
+                      "description": "Suffix to describe the units on the graph",
+                      "type": "string"
+                    },
+                    "tooltip_description": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "y_axis_hidden": {
+                      "description": "Should the values on the y axis be hidden on render",
+                      "type": "boolean"
+                    },
+                    "y_axis_max": {
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "y_axis_min": {
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Reset data for a metric"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
+      }
+    },
+    "PUT /pages/{page_id}/metrics/{metric_id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "putPagesPageIdMetricsMetricId",
+        "parameters": [
+          {
+            "description": "Page identifier",
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Metric Identifier",
+            "in": "path",
+            "name": "metric_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Update a metric",
+                "properties": {
+                  "metric": {
+                    "properties": {
+                      "metric_identifier": {
+                        "description": "Metric Display identifier used to look up the metric data from the provider",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of metric",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Create a metric for a metric provider",
+                  "properties": {
+                    "backfill_percentage": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "backfilled": {
+                      "type": "boolean"
+                    },
+                    "created_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "decimal_places": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "display": {
+                      "description": "Should the metric be displayed",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Metric identifier",
+                      "type": "string"
+                    },
+                    "last_fetched_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "metric_identifier": {
+                      "description": "Metric Display identifier used to look up the metric data from the provider",
+                      "type": "string"
+                    },
+                    "metrics_provider_id": {
+                      "description": "Metric Provider identifier",
+                      "type": "string"
+                    },
+                    "most_recent_data_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Name of metric",
+                      "type": "string"
+                    },
+                    "reference_name": {
+                      "type": "string"
+                    },
+                    "suffix": {
+                      "description": "Suffix to describe the units on the graph",
+                      "type": "string"
+                    },
+                    "tooltip_description": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "y_axis_hidden": {
+                      "description": "Should the values on the y axis be hidden on render",
+                      "type": "boolean"
+                    },
+                    "y_axis_max": {
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "y_axis_min": {
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Update a metric"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Could not authenticate"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource could not be found."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get a list of users",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unprocessable entity"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "securitySchemes": {
+          "api_key": {
+            "description": "#### Obtaining your API Key\n\nAuthentication is done via an API token provided in the Statuspage management interface.\n\n  1. Log in to your account at https://manage.statuspage.io/login.\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\n  3. Click **API info**.\n\n### Passing your API key in an authorization header\n\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\nlisted on the API page, we can fetch your page profile.\n\n    curl -H \"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\" \\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\n\n### Passing your API key in a query param\n\n    curl \"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\"\n",
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+          }
+        },
+        "securitySource": "definition"
       }
     }
   }

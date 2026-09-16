@@ -5,6 +5,8 @@ import * as Fs from 'node:fs'
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
+import { runLiveEntity } from '../../live-entity'
 
 
 import { StatuspageSDK, BaseFeature, stdutil } from '../../..'
@@ -47,16 +49,13 @@ describe('IncidentPostmortemEntity', async () => {
 
     const live = 'TRUE' === process.env.STATUSPAGE_TEST_LIVE
     for (const op of []) {
-      if (maybeSkipControl(t, 'entityOp', 'incident_postmortem.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', 'incident_postmortem.' + op, live)) return
     }
 
+    
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set STATUSPAGE_TEST_INCIDENT_POSTMORTEM_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":[{"active":true,"name":"id","req":false,"type":"`$STRING`","index$":0}],"id":{"field":"id","name":"id"},"name":"incident_postmortem","op":{"remove":{"input":"data","name":"remove","points":[{"active":true,"args":{"params":[{"active":true,"kind":"param","name":"id","orig":"incident_id","reqd":true,"type":"`$STRING`","index$":0},{"active":true,"kind":"param","name":"page_id","orig":"page_id","reqd":true,"type":"`$STRING`","index$":1}]},"contract":{"id":"DELETE /pages/{page_id}/incidents/{incident_id}/postmortem","json":"{\"operationId\":\"deletePagesPageIdIncidentsIncidentIdPostmortem\",\"parameters\":[{\"description\":\"Page identifier\",\"in\":\"path\",\"name\":\"page_id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Incident Identifier\",\"in\":\"path\",\"name\":\"incident_id\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"204\":{\"description\":\"Delete Postmortem\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"description\":\"Get a list of users\",\"properties\":{\"message\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Could not authenticate\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"description\":\"Get a list of users\",\"properties\":{\"message\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"The requested resource could not be found.\"}},\"security\":[{\"api_key\":[]}],\"securitySchemes\":{\"api_key\":{\"description\":\"#### Obtaining your API Key\\n\\nAuthentication is done via an API token provided in the Statuspage management interface.\\n\\n  1. Log in to your account at https://manage.statuspage.io/login.\\n  2. Click on your avatar in the bottom left of your screen to access the user menu.\\n  3. Click **API info**.\\n\\n### Passing your API key in an authorization header\\n\\nThe following example authenticates you with the Statuspage API.  Along with the Page ID\\nlisted on the API page, we can fetch your page profile.\\n\\n    curl -H \\\"Authorization: OAuth 89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\\\" \\\\\\n      https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json\\n\\n### Passing your API key in a query param\\n\\n    curl \\\"https://api.statuspage.io/v1/pages/gytm4qzbx9t6.json?api_key=89a229ce1a8dbcf9ff30430fbe35eb4c0426574bca932061892cefd2138aa4b1\\\"\\n\",\"in\":\"header\",\"name\":\"Authorization\",\"type\":\"apiKey\"}},\"securitySource\":\"definition\"}","source":"openapi3","version":1},"kind":"http","method":"DELETE","orig":"/pages/{page_id}/incidents/{incident_id}/postmortem","rename":{"param":{"incident_id":"id"}},"segments":[{"lit":"pages"},{"var":"page_id"},{"lit":"incidents"},{"var":"id"},{"lit":"postmortem"}],"select":{"exist":["id","page_id"]},"transform":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"remove"}},"relations":{"ancestors":[["page"]]},"key$":"incident_postmortem","name__orig":"incident_postmortem","Name":"IncidentPostmortem","name_":"incident_postmortem","name-":"incident-postmortem","NAME":"INCIDENT_POSTMORTEM","index$":4}, {"active":true,"entity":"incident_postmortem","key$":"BasicIncidentPostmortemFlow","kind":"basic","name":"BasicIncidentPostmortemFlow","param":{},"step":[]}, 'IncidentPostmortem')
     }
     const client = setup.client
     const struct = setup.struct
@@ -102,13 +101,6 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['STATUSPAGE_TEST_INCIDENT_POSTMORTEM_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     'STATUSPAGE_TEST_INCIDENT_POSTMORTEM_ENTID': idmap,
     'STATUSPAGE_TEST_LIVE': 'FALSE',
@@ -120,7 +112,13 @@ function basicSetup(extra?: any) {
 
   const live = 'TRUE' === env.STATUSPAGE_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['STATUSPAGE_TEST_INCIDENT_POSTMORTEM_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new StatuspageSDK(merge([
       // FIRST, so the generated fields below win: sdk-test-control.json's
       // test.client.options adds to the live client, it does not redirect it.
@@ -133,7 +131,8 @@ function basicSetup(extra?: any) {
       // argument at all - so a bare 'extra' silently discarded the apikey
       // and server values above and handed the SDK undefined. Harmless
       // while there was nothing in that object; not harmless now.
-      extra || {}
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -146,7 +145,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.STATUSPAGE_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 

@@ -8,15 +8,139 @@ local function make_config()
     main = {
       name = "Statuspage",
       slug = "statuspage",
-      version = "0.1.1",
+      version = "0.0.2",
       target = "lua",
     },
     feature = {
+      ["debug"] = {
+        ["options"] = {
+          ["active"] = false,
+          ["max"] = 100,
+          ["redact"] = {
+            "authorization",
+            "cookie",
+            "set-cookie",
+            "api-key",
+            "apikey",
+            "x-api-key",
+            "idempotency-key",
+          },
+        },
+        ["optspec"] = {
+          ["now"] = "`$FUNCTION`",
+          ["onEntry"] = "`$FUNCTION`",
+        },
+        ["strict"] = false,
+        ["transport"] = "none",
+      },
+      ["idempotency"] = {
+        ["options"] = {
+          ["active"] = false,
+          ["header"] = "Idempotency-Key",
+          ["methods"] = {
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE",
+          },
+          ["ops"] = {
+            "create",
+            "update",
+            "remove",
+          },
+        },
+        ["optspec"] = {
+          ["keygen"] = "`$FUNCTION`",
+        },
+        ["strict"] = false,
+        ["transport"] = "none",
+      },
+      ["metrics"] = {
+        ["options"] = {
+          ["active"] = false,
+        },
+        ["optspec"] = {
+          ["now"] = "`$FUNCTION`",
+        },
+        ["strict"] = false,
+        ["transport"] = "none",
+      },
+      ["paging"] = {
+        ["options"] = {
+          ["active"] = false,
+          ["afterVar"] = "after",
+          ["cursorParam"] = "cursor",
+          ["firstVar"] = "first",
+          ["limitParam"] = "limit",
+          ["pageParam"] = "page",
+          ["startPage"] = 1,
+        },
+        ["optspec"] = {
+          ["limit"] = "`$NUMBER`",
+          ["ops"] = "`$LIST`",
+        },
+        ["strict"] = false,
+        ["transport"] = "none",
+      },
+      ["ratelimit"] = {
+        ["options"] = {
+          ["active"] = false,
+          ["burst"] = 5,
+          ["rate"] = 5,
+        },
+        ["optspec"] = {
+          ["now"] = "`$FUNCTION`",
+          ["sleep"] = "`$FUNCTION`",
+        },
+        ["strict"] = false,
+        ["transport"] = "wrap",
+      },
+      ["retry"] = {
+        ["options"] = {
+          ["active"] = false,
+          ["factor"] = 2,
+          ["maxDelay"] = 2000,
+          ["minDelay"] = 50,
+          ["retries"] = 2,
+          ["statuses"] = {
+            408,
+            425,
+            429,
+            500,
+            502,
+            503,
+            504,
+          },
+        },
+        ["optspec"] = {
+          ["jitter"] = "`$BOOLEAN`",
+          ["sleep"] = "`$FUNCTION`",
+        },
+        ["strict"] = false,
+        ["transport"] = "wrap",
+      },
       ["test"] = {
         ["options"] = {
           ["active"] = false,
         },
+        ["optspec"] = {
+          ["entity"] = "`$MAP`",
+          ["net"] = "`$MAP`",
+        },
+        ["strict"] = false,
         ["transport"] = "base",
+      },
+      ["timeout"] = {
+        ["options"] = {
+          ["active"] = false,
+          ["ms"] = 30000,
+        },
+        ["optspec"] = {
+          ["clearTimer"] = "`$FUNCTION`",
+          ["setTimer"] = "`$FUNCTION`",
+        },
+        ["strict"] = false,
+        ["transport"] = "wrap",
       },
     },
     options = {
@@ -82,7 +206,7 @@ local function make_config()
           },
           {
             ["name"] = "id",
-            ["short"] = "Incident identifier",
+            ["short"] = "Identifier for component",
             ["type"] = "`$STRING`",
           },
           {
@@ -2982,12 +3106,6 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
-            ["name"] = "data",
-            ["req"] = true,
-            ["short"] = "Add data points to metrics",
-            ["type"] = "`$OBJECT`",
-          },
-          {
             ["format"] = "int32",
             ["name"] = "decimal_places",
             ["type"] = "`$INTEGER`",
@@ -4617,13 +4735,6 @@ local function make_config()
         ["fields"] = {
           {
             ["name"] = "component_ids",
-            ["op"] = {
-              ["create"] = {
-                ["req"] = true,
-                ["type"] = "`$ARRAY`",
-              },
-            },
-            ["short"] = "List of components codes to set on the page access group",
             ["type"] = "`$ARRAY`",
           },
           {
@@ -5399,12 +5510,6 @@ local function make_config()
       ["page_access_user"] = {
         ["fields"] = {
           {
-            ["name"] = "component_ids",
-            ["req"] = true,
-            ["short"] = "List of component codes to allow access to",
-            ["type"] = "`$ARRAY`",
-          },
-          {
             ["format"] = "date-time",
             ["name"] = "created_at",
             ["type"] = "`$STRING`",
@@ -5422,12 +5527,6 @@ local function make_config()
             ["name"] = "id",
             ["short"] = "Page Access User Identifier",
             ["type"] = "`$STRING`",
-          },
-          {
-            ["name"] = "metric_ids",
-            ["req"] = true,
-            ["short"] = "List of metrics to add",
-            ["type"] = "`$ARRAY`",
           },
           {
             ["name"] = "page_access_group_id",
@@ -6715,11 +6814,6 @@ local function make_config()
           },
           {
             ["name"] = "postmortem",
-            ["op"] = {
-              ["update"] = {
-                ["type"] = "`$OBJECT`",
-              },
-            },
             ["req"] = true,
             ["type"] = "`$OBJECT`",
           },
@@ -7221,7 +7315,6 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
           {
-            ["format"] = "int32",
             ["name"] = "email",
             ["short"] = "The email address to use to contact the subscriber.",
             ["type"] = "`$STRING`",
@@ -7235,12 +7328,6 @@ local function make_config()
             ["name"] = "id",
             ["short"] = "Subscriber Identifier",
             ["type"] = "`$STRING`",
-          },
-          {
-            ["format"] = "int32",
-            ["name"] = "integration_partner",
-            ["short"] = "The number of integration partners found by the query.",
-            ["type"] = "`$INTEGER`",
           },
           {
             ["name"] = "mode",
@@ -7285,53 +7372,8 @@ local function make_config()
             ["type"] = "`$BOOLEAN`",
           },
           {
-            ["name"] = "skip_unsubscription_notification",
-            ["short"] = "If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed.",
-            ["type"] = "`$BOOLEAN`",
-          },
-          {
-            ["format"] = "int32",
-            ["name"] = "slack",
-            ["short"] = "The number of Slack subscribers found by the query.",
-            ["type"] = "`$INTEGER`",
-          },
-          {
-            ["format"] = "int32",
-            ["name"] = "sms",
-            ["short"] = "The number of Webhook subscribers found by the query.",
-            ["type"] = "`$INTEGER`",
-          },
-          {
-            ["name"] = "state",
-            ["short"] = "If this is present, only unsubscribe subscribers in this state.",
-            ["type"] = "`$STRING`",
-          },
-          {
             ["name"] = "subscriber",
             ["type"] = "`$OBJECT`",
-          },
-          {
-            ["name"] = "subscribers",
-            ["req"] = true,
-            ["short"] = "The array of quarantined subscriber codes to reactivate, or \"all\" to reactivate all quarantined subscribers.",
-            ["type"] = "`$STRING`",
-          },
-          {
-            ["format"] = "int32",
-            ["name"] = "teams",
-            ["short"] = "The number of MS teams subscribers found by the query.",
-            ["type"] = "`$INTEGER`",
-          },
-          {
-            ["name"] = "type",
-            ["short"] = "If this is present, only reactivate subscribers of this type.",
-            ["type"] = "`$STRING`",
-          },
-          {
-            ["format"] = "int32",
-            ["name"] = "webhook",
-            ["short"] = "The number of SMS subscribers found by the query.",
-            ["type"] = "`$INTEGER`",
           },
           {
             ["name"] = "workspace_name",

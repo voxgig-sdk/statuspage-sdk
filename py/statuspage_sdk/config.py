@@ -37,15 +37,139 @@ def make_config():
         "main": {
             "name": "Statuspage",
             "slug": "statuspage",
-            "version": "0.1.1",
+            "version": "0.0.2",
             "target": "py",
         },
         "feature": {
+            "debug": {
+        "options": {
+          "active": False,
+          "max": 100,
+          "redact": [
+            "authorization",
+            "cookie",
+            "set-cookie",
+            "api-key",
+            "apikey",
+            "x-api-key",
+            "idempotency-key",
+          ],
+        },
+        "optspec": {
+          "now": "`$FUNCTION`",
+          "onEntry": "`$FUNCTION`",
+        },
+        "strict": False,
+        "transport": "none",
+      },
+            "idempotency": {
+        "options": {
+          "active": False,
+          "header": "Idempotency-Key",
+          "methods": [
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE",
+          ],
+          "ops": [
+            "create",
+            "update",
+            "remove",
+          ],
+        },
+        "optspec": {
+          "keygen": "`$FUNCTION`",
+        },
+        "strict": False,
+        "transport": "none",
+      },
+            "metrics": {
+        "options": {
+          "active": False,
+        },
+        "optspec": {
+          "now": "`$FUNCTION`",
+        },
+        "strict": False,
+        "transport": "none",
+      },
+            "paging": {
+        "options": {
+          "active": False,
+          "afterVar": "after",
+          "cursorParam": "cursor",
+          "firstVar": "first",
+          "limitParam": "limit",
+          "pageParam": "page",
+          "startPage": 1,
+        },
+        "optspec": {
+          "limit": "`$NUMBER`",
+          "ops": "`$LIST`",
+        },
+        "strict": False,
+        "transport": "none",
+      },
+            "ratelimit": {
+        "options": {
+          "active": False,
+          "burst": 5,
+          "rate": 5,
+        },
+        "optspec": {
+          "now": "`$FUNCTION`",
+          "sleep": "`$FUNCTION`",
+        },
+        "strict": False,
+        "transport": "wrap",
+      },
+            "retry": {
+        "options": {
+          "active": False,
+          "factor": 2,
+          "maxDelay": 2000,
+          "minDelay": 50,
+          "retries": 2,
+          "statuses": [
+            408,
+            425,
+            429,
+            500,
+            502,
+            503,
+            504,
+          ],
+        },
+        "optspec": {
+          "jitter": "`$BOOLEAN`",
+          "sleep": "`$FUNCTION`",
+        },
+        "strict": False,
+        "transport": "wrap",
+      },
             "test": {
         "options": {
           "active": False,
         },
+        "optspec": {
+          "entity": "`$MAP`",
+          "net": "`$MAP`",
+        },
+        "strict": False,
         "transport": "base",
+      },
+            "timeout": {
+        "options": {
+          "active": False,
+          "ms": 30000,
+        },
+        "optspec": {
+          "clearTimer": "`$FUNCTION`",
+          "setTimer": "`$FUNCTION`",
+        },
+        "strict": False,
+        "transport": "wrap",
       },
         },
         "options": {
@@ -111,7 +235,7 @@ def make_config():
           },
           {
             "name": "id",
-            "short": "Incident identifier",
+            "short": "Identifier for component",
             "type": "`$STRING`",
           },
           {
@@ -3011,12 +3135,6 @@ def make_config():
             "type": "`$STRING`",
           },
           {
-            "name": "data",
-            "req": True,
-            "short": "Add data points to metrics",
-            "type": "`$OBJECT`",
-          },
-          {
             "format": "int32",
             "name": "decimal_places",
             "type": "`$INTEGER`",
@@ -4646,13 +4764,6 @@ def make_config():
         "fields": [
           {
             "name": "component_ids",
-            "op": {
-              "create": {
-                "req": True,
-                "type": "`$ARRAY`",
-              },
-            },
-            "short": "List of components codes to set on the page access group",
             "type": "`$ARRAY`",
           },
           {
@@ -5428,12 +5539,6 @@ def make_config():
       "page_access_user": {
         "fields": [
           {
-            "name": "component_ids",
-            "req": True,
-            "short": "List of component codes to allow access to",
-            "type": "`$ARRAY`",
-          },
-          {
             "format": "date-time",
             "name": "created_at",
             "type": "`$STRING`",
@@ -5451,12 +5556,6 @@ def make_config():
             "name": "id",
             "short": "Page Access User Identifier",
             "type": "`$STRING`",
-          },
-          {
-            "name": "metric_ids",
-            "req": True,
-            "short": "List of metrics to add",
-            "type": "`$ARRAY`",
           },
           {
             "name": "page_access_group_id",
@@ -6744,11 +6843,6 @@ def make_config():
           },
           {
             "name": "postmortem",
-            "op": {
-              "update": {
-                "type": "`$OBJECT`",
-              },
-            },
             "req": True,
             "type": "`$OBJECT`",
           },
@@ -7250,7 +7344,6 @@ def make_config():
             "type": "`$STRING`",
           },
           {
-            "format": "int32",
             "name": "email",
             "short": "The email address to use to contact the subscriber.",
             "type": "`$STRING`",
@@ -7264,12 +7357,6 @@ def make_config():
             "name": "id",
             "short": "Subscriber Identifier",
             "type": "`$STRING`",
-          },
-          {
-            "format": "int32",
-            "name": "integration_partner",
-            "short": "The number of integration partners found by the query.",
-            "type": "`$INTEGER`",
           },
           {
             "name": "mode",
@@ -7314,53 +7401,8 @@ def make_config():
             "type": "`$BOOLEAN`",
           },
           {
-            "name": "skip_unsubscription_notification",
-            "short": "If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed.",
-            "type": "`$BOOLEAN`",
-          },
-          {
-            "format": "int32",
-            "name": "slack",
-            "short": "The number of Slack subscribers found by the query.",
-            "type": "`$INTEGER`",
-          },
-          {
-            "format": "int32",
-            "name": "sms",
-            "short": "The number of Webhook subscribers found by the query.",
-            "type": "`$INTEGER`",
-          },
-          {
-            "name": "state",
-            "short": "If this is present, only unsubscribe subscribers in this state.",
-            "type": "`$STRING`",
-          },
-          {
             "name": "subscriber",
             "type": "`$OBJECT`",
-          },
-          {
-            "name": "subscribers",
-            "req": True,
-            "short": "The array of quarantined subscriber codes to reactivate, or \"all\" to reactivate all quarantined subscribers.",
-            "type": "`$STRING`",
-          },
-          {
-            "format": "int32",
-            "name": "teams",
-            "short": "The number of MS teams subscribers found by the query.",
-            "type": "`$INTEGER`",
-          },
-          {
-            "name": "type",
-            "short": "If this is present, only reactivate subscribers of this type.",
-            "type": "`$STRING`",
-          },
-          {
-            "format": "int32",
-            "name": "webhook",
-            "short": "The number of SMS subscribers found by the query.",
-            "type": "`$INTEGER`",
           },
           {
             "name": "workspace_name",

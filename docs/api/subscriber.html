@@ -1,0 +1,2823 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Subscriber | Statuspage API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">Statuspage API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/statuspage-sdk">voxgig-sdk/statuspage-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">Statuspage API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/component.html">Component</a>
+<a href="../api/component_group_uptime.html">ComponentGroupUptime</a>
+<a href="../api/group_component.html">GroupComponent</a>
+<a href="../api/incident.html">Incident</a>
+<a href="../api/incident_postmortem.html">IncidentPostmortem</a>
+<a href="../api/incident_subscriber.html">IncidentSubscriber</a>
+<a href="../api/incident_template.html">IncidentTemplate</a>
+<a href="../api/incident_update.html">IncidentUpdate</a>
+<a href="../api/metric.html">Metric</a>
+<a href="../api/metrics_provider.html">MetricsProvider</a>
+<a href="../api/page.html">Page</a>
+<a href="../api/page_access_group.html">PageAccessGroup</a>
+<a href="../api/page_access_user.html">PageAccessUser</a>
+<a href="../api/permission.html">Permission</a>
+<a href="../api/postmortem.html">Postmortem</a>
+<a href="../api/status_embed_config.html">StatusEmbedConfig</a>
+<a aria-current="page" href="../api/subscriber.html">Subscriber</a><div class="nav-sections"><a class="nav-section" href="#post-pagespage_idsubscriberssubscriber_idresend_confirmation">POST /pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation</a>
+<a class="nav-section" href="#post-pagespage_idincidentsincident_idsubscribers">POST /pages/{page_id}/incidents/{incident_id}/subscribers</a>
+<a class="nav-section" href="#post-pagespage_idsubscribers">POST /pages/{page_id}/subscribers</a>
+<a class="nav-section" href="#post-pagespage_idsubscribersreactivate">POST /pages/{page_id}/subscribers/reactivate</a>
+<a class="nav-section" href="#post-pagespage_idsubscribersresend_confirmation">POST /pages/{page_id}/subscribers/resend_confirmation</a>
+<a class="nav-section" href="#post-pagespage_idsubscribersunsubscribe">POST /pages/{page_id}/subscribers/unsubscribe</a>
+<a class="nav-section" href="#get-pagespage_idsubscribers">GET /pages/{page_id}/subscribers</a>
+<a class="nav-section" href="#get-pagespage_idincidentsincident_idsubscribers">GET /pages/{page_id}/incidents/{incident_id}/subscribers</a>
+<a class="nav-section" href="#get-pagespage_idsubscribersunsubscribed">GET /pages/{page_id}/subscribers/unsubscribed</a>
+<a class="nav-section" href="#get-pagespage_idincidentsincident_idsubscriberssubscriber_id">GET /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}</a>
+<a class="nav-section" href="#get-pagespage_idsubscriberscount">GET /pages/{page_id}/subscribers/count</a>
+<a class="nav-section" href="#get-pagespage_idsubscriberssubscriber_id">GET /pages/{page_id}/subscribers/{subscriber_id}</a>
+<a class="nav-section" href="#get-pagespage_idsubscribershistogram_by_state">GET /pages/{page_id}/subscribers/histogram_by_state</a>
+<a class="nav-section" href="#delete-pagespage_idincidentsincident_idsubscriberssubscriber_id">DELETE /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}</a>
+<a class="nav-section" href="#delete-pagespage_idsubscriberssubscriber_id">DELETE /pages/{page_id}/subscribers/{subscriber_id}</a>
+<a class="nav-section" href="#patch-pagespage_idsubscriberssubscriber_id">PATCH /pages/{page_id}/subscribers/{subscriber_id}</a></div>
+<a href="../api/user.html">User</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/go.html">Golang</a>
+<a href="../sdks/lua.html">Lua</a>
+<a href="../sdks/php.html">PHP</a>
+<a href="../sdks/py.html">Python</a>
+<a href="../sdks/rb.html">Ruby</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
+<a href="../tools/go-mcp.html">Go MCP server</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="subscriber">Subscriber</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idsubscriberssubscriber_idresend_confirmation"><code>/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation</code></a></td>
+<td><code>create</code></td>
+<td>Resend confirmation to a subscriber</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idincidentsincident_idsubscribers"><code>/pages/{page_id}/incidents/{incident_id}/subscribers</code></a></td>
+<td><code>create</code></td>
+<td>Create an incident subscriber</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idsubscribers"><code>/pages/{page_id}/subscribers</code></a></td>
+<td><code>create</code></td>
+<td>Create a subscriber. Not applicable for Slack subscribers</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idsubscribersreactivate"><code>/pages/{page_id}/subscribers/reactivate</code></a></td>
+<td><code>create</code></td>
+<td>Reactivate a list of quarantined subscribers</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idsubscribersresend_confirmation"><code>/pages/{page_id}/subscribers/resend_confirmation</code></a></td>
+<td><code>create</code></td>
+<td>Resend confirmations to a list of subscribers</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idsubscribersunsubscribe"><code>/pages/{page_id}/subscribers/unsubscribe</code></a></td>
+<td><code>create</code></td>
+<td>Unsubscribe a list of subscribers</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idsubscribers"><code>/pages/{page_id}/subscribers</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of subscribers</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idincidentsincident_idsubscribers"><code>/pages/{page_id}/incidents/{incident_id}/subscribers</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of incident subscribers</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idsubscribersunsubscribed"><code>/pages/{page_id}/subscribers/unsubscribed</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of unsubscribed subscribers</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idincidentsincident_idsubscriberssubscriber_id"><code>/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}</code></a></td>
+<td><code>load</code></td>
+<td>Get an incident subscriber</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idsubscriberscount"><code>/pages/{page_id}/subscribers/count</code></a></td>
+<td><code>load</code></td>
+<td>Get a count of subscribers by type</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idsubscriberssubscriber_id"><code>/pages/{page_id}/subscribers/{subscriber_id}</code></a></td>
+<td><code>load</code></td>
+<td>Get a subscriber</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idsubscribershistogram_by_state"><code>/pages/{page_id}/subscribers/histogram_by_state</code></a></td>
+<td><code>load</code></td>
+<td>Get a histogram of subscribers by type and then state</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-pagespage_idincidentsincident_idsubscriberssubscriber_id"><code>/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}</code></a></td>
+<td><code>remove</code></td>
+<td>Unsubscribe an incident subscriber</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-pagespage_idsubscriberssubscriber_id"><code>/pages/{page_id}/subscribers/{subscriber_id}</code></a></td>
+<td><code>remove</code></td>
+<td>Unsubscribe a subscriber</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><a href="#patch-pagespage_idsubscriberssubscriber_id"><code>/pages/{page_id}/subscribers/{subscriber_id}</code></a></td>
+<td><code>update</code></td>
+<td>Update a subscriber</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>component_ids</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>A list of component ids for which the subscriber should recieve updates for.</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber.</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>purge_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>quarantined_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>subscriber</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create">create</h2>
+<h3 id="post-pagespage_idsubscriberssubscriber_idresend_confirmation" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation</h3>
+<p>Operation ID: <code>postPagesPageIdSubscribersSubscriberIdResendConfirmation</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
+<h4 id="responses">Responses</h4>
+<h5 id="201-resend-confirmation-to-a-subscriber" class="status" data-status="2xx">201: Resend confirmation to a subscriber</h5>
+<h5 id="401-could-not-authenticate" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-pagespage_idincidentsincident_idsubscribers" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/incidents/{incident_id}/subscribers</h3>
+<p>Operation ID: <code>postPagesPageIdIncidentsIncidentIdSubscribers</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |</p>
+<h4 id="request-body">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>subscriber</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>subscriber.email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address for creating Email subscribers.</td>
+</tr>
+<tr>
+<td><code>subscriber.phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country where the phone number is located to use for the new SMS subscriber.</td>
+</tr>
+<tr>
+<td><code>subscriber.phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number (as you would dial from the phone_country) to use for the new SMS subscriber.</td>
+</tr>
+<tr>
+<td><code>subscriber.skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If skip_confirmation_notification is true, the subscriber does not receive any notifications when their subscription changes. Email subscribers will be automatically opted in. This option is only available for paid pages. This option has no effect for trial customers.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-1">Responses</h4>
+<h5 id="201-create-an-incident-subscriber" class="status" data-status="2xx">201: Create an incident subscriber</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="400-bad-request" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-1" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-1" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-pagespage_idsubscribers" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers</h3>
+<p>Operation ID: <code>postPagesPageIdSubscribers</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-2">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
+<h4 id="request-body-1">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>subscriber</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>subscriber.component_ids</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>A list of component ids for which the subscriber should recieve updates for. Components must be an array with at least one element if it is passed at all. Each component must belong to the page indicated in the path.</td>
+</tr>
+<tr>
+<td><code>subscriber.email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address for creating Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>subscriber.endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The endpoint URI for creating Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>subscriber.page_access_user</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The code of the page access user to which the subscriber belongs.</td>
+</tr>
+<tr>
+<td><code>subscriber.phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country where the phone number is located to use for the new SMS subscriber.</td>
+</tr>
+<tr>
+<td><code>subscriber.phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number (as you would dial from the phone_country) to use for the new SMS subscriber.</td>
+</tr>
+<tr>
+<td><code>subscriber.skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If skip_confirmation_notification is true, the subscriber does not receive any notifications when their subscription changes. Email subscribers will be automatically opted in. This option is only available for paid pages. This option has no effect for trial customers.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-2">Responses</h4>
+<h5 id="201-create-a-subscriber-not-applicable-for-slack-subscribers" class="status" data-status="2xx">201: Create a subscriber. Not applicable for Slack subscribers</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="400-bad-request-1" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-2" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-you-are-not-authorized-to-access-this-resource" class="status" data-status="4xx">403: You are not authorized to access this resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-2" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-pagespage_idsubscribersreactivate" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers/reactivate</h3>
+<p>Operation ID: <code>postPagesPageIdSubscribersReactivate</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-3">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
+<h4 id="request-body-2">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>subscribers</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The array of quarantined subscriber codes to reactivate, or &quot;all&quot; to reactivate all quarantined subscribers.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: email, sms, slack, webhook, integration_partner</code></td>
+<td>No</td>
+<td>If this is present, only reactivate subscribers of this type.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-3">Responses</h4>
+<h5 id="201-reactivate-a-list-of-quarantined-subscribers" class="status" data-status="2xx">201: Reactivate a list of quarantined subscribers</h5>
+<h5 id="400-bad-request-2" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-3" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-3" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-1" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-pagespage_idsubscribersresend_confirmation" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers/resend_confirmation</h3>
+<p>Operation ID: <code>postPagesPageIdSubscribersResendConfirmation</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-4">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
+<h4 id="request-body-3">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>subscribers</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The array of subscriber codes to resend confirmations for, or &quot;all&quot; to resend confirmations to all subscribers. Only unconfirmed email subscribers will receive this notification.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-4">Responses</h4>
+<h5 id="201-resend-confirmations-to-a-list-of-subscribers" class="status" data-status="2xx">201: Resend confirmations to a list of subscribers</h5>
+<h5 id="400-bad-request-3" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-4" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-4" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-2" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-pagespage_idsubscribersunsubscribe" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers/unsubscribe</h3>
+<p>Operation ID: <code>postPagesPageIdSubscribersUnsubscribe</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-5">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
+<h4 id="request-body-4">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>skip_unsubscription_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed.</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td><code>enum: active, unconfirmed, quarantined, all</code></td>
+<td>No</td>
+<td>If this is present, only unsubscribe subscribers in this state. Specify state &quot;all&quot; to unsubscribe subscribers in any states.</td>
+</tr>
+<tr>
+<td><code>subscribers</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The array of subscriber codes to unsubscribe (limited to 100), or &quot;all&quot; to unsubscribe all subscribers if the number of subscribers is less than 100.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: email, sms, slack, webhook, teams, integration_partner</code></td>
+<td>No</td>
+<td>If this is present, only unsubscribe subscribers of this type.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-5">Responses</h4>
+<h5 id="201-unsubscribe-a-list-of-subscribers" class="status" data-status="2xx">201: Unsubscribe a list of subscribers</h5>
+<h5 id="400-bad-request-4" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-5" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-5" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-3" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-pagespage_idsubscribers" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers</h3>
+<p>Operation ID: <code>getPagesPageIdSubscribers</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-6">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>q</code> | <code>query</code> | <code>string</code> | No | If this is specified, search the contact information (email, endpoint, or phone number) for the provided value. This parameter doesn’t support searching for Slack subscribers. |
+| <code>type</code> | <code>query</code> | <code>enum: email, sms, webhook, slack, teams, integration_partner</code> | No | If specified, only return subscribers of the indicated type. |
+| <code>state</code> | <code>query</code> | <code>enum: active, unconfirmed, quarantined, all</code> | No | If this is present, only return subscribers in this state. Specify state &quot;all&quot; to find subscribers in any states. |
+| <code>limit</code> | <code>query</code> | <code>integer (int32)</code> | No | The maximum number of rows to return. If a text query string is specified (q=), the default and maximum limit is 100. If the text query string is not specified, the default and maximum limit are not set, and not providing a limit will return all the subscribers. Beginning February 28, 2023, a default limit of 100 will be imposed and this endpoint will return paginated data (that is will no longer return all subscribers) even if this query parameter is not provided. |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | The page offset of subscribers. The first page is page 0, the second page 1, etc. This skips page * limit subscribers. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
+| <code>sort_field</code> | <code>query</code> | <code>enum: primary, created_at, quarantined_at, relevance</code> | No | The field on which to sort: 'primary' to indicate sorting by the identifying field, 'created_at' for sorting by creation timestamp, 'quarantined_at' for sorting by quarantine timestamp, and 'relevance' which sorts by the relevancy of the search text. 'relevance' is not a valid parameter if no search text is supplied. |
+| <code>sort_direction</code> | <code>query</code> | <code>enum: asc, desc</code> | No | The sort direction of the listing. |</p>
+<h4 id="responses-6">Responses</h4>
+<h5 id="200-get-a-list-of-subscribers" class="status" data-status="2xx">200: Get a list of subscribers</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>[].endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>[].mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>[].obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>[].page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>[].phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>[].phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>[].purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>[].quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>[].skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>[].workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="400-bad-request-5" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-6" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-you-are-not-authorized-to-access-this-resource-1" class="status" data-status="4xx">403: You are not authorized to access this resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-6" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-4" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idincidentsincident_idsubscribers" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents/{incident_id}/subscribers</h3>
+<p>Operation ID: <code>getPagesPageIdIncidentsIncidentIdSubscribers</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-7">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
+<h4 id="responses-7">Responses</h4>
+<h5 id="200-get-a-list-of-incident-subscribers" class="status" data-status="2xx">200: Get a list of incident subscribers</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>[].endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>[].mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>[].obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>[].page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>[].phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>[].phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>[].purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>[].quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>[].skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>[].workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-7" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-7" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idsubscribersunsubscribed" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers/unsubscribed</h3>
+<p>Operation ID: <code>getPagesPageIdSubscribersUnsubscribed</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-8">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
+<h4 id="responses-8">Responses</h4>
+<h5 id="200-get-a-list-of-unsubscribed-subscribers" class="status" data-status="2xx">200: Get a list of unsubscribed subscribers</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>[].endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>[].mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>[].obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>[].page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>[].phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>[].phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>[].purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>[].quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>[].skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>[].workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-8" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-8" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="load">load</h2>
+<h3 id="get-pagespage_idincidentsincident_idsubscriberssubscriber_id" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}</h3>
+<p>Operation ID: <code>getPagesPageIdIncidentsIncidentIdSubscribersSubscriberId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-9">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |
+| <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
+<h4 id="responses-9">Responses</h4>
+<h5 id="200-get-an-incident-subscriber" class="status" data-status="2xx">200: Get an incident subscriber</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idsubscriberscount" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers/count</h3>
+<p>Operation ID: <code>getPagesPageIdSubscribersCount</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-10">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>type</code> | <code>query</code> | <code>enum: email, sms, slack, webhook, teams, integration_partner</code> | No | If this is present, only count subscribers of this type. |
+| <code>state</code> | <code>query</code> | <code>enum: active, unconfirmed, quarantined, all</code> | No | If this is present, only count subscribers in this state. Specify state &quot;all&quot; to count subscribers in any states. |</p>
+<h4 id="responses-10">Responses</h4>
+<h5 id="200-get-a-count-of-subscribers-by-type" class="status" data-status="2xx">200: Get a count of subscribers by type</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>email</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of Email subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>integration_partner</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of integration partners found by the query.</td>
+</tr>
+<tr>
+<td><code>slack</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of Slack subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>sms</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of Webhook subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>teams</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of MS teams subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>webhook</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of SMS subscribers found by the query.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="400-bad-request-6" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-9" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-9" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idsubscriberssubscriber_id" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers/{subscriber_id}</h3>
+<p>Operation ID: <code>getPagesPageIdSubscribersSubscriberId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-11">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
+<h4 id="responses-11">Responses</h4>
+<h5 id="200-get-a-subscriber" class="status" data-status="2xx">200: Get a subscriber</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-10" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-10" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idsubscribershistogram_by_state" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers/histogram_by_state</h3>
+<p>Operation ID: <code>getPagesPageIdSubscribersHistogramByState</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-12">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
+<h4 id="responses-12">Responses</h4>
+<h5 id="200-get-a-histogram-of-subscribers-by-type-and-then-state" class="status" data-status="2xx">200: Get a histogram of subscribers by type and then state</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>email</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>email.active</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of active subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>email.quarantined</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of quarantined subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>email.total</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The total number of subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>email.unconfirmed</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of unconfirmed subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>integration_partner</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>integration_partner.active</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of active subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>integration_partner.quarantined</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of quarantined subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>integration_partner.total</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The total number of subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>integration_partner.unconfirmed</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of unconfirmed subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>slack</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>slack.active</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of active subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>slack.quarantined</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of quarantined subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>slack.total</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The total number of subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>slack.unconfirmed</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of unconfirmed subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>sms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>sms.active</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of active subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>sms.quarantined</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of quarantined subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>sms.total</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The total number of subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>sms.unconfirmed</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of unconfirmed subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>teams</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>teams.active</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of active subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>teams.quarantined</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of quarantined subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>teams.total</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The total number of subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>teams.unconfirmed</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of unconfirmed subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>webhook</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>webhook.active</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of active subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>webhook.quarantined</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of quarantined subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>webhook.total</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The total number of subscribers found by the query.</td>
+</tr>
+<tr>
+<td><code>webhook.unconfirmed</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The number of unconfirmed subscribers found by the query.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-11" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-11" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-5" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="remove">remove</h2>
+<h3 id="delete-pagespage_idincidentsincident_idsubscriberssubscriber_id" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}</h3>
+<p>Operation ID: <code>deletePagesPageIdIncidentsIncidentIdSubscribersSubscriberId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-13">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |
+| <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
+<h4 id="responses-13">Responses</h4>
+<h5 id="200-unsubscribe-an-incident-subscriber" class="status" data-status="2xx">200: Unsubscribe an incident subscriber</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="delete-pagespage_idsubscriberssubscriber_id" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/subscribers/{subscriber_id}</h3>
+<p>Operation ID: <code>deletePagesPageIdSubscribersSubscriberId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-14">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |
+| <code>skip_unsubscription_notification</code> | <code>query</code> | <code>boolean</code> | No | If skip_unsubscription_notification is true, the subscriber does not receive any notifications when they are unsubscribed. |</p>
+<h4 id="responses-14">Responses</h4>
+<h5 id="200-unsubscribe-a-subscriber" class="status" data-status="2xx">200: Unsubscribe a subscriber</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-12" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-12" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="update">update</h2>
+<h3 id="patch-pagespage_idsubscriberssubscriber_id" class="operation" data-method="patch"><code>PATCH</code> /pages/{page_id}/subscribers/{subscriber_id}</h3>
+<p>Operation ID: <code>patchPagesPageIdSubscribersSubscriberId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-15">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
+<h4 id="request-body-5">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>component_ids</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>A list of component ids for which the subscriber should recieve updates for. Components must be an array with at least one element if it is passed at all. Each component must belong to the page indicated in the path. To set the subscriber to be subscribed to all components on the page, exclude this parameter.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-15">Responses</h4>
+<h5 id="200-update-a-subscriber" class="status" data-status="2xx">200: Update a subscriber</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>components</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The components for which the subscriber has elected to receive updates.</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display_phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The email address to use to contact the subscriber. Used for Email and Webhook subscribers.</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The URL where a webhook subscriber elects to receive updates.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subscriber Identifier</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The communication mode of the subscriber.</td>
+</tr>
+<tr>
+<td><code>obfuscated_channel_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Obfuscated slack channel name</td>
+</tr>
+<tr>
+<td><code>page_access_user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Page Access user this subscriber belongs to (only for audience-specific pages).</td>
+</tr>
+<tr>
+<td><code>phone_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The two-character country code representing the country of which the phone_number is a part.</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The phone number used to contact an SMS subscriber</td>
+</tr>
+<tr>
+<td><code>purge_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when a quarantined subscriber will be purged (unsubscribed).</td>
+</tr>
+<tr>
+<td><code>quarantined_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the subscriber was quarantined due to an issue reaching them.</td>
+</tr>
+<tr>
+<td><code>skip_confirmation_notification</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>If this is true, do not notify the user with changes to their subscription.</td>
+</tr>
+<tr>
+<td><code>workspace_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The workspace name of the slack subscriber.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-13" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-13" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-6" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

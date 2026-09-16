@@ -1,0 +1,2383 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Component | Statuspage API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">Statuspage API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/statuspage-sdk">voxgig-sdk/statuspage-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">Statuspage API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a aria-current="page" href="../api/component.html">Component</a><div class="nav-sections"><a class="nav-section" href="#post-pagespage_idcomponentscomponent_idpage_access_groups">POST /pages/{page_id}/components/{component_id}/page_access_groups</a>
+<a class="nav-section" href="#post-pagespage_idcomponentscomponent_idpage_access_users">POST /pages/{page_id}/components/{component_id}/page_access_users</a>
+<a class="nav-section" href="#post-pagespage_idcomponents">POST /pages/{page_id}/components</a>
+<a class="nav-section" href="#get-pagespage_idpage_access_groupspage_access_group_idcomponents">GET /pages/{page_id}/page_access_groups/{page_access_group_id}/components</a>
+<a class="nav-section" href="#get-pagespage_idpage_access_userspage_access_user_idcomponents">GET /pages/{page_id}/page_access_users/{page_access_user_id}/components</a>
+<a class="nav-section" href="#get-pagespage_idcomponents">GET /pages/{page_id}/components</a>
+<a class="nav-section" href="#get-pagespage_idcomponentscomponent_iduptime">GET /pages/{page_id}/components/{component_id}/uptime</a>
+<a class="nav-section" href="#get-pagespage_idcomponentscomponent_id">GET /pages/{page_id}/components/{component_id}</a>
+<a class="nav-section" href="#patch-pagespage_idcomponentscomponent_id">PATCH /pages/{page_id}/components/{component_id}</a>
+<a class="nav-section" href="#delete-pagespage_idcomponentscomponent_id">DELETE /pages/{page_id}/components/{component_id}</a>
+<a class="nav-section" href="#delete-pagespage_idcomponentscomponent_idpage_access_groups">DELETE /pages/{page_id}/components/{component_id}/page_access_groups</a>
+<a class="nav-section" href="#delete-pagespage_idcomponentscomponent_idpage_access_users">DELETE /pages/{page_id}/components/{component_id}/page_access_users</a>
+<a class="nav-section" href="#put-pagespage_idcomponentscomponent_id">PUT /pages/{page_id}/components/{component_id}</a></div>
+<a href="../api/component_group_uptime.html">ComponentGroupUptime</a>
+<a href="../api/group_component.html">GroupComponent</a>
+<a href="../api/incident.html">Incident</a>
+<a href="../api/incident_postmortem.html">IncidentPostmortem</a>
+<a href="../api/incident_subscriber.html">IncidentSubscriber</a>
+<a href="../api/incident_template.html">IncidentTemplate</a>
+<a href="../api/incident_update.html">IncidentUpdate</a>
+<a href="../api/metric.html">Metric</a>
+<a href="../api/metrics_provider.html">MetricsProvider</a>
+<a href="../api/page.html">Page</a>
+<a href="../api/page_access_group.html">PageAccessGroup</a>
+<a href="../api/page_access_user.html">PageAccessUser</a>
+<a href="../api/permission.html">Permission</a>
+<a href="../api/postmortem.html">Postmortem</a>
+<a href="../api/status_embed_config.html">StatusEmbedConfig</a>
+<a href="../api/subscriber.html">Subscriber</a>
+<a href="../api/user.html">User</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/go.html">Golang</a>
+<a href="../sdks/lua.html">Lua</a>
+<a href="../sdks/php.html">PHP</a>
+<a href="../sdks/py.html">Python</a>
+<a href="../sdks/rb.html">Ruby</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
+<a href="../tools/go-mcp.html">Go MCP server</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="component">Component</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idcomponentscomponent_idpage_access_groups"><code>/pages/{page_id}/components/{component_id}/page_access_groups</code></a></td>
+<td><code>create</code></td>
+<td>Add page access groups to a component</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idcomponentscomponent_idpage_access_users"><code>/pages/{page_id}/components/{component_id}/page_access_users</code></a></td>
+<td><code>create</code></td>
+<td>Add page access users to a component</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idcomponents"><code>/pages/{page_id}/components</code></a></td>
+<td><code>create</code></td>
+<td>Create a component</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idpage_access_groupspage_access_group_idcomponents"><code>/pages/{page_id}/page_access_groups/{page_access_group_id}/components</code></a></td>
+<td><code>list</code></td>
+<td>List components for a page access group</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idpage_access_userspage_access_user_idcomponents"><code>/pages/{page_id}/page_access_users/{page_access_user_id}/components</code></a></td>
+<td><code>list</code></td>
+<td>Get components for page access user</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idcomponents"><code>/pages/{page_id}/components</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of components</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idcomponentscomponent_iduptime"><code>/pages/{page_id}/components/{component_id}/uptime</code></a></td>
+<td><code>load</code></td>
+<td>Get uptime data for a component that has uptime showcase enabled</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idcomponentscomponent_id"><code>/pages/{page_id}/components/{component_id}</code></a></td>
+<td><code>load</code></td>
+<td>Get a component</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><a href="#patch-pagespage_idcomponentscomponent_id"><code>/pages/{page_id}/components/{component_id}</code></a></td>
+<td><code>patch</code></td>
+<td>Update a component</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-pagespage_idcomponentscomponent_id"><code>/pages/{page_id}/components/{component_id}</code></a></td>
+<td><code>remove</code></td>
+<td>Delete a component</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-pagespage_idcomponentscomponent_idpage_access_groups"><code>/pages/{page_id}/components/{component_id}/page_access_groups</code></a></td>
+<td><code>remove</code></td>
+<td>Remove page access groups from a component</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-pagespage_idcomponentscomponent_idpage_access_users"><code>/pages/{page_id}/components/{component_id}/page_access_users</code></a></td>
+<td><code>remove</code></td>
+<td>Remove page access users from component</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><a href="#put-pagespage_idcomponentscomponent_id"><code>/pages/{page_id}/components/{component_id}</code></a></td>
+<td><code>update</code></td>
+<td>Update a component</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>component</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="create">create</h2>
+<h3 id="post-pagespage_idcomponentscomponent_idpage_access_groups" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/components/{component_id}/page_access_groups</h3>
+<p>Operation ID: <code>postPagesPageIdComponentsComponentIdPageAccessGroups</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>component_id</code> | <code>path</code> | <code>string</code> | Yes | Component identifier |</p>
+<h4 id="responses">Responses</h4>
+<h5 id="201-add-page-access-groups-to-a-component" class="status" data-status="2xx">201: Add page access groups to a component</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-pagespage_idcomponentscomponent_idpage_access_users" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/components/{component_id}/page_access_users</h3>
+<p>Operation ID: <code>postPagesPageIdComponentsComponentIdPageAccessUsers</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>component_id</code> | <code>path</code> | <code>string</code> | Yes | Component identifier |</p>
+<h4 id="request-body">Request body</h4>
+<p><code>application/x-www-form-urlencoded</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>page_access_user_ids</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>List of page access users to add to component</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-1">Responses</h4>
+<h5 id="201-add-page-access-users-to-a-component" class="status" data-status="2xx">201: Add page access users to a component</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-1" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-1" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-1" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-pagespage_idcomponents" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/components</h3>
+<p>Operation ID: <code>postPagesPageIdComponents</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-2">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
+<h4 id="request-body-1">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>component</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>component.description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>component.group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>component.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>component.only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>component.showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>component.start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>component.status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-2">Responses</h4>
+<h5 id="201-create-a-component" class="status" data-status="2xx">201: Create a component</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-2" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-2" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-pagespage_idpage_access_groupspage_access_group_idcomponents" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/page_access_groups/{page_access_group_id}/components</h3>
+<p>Operation ID: <code>getPagesPageIdPageAccessGroupsPageAccessGroupIdComponents</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-3">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page_access_group_id</code> | <code>path</code> | <code>string</code> | Yes | Page Access Group Identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
+<h4 id="responses-3">Responses</h4>
+<h5 id="200-list-components-for-a-page-access-group" class="status" data-status="2xx">200: List components for a page access group</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-3" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-you-are-not-authorized-to-access-this-resource" class="status" data-status="4xx">403: You are not authorized to access this resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-2" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idpage_access_userspage_access_user_idcomponents" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/page_access_users/{page_access_user_id}/components</h3>
+<p>Operation ID: <code>getPagesPageIdPageAccessUsersPageAccessUserIdComponents</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-4">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page_access_user_id</code> | <code>path</code> | <code>string</code> | Yes | Page Access User Identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
+<h4 id="responses-4">Responses</h4>
+<h5 id="200-get-components-for-page-access-user" class="status" data-status="2xx">200: Get components for page access user</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-4" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-you-are-not-authorized-to-access-this-resource-1" class="status" data-status="4xx">403: You are not authorized to access this resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-3" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idcomponents" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/components</h3>
+<p>Operation ID: <code>getPagesPageIdComponents</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-5">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
+<h4 id="responses-5">Responses</h4>
+<h5 id="200-get-a-list-of-components" class="status" data-status="2xx">200: Get a list of components</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-5" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="load">load</h2>
+<h3 id="get-pagespage_idcomponentscomponent_iduptime" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/components/{component_id}/uptime</h3>
+<p>Operation ID: <code>getPagesPageIdComponentsComponentIdUptime</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-6">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>component_id</code> | <code>path</code> | <code>string</code> | Yes | Component identifier |
+| <code>start</code> | <code>query</code> | <code>PartialStartDate</code> | No | The start date for uptime calculation (defaults to the component's start_date field or 90 days ago, whichever is more recent). The maximum supported date range is six calendar months. If the year is given, the date defaults to the first day of the year. If the year and month are given, the start date defaults to the first day of that month. The earliest supported date is January 1, 1970. |
+| <code>end</code> | <code>query</code> | <code>PartialEndDate</code> | No | The end date for uptime calculation (defaults to today in the page's time zone). The maximum supported date range is six calendar months. If the year is given, the date defaults to the last day of the year. If the year and month are given, the date defaults to the last day of that month. The earliest supported date is January 1, 1970. |</p>
+<h4 id="responses-6">Responses</h4>
+<h5 id="200-get-uptime-data-for-a-component-that-has-uptime-showcase-enabled" class="status" data-status="2xx">200: Get uptime data for a component that has uptime showcase enabled</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component identifier</td>
+</tr>
+<tr>
+<td><code>major_outage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Seconds of major outage</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component display name</td>
+</tr>
+<tr>
+<td><code>partial_outage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Seconds of partial outage</td>
+</tr>
+<tr>
+<td><code>range_end</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>End date used for uptime calculation (see the warnings field in the response if this value does not match the end parameter you provided).</td>
+</tr>
+<tr>
+<td><code>range_start</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Start date used for uptime calculation (see the warnings field in the response if this value does not match the start parameter you provided).</td>
+</tr>
+<tr>
+<td><code>related_events</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Related incidents</td>
+</tr>
+<tr>
+<td><code>related_events.id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident identifier</td>
+</tr>
+<tr>
+<td><code>uptime_percentage</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Uptime percentage for a component</td>
+</tr>
+<tr>
+<td><code>warnings</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Warning messages related to the uptime query that may occur</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-6" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-4" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-3" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idcomponentscomponent_id" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/components/{component_id}</h3>
+<p>Operation ID: <code>getPagesPageIdComponentsComponentId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-7">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>component_id</code> | <code>path</code> | <code>string</code> | Yes | Component identifier |</p>
+<h4 id="responses-7">Responses</h4>
+<h5 id="200-get-a-component" class="status" data-status="2xx">200: Get a component</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-7" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-5" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="patch">patch</h2>
+<h3 id="patch-pagespage_idcomponentscomponent_id" class="operation" data-method="patch"><code>PATCH</code> /pages/{page_id}/components/{component_id}</h3>
+<p>Operation ID: <code>patchPagesPageIdComponentsComponentId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-8">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>component_id</code> | <code>path</code> | <code>string</code> | Yes | Component identifier |</p>
+<h4 id="request-body-2">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>component</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>component.description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>component.group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>component.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>component.only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>component.showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>component.start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>component.status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-8">Responses</h4>
+<h5 id="200-update-a-component" class="status" data-status="2xx">200: Update a component</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-8" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-6" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-4" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="remove">remove</h2>
+<h3 id="delete-pagespage_idcomponentscomponent_id" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/components/{component_id}</h3>
+<p>Operation ID: <code>deletePagesPageIdComponentsComponentId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-9">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>component_id</code> | <code>path</code> | <code>string</code> | Yes | Component identifier |</p>
+<h4 id="responses-9">Responses</h4>
+<h5 id="204-delete-a-component" class="status" data-status="2xx">204: Delete a component</h5>
+<h5 id="401-could-not-authenticate-9" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-7" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="delete-pagespage_idcomponentscomponent_idpage_access_groups" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/components/{component_id}/page_access_groups</h3>
+<p>Operation ID: <code>deletePagesPageIdComponentsComponentIdPageAccessGroups</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-10">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>component_id</code> | <code>path</code> | <code>string</code> | Yes | Component identifier |</p>
+<h4 id="responses-10">Responses</h4>
+<h5 id="200-remove-page-access-groups-from-a-component" class="status" data-status="2xx">200: Remove page access groups from a component</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-10" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-8" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="delete-pagespage_idcomponentscomponent_idpage_access_users" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/components/{component_id}/page_access_users</h3>
+<p>Operation ID: <code>deletePagesPageIdComponentsComponentIdPageAccessUsers</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-11">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>component_id</code> | <code>path</code> | <code>string</code> | Yes | Component identifier |</p>
+<h4 id="responses-11">Responses</h4>
+<h5 id="200-remove-page-access-users-from-component" class="status" data-status="2xx">200: Remove page access users from component</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-11" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-9" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="update">update</h2>
+<h3 id="put-pagespage_idcomponentscomponent_id" class="operation" data-method="put"><code>PUT</code> /pages/{page_id}/components/{component_id}</h3>
+<p>Operation ID: <code>putPagesPageIdComponentsComponentId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-12">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>component_id</code> | <code>path</code> | <code>string</code> | Yes | Component identifier |</p>
+<h4 id="request-body-3">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>component</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>component.description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>component.group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>component.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>component.only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>component.showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>component.start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>component.status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-12">Responses</h4>
+<h5 id="200-update-a-component-1" class="status" data-status="2xx">200: Update a component</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-12" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-10" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-5" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

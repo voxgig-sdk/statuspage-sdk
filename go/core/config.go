@@ -12,15 +12,139 @@ func MakeConfig() map[string]any {
 		"main": map[string]any{
 			"name": "Statuspage",
 			"slug": "statuspage",
-			"version": "0.1.1",
+			"version": "0.0.2",
 			"target": "go",
 		},
 		"feature": map[string]any{
+			"debug": map[string]any{
+				"options": map[string]any{
+					"active": false,
+					"max": 100,
+					"redact": []any{
+						"authorization",
+						"cookie",
+						"set-cookie",
+						"api-key",
+						"apikey",
+						"x-api-key",
+						"idempotency-key",
+					},
+				},
+				"optspec": map[string]any{
+					"now": "`$FUNCTION`",
+					"onEntry": "`$FUNCTION`",
+				},
+				"strict": false,
+				"transport": "none",
+			},
+			"idempotency": map[string]any{
+				"options": map[string]any{
+					"active": false,
+					"header": "Idempotency-Key",
+					"methods": []any{
+						"POST",
+						"PUT",
+						"PATCH",
+						"DELETE",
+					},
+					"ops": []any{
+						"create",
+						"update",
+						"remove",
+					},
+				},
+				"optspec": map[string]any{
+					"keygen": "`$FUNCTION`",
+				},
+				"strict": false,
+				"transport": "none",
+			},
+			"metrics": map[string]any{
+				"options": map[string]any{
+					"active": false,
+				},
+				"optspec": map[string]any{
+					"now": "`$FUNCTION`",
+				},
+				"strict": false,
+				"transport": "none",
+			},
+			"paging": map[string]any{
+				"options": map[string]any{
+					"active": false,
+					"afterVar": "after",
+					"cursorParam": "cursor",
+					"firstVar": "first",
+					"limitParam": "limit",
+					"pageParam": "page",
+					"startPage": 1,
+				},
+				"optspec": map[string]any{
+					"limit": "`$NUMBER`",
+					"ops": "`$LIST`",
+				},
+				"strict": false,
+				"transport": "none",
+			},
+			"ratelimit": map[string]any{
+				"options": map[string]any{
+					"active": false,
+					"burst": 5,
+					"rate": 5,
+				},
+				"optspec": map[string]any{
+					"now": "`$FUNCTION`",
+					"sleep": "`$FUNCTION`",
+				},
+				"strict": false,
+				"transport": "wrap",
+			},
+			"retry": map[string]any{
+				"options": map[string]any{
+					"active": false,
+					"factor": 2,
+					"maxDelay": 2000,
+					"minDelay": 50,
+					"retries": 2,
+					"statuses": []any{
+						408,
+						425,
+						429,
+						500,
+						502,
+						503,
+						504,
+					},
+				},
+				"optspec": map[string]any{
+					"jitter": "`$BOOLEAN`",
+					"sleep": "`$FUNCTION`",
+				},
+				"strict": false,
+				"transport": "wrap",
+			},
 			"test": map[string]any{
 				"options": map[string]any{
 					"active": false,
 				},
+				"optspec": map[string]any{
+					"entity": "`$MAP`",
+					"net": "`$MAP`",
+				},
+				"strict": false,
 				"transport": "base",
+			},
+			"timeout": map[string]any{
+				"options": map[string]any{
+					"active": false,
+					"ms": 30000,
+				},
+				"optspec": map[string]any{
+					"clearTimer": "`$FUNCTION`",
+					"setTimer": "`$FUNCTION`",
+				},
+				"strict": false,
+				"transport": "wrap",
 			},
 		},
 		"options": map[string]any{
@@ -86,7 +210,7 @@ func MakeConfig() map[string]any {
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Incident identifier",
+						"short": "Identifier for component",
 						"type": "`$STRING`",
 					},
 					map[string]any{
@@ -2986,12 +3110,6 @@ func MakeConfig() map[string]any {
 						"type": "`$STRING`",
 					},
 					map[string]any{
-						"name": "data",
-						"req": true,
-						"short": "Add data points to metrics",
-						"type": "`$OBJECT`",
-					},
-					map[string]any{
 						"format": "int32",
 						"name": "decimal_places",
 						"type": "`$INTEGER`",
@@ -4621,13 +4739,6 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "component_ids",
-						"op": map[string]any{
-							"create": map[string]any{
-								"req": true,
-								"type": "`$ARRAY`",
-							},
-						},
-						"short": "List of components codes to set on the page access group",
 						"type": "`$ARRAY`",
 					},
 					map[string]any{
@@ -5403,12 +5514,6 @@ func MakeConfig() map[string]any {
 			"page_access_user": map[string]any{
 				"fields": []any{
 					map[string]any{
-						"name": "component_ids",
-						"req": true,
-						"short": "List of component codes to allow access to",
-						"type": "`$ARRAY`",
-					},
-					map[string]any{
 						"format": "date-time",
 						"name": "created_at",
 						"type": "`$STRING`",
@@ -5426,12 +5531,6 @@ func MakeConfig() map[string]any {
 						"name": "id",
 						"short": "Page Access User Identifier",
 						"type": "`$STRING`",
-					},
-					map[string]any{
-						"name": "metric_ids",
-						"req": true,
-						"short": "List of metrics to add",
-						"type": "`$ARRAY`",
 					},
 					map[string]any{
 						"name": "page_access_group_id",
@@ -6719,11 +6818,6 @@ func MakeConfig() map[string]any {
 					},
 					map[string]any{
 						"name": "postmortem",
-						"op": map[string]any{
-							"update": map[string]any{
-								"type": "`$OBJECT`",
-							},
-						},
 						"req": true,
 						"type": "`$OBJECT`",
 					},
@@ -7225,7 +7319,6 @@ func MakeConfig() map[string]any {
 						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "int32",
 						"name": "email",
 						"short": "The email address to use to contact the subscriber.",
 						"type": "`$STRING`",
@@ -7239,12 +7332,6 @@ func MakeConfig() map[string]any {
 						"name": "id",
 						"short": "Subscriber Identifier",
 						"type": "`$STRING`",
-					},
-					map[string]any{
-						"format": "int32",
-						"name": "integration_partner",
-						"short": "The number of integration partners found by the query.",
-						"type": "`$INTEGER`",
 					},
 					map[string]any{
 						"name": "mode",
@@ -7289,53 +7376,8 @@ func MakeConfig() map[string]any {
 						"type": "`$BOOLEAN`",
 					},
 					map[string]any{
-						"name": "skip_unsubscription_notification",
-						"short": "If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed.",
-						"type": "`$BOOLEAN`",
-					},
-					map[string]any{
-						"format": "int32",
-						"name": "slack",
-						"short": "The number of Slack subscribers found by the query.",
-						"type": "`$INTEGER`",
-					},
-					map[string]any{
-						"format": "int32",
-						"name": "sms",
-						"short": "The number of Webhook subscribers found by the query.",
-						"type": "`$INTEGER`",
-					},
-					map[string]any{
-						"name": "state",
-						"short": "If this is present, only unsubscribe subscribers in this state.",
-						"type": "`$STRING`",
-					},
-					map[string]any{
 						"name": "subscriber",
 						"type": "`$OBJECT`",
-					},
-					map[string]any{
-						"name": "subscribers",
-						"req": true,
-						"short": "The array of quarantined subscriber codes to reactivate, or \"all\" to reactivate all quarantined subscribers.",
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"format": "int32",
-						"name": "teams",
-						"short": "The number of MS teams subscribers found by the query.",
-						"type": "`$INTEGER`",
-					},
-					map[string]any{
-						"name": "type",
-						"short": "If this is present, only reactivate subscribers of this type.",
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"format": "int32",
-						"name": "webhook",
-						"short": "The number of SMS subscribers found by the query.",
-						"type": "`$INTEGER`",
 					},
 					map[string]any{
 						"name": "workspace_name",
@@ -8633,9 +8675,37 @@ func SharedConfig() map[string]any {
 
 func makeFeature(name string) Feature {
 	switch name {
+	case "debug":
+		if NewDebugFeatureFunc != nil {
+			return NewDebugFeatureFunc()
+		}
+	case "idempotency":
+		if NewIdempotencyFeatureFunc != nil {
+			return NewIdempotencyFeatureFunc()
+		}
+	case "metrics":
+		if NewMetricsFeatureFunc != nil {
+			return NewMetricsFeatureFunc()
+		}
+	case "paging":
+		if NewPagingFeatureFunc != nil {
+			return NewPagingFeatureFunc()
+		}
+	case "ratelimit":
+		if NewRatelimitFeatureFunc != nil {
+			return NewRatelimitFeatureFunc()
+		}
+	case "retry":
+		if NewRetryFeatureFunc != nil {
+			return NewRetryFeatureFunc()
+		}
 	case "test":
 		if NewTestFeatureFunc != nil {
 			return NewTestFeatureFunc()
+		}
+	case "timeout":
+		if NewTimeoutFeatureFunc != nil {
+			return NewTimeoutFeatureFunc()
 		}
 	default:
 		if NewBaseFeatureFunc != nil {

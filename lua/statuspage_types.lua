@@ -326,7 +326,6 @@
 ---@field backfill_percentage? number
 ---@field backfilled? boolean
 ---@field created_at? string
----@field data table
 ---@field decimal_places? number
 ---@field display? boolean
 ---@field id? string
@@ -363,7 +362,6 @@
 ---@field backfill_percentage? number
 ---@field backfilled? boolean
 ---@field created_at? string
----@field data table
 ---@field decimal_places? number
 ---@field display? boolean
 ---@field id? string
@@ -386,7 +384,6 @@
 ---@field backfill_percentage? number
 ---@field backfilled? boolean
 ---@field created_at? string
----@field data? table
 ---@field decimal_places? number
 ---@field display? boolean
 ---@field last_fetched_at? string
@@ -649,12 +646,10 @@
 ---@field page_id string
 
 ---@class PageAccessUser
----@field component_ids table
 ---@field created_at? string
 ---@field email? string
 ---@field external_login? string
 ---@field id? string
----@field metric_ids table
 ---@field page_access_group_id? string
 ---@field page_access_group_ids? string
 ---@field page_access_user? table
@@ -673,11 +668,9 @@
 
 ---@class PageAccessUserCreateData
 ---@field id string
----@field component_ids table
 ---@field created_at? string
 ---@field email? string
 ---@field external_login? string
----@field metric_ids table
 ---@field page_access_group_id? string
 ---@field page_access_group_ids? string
 ---@field page_access_user? table
@@ -687,11 +680,9 @@
 ---@class PageAccessUserUpdateData
 ---@field id string
 ---@field page_id string
----@field component_ids? table
 ---@field created_at? string
 ---@field email? string
 ---@field external_login? string
----@field metric_ids? table
 ---@field page_access_group_id? string
 ---@field page_access_group_ids? string
 ---@field page_access_user? table
@@ -781,7 +772,6 @@
 ---@field email? string
 ---@field endpoint? string
 ---@field id? string
----@field integration_partner? number
 ---@field mode? string
 ---@field obfuscated_channel_name? string
 ---@field page_access_user_id? string
@@ -790,15 +780,7 @@
 ---@field purge_at? string
 ---@field quarantined_at? string
 ---@field skip_confirmation_notification? boolean
----@field skip_unsubscription_notification? boolean
----@field slack? number
----@field sms? number
----@field state? string
 ---@field subscriber? table
----@field subscribers string
----@field teams? number
----@field type? string
----@field webhook? number
 ---@field workspace_name? string
 
 ---@class SubscriberLoadMatch
@@ -828,7 +810,6 @@
 ---@field email? string
 ---@field endpoint? string
 ---@field id? string
----@field integration_partner? number
 ---@field mode? string
 ---@field obfuscated_channel_name? string
 ---@field page_access_user_id? string
@@ -837,15 +818,7 @@
 ---@field purge_at? string
 ---@field quarantined_at? string
 ---@field skip_confirmation_notification? boolean
----@field skip_unsubscription_notification? boolean
----@field slack? number
----@field sms? number
----@field state? string
 ---@field subscriber? table
----@field subscribers string
----@field teams? number
----@field type? string
----@field webhook? number
 ---@field workspace_name? string
 
 ---@class SubscriberUpdateData
@@ -857,7 +830,6 @@
 ---@field display_phone_number? string
 ---@field email? string
 ---@field endpoint? string
----@field integration_partner? number
 ---@field mode? string
 ---@field obfuscated_channel_name? string
 ---@field page_access_user_id? string
@@ -866,15 +838,7 @@
 ---@field purge_at? string
 ---@field quarantined_at? string
 ---@field skip_confirmation_notification? boolean
----@field skip_unsubscription_notification? boolean
----@field slack? number
----@field sms? number
----@field state? string
 ---@field subscriber? table
----@field subscribers? string
----@field teams? number
----@field type? string
----@field webhook? number
 ---@field workspace_name? string
 
 ---@class SubscriberRemoveMatch

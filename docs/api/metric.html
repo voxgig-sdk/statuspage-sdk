@@ -1,0 +1,2416 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Metric | Statuspage API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">Statuspage API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/statuspage-sdk">voxgig-sdk/statuspage-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">Statuspage API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/component.html">Component</a>
+<a href="../api/component_group_uptime.html">ComponentGroupUptime</a>
+<a href="../api/group_component.html">GroupComponent</a>
+<a href="../api/incident.html">Incident</a>
+<a href="../api/incident_postmortem.html">IncidentPostmortem</a>
+<a href="../api/incident_subscriber.html">IncidentSubscriber</a>
+<a href="../api/incident_template.html">IncidentTemplate</a>
+<a href="../api/incident_update.html">IncidentUpdate</a>
+<a aria-current="page" href="../api/metric.html">Metric</a><div class="nav-sections"><a class="nav-section" href="#post-pagespage_idmetricsmetric_iddata">POST /pages/{page_id}/metrics/{metric_id}/data</a>
+<a class="nav-section" href="#post-pagespage_idmetrics_providersmetrics_provider_idmetrics">POST /pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics</a>
+<a class="nav-section" href="#post-pagespage_idmetricsdata">POST /pages/{page_id}/metrics/data</a>
+<a class="nav-section" href="#get-pagespage_idpage_access_userspage_access_user_idmetrics">GET /pages/{page_id}/page_access_users/{page_access_user_id}/metrics</a>
+<a class="nav-section" href="#get-pagespage_idmetrics_providersmetrics_provider_idmetrics">GET /pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics</a>
+<a class="nav-section" href="#get-pagespage_idmetrics">GET /pages/{page_id}/metrics</a>
+<a class="nav-section" href="#get-pagespage_idmetricsmetric_id">GET /pages/{page_id}/metrics/{metric_id}</a>
+<a class="nav-section" href="#patch-pagespage_idmetricsmetric_id">PATCH /pages/{page_id}/metrics/{metric_id}</a>
+<a class="nav-section" href="#delete-pagespage_idmetricsmetric_id">DELETE /pages/{page_id}/metrics/{metric_id}</a>
+<a class="nav-section" href="#delete-pagespage_idmetricsmetric_iddata">DELETE /pages/{page_id}/metrics/{metric_id}/data</a>
+<a class="nav-section" href="#put-pagespage_idmetricsmetric_id">PUT /pages/{page_id}/metrics/{metric_id}</a></div>
+<a href="../api/metrics_provider.html">MetricsProvider</a>
+<a href="../api/page.html">Page</a>
+<a href="../api/page_access_group.html">PageAccessGroup</a>
+<a href="../api/page_access_user.html">PageAccessUser</a>
+<a href="../api/permission.html">Permission</a>
+<a href="../api/postmortem.html">Postmortem</a>
+<a href="../api/status_embed_config.html">StatusEmbedConfig</a>
+<a href="../api/subscriber.html">Subscriber</a>
+<a href="../api/user.html">User</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/go.html">Golang</a>
+<a href="../sdks/lua.html">Lua</a>
+<a href="../sdks/php.html">PHP</a>
+<a href="../sdks/py.html">Python</a>
+<a href="../sdks/rb.html">Ruby</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
+<a href="../tools/go-mcp.html">Go MCP server</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="metric">Metric</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idmetricsmetric_iddata"><code>/pages/{page_id}/metrics/{metric_id}/data</code></a></td>
+<td><code>create</code></td>
+<td>Add data to a metric</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idmetrics_providersmetrics_provider_idmetrics"><code>/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics</code></a></td>
+<td><code>create</code></td>
+<td>Create a metric for a metric provider</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idmetricsdata"><code>/pages/{page_id}/metrics/data</code></a></td>
+<td><code>create</code></td>
+<td>Data Point is submitted and is currently being added to the metrics</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idpage_access_userspage_access_user_idmetrics"><code>/pages/{page_id}/page_access_users/{page_access_user_id}/metrics</code></a></td>
+<td><code>list</code></td>
+<td>Get metrics for page access user</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idmetrics_providersmetrics_provider_idmetrics"><code>/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics</code></a></td>
+<td><code>load</code></td>
+<td>List metrics for a metric provider</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idmetrics"><code>/pages/{page_id}/metrics</code></a></td>
+<td><code>load</code></td>
+<td>Get a list of metrics</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idmetricsmetric_id"><code>/pages/{page_id}/metrics/{metric_id}</code></a></td>
+<td><code>load</code></td>
+<td>Get a metric</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><a href="#patch-pagespage_idmetricsmetric_id"><code>/pages/{page_id}/metrics/{metric_id}</code></a></td>
+<td><code>patch</code></td>
+<td>Update a metric</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-pagespage_idmetricsmetric_id"><code>/pages/{page_id}/metrics/{metric_id}</code></a></td>
+<td><code>remove</code></td>
+<td>Delete a metric</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-pagespage_idmetricsmetric_iddata"><code>/pages/{page_id}/metrics/{metric_id}/data</code></a></td>
+<td><code>remove</code></td>
+<td>Reset data for a metric</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><a href="#put-pagespage_idmetricsmetric_id"><code>/pages/{page_id}/metrics/{metric_id}</code></a></td>
+<td><code>update</code></td>
+<td>Update a metric</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backfill_percentage</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>decimal_places</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>last_fetched_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>most_recent_data_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>y_axis_max</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_min</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="create">create</h2>
+<h3 id="post-pagespage_idmetricsmetric_iddata" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/metrics/{metric_id}/data</h3>
+<p>Operation ID: <code>postPagesPageIdMetricsMetricIdData</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>metric_id</code> | <code>path</code> | <code>string</code> | Yes | Metric Identifier |</p>
+<h4 id="request-body">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>object</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.timestamp</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Time to store the metric against</td>
+</tr>
+<tr>
+<td><code>data.value</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses">Responses</h4>
+<h5 id="201-add-data-to-a-metric" class="status" data-status="2xx">201: Add data to a metric</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.timestamp</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.value</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="405-method-not-allowed" class="status" data-status="4xx">405: Method not allowed</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-pagespage_idmetrics_providersmetrics_provider_idmetrics" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics</h3>
+<p>Operation ID: <code>postPagesPageIdMetricsProvidersMetricsProviderIdMetrics</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>metrics_provider_id</code> | <code>path</code> | <code>string</code> | Yes | Metric Provider Identifier |</p>
+<h4 id="request-body-1">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>metric</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric.application_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The Identifier for new relic application. Required in the case of NewRelic only</td>
+</tr>
+<tr>
+<td><code>metric.decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>How many decimal places to render on the graph</td>
+</tr>
+<tr>
+<td><code>metric.display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>metric.metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metric.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>metric.suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>metric.tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric.transform</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The transform to apply to metric before pulling into Statuspage. One of: &quot;average&quot;, &quot;count&quot;, &quot;max&quot;, &quot;min&quot;, or &quot;sum&quot;</td>
+</tr>
+<tr>
+<td><code>metric.y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>metric.y_axis_max</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The upper bound of the y axis</td>
+</tr>
+<tr>
+<td><code>metric.y_axis_min</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>The lower bound of the y axis</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-1">Responses</h4>
+<h5 id="201-create-a-metric-for-a-metric-provider" class="status" data-status="2xx">201: Create a metric for a metric provider</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backfill_percentage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>last_fetched_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>most_recent_data_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>y_axis_max</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_min</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="400-bad-request" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-1" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-you-are-not-authorized-to-access-this-resource" class="status" data-status="4xx">403: You are not authorized to access this resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-1" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-1" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-pagespage_idmetricsdata" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/metrics/data</h3>
+<p>Operation ID: <code>postPagesPageIdMetricsData</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-2">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
+<h4 id="request-body-2">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>object</code></td>
+<td>Yes</td>
+<td>Add data points to metrics</td>
+</tr>
+<tr>
+<td><code>data.metric_id</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Metric identifier to add data to</td>
+</tr>
+<tr>
+<td><code>data.metric_id[].timestamp</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.metric_id[].value</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-2">Responses</h4>
+<h5 id="202-data-point-is-submitted-and-is-currently-being-added-to-the-metrics" class="status" data-status="2xx">202: Data Point is submitted and is currently being added to the metrics</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>metric_id</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Metric identifier to add data to</td>
+</tr>
+<tr>
+<td><code>metric_id[].timestamp</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_id[].value</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-2" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-you-are-not-authorized-to-access-this-resource-1" class="status" data-status="4xx">403: You are not authorized to access this resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-2" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="405-method-not-allowed-1" class="status" data-status="4xx">405: Method not allowed</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-pagespage_idpage_access_userspage_access_user_idmetrics" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/page_access_users/{page_access_user_id}/metrics</h3>
+<p>Operation ID: <code>getPagesPageIdPageAccessUsersPageAccessUserIdMetrics</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-3">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page_access_user_id</code> | <code>path</code> | <code>string</code> | Yes | Page Access User Identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
+<h4 id="responses-3">Responses</h4>
+<h5 id="200-get-metrics-for-page-access-user" class="status" data-status="2xx">200: Get metrics for page access user</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].backfill_percentage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>[].last_fetched_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>[].metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>[].most_recent_data_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>[].reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>[].tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>[].y_axis_max</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].y_axis_min</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-3" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-you-are-not-authorized-to-access-this-resource-2" class="status" data-status="4xx">403: You are not authorized to access this resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-3" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="load">load</h2>
+<h3 id="get-pagespage_idmetrics_providersmetrics_provider_idmetrics" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics</h3>
+<p>Operation ID: <code>getPagesPageIdMetricsProvidersMetricsProviderIdMetrics</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-4">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>metrics_provider_id</code> | <code>path</code> | <code>string</code> | Yes | Metric Provider Identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
+<h4 id="responses-4">Responses</h4>
+<h5 id="200-list-metrics-for-a-metric-provider" class="status" data-status="2xx">200: List metrics for a metric provider</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backfill_percentage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>last_fetched_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>most_recent_data_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>y_axis_max</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_min</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-4" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-you-are-not-authorized-to-access-this-resource-3" class="status" data-status="4xx">403: You are not authorized to access this resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-4" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idmetrics" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/metrics</h3>
+<p>Operation ID: <code>getPagesPageIdMetrics</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-5">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
+<h4 id="responses-5">Responses</h4>
+<h5 id="200-get-a-list-of-metrics" class="status" data-status="2xx">200: Get a list of metrics</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backfill_percentage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>last_fetched_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>most_recent_data_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>y_axis_max</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_min</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-5" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-5" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idmetricsmetric_id" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/metrics/{metric_id}</h3>
+<p>Operation ID: <code>getPagesPageIdMetricsMetricId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-6">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>metric_id</code> | <code>path</code> | <code>string</code> | Yes | Metric Identifier |</p>
+<h4 id="responses-6">Responses</h4>
+<h5 id="200-get-a-metric" class="status" data-status="2xx">200: Get a metric</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backfill_percentage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>last_fetched_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>most_recent_data_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>y_axis_max</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_min</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-6" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-6" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="patch">patch</h2>
+<h3 id="patch-pagespage_idmetricsmetric_id" class="operation" data-method="patch"><code>PATCH</code> /pages/{page_id}/metrics/{metric_id}</h3>
+<p>Operation ID: <code>patchPagesPageIdMetricsMetricId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-7">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>metric_id</code> | <code>path</code> | <code>string</code> | Yes | Metric Identifier |</p>
+<h4 id="request-body-3">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>metric</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric.metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metric.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-7">Responses</h4>
+<h5 id="200-update-a-metric" class="status" data-status="2xx">200: Update a metric</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backfill_percentage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>last_fetched_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>most_recent_data_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>y_axis_max</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_min</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-7" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-7" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-2" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="remove">remove</h2>
+<h3 id="delete-pagespage_idmetricsmetric_id" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/metrics/{metric_id}</h3>
+<p>Operation ID: <code>deletePagesPageIdMetricsMetricId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-8">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>metric_id</code> | <code>path</code> | <code>string</code> | Yes | Metric Identifier |</p>
+<h4 id="responses-8">Responses</h4>
+<h5 id="200-delete-a-metric" class="status" data-status="2xx">200: Delete a metric</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backfill_percentage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>last_fetched_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>most_recent_data_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>y_axis_max</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_min</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-8" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-8" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="delete-pagespage_idmetricsmetric_iddata" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/metrics/{metric_id}/data</h3>
+<p>Operation ID: <code>deletePagesPageIdMetricsMetricIdData</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-9">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>metric_id</code> | <code>path</code> | <code>string</code> | Yes | Metric Identifier |</p>
+<h4 id="responses-9">Responses</h4>
+<h5 id="200-reset-data-for-a-metric" class="status" data-status="2xx">200: Reset data for a metric</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backfill_percentage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>last_fetched_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>most_recent_data_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>y_axis_max</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_min</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-9" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-9" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="update">update</h2>
+<h3 id="put-pagespage_idmetricsmetric_id" class="operation" data-method="put"><code>PUT</code> /pages/{page_id}/metrics/{metric_id}</h3>
+<p>Operation ID: <code>putPagesPageIdMetricsMetricId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-10">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>metric_id</code> | <code>path</code> | <code>string</code> | Yes | Metric Identifier |</p>
+<h4 id="request-body-4">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>metric</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric.metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metric.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-10">Responses</h4>
+<h5 id="200-update-a-metric-1" class="status" data-status="2xx">200: Update a metric</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backfill_percentage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>decimal_places</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the metric be displayed</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric identifier</td>
+</tr>
+<tr>
+<td><code>last_fetched_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>metric_identifier</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Display identifier used to look up the metric data from the provider</td>
+</tr>
+<tr>
+<td><code>metrics_provider_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Metric Provider identifier</td>
+</tr>
+<tr>
+<td><code>most_recent_data_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of metric</td>
+</tr>
+<tr>
+<td><code>reference_name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Suffix to describe the units on the graph</td>
+</tr>
+<tr>
+<td><code>tooltip_description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_hidden</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should the values on the y axis be hidden on render</td>
+</tr>
+<tr>
+<td><code>y_axis_max</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>y_axis_min</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-10" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-10" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity-3" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

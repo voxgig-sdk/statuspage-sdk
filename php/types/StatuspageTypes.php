@@ -421,7 +421,6 @@ class Metric
     public ?int $backfill_percentage = null;
     public ?bool $backfilled = null;
     public ?string $created_at = null;
-    public array $data;
     public ?int $decimal_places = null;
     public ?bool $display = null;
     public ?string $id = null;
@@ -467,7 +466,6 @@ class MetricCreateData
     public ?int $backfill_percentage = null;
     public ?bool $backfilled = null;
     public ?string $created_at = null;
-    public array $data;
     public ?int $decimal_places = null;
     public ?bool $display = null;
     public ?string $id = null;
@@ -493,7 +491,6 @@ class MetricUpdateData
     public ?int $backfill_percentage = null;
     public ?bool $backfilled = null;
     public ?string $created_at = null;
-    public ?array $data = null;
     public ?int $decimal_places = null;
     public ?bool $display = null;
     public ?string $last_fetched_at = null;
@@ -810,12 +807,10 @@ class PageAccessGroupRemoveMatch
 /** PageAccessUser entity data model. */
 class PageAccessUser
 {
-    public array $component_ids;
     public ?string $created_at = null;
     public ?string $email = null;
     public ?string $external_login = null;
     public ?string $id = null;
-    public array $metric_ids;
     public ?string $page_access_group_id = null;
     public ?string $page_access_group_ids = null;
     public ?array $page_access_user = null;
@@ -843,11 +838,9 @@ class PageAccessUserListMatch
 class PageAccessUserCreateData
 {
     public string $id;
-    public array $component_ids;
     public ?string $created_at = null;
     public ?string $email = null;
     public ?string $external_login = null;
-    public array $metric_ids;
     public ?string $page_access_group_id = null;
     public ?string $page_access_group_ids = null;
     public ?array $page_access_user = null;
@@ -860,11 +853,9 @@ class PageAccessUserUpdateData
 {
     public string $id;
     public string $page_id;
-    public ?array $component_ids = null;
     public ?string $created_at = null;
     public ?string $email = null;
     public ?string $external_login = null;
-    public ?array $metric_ids = null;
     public ?string $page_access_group_id = null;
     public ?string $page_access_group_ids = null;
     public ?array $page_access_user = null;
@@ -987,7 +978,6 @@ class Subscriber
     public ?string $email = null;
     public ?string $endpoint = null;
     public ?string $id = null;
-    public ?int $integration_partner = null;
     public ?string $mode = null;
     public ?string $obfuscated_channel_name = null;
     public ?string $page_access_user_id = null;
@@ -996,15 +986,7 @@ class Subscriber
     public ?string $purge_at = null;
     public ?string $quarantined_at = null;
     public ?bool $skip_confirmation_notification = null;
-    public ?bool $skip_unsubscription_notification = null;
-    public ?int $slack = null;
-    public ?int $sms = null;
-    public ?string $state = null;
     public ?array $subscriber = null;
-    public string $subscribers;
-    public ?int $teams = null;
-    public ?string $type = null;
-    public ?int $webhook = null;
     public ?string $workspace_name = null;
 }
 
@@ -1043,7 +1025,6 @@ class SubscriberCreateData
     public ?string $email = null;
     public ?string $endpoint = null;
     public ?string $id = null;
-    public ?int $integration_partner = null;
     public ?string $mode = null;
     public ?string $obfuscated_channel_name = null;
     public ?string $page_access_user_id = null;
@@ -1052,15 +1033,7 @@ class SubscriberCreateData
     public ?string $purge_at = null;
     public ?string $quarantined_at = null;
     public ?bool $skip_confirmation_notification = null;
-    public ?bool $skip_unsubscription_notification = null;
-    public ?int $slack = null;
-    public ?int $sms = null;
-    public ?string $state = null;
     public ?array $subscriber = null;
-    public string $subscribers;
-    public ?int $teams = null;
-    public ?string $type = null;
-    public ?int $webhook = null;
     public ?string $workspace_name = null;
 }
 
@@ -1075,7 +1048,6 @@ class SubscriberUpdateData
     public ?string $display_phone_number = null;
     public ?string $email = null;
     public ?string $endpoint = null;
-    public ?int $integration_partner = null;
     public ?string $mode = null;
     public ?string $obfuscated_channel_name = null;
     public ?string $page_access_user_id = null;
@@ -1084,15 +1056,7 @@ class SubscriberUpdateData
     public ?string $purge_at = null;
     public ?string $quarantined_at = null;
     public ?bool $skip_confirmation_notification = null;
-    public ?bool $skip_unsubscription_notification = null;
-    public ?int $slack = null;
-    public ?int $sms = null;
-    public ?string $state = null;
     public ?array $subscriber = null;
-    public ?string $subscribers = null;
-    public ?int $teams = null;
-    public ?string $type = null;
-    public ?int $webhook = null;
     public ?string $workspace_name = null;
 }
 

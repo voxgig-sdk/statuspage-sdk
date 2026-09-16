@@ -10,10 +10,109 @@ declare class Config {
         target: string;
     };
     feature: {
+        debug: {
+            options: {
+                active: boolean;
+                max: number;
+                redact: string[];
+            };
+            optspec: {
+                now: string;
+                onEntry: string;
+            };
+            strict: boolean;
+            transport: string;
+        };
+        idempotency: {
+            options: {
+                active: boolean;
+                header: string;
+                methods: string[];
+                ops: string[];
+            };
+            optspec: {
+                keygen: string;
+            };
+            strict: boolean;
+            transport: string;
+        };
+        metrics: {
+            options: {
+                active: boolean;
+            };
+            optspec: {
+                now: string;
+            };
+            strict: boolean;
+            transport: string;
+        };
+        paging: {
+            options: {
+                active: boolean;
+                afterVar: string;
+                cursorParam: string;
+                firstVar: string;
+                limitParam: string;
+                pageParam: string;
+                startPage: number;
+            };
+            optspec: {
+                limit: string;
+                ops: string;
+            };
+            strict: boolean;
+            transport: string;
+        };
+        ratelimit: {
+            options: {
+                active: boolean;
+                burst: number;
+                rate: number;
+            };
+            optspec: {
+                now: string;
+                sleep: string;
+            };
+            strict: boolean;
+            transport: string;
+        };
+        retry: {
+            options: {
+                active: boolean;
+                factor: number;
+                maxDelay: number;
+                minDelay: number;
+                retries: number;
+                statuses: number[];
+            };
+            optspec: {
+                jitter: string;
+                sleep: string;
+            };
+            strict: boolean;
+            transport: string;
+        };
         test: {
             options: {
                 active: boolean;
             };
+            optspec: {
+                entity: string;
+                net: string;
+            };
+            strict: boolean;
+            transport: string;
+        };
+        timeout: {
+            options: {
+                active: boolean;
+                ms: number;
+            };
+            optspec: {
+                clearTimer: string;
+                setTimer: string;
+            };
+            strict: boolean;
             transport: string;
         };
     };
@@ -1337,26 +1436,17 @@ declare class Config {
                 format: string;
                 name: string;
                 type: string;
-                req?: undefined;
                 short?: undefined;
             } | {
                 name: string;
                 type: string;
                 format?: undefined;
-                req?: undefined;
                 short?: undefined;
             } | {
                 name: string;
-                req: boolean;
                 short: string;
                 type: string;
                 format?: undefined;
-            } | {
-                name: string;
-                short: string;
-                type: string;
-                format?: undefined;
-                req?: undefined;
             })[];
             id: {
                 field: string;
@@ -2161,32 +2251,18 @@ declare class Config {
         page_access_group: {
             fields: ({
                 name: string;
-                op: {
-                    create: {
-                        req: boolean;
-                        type: string;
-                    };
-                };
-                short: string;
                 type: string;
                 format?: undefined;
+                short?: undefined;
             } | {
                 format: string;
                 name: string;
                 type: string;
-                op?: undefined;
                 short?: undefined;
             } | {
                 name: string;
                 short: string;
                 type: string;
-                op?: undefined;
-                format?: undefined;
-            } | {
-                name: string;
-                type: string;
-                op?: undefined;
-                short?: undefined;
                 format?: undefined;
             })[];
             id: {
@@ -2584,28 +2660,19 @@ declare class Config {
         };
         page_access_user: {
             fields: ({
-                name: string;
-                req: boolean;
-                short: string;
-                type: string;
-                format?: undefined;
-            } | {
                 format: string;
                 name: string;
                 type: string;
-                req?: undefined;
                 short?: undefined;
             } | {
                 name: string;
                 type: string;
-                req?: undefined;
-                short?: undefined;
                 format?: undefined;
+                short?: undefined;
             } | {
                 name: string;
                 short: string;
                 type: string;
-                req?: undefined;
                 format?: undefined;
             })[];
             id: {
@@ -3100,22 +3167,15 @@ declare class Config {
                 short: string;
                 type: string;
                 format?: undefined;
-                op?: undefined;
                 req?: undefined;
             } | {
                 format: string;
                 name: string;
                 type: string;
                 short?: undefined;
-                op?: undefined;
                 req?: undefined;
             } | {
                 name: string;
-                op: {
-                    update: {
-                        type: string;
-                    };
-                };
                 req: boolean;
                 type: string;
                 short?: undefined;
@@ -3383,30 +3443,20 @@ declare class Config {
                 short: string;
                 type: string;
                 format?: undefined;
-                req?: undefined;
             } | {
                 format: string;
                 name: string;
                 type: string;
                 short?: undefined;
-                req?: undefined;
             } | {
                 format: string;
                 name: string;
                 short: string;
                 type: string;
-                req?: undefined;
             } | {
                 name: string;
                 type: string;
                 short?: undefined;
-                format?: undefined;
-                req?: undefined;
-            } | {
-                name: string;
-                req: boolean;
-                short: string;
-                type: string;
                 format?: undefined;
             })[];
             id: {

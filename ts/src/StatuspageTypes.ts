@@ -378,7 +378,6 @@ export interface Metric {
   backfill_percentage?: number
   backfilled?: boolean
   created_at?: string
-  data: Record<string, any>
   decimal_places?: number
   display?: boolean
   id?: string
@@ -418,7 +417,6 @@ export interface MetricCreateData {
   backfill_percentage?: number
   backfilled?: boolean
   created_at?: string
-  data: Record<string, any>
   decimal_places?: number
   display?: boolean
   id?: string
@@ -448,7 +446,6 @@ export interface MetricUpdateData {
   backfill_percentage?: number
   backfilled?: boolean
   created_at?: string
-  data?: Record<string, any>
   decimal_places?: number
   display?: boolean
   last_fetched_at?: string
@@ -753,12 +750,10 @@ export interface PageAccessGroupRemoveMatch {
 }
 
 export interface PageAccessUser {
-  component_ids: any[]
   created_at?: string
   email?: string
   external_login?: string
   id?: string
-  metric_ids: any[]
   page_access_group_id?: string
   page_access_group_ids?: string
   page_access_user?: Record<string, any>
@@ -780,11 +775,9 @@ export interface PageAccessUserListMatch {
 
 export interface PageAccessUserCreateData {
   id: string
-  component_ids: any[]
   created_at?: string
   email?: string
   external_login?: string
-  metric_ids: any[]
   page_access_group_id?: string
   page_access_group_ids?: string
   page_access_user?: Record<string, any>
@@ -801,11 +794,9 @@ export interface PageAccessUserCreateData {
 export interface PageAccessUserUpdateData {
   id: string
   page_id: string
-  component_ids?: any[]
   created_at?: string
   email?: string
   external_login?: string
-  metric_ids?: any[]
   page_access_group_id?: string
   page_access_group_ids?: string
   page_access_user?: Record<string, any>
@@ -924,7 +915,6 @@ export interface Subscriber {
   email?: string
   endpoint?: string
   id?: string
-  integration_partner?: number
   mode?: string
   obfuscated_channel_name?: string
   page_access_user_id?: string
@@ -933,15 +923,7 @@ export interface Subscriber {
   purge_at?: string
   quarantined_at?: string
   skip_confirmation_notification?: boolean
-  skip_unsubscription_notification?: boolean
-  slack?: number
-  sms?: number
-  state?: string
   subscriber?: Record<string, any>
-  subscribers: string
-  teams?: number
-  type?: string
-  webhook?: number
   workspace_name?: string
 }
 
@@ -986,7 +968,6 @@ export interface SubscriberCreateData {
   email?: string
   endpoint?: string
   id?: string
-  integration_partner?: number
   mode?: string
   obfuscated_channel_name?: string
   page_access_user_id?: string
@@ -995,15 +976,7 @@ export interface SubscriberCreateData {
   purge_at?: string
   quarantined_at?: string
   skip_confirmation_notification?: boolean
-  skip_unsubscription_notification?: boolean
-  slack?: number
-  sms?: number
-  state?: string
   subscriber?: Record<string, any>
-  subscribers: string
-  teams?: number
-  type?: string
-  webhook?: number
   workspace_name?: string
 
   // Selects a custom action instead of the plain create:
@@ -1022,7 +995,6 @@ export interface SubscriberUpdateData {
   display_phone_number?: string
   email?: string
   endpoint?: string
-  integration_partner?: number
   mode?: string
   obfuscated_channel_name?: string
   page_access_user_id?: string
@@ -1031,15 +1003,7 @@ export interface SubscriberUpdateData {
   purge_at?: string
   quarantined_at?: string
   skip_confirmation_notification?: boolean
-  skip_unsubscription_notification?: boolean
-  slack?: number
-  sms?: number
-  state?: string
   subscriber?: Record<string, any>
-  subscribers?: string
-  teams?: number
-  type?: string
-  webhook?: number
   workspace_name?: string
 }
 

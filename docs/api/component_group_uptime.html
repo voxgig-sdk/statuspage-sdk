@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ComponentGroupUptime | Statuspage API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">Statuspage API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/statuspage-sdk">voxgig-sdk/statuspage-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">Statuspage API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/component.html">Component</a>
+<a aria-current="page" href="../api/component_group_uptime.html">ComponentGroupUptime</a><div class="nav-sections"><a class="nav-section" href="#get-pagespage_idcomponent-groupsiduptime">GET /pages/{page_id}/component-groups/{id}/uptime</a></div>
+<a href="../api/group_component.html">GroupComponent</a>
+<a href="../api/incident.html">Incident</a>
+<a href="../api/incident_postmortem.html">IncidentPostmortem</a>
+<a href="../api/incident_subscriber.html">IncidentSubscriber</a>
+<a href="../api/incident_template.html">IncidentTemplate</a>
+<a href="../api/incident_update.html">IncidentUpdate</a>
+<a href="../api/metric.html">Metric</a>
+<a href="../api/metrics_provider.html">MetricsProvider</a>
+<a href="../api/page.html">Page</a>
+<a href="../api/page_access_group.html">PageAccessGroup</a>
+<a href="../api/page_access_user.html">PageAccessUser</a>
+<a href="../api/permission.html">Permission</a>
+<a href="../api/postmortem.html">Postmortem</a>
+<a href="../api/status_embed_config.html">StatusEmbedConfig</a>
+<a href="../api/subscriber.html">Subscriber</a>
+<a href="../api/user.html">User</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/go.html">Golang</a>
+<a href="../sdks/lua.html">Lua</a>
+<a href="../sdks/php.html">PHP</a>
+<a href="../sdks/py.html">Python</a>
+<a href="../sdks/rb.html">Ruby</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
+<a href="../tools/go-mcp.html">Go MCP server</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="componentgroupuptime">ComponentGroupUptime</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idcomponent-groupsiduptime"><code>/pages/{page_id}/component-groups/{id}/uptime</code></a></td>
+<td><code>load</code></td>
+<td>Get uptime data for a component group that has uptime showcase enabled for at least one component</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>component_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component identifier</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>incidents</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Related incidents</td>
+</tr>
+</tbody>
+</table>
+<h2 id="load">load</h2>
+<h3 id="get-pagespage_idcomponent-groupsiduptime" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/component-groups/{id}/uptime</h3>
+<p>Operation ID: <code>getPagesPageIdComponentGroupsIdUptime</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Component group identifier |
+| <code>start</code> | <code>query</code> | <code>PartialStartDate</code> | No | The start date for uptime calculation (defaults to the date of the component in the group with the earliest start_date, or 90 days ago, whichever is more recent). The maximum supported date range is six calendar months. If the year is given, the date defaults to the first day of the year. If the year and month are given, the start date defaults to the first day of that month. The earliest supported date is January 1, 1970. |
+| <code>end</code> | <code>query</code> | <code>PartialEndDate</code> | No | The end date for uptime calculation (defaults to today in the page's time zone). The maximum supported date range is six calendar months. If the year is given, the date defaults to the last day of the year. If the year and month are given, the date defaults to the last day of that month. The earliest supported date is January 1, 1970. |</p>
+<h4 id="responses">Responses</h4>
+<h5 id="200-get-uptime-data-for-a-component-group-that-has-uptime-showcase-enabled-for-at-least-one-component" class="status" data-status="2xx">200: Get uptime data for a component group that has uptime showcase enabled for at least one component</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component group identifier</td>
+</tr>
+<tr>
+<td><code>major_outage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Seconds of major outage</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component group display name</td>
+</tr>
+<tr>
+<td><code>partial_outage</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Seconds of partial outage</td>
+</tr>
+<tr>
+<td><code>range_end</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>End date used for uptime calculation (see the warnings field in the response if this value does not match the end parameter you provided).</td>
+</tr>
+<tr>
+<td><code>range_start</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Start date used for uptime calculation (see the warnings field in the response if this value does not match the start parameter you provided).</td>
+</tr>
+<tr>
+<td><code>related_events</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Related incidents by component</td>
+</tr>
+<tr>
+<td><code>related_events.component_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component identifier</td>
+</tr>
+<tr>
+<td><code>related_events.incidents</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Related incidents</td>
+</tr>
+<tr>
+<td><code>related_events.incidents.id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident identifier</td>
+</tr>
+<tr>
+<td><code>uptime_percentage</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Uptime percentage for a component</td>
+</tr>
+<tr>
+<td><code>warnings</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Warning messages related to the uptime query that may occur</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

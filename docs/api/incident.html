@@ -1,0 +1,4885 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Incident | Statuspage API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">Statuspage API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/statuspage-sdk">voxgig-sdk/statuspage-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">Statuspage API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/component.html">Component</a>
+<a href="../api/component_group_uptime.html">ComponentGroupUptime</a>
+<a href="../api/group_component.html">GroupComponent</a>
+<a aria-current="page" href="../api/incident.html">Incident</a><div class="nav-sections"><a class="nav-section" href="#post-pagespage_idincidents">POST /pages/{page_id}/incidents</a>
+<a class="nav-section" href="#get-pagespage_idincidents">GET /pages/{page_id}/incidents</a>
+<a class="nav-section" href="#get-pagespage_idincidentsactive_maintenance">GET /pages/{page_id}/incidents/active_maintenance</a>
+<a class="nav-section" href="#get-pagespage_idincidentsscheduled">GET /pages/{page_id}/incidents/scheduled</a>
+<a class="nav-section" href="#get-pagespage_idincidentsunresolved">GET /pages/{page_id}/incidents/unresolved</a>
+<a class="nav-section" href="#get-pagespage_idincidentsupcoming">GET /pages/{page_id}/incidents/upcoming</a>
+<a class="nav-section" href="#get-pagespage_idincidentsincident_id">GET /pages/{page_id}/incidents/{incident_id}</a>
+<a class="nav-section" href="#patch-pagespage_idincidentsincident_id">PATCH /pages/{page_id}/incidents/{incident_id}</a>
+<a class="nav-section" href="#delete-pagespage_idincidentsincident_id">DELETE /pages/{page_id}/incidents/{incident_id}</a>
+<a class="nav-section" href="#put-pagespage_idincidentsincident_id">PUT /pages/{page_id}/incidents/{incident_id}</a></div>
+<a href="../api/incident_postmortem.html">IncidentPostmortem</a>
+<a href="../api/incident_subscriber.html">IncidentSubscriber</a>
+<a href="../api/incident_template.html">IncidentTemplate</a>
+<a href="../api/incident_update.html">IncidentUpdate</a>
+<a href="../api/metric.html">Metric</a>
+<a href="../api/metrics_provider.html">MetricsProvider</a>
+<a href="../api/page.html">Page</a>
+<a href="../api/page_access_group.html">PageAccessGroup</a>
+<a href="../api/page_access_user.html">PageAccessUser</a>
+<a href="../api/permission.html">Permission</a>
+<a href="../api/postmortem.html">Postmortem</a>
+<a href="../api/status_embed_config.html">StatusEmbedConfig</a>
+<a href="../api/subscriber.html">Subscriber</a>
+<a href="../api/user.html">User</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/go.html">Golang</a>
+<a href="../sdks/lua.html">Lua</a>
+<a href="../sdks/php.html">PHP</a>
+<a href="../sdks/py.html">Python</a>
+<a href="../sdks/rb.html">Ruby</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
+<a href="../tools/go-mcp.html">Go MCP server</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="incident">Incident</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idincidents"><code>/pages/{page_id}/incidents</code></a></td>
+<td><code>create</code></td>
+<td>Create an incident</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idincidents"><code>/pages/{page_id}/incidents</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of incidents</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idincidentsactive_maintenance"><code>/pages/{page_id}/incidents/active_maintenance</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of active maintenances</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idincidentsscheduled"><code>/pages/{page_id}/incidents/scheduled</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of scheduled incidents</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idincidentsunresolved"><code>/pages/{page_id}/incidents/unresolved</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of unresolved incidents</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idincidentsupcoming"><code>/pages/{page_id}/incidents/upcoming</code></a></td>
+<td><code>list</code></td>
+<td>Get a list of upcoming incidents</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-pagespage_idincidentsincident_id"><code>/pages/{page_id}/incidents/{incident_id}</code></a></td>
+<td><code>load</code></td>
+<td>Get an incident</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><a href="#patch-pagespage_idincidentsincident_id"><code>/pages/{page_id}/incidents/{incident_id}</code></a></td>
+<td><code>patch</code></td>
+<td>Update an incident</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-pagespage_idincidentsincident_id"><code>/pages/{page_id}/incidents/{incident_id}</code></a></td>
+<td><code>remove</code></td>
+<td>Delete an incident</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><a href="#put-pagespage_idincidentsincident_id"><code>/pages/{page_id}/incidents/{incident_id}</code></a></td>
+<td><code>update</code></td>
+<td>Update an incident</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>impact</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>impact_override</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>incident</code></td>
+<td><code>object</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>incident_updates</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident.</td>
+</tr>
+<tr>
+<td><code>monitoring_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name.</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_body_last_updated_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents.</td>
+</tr>
+<tr>
+<td><code>resolved_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>scheduled_for</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>scheduled_reminded_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>scheduled_until</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The incident status.</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create">create</h2>
+<h3 id="post-pagespage_idincidents" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/incidents</h3>
+<p>Operation ID: <code>postPagesPageIdIncidents</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
+<h4 id="request-body">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>incident</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_at_beginning</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically when scheduled maintenance starts.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_on_completion</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically when scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_on_creation</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically when scheduled maintenance is created.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_one_hour_before</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically one hour before scheduled maintenance starts.</td>
+</tr>
+<tr>
+<td><code>incident.backfill_date</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>TimeStamp when incident was backfilled.</td>
+</tr>
+<tr>
+<td><code>incident.backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether incident is backfilled. If true, components cannot be specified.</td>
+</tr>
+<tr>
+<td><code>incident.body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The initial message, created as the first incident update. There is a maximum limit of 25000 characters</td>
+</tr>
+<tr>
+<td><code>incident.component_ids</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>List of component_ids affected by this incident</td>
+</tr>
+<tr>
+<td><code>incident.components</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Map of status changes to apply to affected components</td>
+</tr>
+<tr>
+<td><code>incident.components.f5ktlfs69wvz</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Map of status changes to apply to affected components</td>
+</tr>
+<tr>
+<td><code>incident.deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Deliver notifications to subscribers if this is true. If this is false, create an incident without notifying customers.</td>
+</tr>
+<tr>
+<td><code>incident.impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>incident.metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Attach a json object to the incident. All top-level values in the object must also be objects.</td>
+</tr>
+<tr>
+<td><code>incident.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>incident.reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_auto_transition</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Same as :scheduled_auto_transition_in_progress. Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>incident.status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses">Responses</h4>
+<h5 id="201-create-an-incident" class="status" data-status="2xx">201: Create an incident</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="400-bad-request" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-unprocessable-entity" class="status" data-status="4xx">422: Unprocessable entity</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-pagespage_idincidents" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents</h3>
+<p>Operation ID: <code>getPagesPageIdIncidents</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>q</code> | <code>query</code> | <code>string</code> | No | If this is specified, search for the text query string in the incidents' name, status, postmortem_body, and incident_updates fields. |
+| <code>limit</code> | <code>query</code> | <code>integer (int32)</code> | No | The maximum number of rows to return per page. The default and maximum limit is 100. |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. |</p>
+<h4 id="responses-1">Responses</h4>
+<h5 id="200-get-a-list-of-incidents" class="status" data-status="2xx">200: Get a list of incidents</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>[].components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>[].components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>[].components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>[].components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>[].components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>[].components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>[].components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>[].components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>[].components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>[].components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>[].impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>[].impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>[].incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>[].metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>[].monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>[].reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>[].resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>[].shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="400-bad-request-1" class="status" data-status="4xx">400: Bad request</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-1" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-1" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idincidentsactive_maintenance" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents/active_maintenance</h3>
+<p>Operation ID: <code>getPagesPageIdIncidentsActiveMaintenance</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-2">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. |</p>
+<h4 id="responses-2">Responses</h4>
+<h5 id="200-get-a-list-of-active-maintenances" class="status" data-status="2xx">200: Get a list of active maintenances</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>[].components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>[].components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>[].components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>[].components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>[].components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>[].components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>[].components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>[].components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>[].components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>[].components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>[].impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>[].impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>[].incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>[].metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>[].monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>[].reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>[].resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>[].shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-2" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-2" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idincidentsscheduled" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents/scheduled</h3>
+<p>Operation ID: <code>getPagesPageIdIncidentsScheduled</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-3">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. |</p>
+<h4 id="responses-3">Responses</h4>
+<h5 id="200-get-a-list-of-scheduled-incidents" class="status" data-status="2xx">200: Get a list of scheduled incidents</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>[].components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>[].components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>[].components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>[].components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>[].components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>[].components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>[].components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>[].components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>[].components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>[].components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>[].impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>[].impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>[].incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>[].metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>[].monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>[].reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>[].resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>[].shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-3" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-3" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idincidentsunresolved" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents/unresolved</h3>
+<p>Operation ID: <code>getPagesPageIdIncidentsUnresolved</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-4">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. |</p>
+<h4 id="responses-4">Responses</h4>
+<h5 id="200-get-a-list-of-unresolved-incidents" class="status" data-status="2xx">200: Get a list of unresolved incidents</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>[].components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>[].components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>[].components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>[].components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>[].components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>[].components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>[].components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>[].components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>[].components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>[].components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>[].impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>[].impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>[].incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>[].metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>[].monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>[].reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>[].resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>[].shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-4" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-4" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-pagespage_idincidentsupcoming" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents/upcoming</h3>
+<p>Operation ID: <code>getPagesPageIdIncidentsUpcoming</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-5">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. |
+| <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. |</p>
+<h4 id="responses-5">Responses</h4>
+<h5 id="200-get-a-list-of-upcoming-incidents" class="status" data-status="2xx">200: Get a list of upcoming incidents</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>[].auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>[].components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>[].components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>[].components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>[].components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>[].components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>[].components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>[].components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>[].components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>[].components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>[].components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>[].components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>[].components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>[].impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>[].impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>[].incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>[].incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>[].metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>[].monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>[].postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>[].reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>[].resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>[].scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>[].shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-could-not-authenticate-5" class="status" data-status="4xx">401: Could not authenticate</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-the-requested-resource-could-not-be-found-5" class="status" data-status="4xx">404: The requested resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="load">load</h2>
+<h3 id="get-pagespage_idincidentsincident_id" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents/{incident_id}</h3>
+<p>Operation ID: <code>getPagesPageIdIncidentsIncidentId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-6">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |</p>
+<h4 id="responses-6">Responses</h4>
+<h5 id="200-get-an-incident" class="status" data-status="2xx">200: Get an incident</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="patch">patch</h2>
+<h3 id="patch-pagespage_idincidentsincident_id" class="operation" data-method="patch"><code>PATCH</code> /pages/{page_id}/incidents/{incident_id}</h3>
+<p>Operation ID: <code>patchPagesPageIdIncidentsIncidentId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-7">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |</p>
+<h4 id="request-body-1">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>incident</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_at_beginning</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically when scheduled maintenance starts.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_on_completion</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically when scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_on_creation</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically when scheduled maintenance is created.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_one_hour_before</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically one hour before scheduled maintenance starts.</td>
+</tr>
+<tr>
+<td><code>incident.backfill_date</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>TimeStamp when incident was backfilled.</td>
+</tr>
+<tr>
+<td><code>incident.backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether incident is backfilled. If true, components cannot be specified.</td>
+</tr>
+<tr>
+<td><code>incident.body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The initial message, created as the first incident update. There is a maximum limit of 25000 characters</td>
+</tr>
+<tr>
+<td><code>incident.component_ids</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>List of component_ids affected by this incident</td>
+</tr>
+<tr>
+<td><code>incident.components</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Map of status changes to apply to affected components</td>
+</tr>
+<tr>
+<td><code>incident.components.7jy26js5k7m9</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Map of status changes to apply to affected components</td>
+</tr>
+<tr>
+<td><code>incident.deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Deliver notifications to subscribers if this is true. If this is false, create an incident without notifying customers.</td>
+</tr>
+<tr>
+<td><code>incident.impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>incident.metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Attach a json object to the incident. All top-level values in the object must also be objects.</td>
+</tr>
+<tr>
+<td><code>incident.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>incident.reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_auto_transition</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Same as :scheduled_auto_transition_in_progress. Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>incident.status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-7">Responses</h4>
+<h5 id="200-update-an-incident" class="status" data-status="2xx">200: Update an incident</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="remove">remove</h2>
+<h3 id="delete-pagespage_idincidentsincident_id" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/incidents/{incident_id}</h3>
+<p>Operation ID: <code>deletePagesPageIdIncidentsIncidentId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-8">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |</p>
+<h4 id="responses-8">Responses</h4>
+<h5 id="200-delete-an-incident" class="status" data-status="2xx">200: Delete an incident</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="update">update</h2>
+<h3 id="put-pagespage_idincidentsincident_id" class="operation" data-method="put"><code>PUT</code> /pages/{page_id}/incidents/{incident_id}</h3>
+<p>Operation ID: <code>putPagesPageIdIncidentsIncidentId</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-9">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |</p>
+<h4 id="request-body-2">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>incident</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>incident.auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_at_beginning</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically when scheduled maintenance starts.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_on_completion</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically when scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_on_creation</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically when scheduled maintenance is created.</td>
+</tr>
+<tr>
+<td><code>incident.auto_tweet_one_hour_before</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether tweet automatically one hour before scheduled maintenance starts.</td>
+</tr>
+<tr>
+<td><code>incident.backfill_date</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>TimeStamp when incident was backfilled.</td>
+</tr>
+<tr>
+<td><code>incident.backfilled</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether incident is backfilled. If true, components cannot be specified.</td>
+</tr>
+<tr>
+<td><code>incident.body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The initial message, created as the first incident update. There is a maximum limit of 25000 characters</td>
+</tr>
+<tr>
+<td><code>incident.component_ids</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>List of component_ids affected by this incident</td>
+</tr>
+<tr>
+<td><code>incident.components</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Map of status changes to apply to affected components</td>
+</tr>
+<tr>
+<td><code>incident.components.7jy26js5k7m9</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Map of status changes to apply to affected components</td>
+</tr>
+<tr>
+<td><code>incident.deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Deliver notifications to subscribers if this is true. If this is false, create an incident without notifying customers.</td>
+</tr>
+<tr>
+<td><code>incident.impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>incident.metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Attach a json object to the incident. All top-level values in the object must also be objects.</td>
+</tr>
+<tr>
+<td><code>incident.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>incident.reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_auto_transition</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Same as :scheduled_auto_transition_in_progress. Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>incident.scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>incident.status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-9">Responses</h4>
+<h5 id="200-update-an-incident-1" class="status" data-status="2xx">200: Update an incident</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_end</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to completed.</td>
+</tr>
+<tr>
+<td><code>auto_transition_deliver_notifications_at_start</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether send notification when scheduled maintenances auto transition to started.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_maintenance_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+</tr>
+<tr>
+<td><code>auto_transition_to_operational_state</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether change components status to operational once scheduled maintenance completes.</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Incident components</td>
+</tr>
+<tr>
+<td><code>components[].automation_email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>components[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>More detailed description for component</td>
+</tr>
+<tr>
+<td><code>components[].group</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Is this component a group</td>
+</tr>
+<tr>
+<td><code>components[].group_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Component Group identifier</td>
+</tr>
+<tr>
+<td><code>components[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Identifier for component</td>
+</tr>
+<tr>
+<td><code>components[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Display name for component</td>
+</tr>
+<tr>
+<td><code>components[].only_show_if_degraded</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Requires a special feature flag to be enabled</td>
+</tr>
+<tr>
+<td><code>components[].page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Page identifier</td>
+</tr>
+<tr>
+<td><code>components[].position</code></td>
+<td><code>integer (int32)</code></td>
+<td>No</td>
+<td>Order the component will appear on the page</td>
+</tr>
+<tr>
+<td><code>components[].showcase</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Should this component be showcased</td>
+</tr>
+<tr>
+<td><code>components[].start_date</code></td>
+<td><code>string (date)</code></td>
+<td>No</td>
+<td>The date this component started being used</td>
+</tr>
+<tr>
+<td><code>components[].status</code></td>
+<td><code>enum: operational, under_maintenance, degraded_performance, partial_outage, major_outage, </code></td>
+<td>No</td>
+<td>Status of component</td>
+</tr>
+<tr>
+<td><code>components[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was created at.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier</td>
+</tr>
+<tr>
+<td><code>impact</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>The impact of the incident.</td>
+</tr>
+<tr>
+<td><code>impact_override</code></td>
+<td><code>enum: none, maintenance, minor, major, critical</code></td>
+<td>No</td>
+<td>value to override calculated impact value</td>
+</tr>
+<tr>
+<td><code>incident_updates</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>The incident updates for incident.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].affected_components</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Affected components associated with the incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident update body.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update was created at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].custom_tweet</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>An optional customized tweet message for incident postmortem.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].deliver_notifications</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to delivery notifications.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].display_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>Timestamp when incident update is happened.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Update Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].incident_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Identifier.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].tweet_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Tweet identifier associated to this incident update.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].twitter_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when twitter updated at.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident update is updated.</td>
+</tr>
+<tr>
+<td><code>incident_updates[].wants_twitter_update</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to create twitter update.</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>Object</code></td>
+<td>No</td>
+<td>Metadata attached to the incident. Top level values must be objects.</td>
+</tr>
+<tr>
+<td><code>monitoring_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident entered monitoring state.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Name. There is a maximum limit of 255 characters.</td>
+</tr>
+<tr>
+<td><code>page_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Page Identifier</td>
+</tr>
+<tr>
+<td><code>postmortem_body</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Body of the Postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_body_last_updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident postmortem body was last updated at.</td>
+</tr>
+<tr>
+<td><code>postmortem_ignored</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident will have postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_subscribers</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indicates whether subscribers are already notificed about postmortem.</td>
+</tr>
+<tr>
+<td><code>postmortem_notified_twitter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to decide if notify postmortem on twitter.</td>
+</tr>
+<tr>
+<td><code>postmortem_published_at</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>The timestamp when the postmortem was published.</td>
+</tr>
+<tr>
+<td><code>reminder_intervals</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+</tr>
+<tr>
+<td><code>resolved_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when incident was resolved.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_completed</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to complete.</td>
+</tr>
+<tr>
+<td><code>scheduled_auto_in_progress</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether the incident is scheduled to automatically change to in progress.</td>
+</tr>
+<tr>
+<td><code>scheduled_for</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled for.</td>
+</tr>
+<tr>
+<td><code>scheduled_remind_prior</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Controls whether to remind subscribers prior to scheduled incidents.</td>
+</tr>
+<tr>
+<td><code>scheduled_reminded_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the scheduled incident reminder was sent at.</td>
+</tr>
+<tr>
+<td><code>scheduled_until</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp the incident is scheduled until.</td>
+</tr>
+<tr>
+<td><code>shortlink</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Incident Shortlink.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
+<td>No</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>No</td>
+<td>The timestamp when the incident was updated at.</td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

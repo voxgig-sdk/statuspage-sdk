@@ -1195,9 +1195,6 @@ IncidentUpdateUpdateData = Struct.new(
 # @!attribute [rw] created_at
 #   @return [String, nil]
 #
-# @!attribute [rw] data
-#   @return [Hash]
-#
 # @!attribute [rw] decimal_places
 #   @return [Integer, nil]
 #
@@ -1249,7 +1246,6 @@ Metric = Struct.new(
   :backfill_percentage,
   :backfilled,
   :created_at,
-  :data,
   :decimal_places,
   :display,
   :id,
@@ -1332,9 +1328,6 @@ MetricListMatch = Struct.new(
 # @!attribute [rw] created_at
 #   @return [String, nil]
 #
-# @!attribute [rw] data
-#   @return [Hash]
-#
 # @!attribute [rw] decimal_places
 #   @return [Integer, nil]
 #
@@ -1385,7 +1378,6 @@ MetricCreateData = Struct.new(
   :backfill_percentage,
   :backfilled,
   :created_at,
-  :data,
   :decimal_places,
   :display,
   :id,
@@ -1420,9 +1412,6 @@ MetricCreateData = Struct.new(
 #
 # @!attribute [rw] created_at
 #   @return [String, nil]
-#
-# @!attribute [rw] data
-#   @return [Hash, nil]
 #
 # @!attribute [rw] decimal_places
 #   @return [Integer, nil]
@@ -1474,7 +1463,6 @@ MetricUpdateData = Struct.new(
   :backfill_percentage,
   :backfilled,
   :created_at,
-  :data,
   :decimal_places,
   :display,
   :last_fetched_at,
@@ -2424,9 +2412,6 @@ PageAccessGroupRemoveMatch = Struct.new(
 
 # PageAccessUser entity data model.
 #
-# @!attribute [rw] component_ids
-#   @return [Array]
-#
 # @!attribute [rw] created_at
 #   @return [String, nil]
 #
@@ -2438,9 +2423,6 @@ PageAccessGroupRemoveMatch = Struct.new(
 #
 # @!attribute [rw] id
 #   @return [String, nil]
-#
-# @!attribute [rw] metric_ids
-#   @return [Array]
 #
 # @!attribute [rw] page_access_group_id
 #   @return [String, nil]
@@ -2457,12 +2439,10 @@ PageAccessGroupRemoveMatch = Struct.new(
 # @!attribute [rw] updated_at
 #   @return [String, nil]
 PageAccessUser = Struct.new(
-  :component_ids,
   :created_at,
   :email,
   :external_login,
   :id,
-  :metric_ids,
   :page_access_group_id,
   :page_access_group_ids,
   :page_access_user,
@@ -2510,9 +2490,6 @@ PageAccessUserListMatch = Struct.new(
 # @!attribute [rw] id
 #   @return [String]
 #
-# @!attribute [rw] component_ids
-#   @return [Array]
-#
 # @!attribute [rw] created_at
 #   @return [String, nil]
 #
@@ -2521,9 +2498,6 @@ PageAccessUserListMatch = Struct.new(
 #
 # @!attribute [rw] external_login
 #   @return [String, nil]
-#
-# @!attribute [rw] metric_ids
-#   @return [Array]
 #
 # @!attribute [rw] page_access_group_id
 #   @return [String, nil]
@@ -2541,11 +2515,9 @@ PageAccessUserListMatch = Struct.new(
 #   @return [String, nil]
 PageAccessUserCreateData = Struct.new(
   :id,
-  :component_ids,
   :created_at,
   :email,
   :external_login,
-  :metric_ids,
   :page_access_group_id,
   :page_access_group_ids,
   :page_access_user,
@@ -2562,9 +2534,6 @@ PageAccessUserCreateData = Struct.new(
 # @!attribute [rw] page_id
 #   @return [String]
 #
-# @!attribute [rw] component_ids
-#   @return [Array, nil]
-#
 # @!attribute [rw] created_at
 #   @return [String, nil]
 #
@@ -2573,9 +2542,6 @@ PageAccessUserCreateData = Struct.new(
 #
 # @!attribute [rw] external_login
 #   @return [String, nil]
-#
-# @!attribute [rw] metric_ids
-#   @return [Array, nil]
 #
 # @!attribute [rw] page_access_group_id
 #   @return [String, nil]
@@ -2591,11 +2557,9 @@ PageAccessUserCreateData = Struct.new(
 PageAccessUserUpdateData = Struct.new(
   :id,
   :page_id,
-  :component_ids,
   :created_at,
   :email,
   :external_login,
-  :metric_ids,
   :page_access_group_id,
   :page_access_group_ids,
   :page_access_user,
@@ -2900,9 +2864,6 @@ StatusEmbedConfigUpdateData = Struct.new(
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] integration_partner
-#   @return [Integer, nil]
-#
 # @!attribute [rw] mode
 #   @return [String, nil]
 #
@@ -2927,32 +2888,8 @@ StatusEmbedConfigUpdateData = Struct.new(
 # @!attribute [rw] skip_confirmation_notification
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] skip_unsubscription_notification
-#   @return [Boolean, nil]
-#
-# @!attribute [rw] slack
-#   @return [Integer, nil]
-#
-# @!attribute [rw] sms
-#   @return [Integer, nil]
-#
-# @!attribute [rw] state
-#   @return [String, nil]
-#
 # @!attribute [rw] subscriber
 #   @return [Hash, nil]
-#
-# @!attribute [rw] subscribers
-#   @return [String]
-#
-# @!attribute [rw] teams
-#   @return [Integer, nil]
-#
-# @!attribute [rw] type
-#   @return [String, nil]
-#
-# @!attribute [rw] webhook
-#   @return [Integer, nil]
 #
 # @!attribute [rw] workspace_name
 #   @return [String, nil]
@@ -2964,7 +2901,6 @@ Subscriber = Struct.new(
   :email,
   :endpoint,
   :id,
-  :integration_partner,
   :mode,
   :obfuscated_channel_name,
   :page_access_user_id,
@@ -2973,15 +2909,7 @@ Subscriber = Struct.new(
   :purge_at,
   :quarantined_at,
   :skip_confirmation_notification,
-  :skip_unsubscription_notification,
-  :slack,
-  :sms,
-  :state,
   :subscriber,
-  :subscribers,
-  :teams,
-  :type,
-  :webhook,
   :workspace_name,
   keyword_init: true
 )
@@ -3077,9 +3005,6 @@ SubscriberListMatch = Struct.new(
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] integration_partner
-#   @return [Integer, nil]
-#
 # @!attribute [rw] mode
 #   @return [String, nil]
 #
@@ -3104,32 +3029,8 @@ SubscriberListMatch = Struct.new(
 # @!attribute [rw] skip_confirmation_notification
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] skip_unsubscription_notification
-#   @return [Boolean, nil]
-#
-# @!attribute [rw] slack
-#   @return [Integer, nil]
-#
-# @!attribute [rw] sms
-#   @return [Integer, nil]
-#
-# @!attribute [rw] state
-#   @return [String, nil]
-#
 # @!attribute [rw] subscriber
 #   @return [Hash, nil]
-#
-# @!attribute [rw] subscribers
-#   @return [String]
-#
-# @!attribute [rw] teams
-#   @return [Integer, nil]
-#
-# @!attribute [rw] type
-#   @return [String, nil]
-#
-# @!attribute [rw] webhook
-#   @return [Integer, nil]
 #
 # @!attribute [rw] workspace_name
 #   @return [String, nil]
@@ -3143,7 +3044,6 @@ SubscriberCreateData = Struct.new(
   :email,
   :endpoint,
   :id,
-  :integration_partner,
   :mode,
   :obfuscated_channel_name,
   :page_access_user_id,
@@ -3152,15 +3052,7 @@ SubscriberCreateData = Struct.new(
   :purge_at,
   :quarantined_at,
   :skip_confirmation_notification,
-  :skip_unsubscription_notification,
-  :slack,
-  :sms,
-  :state,
   :subscriber,
-  :subscribers,
-  :teams,
-  :type,
-  :webhook,
   :workspace_name,
   keyword_init: true
 )
@@ -3191,9 +3083,6 @@ SubscriberCreateData = Struct.new(
 # @!attribute [rw] endpoint
 #   @return [String, nil]
 #
-# @!attribute [rw] integration_partner
-#   @return [Integer, nil]
-#
 # @!attribute [rw] mode
 #   @return [String, nil]
 #
@@ -3218,32 +3107,8 @@ SubscriberCreateData = Struct.new(
 # @!attribute [rw] skip_confirmation_notification
 #   @return [Boolean, nil]
 #
-# @!attribute [rw] skip_unsubscription_notification
-#   @return [Boolean, nil]
-#
-# @!attribute [rw] slack
-#   @return [Integer, nil]
-#
-# @!attribute [rw] sms
-#   @return [Integer, nil]
-#
-# @!attribute [rw] state
-#   @return [String, nil]
-#
 # @!attribute [rw] subscriber
 #   @return [Hash, nil]
-#
-# @!attribute [rw] subscribers
-#   @return [String, nil]
-#
-# @!attribute [rw] teams
-#   @return [Integer, nil]
-#
-# @!attribute [rw] type
-#   @return [String, nil]
-#
-# @!attribute [rw] webhook
-#   @return [Integer, nil]
 #
 # @!attribute [rw] workspace_name
 #   @return [String, nil]
@@ -3256,7 +3121,6 @@ SubscriberUpdateData = Struct.new(
   :display_phone_number,
   :email,
   :endpoint,
-  :integration_partner,
   :mode,
   :obfuscated_channel_name,
   :page_access_user_id,
@@ -3265,15 +3129,7 @@ SubscriberUpdateData = Struct.new(
   :purge_at,
   :quarantined_at,
   :skip_confirmation_notification,
-  :skip_unsubscription_notification,
-  :slack,
-  :sms,
-  :state,
   :subscriber,
-  :subscribers,
-  :teams,
-  :type,
-  :webhook,
   :workspace_name,
   keyword_init: true
 )

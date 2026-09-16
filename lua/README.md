@@ -287,7 +287,7 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 | `description` | More detailed description for component |
 | `group` | Is this component a group |
 | `group_id` | Component Group identifier |
-| `id` | Incident identifier |
+| `id` | Identifier for component |
 | `name` | Display name for component |
 | `only_show_if_degraded` | Requires a special feature flag to be enabled |
 | `page_id` | Page identifier |
@@ -440,7 +440,6 @@ API path: `/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_u
 | `backfill_percentage` |  |
 | `backfilled` |  |
 | `created_at` |  |
-| `data` | Add data points to metrics |
 | `decimal_places` |  |
 | `display` | Should the metric be displayed |
 | `id` | Metric identifier |
@@ -539,7 +538,7 @@ API path: `/pages`
 
 | Field | Description |
 | --- | --- |
-| `component_ids` | List of components codes to set on the page access group |
+| `component_ids` |  |
 | `created_at` |  |
 | `external_identifier` | Associates group with external group. |
 | `id` | Page Access Group Identifier |
@@ -558,12 +557,10 @@ API path: `/pages/{page_id}/page_access_groups/{page_access_group_id}/components
 
 | Field | Description |
 | --- | --- |
-| `component_ids` | List of component codes to allow access to |
 | `created_at` |  |
 | `email` |  |
 | `external_login` | IDP login user id. |
 | `id` | Page Access User Identifier |
-| `metric_ids` | List of metrics to add |
 | `page_access_group_id` |  |
 | `page_access_group_ids` |  |
 | `page_access_user` |  |
@@ -634,7 +631,6 @@ API path: `/pages/{page_id}/status_embed_config`
 | `email` | The email address to use to contact the subscriber. |
 | `endpoint` | The URL where a webhook subscriber elects to receive updates. |
 | `id` | Subscriber Identifier |
-| `integration_partner` | The number of integration partners found by the query. |
 | `mode` | The communication mode of the subscriber. |
 | `obfuscated_channel_name` | Obfuscated slack channel name |
 | `page_access_user_id` | The Page Access user this subscriber belongs to (only for audience-specific pages). |
@@ -643,15 +639,7 @@ API path: `/pages/{page_id}/status_embed_config`
 | `purge_at` | The timestamp when a quarantined subscriber will be purged (unsubscribed). |
 | `quarantined_at` | The timestamp when the subscriber was quarantined due to an issue reaching them. |
 | `skip_confirmation_notification` | If this is true, do not notify the user with changes to their subscription. |
-| `skip_unsubscription_notification` | If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed. |
-| `slack` | The number of Slack subscribers found by the query. |
-| `sms` | The number of Webhook subscribers found by the query. |
-| `state` | If this is present, only unsubscribe subscribers in this state. |
 | `subscriber` |  |
-| `subscribers` | The array of quarantined subscriber codes to reactivate, or "all" to reactivate all quarantined subscribers. |
-| `teams` | The number of MS teams subscribers found by the query. |
-| `type` | If this is present, only reactivate subscribers of this type. |
-| `webhook` | The number of SMS subscribers found by the query. |
 | `workspace_name` | The workspace name of the slack subscriber. |
 
 Operations: Create, List, Load, Remove, Update.
@@ -704,7 +692,7 @@ Create an instance: `local component = client:Component(nil)`
 | `description` | `string` | More detailed description for component |
 | `group` | `boolean` | Is this component a group |
 | `group_id` | `string` | Component Group identifier |
-| `id` | `string` | Incident identifier |
+| `id` | `string` | Identifier for component |
 | `name` | `string` | Display name for component |
 | `only_show_if_degraded` | `boolean` | Requires a special feature flag to be enabled |
 | `page_id` | `string` | Page identifier |
@@ -1014,7 +1002,6 @@ Create an instance: `local metric = client:Metric(nil)`
 | `backfill_percentage` | `number` |  |
 | `backfilled` | `boolean` |  |
 | `created_at` | `string` |  |
-| `data` | `table` | Add data points to metrics |
 | `decimal_places` | `number` |  |
 | `display` | `boolean` | Should the metric be displayed |
 | `id` | `string` | Metric identifier |
@@ -1050,7 +1037,6 @@ local metrics, err = client:Metric():list()
 local metric, err = client:Metric():create({
   metrics_provider_id = "example_metrics_provider_id", -- string
   page_id = "example_page_id", -- string
-  data = {}, -- table
 })
 ```
 
@@ -1198,7 +1184,7 @@ Create an instance: `local page_access_group = client:PageAccessGroup(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_ids` | `table` | List of components codes to set on the page access group |
+| `component_ids` | `table` |  |
 | `created_at` | `string` |  |
 | `external_identifier` | `string` | Associates group with external group. |
 | `id` | `string` | Page Access Group Identifier |
@@ -1248,12 +1234,10 @@ Create an instance: `local page_access_user = client:PageAccessUser(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_ids` | `table` | List of component codes to allow access to |
 | `created_at` | `string` |  |
 | `email` | `string` |  |
 | `external_login` | `string` | IDP login user id. |
 | `id` | `string` | Page Access User Identifier |
-| `metric_ids` | `table` | List of metrics to add |
 | `page_access_group_id` | `string` |  |
 | `page_access_group_ids` | `string` |  |
 | `page_access_user` | `table` |  |
@@ -1277,8 +1261,6 @@ local page_access_users, err = client:PageAccessUser():list()
 ```lua
 local page_access_user, err = client:PageAccessUser():create({
   id = "example_id", -- string
-  component_ids = {}, -- table
-  metric_ids = {}, -- table
 })
 ```
 
@@ -1399,7 +1381,6 @@ Create an instance: `local subscriber = client:Subscriber(nil)`
 | `email` | `string` | The email address to use to contact the subscriber. |
 | `endpoint` | `string` | The URL where a webhook subscriber elects to receive updates. |
 | `id` | `string` | Subscriber Identifier |
-| `integration_partner` | `number` | The number of integration partners found by the query. |
 | `mode` | `string` | The communication mode of the subscriber. |
 | `obfuscated_channel_name` | `string` | Obfuscated slack channel name |
 | `page_access_user_id` | `string` | The Page Access user this subscriber belongs to (only for audience-specific pages). |
@@ -1408,15 +1389,7 @@ Create an instance: `local subscriber = client:Subscriber(nil)`
 | `purge_at` | `string` | The timestamp when a quarantined subscriber will be purged (unsubscribed). |
 | `quarantined_at` | `string` | The timestamp when the subscriber was quarantined due to an issue reaching them. |
 | `skip_confirmation_notification` | `boolean` | If this is true, do not notify the user with changes to their subscription. |
-| `skip_unsubscription_notification` | `boolean` | If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed. |
-| `slack` | `number` | The number of Slack subscribers found by the query. |
-| `sms` | `number` | The number of Webhook subscribers found by the query. |
-| `state` | `string` | If this is present, only unsubscribe subscribers in this state. |
 | `subscriber` | `table` |  |
-| `subscribers` | `string` | The array of quarantined subscriber codes to reactivate, or "all" to reactivate all quarantined subscribers. |
-| `teams` | `number` | The number of MS teams subscribers found by the query. |
-| `type` | `string` | If this is present, only reactivate subscribers of this type. |
-| `webhook` | `number` | The number of SMS subscribers found by the query. |
 | `workspace_name` | `string` | The workspace name of the slack subscriber. |
 
 #### Example: Load
@@ -1436,7 +1409,6 @@ local subscribers, err = client:Subscriber():list()
 ```lua
 local subscriber, err = client:Subscriber():create({
   page_id = "example_page_id", -- string
-  subscribers = "example_subscribers", -- string
 })
 ```
 
@@ -1483,7 +1455,7 @@ local user, err = client:User():create({
 
 ## Features
 
-This SDK ships 1 optional features. Each is **inactive until you
+This SDK ships 8 optional features. Each is **inactive until you
 switch it on**, so an SDK you have not configured behaves exactly as if none of
 them existed — no retries, no cache, no logging, no measurable overhead.
 
@@ -1492,7 +1464,105 @@ above:
 
 | Feature | What it does |
 |---|---|
+| [`debug`](#debug) | Request/response capture ring buffer for debugging |
+| [`idempotency`](#idempotency) | Idempotency keys for safe retries of mutating operations |
+| [`metrics`](#metrics) | Statistics capture: per-operation counters and latency |
+| [`paging`](#paging) | Pagination signals for list operations |
+| [`ratelimit`](#ratelimit) | Client-side rate limiting via a token bucket |
+| [`retry`](#retry) | Automatic retry of transient failures with exponential backoff |
 | [`test`](#test) | In-memory mock transport for testing without a live server |
+| [`timeout`](#timeout) | Per-request timeout with transport abort |
+
+> **Order matters for `ratelimit`, `retry`, `timeout`.** These wrap the
+> transport, so each one wraps whatever is already installed: the order you
+> activate them in IS the nesting order. Activating them as an ordered list
+> rather than a map is what fixes that order.
+
+### debug
+
+Request/response capture ring buffer for debugging.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `max` | `100` |
+| `redact` | `['authorization', 'cookie', 'set-cookie', 'api-key', 'apikey', 'x-api-key', 'idempotency-key']` |
+
+Set `feature.debug.active` to enable it, then override any of the options above.
+
+### idempotency
+
+Idempotency keys for safe retries of mutating operations.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `header` | `'Idempotency-Key'` |
+| `methods` | `['POST', 'PUT', 'PATCH', 'DELETE']` |
+| `ops` | `['create', 'update', 'remove']` |
+
+Set `feature.idempotency.active` to enable it, then override any of the options above.
+
+### metrics
+
+Statistics capture: per-operation counters and latency.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+
+Set `feature.metrics.active` to enable it, then override any of the options above.
+
+### paging
+
+Pagination signals for list operations.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `afterVar` | `'after'` |
+| `cursorParam` | `'cursor'` |
+| `firstVar` | `'first'` |
+| `limitParam` | `'limit'` |
+| `pageParam` | `'page'` |
+| `startPage` | `1` |
+
+Set `feature.paging.active` to enable it, then override any of the options above.
+
+### ratelimit
+
+Client-side rate limiting via a token bucket.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `burst` | `5` |
+| `rate` | `5` |
+
+Set `feature.ratelimit.active` to enable it, then override any of the options above.
+
+`ratelimit` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
+### retry
+
+Automatic retry of transient failures with exponential backoff.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `factor` | `2` |
+| `maxDelay` | `2000` |
+| `minDelay` | `50` |
+| `retries` | `2` |
+| `statuses` | `[408, 425, 429, 500, 502, 503, 504]` |
+
+Set `feature.retry.active` to enable it, then override any of the options above.
+
+`retry` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
 
 ### test
 
@@ -1503,6 +1573,21 @@ In-memory mock transport for testing without a live server.
 | `active` | `false` |
 
 Set `feature.test.active` to enable it, then override any of the options above.
+
+### timeout
+
+Per-request timeout with transport abort.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `ms` | `30000` |
+
+Set `feature.timeout.active` to enable it, then override any of the options above.
+
+`timeout` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
 
 
 ## Advanced
@@ -1543,7 +1628,14 @@ with hook methods named after pipeline stages (e.g. `PrePoint`,
 
 The SDK ships with built-in features:
 
+- **DebugFeature**: Request/response capture ring buffer for debugging
+- **IdempotencyFeature**: Idempotency keys for safe retries of mutating operations
+- **MetricsFeature**: Statistics capture: per-operation counters and latency
+- **PagingFeature**: Pagination signals for list operations
+- **RatelimitFeature**: Client-side rate limiting via a token bucket
+- **RetryFeature**: Automatic retry of transient failures with exponential backoff
 - **TestFeature**: In-memory mock transport for testing without a live server
+- **TimeoutFeature**: Per-request timeout with transport abort
 
 Features are initialized in order. Hooks fire in the order features
 were added, so later features can override earlier ones.

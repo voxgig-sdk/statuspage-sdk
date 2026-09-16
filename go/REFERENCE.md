@@ -173,7 +173,7 @@ fmt.Println(component.GetName()) // "component"
 | `description` | `string` | No | More detailed description for component |
 | `group` | `bool` | No | Is this component a group |
 | `group_id` | `string` | No | Component Group identifier |
-| `id` | `string` | No | Incident identifier |
+| `id` | `string` | No | Identifier for component |
 | `name` | `string` | No | Display name for component |
 | `only_show_if_degraded` | `bool` | No | Requires a special feature flag to be enabled |
 | `page_id` | `string` | No | Page identifier |
@@ -874,7 +874,6 @@ fmt.Println(metric.GetName()) // "metric"
 | `backfill_percentage` | `int` | No |  |
 | `backfilled` | `bool` | No |  |
 | `created_at` | `string` | No |  |
-| `data` | `map[string]any` | Yes | Add data points to metrics |
 | `decimal_places` | `int` | No |  |
 | `display` | `bool` | No | Should the metric be displayed |
 | `id` | `string` | No | Metric identifier |
@@ -926,7 +925,6 @@ Create a new entity with the given data.
 result, err := client.Metric(nil).Create(map[string]any{
     "metrics_provider_id": "example_metrics_provider_id",
     "page_id": "example_page_id",
-    "data": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1233,7 +1231,7 @@ fmt.Println(pageAccessGroup.GetName()) // "page_access_group"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_ids` | `[]any` | No | List of components codes to set on the page access group |
+| `component_ids` | `[]any` | No |  |
 | `created_at` | `string` | No |  |
 | `external_identifier` | `string` | No | Associates group with external group. |
 | `id` | `string` | No | Page Access Group Identifier |
@@ -1243,21 +1241,6 @@ fmt.Println(pageAccessGroup.GetName()) // "page_access_group"
 | `page_access_user_ids` | `[]any` | No |  |
 | `page_id` | `string` | No | Page Identifier. |
 | `updated_at` | `string` | No |  |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `component_ids` | - | - | Yes | - | - |
-| `created_at` | - | - | - | - | - |
-| `external_identifier` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `metric_ids` | - | - | - | - | - |
-| `name` | - | - | - | - | - |
-| `page_access_group` | - | - | - | - | - |
-| `page_access_user_ids` | - | - | - | - | - |
-| `page_id` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -1362,12 +1345,10 @@ fmt.Println(pageAccessUser.GetName()) // "page_access_user"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `component_ids` | `[]any` | Yes | List of component codes to allow access to |
 | `created_at` | `string` | No |  |
 | `email` | `string` | No |  |
 | `external_login` | `string` | No | IDP login user id. |
 | `id` | `string` | No | Page Access User Identifier |
-| `metric_ids` | `[]any` | Yes | List of metrics to add |
 | `page_access_group_id` | `string` | No |  |
 | `page_access_group_ids` | `string` | No |  |
 | `page_access_user` | `map[string]any` | No |  |
@@ -1407,8 +1388,6 @@ Create a new entity with the given data.
 ```go
 result, err := client.PageAccessUser(nil).Create(map[string]any{
     "id": "example_id",
-    "component_ids": []any{},
-    "metric_ids": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1561,23 +1540,6 @@ fmt.Println(postmortem.GetName()) // "postmortem"
 | `published_at` | `string` | No |  |
 | `updated_at` | `string` | No |  |
 
-### Field Usage by Operation
-
-| Field | load | update |
-| --- | --- | --- |
-| `body` | - | - |
-| `body_draft` | - | - |
-| `body_draft_updated_at` | - | - |
-| `body_updated_at` | - | - |
-| `created_at` | - | - |
-| `custom_tweet` | - | - |
-| `notify_subscribers` | - | - |
-| `notify_twitter` | - | - |
-| `postmortem` | - | Yes |
-| `preview_key` | - | - |
-| `published_at` | - | - |
-| `updated_at` | - | - |
-
 ### Operations
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -1722,7 +1684,6 @@ fmt.Println(subscriber.GetName()) // "subscriber"
 | `email` | `string` | No | The email address to use to contact the subscriber. |
 | `endpoint` | `string` | No | The URL where a webhook subscriber elects to receive updates. |
 | `id` | `string` | No | Subscriber Identifier |
-| `integration_partner` | `int` | No | The number of integration partners found by the query. |
 | `mode` | `string` | No | The communication mode of the subscriber. |
 | `obfuscated_channel_name` | `string` | No | Obfuscated slack channel name |
 | `page_access_user_id` | `string` | No | The Page Access user this subscriber belongs to (only for audience-specific pages). |
@@ -1731,15 +1692,7 @@ fmt.Println(subscriber.GetName()) // "subscriber"
 | `purge_at` | `string` | No | The timestamp when a quarantined subscriber will be purged (unsubscribed). |
 | `quarantined_at` | `string` | No | The timestamp when the subscriber was quarantined due to an issue reaching them. |
 | `skip_confirmation_notification` | `bool` | No | If this is true, do not notify the user with changes to their subscription. |
-| `skip_unsubscription_notification` | `bool` | No | If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed. |
-| `slack` | `int` | No | The number of Slack subscribers found by the query. |
-| `sms` | `int` | No | The number of Webhook subscribers found by the query. |
-| `state` | `string` | No | If this is present, only unsubscribe subscribers in this state. |
 | `subscriber` | `map[string]any` | No |  |
-| `subscribers` | `string` | Yes | The array of quarantined subscriber codes to reactivate, or "all" to reactivate all quarantined subscribers. |
-| `teams` | `int` | No | The number of MS teams subscribers found by the query. |
-| `type` | `string` | No | If this is present, only reactivate subscribers of this type. |
-| `webhook` | `int` | No | The number of SMS subscribers found by the query. |
 | `workspace_name` | `string` | No | The workspace name of the slack subscriber. |
 
 ### Operations
@@ -1775,7 +1728,6 @@ Create a new entity with the given data.
 ```go
 result, err := client.Subscriber(nil).Create(map[string]any{
     "page_id": "example_page_id",
-    "subscribers": "example_subscribers",
 }, nil)
 if err != nil {
     panic(err)
@@ -1924,7 +1876,14 @@ Return the entity name.
 
 | Feature | Version | Description |
 | --- | --- | --- |
+| `debug` | 0.0.1 | Request/response capture ring buffer for debugging |
+| `idempotency` | 0.0.1 | Idempotency keys for safe retries of mutating operations |
+| `metrics` | 0.0.1 | Statistics capture: per-operation counters and latency |
+| `paging` | 0.0.1 | Pagination signals for list operations |
+| `ratelimit` | 0.0.1 | Client-side rate limiting via a token bucket |
+| `retry` | 0.0.1 | Automatic retry of transient failures with exponential backoff |
 | `test` | 0.0.1 | In-memory mock transport for testing without a live server |
+| `timeout` | 0.0.1 | Per-request timeout with transport abort |
 
 
 Features are activated via the `feature` option:
@@ -1932,7 +1891,14 @@ Features are activated via the `feature` option:
 ```go
 client := sdk.NewStatuspageSDK(map[string]any{
     "feature": map[string]any{
+        "debug": map[string]any{"active": true},
+        "idempotency": map[string]any{"active": true},
+        "metrics": map[string]any{"active": true},
+        "paging": map[string]any{"active": true},
+        "ratelimit": map[string]any{"active": true},
+        "retry": map[string]any{"active": true},
         "test": map[string]any{"active": true},
+        "timeout": map[string]any{"active": true},
     },
 })
 ```
@@ -1947,6 +1913,210 @@ unless you name it.
 The array form of \`feature\` is significant: several features wrap the
 transport, and the order you list them in is the order they nest.
 
+#### Ordering
+
+`ratelimit`, `retry`, `timeout` wrap the transport. Each
+wraps whatever is already installed, so **activation order is nesting order**:
+a feature activated later sits OUTSIDE one activated earlier, and sees the call
+first.
+
+That decides behaviour, not just sequence: a feature that short-circuits the
+call, such as a cache serving a hit, stops every feature nested inside it from
+ever seeing that call.
+
+`debug`, `idempotency`, `metrics`, `paging`, `test` attach to pipeline hooks
+rather than the transport, so their order does not affect what they observe.
+
+#### `debug`
+
+Request/response capture ring buffer for debugging.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `max` | `100` |
+| `redact` | `['authorization', 'cookie', 'set-cookie', 'api-key', 'apikey', 'x-api-key', 'idempotency-key']` |
+
+| Option | Type |
+|---|---|
+| `now` | function |
+| `onEntry` | function |
+
+These take no default: the feature behaves one way when you supply them and
+another when you do not.
+
+**Usage**
+
+Set `feature.debug.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Attaches to pipeline hooks, not the transport, so activation order does
+  not change what it observes.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `idempotency`
+
+Idempotency keys for safe retries of mutating operations.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `header` | `'Idempotency-Key'` |
+| `methods` | `['POST', 'PUT', 'PATCH', 'DELETE']` |
+| `ops` | `['create', 'update', 'remove']` |
+
+| Option | Type |
+|---|---|
+| `keygen` | function |
+
+These take no default: the feature behaves one way when you supply them and
+another when you do not.
+
+**Usage**
+
+Set `feature.idempotency.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Attaches to pipeline hooks, not the transport, so activation order does
+  not change what it observes.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `metrics`
+
+Statistics capture: per-operation counters and latency.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+
+| Option | Type |
+|---|---|
+| `now` | function |
+
+These take no default: the feature behaves one way when you supply them and
+another when you do not.
+
+**Usage**
+
+Set `feature.metrics.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Attaches to pipeline hooks, not the transport, so activation order does
+  not change what it observes.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `paging`
+
+Pagination signals for list operations.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `afterVar` | `'after'` |
+| `cursorParam` | `'cursor'` |
+| `firstVar` | `'first'` |
+| `limitParam` | `'limit'` |
+| `pageParam` | `'page'` |
+| `startPage` | `1` |
+
+| Option | Type |
+|---|---|
+| `limit` | number |
+| `ops` | list |
+
+These take no default: the feature behaves one way when you supply them and
+another when you do not.
+
+**Usage**
+
+Set `feature.paging.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Attaches to pipeline hooks, not the transport, so activation order does
+  not change what it observes.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `ratelimit`
+
+Client-side rate limiting via a token bucket.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `burst` | `5` |
+| `rate` | `5` |
+
+| Option | Type |
+|---|---|
+| `now` | function |
+| `sleep` | function |
+
+These take no default: the feature behaves one way when you supply them and
+another when you do not.
+
+**Usage**
+
+Set `feature.ratelimit.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Wraps the transport: its place in the activation order decides what it
+  sees. See [Ordering](#ordering) above.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `retry`
+
+Automatic retry of transient failures with exponential backoff.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `factor` | `2` |
+| `maxDelay` | `2000` |
+| `minDelay` | `50` |
+| `retries` | `2` |
+| `statuses` | `[408, 425, 429, 500, 502, 503, 504]` |
+
+| Option | Type |
+|---|---|
+| `jitter` | boolean |
+| `sleep` | function |
+
+These take no default: the feature behaves one way when you supply them and
+another when you do not.
+
+**Usage**
+
+Set `feature.retry.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Wraps the transport: its place in the activation order decides what it
+  sees. See [Ordering](#ordering) above.
+- Inactive by default: leaving it out costs nothing at runtime.
+
 #### `test`
 
 In-memory mock transport for testing without a live server.
@@ -1957,10 +2127,13 @@ In-memory mock transport for testing without a live server.
 |---|---|
 | `active` | `false` |
 
-Options above are those the model carries a default for. A feature may
-also accept callback options — a `sink` to receive each record, for
-instance — which have no default and are covered in the full feature
-reference.
+| Option | Type |
+|---|---|
+| `entity` | map |
+| `net` | map |
+
+These take no default: the feature behaves one way when you supply them and
+another when you do not.
 
 **Usage**
 
@@ -1973,5 +2146,35 @@ its default unless you name it.
   not change what it observes.
 - Installs the BASE transport that the wrapping features wrap, so it must be
   activated before them.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `timeout`
+
+Per-request timeout with transport abort.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `ms` | `30000` |
+
+| Option | Type |
+|---|---|
+| `clearTimer` | function |
+| `setTimer` | function |
+
+These take no default: the feature behaves one way when you supply them and
+another when you do not.
+
+**Usage**
+
+Set `feature.timeout.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Wraps the transport: its place in the activation order decides what it
+  sees. See [Ordering](#ordering) above.
 - Inactive by default: leaving it out costs nothing at runtime.
 
