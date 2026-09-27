@@ -324,13 +324,6 @@ class StatuspageSDK
   end
 
 
-  # Canonical facade: client.IncidentSubscriber.list / client.IncidentSubscriber.load({ "id" => ... })
-  def IncidentSubscriber(data = nil)
-    require_relative 'entity/incident_subscriber_entity'
-    IncidentSubscriberEntity.new(self, data)
-  end
-
-
   # Canonical facade: client.IncidentTemplate.list / client.IncidentTemplate.load({ "id" => ... })
   def IncidentTemplate(data = nil)
     require_relative 'entity/incident_template_entity'

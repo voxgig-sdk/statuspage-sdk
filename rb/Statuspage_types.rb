@@ -2,8 +2,8 @@
 
 # Typed models for the Statuspage SDK.
 #
-# GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
-# params (op.<name>.points[].args.params[]). Member types come from the
+# GENERATED from the API model: main.kit.entity.<e>.fields{} and per-op
+# params (op.<name>.points[].g.params[]). Member types come from the
 # canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 # @voxgig/apidef VALID_CANON). Ruby types are unenforced; these YARD
 # annotations document the shapes. Do not edit by hand.
@@ -923,27 +923,6 @@ IncidentPostmortem = Struct.new(
 IncidentPostmortemRemoveMatch = Struct.new(
   :id,
   :page_id,
-  keyword_init: true
-)
-
-# IncidentSubscriber entity data model.
-class IncidentSubscriber
-end
-
-# Request payload for IncidentSubscriber#create.
-#
-# @!attribute [rw] incident_id
-#   @return [String]
-#
-# @!attribute [rw] page_id
-#   @return [String]
-#
-# @!attribute [rw] subscriber_id
-#   @return [String]
-IncidentSubscriberCreateData = Struct.new(
-  :incident_id,
-  :page_id,
-  :subscriber_id,
   keyword_init: true
 )
 

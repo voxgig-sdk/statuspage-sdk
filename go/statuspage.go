@@ -68,9 +68,6 @@ func init() {
 	core.NewIncidentPostmortemEntityFunc = func(client *core.StatuspageSDK, entopts map[string]any) core.StatuspageEntity {
 		return entity.NewIncidentPostmortemEntity(client, entopts)
 	}
-	core.NewIncidentSubscriberEntityFunc = func(client *core.StatuspageSDK, entopts map[string]any) core.StatuspageEntity {
-		return entity.NewIncidentSubscriberEntity(client, entopts)
-	}
 	core.NewIncidentTemplateEntityFunc = func(client *core.StatuspageSDK, entopts map[string]any) core.StatuspageEntity {
 		return entity.NewIncidentTemplateEntity(client, entopts)
 	}

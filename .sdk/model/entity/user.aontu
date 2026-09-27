@@ -1,0 +1,245 @@
+# Entity: user
+
+main: kit: entity: user: {
+
+  alias: field: {}
+
+  fields: {
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: false
+      t: "`$STRING`"
+    }
+    email: {
+      h: "Email"
+      n: "email"
+      r: false
+      sh: "Email address for the team member"
+      t: "`$STRING`"
+    }
+    first_name: {
+      h: "First Name"
+      n: "first_name"
+      r: false
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      sh: "User identifier"
+      t: "`$STRING`"
+    }
+    last_name: {
+      h: "Last Name"
+      n: "last_name"
+      r: false
+      t: "`$STRING`"
+    }
+    organization_id: {
+      h: "Organization Id"
+      n: "organization_id"
+      r: false
+      sh: "Organization identifier"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: false
+      t: "`$STRING`"
+    }
+    user: {
+      h: "User"
+      n: "user"
+      r: true
+      t: "`$OBJECT`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "user"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /organizations/{organization_id}/users"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "organization_id"
+                or: "organization_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/organizations/{organization_id}/users"
+          q: {
+            exist: [
+              "organization_id"
+            ]
+          }
+          s: [
+            {
+              lit: "organizations"
+            }
+            {
+              var: "organization_id"
+            }
+            {
+              lit: "users"
+            }
+          ]
+          t: {
+            req: {
+              user: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /organizations/{organization_id}/users"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "organization_id"
+                or: "organization_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/organizations/{organization_id}/users"
+          q: {
+            exist: [
+              "organization_id"
+              "page"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "organizations"
+            }
+            {
+              var: "organization_id"
+            }
+            {
+              lit: "users"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /organizations/{organization_id}/users/{user_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "user_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "organization_id"
+                or: "organization_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/organizations/{organization_id}/users/{user_id}"
+          q: {
+            exist: [
+              "id"
+              "organization_id"
+            ]
+          }
+          r: {
+            param: {
+              user_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "organizations"
+            }
+            {
+              var: "organization_id"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

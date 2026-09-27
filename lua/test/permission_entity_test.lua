@@ -93,7 +93,7 @@ function permission_basic_setup(extra)
 
   -- Generate idmap via transform.
   local idmap = vs.transform(
-    { "permission01", "permission02", "permission03", "organization01", "organization02", "organization03" },
+    { "permission01", "permission02", "permission03", "organization01" },
     {
       ["`$PACK`"] = { "", {
         ["`$KEY`"] = "`$COPY`",

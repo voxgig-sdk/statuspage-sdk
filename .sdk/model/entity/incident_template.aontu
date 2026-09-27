@@ -1,0 +1,203 @@
+# Entity: incident_template
+
+main: kit: entity: incident_template: {
+
+  alias: field: {}
+
+  fields: {
+    body: {
+      h: "Body"
+      n: "body"
+      r: false
+      sh: "Body of the incident or maintenance update to be applied when selecting this template"
+      t: "`$STRING`"
+    }
+    components: {
+      h: "Components"
+      n: "components"
+      r: false
+      sh: "Affected components"
+      t: "`$ARRAY`"
+    }
+    group_id: {
+      h: "Group Id"
+      n: "group_id"
+      r: false
+      sh: "Identifier of Template Group this template belongs to"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      sh: "Incident Template Identifier"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: false
+      sh: "Name of the template, as shown in the list on the \"Templates\" tab of the \"Incidents\" page"
+      t: "`$STRING`"
+    }
+    should_send_notifications: {
+      h: "Should Send Notifications"
+      n: "should_send_notifications"
+      r: false
+      sh: "Whether the \"deliver notifications\" checkbox should be selected when selecting this template"
+      t: "`$BOOLEAN`"
+    }
+    should_tweet: {
+      h: "Should Tweet"
+      n: "should_tweet"
+      r: false
+      sh: "Whether the \"tweet update\" checkbox should be selected when selecting this template"
+      t: "`$BOOLEAN`"
+    }
+    template: {
+      h: "Template"
+      n: "template"
+      r: true
+      t: "`$OBJECT`"
+    }
+    title: {
+      h: "Title"
+      n: "title"
+      r: false
+      sh: "Title to be applied to the incident or maintenance when selecting this template"
+      t: "`$STRING`"
+    }
+    update_status: {
+      h: "Update Status"
+      n: "update_status"
+      r: false
+      sh: "The status the incident or maintenance should transition to when selecting this template"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "incident_template"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /pages/{page_id}/incident_templates"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/incident_templates"
+          q: {
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incident_templates"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/incident_templates"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: 1
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: 100
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/incident_templates"
+          q: {
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incident_templates"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.page")]
+  ]
+
+}

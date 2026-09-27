@@ -68,10 +68,6 @@ Create a new `Incident` entity instance. Pass `nil` for no initial data.
 
 Create a new `IncidentPostmortem` entity instance. Pass `nil` for no initial data.
 
-#### `IncidentSubscriber(data map[string]any) StatuspageEntity`
-
-Create a new `IncidentSubscriber` entity instance. Pass `nil` for no initial data.
-
 #### `IncidentTemplate(data map[string]any) StatuspageEntity`
 
 Create a new `IncidentTemplate` entity instance. Pass `nil` for no initial data.
@@ -658,55 +654,6 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `IncidentPostmortemEntity` instance with the same client and
-options.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## IncidentSubscriberEntity
-
-```go
-incidentSubscriber := client.IncidentSubscriber(nil)
-fmt.Println(incidentSubscriber.GetName()) // "incident_subscriber"
-```
-
-### Operations
-
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.IncidentSubscriber(nil).Create(map[string]any{
-    "incident_id": "example_incident_id",
-    "page_id": "example_page_id",
-    "subscriber_id": "example_subscriber_id",
-}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result)
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `IncidentSubscriberEntity` instance with the same client and
 options.
 
 #### `GetName() string`
@@ -1876,14 +1823,14 @@ Return the entity name.
 
 | Feature | Version | Description |
 | --- | --- | --- |
-| `debug` | 0.0.1 | Request/response capture ring buffer for debugging |
-| `idempotency` | 0.0.1 | Idempotency keys for safe retries of mutating operations |
-| `metrics` | 0.0.1 | Statistics capture: per-operation counters and latency |
-| `paging` | 0.0.1 | Pagination signals for list operations |
-| `ratelimit` | 0.0.1 | Client-side rate limiting via a token bucket |
-| `retry` | 0.0.1 | Automatic retry of transient failures with exponential backoff |
-| `test` | 0.0.1 | In-memory mock transport for testing without a live server |
-| `timeout` | 0.0.1 | Per-request timeout with transport abort |
+| `debug` | 0.0.1 | Debug capture |
+| `idempotency` | 0.0.1 | Idempotency |
+| `metrics` | 0.0.1 | Metrics |
+| `paging` | 0.0.1 | Paging |
+| `ratelimit` | 0.0.1 | Rate limiting |
+| `retry` | 0.0.1 | Retry |
+| `test` | 0.0.1 | Test transport |
+| `timeout` | 0.0.1 | Timeout |
 
 
 Features are activated via the `feature` option:
@@ -1929,7 +1876,7 @@ rather than the transport, so their order does not affect what they observe.
 
 #### `debug`
 
-Request/response capture ring buffer for debugging.
+Debug capture.
 
 **Configuration**
 
@@ -1960,7 +1907,7 @@ its default unless you name it.
 
 #### `idempotency`
 
-Idempotency keys for safe retries of mutating operations.
+Idempotency.
 
 **Configuration**
 
@@ -1991,7 +1938,7 @@ its default unless you name it.
 
 #### `metrics`
 
-Statistics capture: per-operation counters and latency.
+Metrics.
 
 **Configuration**
 
@@ -2019,7 +1966,7 @@ its default unless you name it.
 
 #### `paging`
 
-Pagination signals for list operations.
+Paging.
 
 **Configuration**
 
@@ -2054,7 +2001,7 @@ its default unless you name it.
 
 #### `ratelimit`
 
-Client-side rate limiting via a token bucket.
+Rate limiting.
 
 **Configuration**
 
@@ -2085,7 +2032,7 @@ its default unless you name it.
 
 #### `retry`
 
-Automatic retry of transient failures with exponential backoff.
+Retry.
 
 **Configuration**
 
@@ -2119,7 +2066,7 @@ its default unless you name it.
 
 #### `test`
 
-In-memory mock transport for testing without a live server.
+Test transport.
 
 **Configuration**
 
@@ -2150,7 +2097,7 @@ its default unless you name it.
 
 #### `timeout`
 
-Per-request timeout with transport abort.
+Timeout.
 
 **Configuration**
 

@@ -1,0 +1,72 @@
+# BasicUserFlow
+
+main: kit: flow: BasicUserFlow:
+{
+  entity: "user",
+  kind: "basic",
+  name: "BasicUserFlow",
+  step: [
+    {
+      i: {
+        ref: "user_ref01"
+      }
+
+      m: {
+        organization_id: "organization01"
+      }
+
+      o: "create"
+    }
+
+    {
+      m: {
+        organization_id: "organization01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "user_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "user_ref01",
+        suffix: "_rm0"
+      }
+
+      m: {
+        id: "user01",
+        organization_id: "organization01"
+      }
+
+      o: "remove"
+    }
+
+    {
+      i: {
+        suffix: "_rt0"
+      }
+
+      m: {
+        organization_id: "organization01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "user_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicUserFlow"
+}

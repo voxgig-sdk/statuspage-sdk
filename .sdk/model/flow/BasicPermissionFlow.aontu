@@ -1,0 +1,56 @@
+# BasicPermissionFlow
+
+main: kit: flow: BasicPermissionFlow:
+{
+  entity: "permission",
+  kind: "basic",
+  name: "BasicPermissionFlow",
+  step: [
+    {
+      d: {
+        organization_id: "organization01"
+      }
+
+      i: {
+        ref: "permission_ref01",
+        srcdatavar: "permission_ref01_data",
+        suffix: "_up0",
+        textfield: "user_id"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-permission_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "permission_ref01",
+        srcdatavar: "permission_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "permission01",
+        organization_id: "organization01"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-permission_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPermissionFlow"
+}

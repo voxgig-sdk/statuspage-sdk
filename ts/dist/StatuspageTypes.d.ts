@@ -252,13 +252,6 @@ export interface IncidentPostmortemRemoveMatch {
     id: string;
     page_id: string;
 }
-export interface IncidentSubscriber {
-}
-export interface IncidentSubscriberCreateData {
-    incident_id: string;
-    page_id: string;
-    subscriber_id: string;
-}
 export interface IncidentTemplate {
     body?: string;
     components?: any[];

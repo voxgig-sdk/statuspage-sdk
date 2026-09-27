@@ -1,0 +1,498 @@
+# Entity: page
+
+main: kit: entity: page: {
+
+  alias: field: {}
+
+  fields: {
+    activity_score: {
+      fo: "float"
+      h: "Activity Score"
+      n: "activity_score"
+      r: false
+      t: "`$NUMBER`"
+    }
+    allow_email_subscribers: {
+      h: "Allow Email Subscribers"
+      n: "allow_email_subscribers"
+      r: false
+      sh: "Can your users choose to receive notifications via email"
+      t: "`$BOOLEAN`"
+    }
+    allow_incident_subscribers: {
+      h: "Allow Incident Subscribers"
+      n: "allow_incident_subscribers"
+      r: false
+      sh: "Can your users subscribe to notifications for a single incident"
+      t: "`$BOOLEAN`"
+    }
+    allow_page_subscribers: {
+      h: "Allow Page Subscribers"
+      n: "allow_page_subscribers"
+      r: false
+      sh: "Can your users subscribe to all notifications on the page"
+      t: "`$BOOLEAN`"
+    }
+    allow_rss_atom_feeds: {
+      h: "Allow Rss Atom Feeds"
+      n: "allow_rss_atom_feeds"
+      r: false
+      sh: "Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages)"
+      t: "`$BOOLEAN`"
+    }
+    allow_sms_subscribers: {
+      h: "Allow Sms Subscribers"
+      n: "allow_sms_subscribers"
+      r: false
+      sh: "Can your users choose to receive notifications via SMS"
+      t: "`$BOOLEAN`"
+    }
+    allow_webhook_subscribers: {
+      h: "Allow Webhook Subscribers"
+      n: "allow_webhook_subscribers"
+      r: false
+      sh: "Can your users choose to receive notifications via Webhooks"
+      t: "`$BOOLEAN`"
+    }
+    branding: {
+      h: "Branding"
+      n: "branding"
+      r: false
+      sh: "The main template your statuspage will use"
+      t: "`$STRING`"
+    }
+    city: {
+      h: "City"
+      n: "city"
+      r: false
+      t: "`$STRING`"
+    }
+    country: {
+      h: "Country"
+      n: "country"
+      r: false
+      t: "`$STRING`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: false
+      sh: "Timestamp the record was created"
+      t: "`$STRING`"
+    }
+    css_blues: {
+      h: "Css Blues"
+      n: "css_blues"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_body_background_color: {
+      h: "Css Body Background Color"
+      n: "css_body_background_color"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_border_color: {
+      h: "Css Border Color"
+      n: "css_border_color"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_font_color: {
+      h: "Css Font Color"
+      n: "css_font_color"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_graph_color: {
+      h: "Css Graph Color"
+      n: "css_graph_color"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_greens: {
+      h: "Css Greens"
+      n: "css_greens"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_light_font_color: {
+      h: "Css Light Font Color"
+      n: "css_light_font_color"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_link_color: {
+      h: "Css Link Color"
+      n: "css_link_color"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_no_data: {
+      h: "Css No Data"
+      n: "css_no_data"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_oranges: {
+      h: "Css Oranges"
+      n: "css_oranges"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_reds: {
+      h: "Css Reds"
+      n: "css_reds"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    css_yellows: {
+      h: "Css Yellows"
+      n: "css_yellows"
+      r: false
+      sh: "CSS Color"
+      t: "`$STRING`"
+    }
+    domain: {
+      h: "Domain"
+      n: "domain"
+      r: false
+      sh: "CNAME alias for your status page"
+      t: "`$STRING`"
+    }
+    email_logo: {
+      h: "Email Logo"
+      n: "email_logo"
+      r: false
+      t: "`$STRING`"
+    }
+    favicon_logo: {
+      h: "Favicon Logo"
+      n: "favicon_logo"
+      r: false
+      t: "`$STRING`"
+    }
+    headline: {
+      h: "Headline"
+      n: "headline"
+      r: false
+      t: "`$STRING`"
+    }
+    hero_cover: {
+      h: "Hero Cover"
+      n: "hero_cover"
+      r: false
+      t: "`$STRING`"
+    }
+    hidden_from_search: {
+      h: "Hidden From Search"
+      n: "hidden_from_search"
+      r: false
+      sh: "Should your page hide itself from search engines"
+      t: "`$BOOLEAN`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      sh: "Page identifier"
+      t: "`$STRING`"
+    }
+    ip_restrictions: {
+      h: "Ip Restrictions"
+      n: "ip_restrictions"
+      r: false
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: false
+      sh: "Name of your page to be displayed"
+      t: "`$STRING`"
+    }
+    notifications_email_footer: {
+      h: "Notifications Email Footer"
+      n: "notifications_email_footer"
+      r: false
+      sh: "Allows you to customize the footer appearing on your notification emails."
+      t: "`$STRING`"
+    }
+    notifications_from_email: {
+      h: "Notifications From Email"
+      n: "notifications_from_email"
+      r: false
+      sh: "Allows you to customize the email address your page notifications come from"
+      t: "`$STRING`"
+    }
+    page: {
+      h: "Page"
+      n: "page"
+      r: false
+      t: "`$OBJECT`"
+    }
+    page_description: {
+      h: "Page Description"
+      n: "page_description"
+      r: false
+      t: "`$STRING`"
+    }
+    state: {
+      h: "State"
+      n: "state"
+      r: false
+      t: "`$STRING`"
+    }
+    subdomain: {
+      h: "Subdomain"
+      n: "subdomain"
+      r: false
+      sh: "Subdomain at which to access your status page"
+      t: "`$STRING`"
+    }
+    support_url: {
+      h: "Support Url"
+      n: "support_url"
+      r: false
+      t: "`$STRING`"
+    }
+    time_zone: {
+      h: "Time Zone"
+      n: "time_zone"
+      r: false
+      sh: "Timezone configured for your page"
+      t: "`$STRING`"
+    }
+    transactional_logo: {
+      h: "Transactional Logo"
+      n: "transactional_logo"
+      r: false
+      t: "`$STRING`"
+    }
+    twitter_logo: {
+      h: "Twitter Logo"
+      n: "twitter_logo"
+      r: false
+      t: "`$STRING`"
+    }
+    twitter_username: {
+      h: "Twitter Username"
+      n: "twitter_username"
+      r: false
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: false
+      sh: "Timestamp the record was last updated"
+      t: "`$STRING`"
+    }
+    url: {
+      h: "Url"
+      n: "url"
+      r: false
+      sh: "Website of your page."
+      t: "`$STRING`"
+    }
+    viewers_must_be_team_members: {
+      h: "Viewers Must Be Team Members"
+      n: "viewers_must_be_team_members"
+      r: false
+      t: "`$BOOLEAN`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "page"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /pages"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/pages"
+          s: [
+            {
+              lit: "pages"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              page_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    patch: {
+      name: "patch"
+      points: [
+        {
+          co: {
+            id: "PATCH /pages/{page_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PATCH"
+          o: "/pages/{page_id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              page_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: {
+              page: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          co: {
+            id: "PUT /pages/{page_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/pages/{page_id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              page_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: {
+              page: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

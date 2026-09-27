@@ -12,7 +12,7 @@ func MakeConfig() map[string]any {
 		"main": map[string]any{
 			"name": "Statuspage",
 			"slug": "statuspage",
-			"version": "0.0.2",
+			"version": "0.1.1",
 			"target": "go",
 		},
 		"feature": map[string]any{
@@ -161,7 +161,6 @@ func MakeConfig() map[string]any {
 				"group_component": map[string]any{},
 				"incident": map[string]any{},
 				"incident_postmortem": map[string]any{},
-				"incident_subscriber": map[string]any{},
 				"incident_template": map[string]any{},
 				"incident_update": map[string]any{},
 				"metric": map[string]any{},
@@ -181,79 +180,94 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "automation_email",
-						"short": "Requires a special feature flag to be enabled",
+						"title": "Automation Email",
 						"type": "`$STRING`",
+						"short": "Requires a special feature flag to be enabled",
 					},
 					map[string]any{
 						"name": "component",
+						"title": "Component",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "description",
-						"short": "More detailed description for component",
+						"title": "Description",
 						"type": "`$STRING`",
+						"short": "More detailed description for component",
 					},
 					map[string]any{
 						"name": "group",
-						"short": "Is this component a group",
+						"title": "Group",
 						"type": "`$BOOLEAN`",
+						"short": "Is this component a group",
 					},
 					map[string]any{
 						"name": "group_id",
-						"short": "Component Group identifier",
+						"title": "Group Id",
 						"type": "`$STRING`",
+						"short": "Component Group identifier",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Identifier for component",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Identifier for component",
 					},
 					map[string]any{
 						"name": "name",
-						"short": "Display name for component",
+						"title": "Name",
 						"type": "`$STRING`",
+						"short": "Display name for component",
 					},
 					map[string]any{
 						"name": "only_show_if_degraded",
-						"short": "Requires a special feature flag to be enabled",
+						"title": "Only Show If Degraded",
 						"type": "`$BOOLEAN`",
+						"short": "Requires a special feature flag to be enabled",
 					},
 					map[string]any{
 						"name": "page_id",
-						"short": "Page identifier",
+						"title": "Page Id",
 						"type": "`$STRING`",
+						"short": "Page identifier",
 					},
 					map[string]any{
-						"format": "int32",
 						"name": "position",
-						"short": "Order the component will appear on the page",
+						"title": "Position",
 						"type": "`$INTEGER`",
+						"short": "Order the component will appear on the page",
+						"format": "int32",
 					},
 					map[string]any{
 						"name": "showcase",
-						"short": "Should this component be showcased",
+						"title": "Showcase",
 						"type": "`$BOOLEAN`",
+						"short": "Should this component be showcased",
 					},
 					map[string]any{
-						"format": "date",
 						"name": "start_date",
-						"short": "The date this component started being used",
+						"title": "Start Date",
 						"type": "`$STRING`",
+						"short": "The date this component started being used",
+						"format": "date",
 					},
 					map[string]any{
 						"name": "status",
-						"short": "Status of component",
+						"title": "Status",
 						"type": "`$STRING`",
+						"short": "Status of component",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 				},
 				"id": map[string]any{
@@ -267,32 +281,9 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/components/{component_id}/page_access_groups",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"component_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -310,17 +301,6 @@ func MakeConfig() map[string]any {
 										"lit": "page_access_groups",
 									},
 								},
-								"select": map[string]any{
-									"$action": "page_access_group",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -328,34 +308,45 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"page_access_groups",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "POST",
-								"orig": "/pages/{page_id}/components/{component_id}/page_access_users",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"component_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "page_access_group",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "POST",
+								"orig": "/pages/{page_id}/components/{component_id}/page_access_users",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -373,17 +364,6 @@ func MakeConfig() map[string]any {
 										"lit": "page_access_users",
 									},
 								},
-								"select": map[string]any{
-									"$action": "page_access_user",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -391,19 +371,42 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"page_access_users",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{
+									"param": map[string]any{
+										"component_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
+											"name": "id",
+											"orig": "component_id",
+											"type": "`$STRING`",
 											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"$action": "page_access_user",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/components",
@@ -418,21 +421,33 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"components",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": map[string]any{
 										"component": "`reqdata`",
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"components",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -442,38 +457,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_access_group_id",
-											"orig": "page_access_group_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
@@ -494,6 +477,50 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"page_access_groups",
+									"{page_access_group_id}",
+									"components",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_access_group_id",
+											"orig": "page_access_group_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"page",
@@ -502,51 +529,8 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"page_access_groups",
-									"{page_access_group_id}",
-									"components",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_access_user_id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
@@ -567,6 +551,50 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"page_access_users",
+									"{page_access_user_id}",
+									"components",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_access_user_id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"page",
@@ -575,44 +603,8 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"page_access_users",
-									"{page_access_user_id}",
-									"components",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/components",
@@ -627,21 +619,47 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"components",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"page",
 										"page_id",
 										"per_page",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"components",
 								},
 							},
 						},
@@ -651,46 +669,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "end",
-											"orig": "end",
-											"type": "Any",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "start",
-											"orig": "start",
-											"type": "Any",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/components/{component_id}/uptime",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"component_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -708,6 +689,54 @@ func MakeConfig() map[string]any {
 										"lit": "uptime",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"components",
+									"{id}",
+									"uptime",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"component_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body.related_events`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "end",
+											"orig": "end",
+											"type": "Any",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "start",
+											"orig": "start",
+											"type": "Any",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"$action": "uptime",
 									"exist": []any{
@@ -717,45 +746,11 @@ func MakeConfig() map[string]any {
 										"start",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body.related_events`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"components",
-									"{id}",
-									"uptime",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/components/{component_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"component_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -770,21 +765,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"components",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"component_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"components",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -794,32 +812,9 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/components/{component_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"component_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -834,10 +829,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"components",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"component_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -846,11 +846,29 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"components",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -860,32 +878,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/pages/{page_id}/components/{component_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"component_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -900,50 +895,50 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"components",
 									"{id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/components/{component_id}/page_access_groups",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"component_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/components/{component_id}/page_access_groups",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -961,17 +956,6 @@ func MakeConfig() map[string]any {
 										"lit": "page_access_groups",
 									},
 								},
-								"select": map[string]any{
-									"$action": "page_access_group",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -979,34 +963,45 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"page_access_groups",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/components/{component_id}/page_access_users",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"component_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "page_access_group",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/components/{component_id}/page_access_users",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -1024,23 +1019,46 @@ func MakeConfig() map[string]any {
 										"lit": "page_access_users",
 									},
 								},
-								"select": map[string]any{
-									"$action": "page_access_user",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"components",
 									"{id}",
 									"page_access_users",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"component_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "page_access_user",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -1050,32 +1068,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/components/{component_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"component_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -1090,10 +1085,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"components",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"component_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -1102,11 +1102,29 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"components",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -1115,15 +1133,15 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 						[]any{
-							"page",
-							"page_access_group",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.page_access_group",
 						},
 						[]any{
-							"page",
-							"page_access_user",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.page_access_user",
 						},
 					},
 				},
@@ -1132,17 +1150,20 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "component_id",
-						"short": "Component identifier",
+						"title": "Component Id",
 						"type": "`$STRING`",
+						"short": "Component identifier",
 					},
 					map[string]any{
 						"name": "id",
+						"title": "Id",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "incidents",
-						"short": "Related incidents",
+						"title": "Incidents",
 						"type": "`$OBJECT`",
+						"short": "Related incidents",
 					},
 				},
 				"id": map[string]any{
@@ -1156,38 +1177,6 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "end",
-											"orig": "end",
-											"type": "Any",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "start",
-											"orig": "start",
-											"type": "Any",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/component-groups/{id}/uptime",
@@ -1208,6 +1197,50 @@ func MakeConfig() map[string]any {
 										"lit": "uptime",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"component-groups",
+									"{id}",
+									"uptime",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body.related_events`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "end",
+											"orig": "end",
+											"type": "Any",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "start",
+											"orig": "start",
+											"type": "Any",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"end",
@@ -1216,17 +1249,6 @@ func MakeConfig() map[string]any {
 										"start",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body.related_events`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"component-groups",
-									"{id}",
-									"uptime",
-								},
 							},
 						},
 					},
@@ -1234,7 +1256,7 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 					},
 				},
@@ -1243,44 +1265,53 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "component_group",
-						"req": true,
+						"title": "Component Group",
 						"type": "`$OBJECT`",
+						"req": true,
 					},
 					map[string]any{
 						"name": "components",
+						"title": "Components",
 						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "description",
-						"short": "Description of the component group.",
+						"title": "Description",
 						"type": "`$STRING`",
+						"short": "Description of the component group.",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Component Group Identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Component Group Identifier",
 					},
 					map[string]any{
 						"name": "name",
+						"title": "Name",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "page_id",
+						"title": "Page Id",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "position",
+						"title": "Position",
 						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 				},
 				"id": map[string]any{
@@ -1294,17 +1325,6 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/component-groups",
@@ -1319,19 +1339,31 @@ func MakeConfig() map[string]any {
 										"lit": "component-groups",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"component-groups",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -1341,31 +1373,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/component-groups",
@@ -1380,21 +1387,47 @@ func MakeConfig() map[string]any {
 										"lit": "component-groups",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"component-groups",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"page",
 										"page_id",
 										"per_page",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"component-groups",
 								},
 							},
 						},
@@ -1404,24 +1437,6 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/component-groups/{id}",
@@ -1439,21 +1454,40 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"component-groups",
 									"{id}",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -1463,24 +1497,6 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/component-groups/{id}",
@@ -1498,21 +1514,40 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"component-groups",
 									"{id}",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -1522,24 +1557,6 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/pages/{page_id}/component-groups/{id}",
@@ -1557,21 +1574,40 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"component-groups",
 									"{id}",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -1581,24 +1617,6 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/component-groups/{id}",
@@ -1616,21 +1634,40 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"component-groups",
 									"{id}",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -1639,7 +1676,7 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 					},
 				},
@@ -1648,52 +1685,64 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "auto_transition_deliver_notifications_at_end",
-						"short": "Controls whether send notification when scheduled maintenances auto transition to completed.",
+						"title": "Auto Transition Deliver Notifications At End",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether send notification when scheduled maintenances auto transition to completed.",
 					},
 					map[string]any{
 						"name": "auto_transition_deliver_notifications_at_start",
-						"short": "Controls whether send notification when scheduled maintenances auto transition to started.",
+						"title": "Auto Transition Deliver Notifications At Start",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether send notification when scheduled maintenances auto transition to started.",
 					},
 					map[string]any{
 						"name": "auto_transition_to_maintenance_state",
-						"short": "Controls whether change components status to under_maintenance once scheduled maintenance is in progress.",
+						"title": "Auto Transition To Maintenance State",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether change components status to under_maintenance once scheduled maintenance is in progress.",
 					},
 					map[string]any{
 						"name": "auto_transition_to_operational_state",
-						"short": "Controls whether change components status to operational once scheduled maintenance completes.",
+						"title": "Auto Transition To Operational State",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether change components status to operational once scheduled maintenance completes.",
 					},
 					map[string]any{
 						"name": "components",
-						"short": "Incident components",
+						"title": "Components",
 						"type": "`$ARRAY`",
+						"short": "Incident components",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
-						"short": "The timestamp when the incident was created at.",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"short": "The timestamp when the incident was created at.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Incident Identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Incident Identifier",
 					},
 					map[string]any{
 						"name": "impact",
-						"short": "The impact of the incident.",
+						"title": "Impact",
 						"type": "`$STRING`",
+						"short": "The impact of the incident.",
 					},
 					map[string]any{
 						"name": "impact_override",
-						"short": "value to override calculated impact value",
+						"title": "Impact Override",
 						"type": "`$STRING`",
+						"short": "value to override calculated impact value",
 					},
 					map[string]any{
 						"name": "incident",
+						"title": "Incident",
+						"type": "`$OBJECT`",
+						"req": true,
 						"op": map[string]any{
 							"patch": map[string]any{
 								"type": "`$OBJECT`",
@@ -1702,125 +1751,145 @@ func MakeConfig() map[string]any {
 								"type": "`$OBJECT`",
 							},
 						},
-						"req": true,
-						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "incident_updates",
-						"short": "The incident updates for incident.",
+						"title": "Incident Updates",
 						"type": "`$ARRAY`",
+						"short": "The incident updates for incident.",
 					},
 					map[string]any{
 						"name": "metadata",
-						"short": "Metadata attached to the incident.",
+						"title": "Metadata",
 						"type": "`$OBJECT`",
+						"short": "Metadata attached to the incident.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "monitoring_at",
-						"short": "The timestamp when incident entered monitoring state.",
+						"title": "Monitoring At",
 						"type": "`$STRING`",
+						"short": "The timestamp when incident entered monitoring state.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "name",
-						"short": "Incident Name.",
+						"title": "Name",
 						"type": "`$STRING`",
+						"short": "Incident Name.",
 					},
 					map[string]any{
 						"name": "page_id",
-						"short": "Incident Page Identifier",
+						"title": "Page Id",
 						"type": "`$STRING`",
+						"short": "Incident Page Identifier",
 					},
 					map[string]any{
 						"name": "postmortem_body",
-						"short": "Body of the Postmortem.",
+						"title": "Postmortem Body",
 						"type": "`$STRING`",
+						"short": "Body of the Postmortem.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "postmortem_body_last_updated_at",
-						"short": "The timestamp when the incident postmortem body was last updated at.",
+						"title": "Postmortem Body Last Updated At",
 						"type": "`$STRING`",
+						"short": "The timestamp when the incident postmortem body was last updated at.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "postmortem_ignored",
-						"short": "Controls whether the incident will have postmortem.",
+						"title": "Postmortem Ignored",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether the incident will have postmortem.",
 					},
 					map[string]any{
 						"name": "postmortem_notified_subscribers",
-						"short": "Indicates whether subscribers are already notificed about postmortem.",
+						"title": "Postmortem Notified Subscribers",
 						"type": "`$BOOLEAN`",
+						"short": "Indicates whether subscribers are already notificed about postmortem.",
 					},
 					map[string]any{
 						"name": "postmortem_notified_twitter",
-						"short": "Controls whether to decide if notify postmortem on twitter.",
+						"title": "Postmortem Notified Twitter",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether to decide if notify postmortem on twitter.",
 					},
 					map[string]any{
 						"name": "postmortem_published_at",
-						"short": "The timestamp when the postmortem was published.",
+						"title": "Postmortem Published At",
 						"type": "`$BOOLEAN`",
+						"short": "The timestamp when the postmortem was published.",
 					},
 					map[string]any{
 						"name": "reminder_intervals",
-						"short": "Custom reminder intervals for unresolved/open incidents.",
+						"title": "Reminder Intervals",
 						"type": "`$STRING`",
+						"short": "Custom reminder intervals for unresolved/open incidents.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "resolved_at",
-						"short": "The timestamp when incident was resolved.",
+						"title": "Resolved At",
 						"type": "`$STRING`",
+						"short": "The timestamp when incident was resolved.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "scheduled_auto_completed",
-						"short": "Controls whether the incident is scheduled to automatically change to complete.",
+						"title": "Scheduled Auto Completed",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether the incident is scheduled to automatically change to complete.",
 					},
 					map[string]any{
 						"name": "scheduled_auto_in_progress",
-						"short": "Controls whether the incident is scheduled to automatically change to in progress.",
+						"title": "Scheduled Auto In Progress",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether the incident is scheduled to automatically change to in progress.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "scheduled_for",
-						"short": "The timestamp the incident is scheduled for.",
+						"title": "Scheduled For",
 						"type": "`$STRING`",
+						"short": "The timestamp the incident is scheduled for.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "scheduled_remind_prior",
-						"short": "Controls whether to remind subscribers prior to scheduled incidents.",
+						"title": "Scheduled Remind Prior",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether to remind subscribers prior to scheduled incidents.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "scheduled_reminded_at",
-						"short": "The timestamp when the scheduled incident reminder was sent at.",
+						"title": "Scheduled Reminded At",
 						"type": "`$STRING`",
+						"short": "The timestamp when the scheduled incident reminder was sent at.",
+						"format": "date-time",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "scheduled_until",
-						"short": "The timestamp the incident is scheduled until.",
+						"title": "Scheduled Until",
 						"type": "`$STRING`",
+						"short": "The timestamp the incident is scheduled until.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "shortlink",
-						"short": "Incident Shortlink.",
+						"title": "Shortlink",
 						"type": "`$STRING`",
+						"short": "Incident Shortlink.",
 					},
 					map[string]any{
 						"name": "status",
-						"short": "The incident status.",
+						"title": "Status",
 						"type": "`$STRING`",
+						"short": "The incident status.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
-						"short": "The timestamp when the incident was updated at.",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"short": "The timestamp when the incident was updated at.",
+						"format": "date-time",
 					},
 				},
 				"id": map[string]any{
@@ -1834,17 +1903,6 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/incidents",
@@ -1859,21 +1917,33 @@ func MakeConfig() map[string]any {
 										"lit": "incidents",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": map[string]any{
 										"incident": "`reqdata`",
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -1883,37 +1953,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "limit",
-											"orig": "limit",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "q",
-											"orig": "q",
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incidents",
@@ -1928,6 +1967,47 @@ func MakeConfig() map[string]any {
 										"lit": "incidents",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "limit",
+											"orig": "limit",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "q",
+											"orig": "q",
+											"type": "`$STRING`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"limit",
@@ -1936,44 +2016,8 @@ func MakeConfig() map[string]any {
 										"q",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"example": 1,
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"example": 100,
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incidents/active_maintenance",
@@ -1991,6 +2035,44 @@ func MakeConfig() map[string]any {
 										"lit": "active_maintenance",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"active_maintenance",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 1,
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 100,
+										},
+									},
+								},
 								"select": map[string]any{
 									"$action": "active_maintenance",
 									"exist": []any{
@@ -1999,45 +2081,8 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"active_maintenance",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"example": 1,
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"example": 100,
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incidents/scheduled",
@@ -2055,6 +2100,44 @@ func MakeConfig() map[string]any {
 										"lit": "scheduled",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"scheduled",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 1,
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 100,
+										},
+									},
+								},
 								"select": map[string]any{
 									"$action": "scheduled",
 									"exist": []any{
@@ -2063,45 +2146,8 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"scheduled",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"example": 1,
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"example": 100,
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incidents/unresolved",
@@ -2119,6 +2165,44 @@ func MakeConfig() map[string]any {
 										"lit": "unresolved",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"unresolved",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 1,
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 100,
+										},
+									},
+								},
 								"select": map[string]any{
 									"$action": "unresolved",
 									"exist": []any{
@@ -2127,45 +2211,8 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"unresolved",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"example": 1,
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"example": 100,
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incidents/upcoming",
@@ -2183,6 +2230,44 @@ func MakeConfig() map[string]any {
 										"lit": "upcoming",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"upcoming",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 1,
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 100,
+										},
+									},
+								},
 								"select": map[string]any{
 									"$action": "upcoming",
 									"exist": []any{
@@ -2190,16 +2275,6 @@ func MakeConfig() map[string]any {
 										"page_id",
 										"per_page",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"upcoming",
 								},
 							},
 						},
@@ -2209,32 +2284,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incidents/{incident_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"incident_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -2249,21 +2301,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"incident_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -2273,32 +2348,9 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/incidents/{incident_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"incident_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -2313,10 +2365,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"incident_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -2325,11 +2382,29 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -2339,32 +2414,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/pages/{page_id}/incidents/{incident_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"incident_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -2379,21 +2431,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"incident_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -2403,32 +2478,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/incidents/{incident_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"incident_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -2443,10 +2495,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"incident_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -2455,11 +2512,29 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -2468,7 +2543,7 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 					},
 				},
@@ -2477,6 +2552,7 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "id",
+						"title": "Id",
 						"type": "`$STRING`",
 					},
 				},
@@ -2491,32 +2567,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/postmortem",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"incident_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -2534,16 +2587,6 @@ func MakeConfig() map[string]any {
 										"lit": "postmortem",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -2551,97 +2594,38 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"postmortem",
 								},
-							},
-						},
-					},
-				},
-				"relations": map[string]any{
-					"ancestors": []any{
-						[]any{
-							"page",
-						},
-					},
-				},
-			},
-			"incident_subscriber": map[string]any{
-				"fields": []any{},
-				"name": "incident_subscriber",
-				"op": map[string]any{
-					"create": map[string]any{
-						"input": "data",
-						"name": "create",
-						"points": []any{
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "incident_id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "subscriber_id",
-											"orig": "subscriber_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "POST",
-								"orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation",
-								"segments": []any{
-									map[string]any{
-										"lit": "pages",
-									},
-									map[string]any{
-										"var": "page_id",
-									},
-									map[string]any{
-										"lit": "incidents",
-									},
-									map[string]any{
-										"var": "incident_id",
-									},
-									map[string]any{
-										"lit": "subscribers",
-									},
-									map[string]any{
-										"var": "subscriber_id",
-									},
-									map[string]any{
-										"lit": "resend_confirmation",
-									},
-								},
-								"select": map[string]any{
-									"exist": []any{
-										"incident_id",
-										"page_id",
-										"subscriber_id",
+								"rename": map[string]any{
+									"param": map[string]any{
+										"incident_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"{incident_id}",
-									"subscribers",
-									"{subscriber_id}",
-									"resend_confirmation",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -2650,9 +2634,7 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
-							"incident",
-							"subscriber",
+							"$.main.kit.entity.page",
 						},
 					},
 				},
@@ -2661,53 +2643,63 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "body",
-						"short": "Body of the incident or maintenance update to be applied when selecting this template",
+						"title": "Body",
 						"type": "`$STRING`",
+						"short": "Body of the incident or maintenance update to be applied when selecting this template",
 					},
 					map[string]any{
 						"name": "components",
-						"short": "Affected components",
+						"title": "Components",
 						"type": "`$ARRAY`",
+						"short": "Affected components",
 					},
 					map[string]any{
 						"name": "group_id",
-						"short": "Identifier of Template Group this template belongs to",
+						"title": "Group Id",
 						"type": "`$STRING`",
+						"short": "Identifier of Template Group this template belongs to",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Incident Template Identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Incident Template Identifier",
 					},
 					map[string]any{
 						"name": "name",
-						"short": "Name of the template, as shown in the list on the \"Templates\" tab of the \"Incidents\" page",
+						"title": "Name",
 						"type": "`$STRING`",
+						"short": "Name of the template, as shown in the list on the \"Templates\" tab of the \"Incidents\" page",
 					},
 					map[string]any{
 						"name": "should_send_notifications",
-						"short": "Whether the \"deliver notifications\" checkbox should be selected when selecting this template",
+						"title": "Should Send Notifications",
 						"type": "`$BOOLEAN`",
+						"short": "Whether the \"deliver notifications\" checkbox should be selected when selecting this template",
 					},
 					map[string]any{
 						"name": "should_tweet",
-						"short": "Whether the \"tweet update\" checkbox should be selected when selecting this template",
+						"title": "Should Tweet",
 						"type": "`$BOOLEAN`",
+						"short": "Whether the \"tweet update\" checkbox should be selected when selecting this template",
 					},
 					map[string]any{
 						"name": "template",
-						"req": true,
+						"title": "Template",
 						"type": "`$OBJECT`",
+						"req": true,
 					},
 					map[string]any{
 						"name": "title",
-						"short": "Title to be applied to the incident or maintenance when selecting this template",
+						"title": "Title",
 						"type": "`$STRING`",
+						"short": "Title to be applied to the incident or maintenance when selecting this template",
 					},
 					map[string]any{
 						"name": "update_status",
-						"short": "The status the incident or maintenance should transition to when selecting this template",
+						"title": "Update Status",
 						"type": "`$STRING`",
+						"short": "The status the incident or maintenance should transition to when selecting this template",
 					},
 				},
 				"id": map[string]any{
@@ -2721,17 +2713,6 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/incident_templates",
@@ -2746,19 +2727,31 @@ func MakeConfig() map[string]any {
 										"lit": "incident_templates",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"incident_templates",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -2768,33 +2761,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"example": 1,
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"example": 100,
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incident_templates",
@@ -2809,21 +2775,49 @@ func MakeConfig() map[string]any {
 										"lit": "incident_templates",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incident_templates",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 1,
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 100,
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"page",
 										"page_id",
 										"per_page",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incident_templates",
 								},
 							},
 						},
@@ -2832,7 +2826,7 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 					},
 				},
@@ -2841,76 +2835,90 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "affected_components",
-						"short": "Affected components associated with the incident update.",
+						"title": "Affected Components",
 						"type": "`$ARRAY`",
+						"short": "Affected components associated with the incident update.",
 					},
 					map[string]any{
 						"name": "body",
-						"short": "Incident update body.",
+						"title": "Body",
 						"type": "`$STRING`",
+						"short": "Incident update body.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
-						"short": "The timestamp when the incident update was created at.",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"short": "The timestamp when the incident update was created at.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "custom_tweet",
-						"short": "An optional customized tweet message for incident postmortem.",
+						"title": "Custom Tweet",
 						"type": "`$STRING`",
+						"short": "An optional customized tweet message for incident postmortem.",
 					},
 					map[string]any{
 						"name": "deliver_notifications",
-						"short": "Controls whether to delivery notifications.",
+						"title": "Deliver Notifications",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether to delivery notifications.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "display_at",
-						"short": "Timestamp when incident update is happened.",
+						"title": "Display At",
 						"type": "`$STRING`",
+						"short": "Timestamp when incident update is happened.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Incident Update Identifier.",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Incident Update Identifier.",
 					},
 					map[string]any{
 						"name": "incident_id",
-						"short": "Incident Identifier.",
+						"title": "Incident Id",
 						"type": "`$STRING`",
+						"short": "Incident Identifier.",
 					},
 					map[string]any{
 						"name": "incident_update",
+						"title": "Incident Update",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "status",
-						"short": "The incident status.",
+						"title": "Status",
 						"type": "`$STRING`",
+						"short": "The incident status.",
 					},
 					map[string]any{
 						"name": "tweet_id",
+						"title": "Tweet Id",
+						"type": "`$STRING`",
 						"short": "Tweet identifier associated to this incident update.",
-						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "twitter_updated_at",
-						"short": "The timestamp when twitter updated at.",
+						"title": "Twitter Updated At",
 						"type": "`$STRING`",
+						"short": "The timestamp when twitter updated at.",
+						"format": "date-time",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
-						"short": "The timestamp when the incident update is updated.",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"short": "The timestamp when the incident update is updated.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "wants_twitter_update",
-						"short": "Controls whether to create twitter update.",
+						"title": "Wants Twitter Update",
 						"type": "`$BOOLEAN`",
+						"short": "Controls whether to create twitter update.",
 					},
 				},
 				"id": map[string]any{
@@ -2924,39 +2932,9 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "incident_update_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "incident_id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"incident_update_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -2977,11 +2955,17 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"incident_id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"{incident_id}",
+									"incident_updates",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"incident_update_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -2990,13 +2974,37 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"{incident_id}",
-									"incident_updates",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "incident_update_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "incident_id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"incident_id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -3006,39 +3014,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "incident_update_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "incident_id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"incident_update_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -3059,19 +3037,6 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"incident_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": map[string]any{
-										"incident_update": "`reqdata`",
-									},
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -3080,6 +3045,49 @@ func MakeConfig() map[string]any {
 									"incident_updates",
 									"{id}",
 								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"incident_update_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": map[string]any{
+										"incident_update": "`reqdata`",
+									},
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "incident_update_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "incident_id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"incident_id",
+										"page_id",
+									},
+								},
 							},
 						},
 					},
@@ -3087,8 +3095,8 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
-							"incident",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.incident",
 						},
 					},
 				},
@@ -3096,95 +3104,114 @@ func MakeConfig() map[string]any {
 			"metric": map[string]any{
 				"fields": []any{
 					map[string]any{
-						"format": "int32",
 						"name": "backfill_percentage",
+						"title": "Backfill Percentage",
 						"type": "`$INTEGER`",
+						"format": "int32",
 					},
 					map[string]any{
 						"name": "backfilled",
+						"title": "Backfilled",
 						"type": "`$BOOLEAN`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
-						"format": "int32",
 						"name": "decimal_places",
+						"title": "Decimal Places",
 						"type": "`$INTEGER`",
+						"format": "int32",
 					},
 					map[string]any{
 						"name": "display",
-						"short": "Should the metric be displayed",
+						"title": "Display",
 						"type": "`$BOOLEAN`",
+						"short": "Should the metric be displayed",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Metric identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Metric identifier",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "last_fetched_at",
+						"title": "Last Fetched At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "metric",
+						"title": "Metric",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "metric_identifier",
-						"short": "Metric Display identifier used to look up the metric data from the provider",
+						"title": "Metric Identifier",
 						"type": "`$STRING`",
+						"short": "Metric Display identifier used to look up the metric data from the provider",
 					},
 					map[string]any{
 						"name": "metrics_provider_id",
-						"short": "Metric Provider identifier",
+						"title": "Metrics Provider Id",
 						"type": "`$STRING`",
+						"short": "Metric Provider identifier",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "most_recent_data_at",
+						"title": "Most Recent Data At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "name",
-						"short": "Name of metric",
+						"title": "Name",
 						"type": "`$STRING`",
+						"short": "Name of metric",
 					},
 					map[string]any{
 						"name": "reference_name",
+						"title": "Reference Name",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "suffix",
-						"short": "Suffix to describe the units on the graph",
+						"title": "Suffix",
 						"type": "`$STRING`",
+						"short": "Suffix to describe the units on the graph",
 					},
 					map[string]any{
 						"name": "tooltip_description",
+						"title": "Tooltip Description",
 						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "y_axis_hidden",
-						"short": "Should the values on the y axis be hidden on render",
+						"title": "Y Axis Hidden",
 						"type": "`$BOOLEAN`",
+						"short": "Should the values on the y axis be hidden on render",
 					},
 					map[string]any{
-						"format": "float",
 						"name": "y_axis_max",
+						"title": "Y Axis Max",
 						"type": "`$NUMBER`",
+						"format": "float",
 					},
 					map[string]any{
-						"format": "float",
 						"name": "y_axis_min",
+						"title": "Y Axis Min",
 						"type": "`$NUMBER`",
+						"format": "float",
 					},
 				},
 				"id": map[string]any{
@@ -3198,32 +3225,9 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metric_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/metrics/{metric_id}/data",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"metric_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -3241,17 +3245,6 @@ func MakeConfig() map[string]any {
 										"lit": "data",
 									},
 								},
-								"select": map[string]any{
-									"$action": "data",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body.data`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -3259,26 +3252,42 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"data",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{
+									"param": map[string]any{
+										"metric_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body.data`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
-											"name": "metrics_provider_id",
-											"orig": "metrics_provider_id",
-											"reqd": true,
+											"name": "id",
+											"orig": "metric_id",
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 										map[string]any{
-											"kind": "param",
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"$action": "data",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
@@ -3299,18 +3308,6 @@ func MakeConfig() map[string]any {
 										"lit": "metrics",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"metrics_provider_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": map[string]any{
-										"metric": "`reqdata`",
-									},
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -3318,19 +3315,39 @@ func MakeConfig() map[string]any {
 									"{metrics_provider_id}",
 									"metrics",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": map[string]any{
+										"metric": "`reqdata`",
+									},
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
+											"name": "metrics_provider_id",
+											"orig": "metrics_provider_id",
+											"type": "`$STRING`",
 											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"exist": []any{
+										"metrics_provider_id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/metrics/data",
@@ -3348,21 +3365,33 @@ func MakeConfig() map[string]any {
 										"lit": "data",
 									},
 								},
-								"select": map[string]any{
-									"$action": "data",
-									"exist": []any{
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"metrics",
 									"data",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "data",
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -3372,38 +3401,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_access_user_id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
@@ -3424,6 +3421,50 @@ func MakeConfig() map[string]any {
 										"lit": "metrics",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"page_access_users",
+									"{page_access_user_id}",
+									"metrics",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_access_user_id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"page",
@@ -3431,17 +3472,6 @@ func MakeConfig() map[string]any {
 										"page_id",
 										"per_page",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"page_access_users",
-									"{page_access_user_id}",
-									"metrics",
 								},
 							},
 						},
@@ -3451,38 +3481,6 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "metrics_provider_id",
-											"orig": "metrics_provider_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
@@ -3503,6 +3501,50 @@ func MakeConfig() map[string]any {
 										"lit": "metrics",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics_providers",
+									"{metrics_provider_id}",
+									"metrics",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "metrics_provider_id",
+											"orig": "metrics_provider_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"metrics_provider_id",
@@ -3511,44 +3553,8 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics_providers",
-									"{metrics_provider_id}",
-									"metrics",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/metrics",
@@ -3563,6 +3569,41 @@ func MakeConfig() map[string]any {
 										"lit": "metrics",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"page",
@@ -3570,43 +3611,11 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metric_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/metrics/{metric_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"metric_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -3621,21 +3630,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"metric_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "metric_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -3645,32 +3677,9 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metric_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/metrics/{metric_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"metric_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -3685,10 +3694,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"metric_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -3697,11 +3711,29 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "metric_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -3711,32 +3743,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metric_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/pages/{page_id}/metrics/{metric_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"metric_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -3751,50 +3760,50 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"metrics",
 									"{id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metric_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/metrics/{metric_id}/data",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"metric_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "metric_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/metrics/{metric_id}/data",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -3812,23 +3821,46 @@ func MakeConfig() map[string]any {
 										"lit": "data",
 									},
 								},
-								"select": map[string]any{
-									"$action": "data",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"metrics",
 									"{id}",
 									"data",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"metric_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "metric_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "data",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -3838,32 +3870,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metric_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/metrics/{metric_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"metric_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -3878,10 +3887,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"metric_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -3890,11 +3904,29 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "metric_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -3903,15 +3935,15 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 						[]any{
-							"page",
-							"metrics_provider",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.metrics_provider",
 						},
 						[]any{
-							"page",
-							"page_access_user",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.page_access_user",
 						},
 					},
 				},
@@ -3919,45 +3951,54 @@ func MakeConfig() map[string]any {
 			"metrics_provider": map[string]any{
 				"fields": []any{
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "disabled",
+						"title": "Disabled",
 						"type": "`$BOOLEAN`",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Identifier for Metrics Provider",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Identifier for Metrics Provider",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "last_revalidated_at",
+						"title": "Last Revalidated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "metric_base_uri",
+						"title": "Metric Base Uri",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "metrics_provider",
+						"title": "Metrics Provider",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
-						"format": "int32",
 						"name": "page_id",
+						"title": "Page Id",
 						"type": "`$INTEGER`",
+						"format": "int32",
 					},
 					map[string]any{
 						"name": "type",
+						"title": "Type",
 						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 				},
 				"id": map[string]any{
@@ -3971,17 +4012,6 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/metrics_providers",
@@ -3996,21 +4026,33 @@ func MakeConfig() map[string]any {
 										"lit": "metrics_providers",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics_providers",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": map[string]any{
 										"metrics_provider": "`reqdata`",
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics_providers",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -4020,17 +4062,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/metrics_providers",
@@ -4045,19 +4076,31 @@ func MakeConfig() map[string]any {
 										"lit": "metrics_providers",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"metrics_providers",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -4067,32 +4110,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metrics_provider_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"metrics_provider_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4107,21 +4127,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics_providers",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"metrics_provider_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics_providers",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "metrics_provider_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -4131,32 +4174,9 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metrics_provider_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"metrics_provider_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4171,10 +4191,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics_providers",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"metrics_provider_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -4183,11 +4208,29 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics_providers",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "metrics_provider_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -4197,32 +4240,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metrics_provider_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"metrics_provider_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4237,21 +4257,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics_providers",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"metrics_provider_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics_providers",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "metrics_provider_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -4261,32 +4304,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "metrics_provider_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"metrics_provider_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4301,10 +4321,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"metrics_providers",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"metrics_provider_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -4313,11 +4338,29 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"metrics_providers",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "metrics_provider_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -4326,7 +4369,7 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 					},
 				},
@@ -4334,220 +4377,266 @@ func MakeConfig() map[string]any {
 			"page": map[string]any{
 				"fields": []any{
 					map[string]any{
-						"format": "float",
 						"name": "activity_score",
+						"title": "Activity Score",
 						"type": "`$NUMBER`",
+						"format": "float",
 					},
 					map[string]any{
 						"name": "allow_email_subscribers",
-						"short": "Can your users choose to receive notifications via email",
+						"title": "Allow Email Subscribers",
 						"type": "`$BOOLEAN`",
+						"short": "Can your users choose to receive notifications via email",
 					},
 					map[string]any{
 						"name": "allow_incident_subscribers",
-						"short": "Can your users subscribe to notifications for a single incident",
+						"title": "Allow Incident Subscribers",
 						"type": "`$BOOLEAN`",
+						"short": "Can your users subscribe to notifications for a single incident",
 					},
 					map[string]any{
 						"name": "allow_page_subscribers",
-						"short": "Can your users subscribe to all notifications on the page",
+						"title": "Allow Page Subscribers",
 						"type": "`$BOOLEAN`",
+						"short": "Can your users subscribe to all notifications on the page",
 					},
 					map[string]any{
 						"name": "allow_rss_atom_feeds",
-						"short": "Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages)",
+						"title": "Allow Rss Atom Feeds",
 						"type": "`$BOOLEAN`",
+						"short": "Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages)",
 					},
 					map[string]any{
 						"name": "allow_sms_subscribers",
-						"short": "Can your users choose to receive notifications via SMS",
+						"title": "Allow Sms Subscribers",
 						"type": "`$BOOLEAN`",
+						"short": "Can your users choose to receive notifications via SMS",
 					},
 					map[string]any{
 						"name": "allow_webhook_subscribers",
-						"short": "Can your users choose to receive notifications via Webhooks",
+						"title": "Allow Webhook Subscribers",
 						"type": "`$BOOLEAN`",
+						"short": "Can your users choose to receive notifications via Webhooks",
 					},
 					map[string]any{
 						"name": "branding",
-						"short": "The main template your statuspage will use",
+						"title": "Branding",
 						"type": "`$STRING`",
+						"short": "The main template your statuspage will use",
 					},
 					map[string]any{
 						"name": "city",
+						"title": "City",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "country",
+						"title": "Country",
 						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
-						"short": "Timestamp the record was created",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"short": "Timestamp the record was created",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "css_blues",
-						"short": "CSS Color",
+						"title": "Css Blues",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_body_background_color",
-						"short": "CSS Color",
+						"title": "Css Body Background Color",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_border_color",
-						"short": "CSS Color",
+						"title": "Css Border Color",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_font_color",
-						"short": "CSS Color",
+						"title": "Css Font Color",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_graph_color",
-						"short": "CSS Color",
+						"title": "Css Graph Color",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_greens",
-						"short": "CSS Color",
+						"title": "Css Greens",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_light_font_color",
-						"short": "CSS Color",
+						"title": "Css Light Font Color",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_link_color",
-						"short": "CSS Color",
+						"title": "Css Link Color",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_no_data",
-						"short": "CSS Color",
+						"title": "Css No Data",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_oranges",
-						"short": "CSS Color",
+						"title": "Css Oranges",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_reds",
-						"short": "CSS Color",
+						"title": "Css Reds",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "css_yellows",
-						"short": "CSS Color",
+						"title": "Css Yellows",
 						"type": "`$STRING`",
+						"short": "CSS Color",
 					},
 					map[string]any{
 						"name": "domain",
-						"short": "CNAME alias for your status page",
+						"title": "Domain",
 						"type": "`$STRING`",
+						"short": "CNAME alias for your status page",
 					},
 					map[string]any{
 						"name": "email_logo",
+						"title": "Email Logo",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "favicon_logo",
+						"title": "Favicon Logo",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "headline",
+						"title": "Headline",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "hero_cover",
+						"title": "Hero Cover",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "hidden_from_search",
-						"short": "Should your page hide itself from search engines",
+						"title": "Hidden From Search",
 						"type": "`$BOOLEAN`",
+						"short": "Should your page hide itself from search engines",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Page identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Page identifier",
 					},
 					map[string]any{
 						"name": "ip_restrictions",
+						"title": "Ip Restrictions",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "name",
-						"short": "Name of your page to be displayed",
+						"title": "Name",
 						"type": "`$STRING`",
+						"short": "Name of your page to be displayed",
 					},
 					map[string]any{
 						"name": "notifications_email_footer",
-						"short": "Allows you to customize the footer appearing on your notification emails.",
+						"title": "Notifications Email Footer",
 						"type": "`$STRING`",
+						"short": "Allows you to customize the footer appearing on your notification emails.",
 					},
 					map[string]any{
 						"name": "notifications_from_email",
-						"short": "Allows you to customize the email address your page notifications come from",
+						"title": "Notifications From Email",
 						"type": "`$STRING`",
+						"short": "Allows you to customize the email address your page notifications come from",
 					},
 					map[string]any{
 						"name": "page",
+						"title": "Page",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "page_description",
+						"title": "Page Description",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "state",
+						"title": "State",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "subdomain",
-						"short": "Subdomain at which to access your status page",
+						"title": "Subdomain",
 						"type": "`$STRING`",
+						"short": "Subdomain at which to access your status page",
 					},
 					map[string]any{
 						"name": "support_url",
+						"title": "Support Url",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "time_zone",
-						"short": "Timezone configured for your page",
+						"title": "Time Zone",
 						"type": "`$STRING`",
+						"short": "Timezone configured for your page",
 					},
 					map[string]any{
 						"name": "transactional_logo",
+						"title": "Transactional Logo",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "twitter_logo",
+						"title": "Twitter Logo",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "twitter_username",
+						"title": "Twitter Username",
 						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
-						"short": "Timestamp the record was last updated",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"short": "Timestamp the record was last updated",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "url",
-						"short": "Website of your page.",
+						"title": "Url",
 						"type": "`$STRING`",
+						"short": "Website of your page.",
 					},
 					map[string]any{
 						"name": "viewers_must_be_team_members",
+						"title": "Viewers Must Be Team Members",
 						"type": "`$BOOLEAN`",
 					},
 				},
@@ -4562,7 +4651,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages",
@@ -4571,14 +4659,16 @@ func MakeConfig() map[string]any {
 										"lit": "pages",
 									},
 								},
-								"select": map[string]any{},
+								"parts": []any{
+									"pages",
+								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 						},
 					},
@@ -4587,25 +4677,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4614,18 +4688,34 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"pages",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
 								},
 							},
 						},
@@ -4635,25 +4725,9 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4662,9 +4736,13 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"pages",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -4673,9 +4751,21 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
 								},
 							},
 						},
@@ -4685,25 +4775,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4712,9 +4786,13 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"pages",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -4723,9 +4801,21 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
 								},
 							},
 						},
@@ -4739,49 +4829,59 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "component_ids",
+						"title": "Component Ids",
 						"type": "`$ARRAY`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "external_identifier",
-						"short": "Associates group with external group.",
+						"title": "External Identifier",
 						"type": "`$STRING`",
+						"short": "Associates group with external group.",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Page Access Group Identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Page Access Group Identifier",
 					},
 					map[string]any{
 						"name": "metric_ids",
+						"title": "Metric Ids",
 						"type": "`$ARRAY`",
 					},
 					map[string]any{
 						"name": "name",
-						"short": "Name for this Group.",
+						"title": "Name",
 						"type": "`$STRING`",
+						"short": "Name for this Group.",
 					},
 					map[string]any{
 						"name": "page_access_group",
+						"title": "Page Access Group",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "page_access_user_ids",
+						"title": "Page Access User Ids",
 						"type": "`$ARRAY`",
 					},
 					map[string]any{
 						"name": "page_id",
-						"short": "Page Identifier.",
+						"title": "Page Id",
 						"type": "`$STRING`",
+						"short": "Page Identifier.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 				},
 				"id": map[string]any{
@@ -4795,32 +4895,9 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_group_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_group_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4838,17 +4915,6 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
-								"select": map[string]any{
-									"$action": "component",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -4856,27 +4922,45 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"components",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_group_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
 											"name": "id",
-											"orig": "page_id",
-											"reqd": true,
+											"orig": "page_access_group_id",
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"$action": "component",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/page_access_groups",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4888,9 +4972,14 @@ func MakeConfig() map[string]any {
 										"lit": "page_access_groups",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"pages",
+									"{id}",
+									"page_access_groups",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -4899,10 +4988,21 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{id}",
-									"page_access_groups",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
 								},
 							},
 						},
@@ -4912,39 +5012,9 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/page_access_groups",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -4954,6 +5024,45 @@ func MakeConfig() map[string]any {
 									},
 									map[string]any{
 										"lit": "page_access_groups",
+									},
+								},
+								"parts": []any{
+									"pages",
+									"{id}",
+									"page_access_groups",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
 									},
 								},
 								"select": map[string]any{
@@ -4963,15 +5072,6 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{id}",
-									"page_access_groups",
-								},
 							},
 						},
 					},
@@ -4980,32 +5080,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_group_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_group_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5020,21 +5097,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"page_access_groups",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_group_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"page_access_groups",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_group_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -5044,32 +5144,9 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_group_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_group_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5084,10 +5161,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"page_access_groups",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_group_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -5096,40 +5178,35 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"page_access_groups",
-									"{id}",
-								},
-							},
-							map[string]any{
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
 											"name": "id",
 											"orig": "page_access_group_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 										map[string]any{
-											"kind": "param",
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_group_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5147,23 +5224,46 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
-								"select": map[string]any{
-									"$action": "component",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_groups",
 									"{id}",
 									"components",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_group_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_group_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "component",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -5173,39 +5273,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "component_id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_group_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components/{component_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_group_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5226,17 +5296,6 @@ func MakeConfig() map[string]any {
 										"var": "component_id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"component_id",
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -5245,34 +5304,52 @@ func MakeConfig() map[string]any {
 									"components",
 									"{component_id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_group_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_group_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "component_id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_group_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"component_id",
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5287,50 +5364,50 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_groups",
 									"{id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_group_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_group_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_group_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5348,23 +5425,46 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
-								"select": map[string]any{
-									"$action": "component",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_groups",
 									"{id}",
 									"components",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_group_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_group_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "component",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -5374,32 +5474,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_group_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_group_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5414,10 +5491,15 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"page_access_groups",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_group_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -5426,40 +5508,35 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"page_access_groups",
-									"{id}",
-								},
-							},
-							map[string]any{
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
 											"name": "id",
 											"orig": "page_access_group_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 										map[string]any{
-											"kind": "param",
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_group_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5477,23 +5554,46 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
-								"select": map[string]any{
-									"$action": "component",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_groups",
 									"{id}",
 									"components",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_group_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_group_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "component",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -5502,11 +5602,11 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 						[]any{
-							"page",
-							"component",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.component",
 						},
 					},
 				},
@@ -5514,44 +5614,53 @@ func MakeConfig() map[string]any {
 			"page_access_user": map[string]any{
 				"fields": []any{
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "email",
+						"title": "Email",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "external_login",
-						"short": "IDP login user id.",
+						"title": "External Login",
 						"type": "`$STRING`",
+						"short": "IDP login user id.",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Page Access User Identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Page Access User Identifier",
 					},
 					map[string]any{
 						"name": "page_access_group_id",
+						"title": "Page Access Group Id",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "page_access_group_ids",
+						"title": "Page Access Group Ids",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "page_access_user",
+						"title": "Page Access User",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "page_id",
+						"title": "Page Id",
 						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 				},
 				"id": map[string]any{
@@ -5565,32 +5674,9 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_user_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5608,17 +5694,6 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
-								"select": map[string]any{
-									"$action": "component",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -5626,34 +5701,45 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"components",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "POST",
-								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_user_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "component",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "POST",
+								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5671,17 +5757,6 @@ func MakeConfig() map[string]any {
 										"lit": "metrics",
 									},
 								},
-								"select": map[string]any{
-									"$action": "metric",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -5689,27 +5764,45 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"metrics",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_user_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
 											"name": "id",
-											"orig": "page_id",
-											"reqd": true,
+											"orig": "page_access_user_id",
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"$action": "metric",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/page_access_users",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5721,9 +5814,14 @@ func MakeConfig() map[string]any {
 										"lit": "page_access_users",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"pages",
+									"{id}",
+									"page_access_users",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_id": "id",
 									},
 								},
 								"transform": map[string]any{
@@ -5732,10 +5830,21 @@ func MakeConfig() map[string]any {
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{id}",
-									"page_access_users",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
 								},
 							},
 						},
@@ -5745,45 +5854,9 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "email",
-											"orig": "email",
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/page_access_users",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5793,6 +5866,51 @@ func MakeConfig() map[string]any {
 									},
 									map[string]any{
 										"lit": "page_access_users",
+									},
+								},
+								"parts": []any{
+									"pages",
+									"{id}",
+									"page_access_users",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "email",
+											"orig": "email",
+											"type": "`$STRING`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
 									},
 								},
 								"select": map[string]any{
@@ -5803,15 +5921,6 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{id}",
-									"page_access_users",
-								},
 							},
 						},
 					},
@@ -5820,32 +5929,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_user_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5860,21 +5946,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"page_access_users",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_user_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"page_access_users",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -5884,32 +5993,9 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_user_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5924,50 +6010,50 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_users",
 									"{id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "PATCH",
-								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_user_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "PATCH",
+								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -5985,17 +6071,6 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
-								"select": map[string]any{
-									"$action": "component",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -6003,34 +6078,45 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"components",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "PATCH",
-								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_user_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "component",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "PATCH",
+								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -6048,23 +6134,46 @@ func MakeConfig() map[string]any {
 										"lit": "metrics",
 									},
 								},
-								"select": map[string]any{
-									"$action": "metric",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_users",
 									"{id}",
 									"metrics",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_user_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "metric",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -6074,39 +6183,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "component_id",
-											"orig": "component_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components/{component_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_user_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -6127,17 +6206,6 @@ func MakeConfig() map[string]any {
 										"var": "component_id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"component_id",
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -6146,41 +6214,52 @@ func MakeConfig() map[string]any {
 									"components",
 									"{component_id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "metric_id",
-											"orig": "metric_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics/{metric_id}",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_user_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "component_id",
+											"orig": "component_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"component_id",
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics/{metric_id}",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -6201,17 +6280,6 @@ func MakeConfig() map[string]any {
 										"var": "metric_id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"metric_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -6220,34 +6288,52 @@ func MakeConfig() map[string]any {
 									"metrics",
 									"{metric_id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_user_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "metric_id",
+											"orig": "metric_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"metric_id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -6262,50 +6348,50 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_users",
 									"{id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_user_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -6323,17 +6409,6 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
-								"select": map[string]any{
-									"$action": "component",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -6341,34 +6416,45 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"components",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_user_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "component",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -6386,23 +6472,46 @@ func MakeConfig() map[string]any {
 										"lit": "metrics",
 									},
 								},
-								"select": map[string]any{
-									"$action": "metric",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_users",
 									"{id}",
 									"metrics",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_user_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "metric",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -6412,32 +6521,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"page_access_user_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -6452,50 +6538,50 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_users",
 									"{id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "PUT",
-								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_user_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "PUT",
+								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -6513,17 +6599,6 @@ func MakeConfig() map[string]any {
 										"lit": "components",
 									},
 								},
-								"select": map[string]any{
-									"$action": "component",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -6531,34 +6606,45 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"components",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "page_access_user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "PUT",
-								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"page_access_user_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "component",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "PUT",
+								"orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -6576,23 +6662,46 @@ func MakeConfig() map[string]any {
 										"lit": "metrics",
 									},
 								},
-								"select": map[string]any{
-									"$action": "metric",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"page_access_users",
 									"{id}",
 									"metrics",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"page_access_user_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "page_access_user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "metric",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -6601,15 +6710,15 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 						[]any{
-							"page",
-							"component",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.component",
 						},
 						[]any{
-							"page",
-							"metric",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.metric",
 						},
 					},
 				},
@@ -6618,17 +6727,20 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "id",
+						"title": "Id",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "pages",
-						"short": "Pages accessible by the user.",
+						"title": "Pages",
 						"type": "`$OBJECT`",
+						"short": "Pages accessible by the user.",
 					},
 					map[string]any{
 						"name": "user_id",
-						"short": "User identifier",
+						"title": "User Id",
 						"type": "`$STRING`",
+						"short": "User identifier",
 					},
 				},
 				"id": map[string]any{
@@ -6642,32 +6754,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "organization_id",
-											"orig": "organization_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/organizations/{organization_id}/permissions/{user_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"user_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "organizations",
@@ -6682,21 +6771,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"organization_id",
+								"parts": []any{
+									"organizations",
+									"{organization_id}",
+									"permissions",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"user_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.data`",
 								},
-								"parts": []any{
-									"organizations",
-									"{organization_id}",
-									"permissions",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "organization_id",
+											"orig": "organization_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"organization_id",
+									},
 								},
 							},
 						},
@@ -6706,32 +6818,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "organization_id",
-											"orig": "organization_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/organizations/{organization_id}/permissions/{user_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"user_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "organizations",
@@ -6746,95 +6835,126 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"organization_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body.data`",
-								},
 								"parts": []any{
 									"organizations",
 									"{organization_id}",
 									"permissions",
 									"{id}",
 								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"user_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body.data`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "organization_id",
+											"orig": "organization_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"organization_id",
+									},
+								},
 							},
 						},
 					},
 				},
 				"relations": map[string]any{
-					"ancestors": []any{
-						[]any{
-							"organization",
-						},
-					},
+					"ancestors": []any{},
 				},
 			},
 			"postmortem": map[string]any{
 				"fields": []any{
 					map[string]any{
 						"name": "body",
-						"short": "Postmortem body",
+						"title": "Body",
 						"type": "`$STRING`",
+						"short": "Postmortem body",
 					},
 					map[string]any{
 						"name": "body_draft",
+						"title": "Body Draft",
+						"type": "`$STRING`",
 						"short": "Body draft",
-						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "body_draft_updated_at",
+						"title": "Body Draft Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "body_updated_at",
+						"title": "Body Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "custom_tweet",
-						"short": "Custom tweet for Incident Postmortem",
+						"title": "Custom Tweet",
 						"type": "`$STRING`",
+						"short": "Custom tweet for Incident Postmortem",
 					},
 					map[string]any{
 						"name": "notify_subscribers",
-						"short": "Should email subscribers be notified.",
+						"title": "Notify Subscribers",
 						"type": "`$BOOLEAN`",
+						"short": "Should email subscribers be notified.",
 					},
 					map[string]any{
 						"name": "notify_twitter",
-						"short": "Should Twitter followers be notified.",
+						"title": "Notify Twitter",
 						"type": "`$BOOLEAN`",
+						"short": "Should Twitter followers be notified.",
 					},
 					map[string]any{
 						"name": "postmortem",
-						"req": true,
+						"title": "Postmortem",
 						"type": "`$OBJECT`",
+						"req": true,
 					},
 					map[string]any{
 						"name": "preview_key",
+						"title": "Preview Key",
+						"type": "`$STRING`",
 						"short": "Preview Key",
-						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "published_at",
+						"title": "Published At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 				},
 				"name": "postmortem",
@@ -6844,24 +6964,6 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "incident_id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/postmortem",
@@ -6882,22 +6984,41 @@ func MakeConfig() map[string]any {
 										"lit": "postmortem",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"incident_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"incidents",
 									"{incident_id}",
 									"postmortem",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "incident_id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"incident_id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -6907,24 +7028,6 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "incident_id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/postmortem",
@@ -6945,18 +7048,6 @@ func MakeConfig() map[string]any {
 										"lit": "postmortem",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"incident_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": map[string]any{
-										"postmortem": "`reqdata`",
-									},
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -6964,26 +7055,39 @@ func MakeConfig() map[string]any {
 									"{incident_id}",
 									"postmortem",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": map[string]any{
+										"postmortem": "`reqdata`",
+									},
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
 											"name": "incident_id",
 											"orig": "incident_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 										map[string]any{
-											"kind": "param",
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"exist": []any{
+										"incident_id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/postmortem/publish",
@@ -7007,19 +7111,6 @@ func MakeConfig() map[string]any {
 										"lit": "publish",
 									},
 								},
-								"select": map[string]any{
-									"$action": "publish",
-									"exist": []any{
-										"incident_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": map[string]any{
-										"postmortem": "`reqdata`",
-									},
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -7028,26 +7119,40 @@ func MakeConfig() map[string]any {
 									"postmortem",
 									"publish",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": map[string]any{
+										"postmortem": "`reqdata`",
+									},
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
 											"name": "incident_id",
 											"orig": "incident_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 										map[string]any{
-											"kind": "param",
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"$action": "publish",
+									"exist": []any{
+										"incident_id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/postmortem/revert",
@@ -7071,17 +7176,6 @@ func MakeConfig() map[string]any {
 										"lit": "revert",
 									},
 								},
-								"select": map[string]any{
-									"$action": "revert",
-									"exist": []any{
-										"incident_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -7090,6 +7184,36 @@ func MakeConfig() map[string]any {
 									"postmortem",
 									"revert",
 								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "incident_id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "revert",
+									"exist": []any{
+										"incident_id",
+										"page_id",
+									},
+								},
 							},
 						},
 					},
@@ -7097,8 +7221,8 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
-							"incident",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.incident",
 						},
 					},
 				},
@@ -7107,36 +7231,43 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "incident_background_color",
-						"short": "Color of status embed iframe background when displaying incident",
+						"title": "Incident Background Color",
 						"type": "`$STRING`",
+						"short": "Color of status embed iframe background when displaying incident",
 					},
 					map[string]any{
 						"name": "incident_text_color",
-						"short": "Color of status embed iframe text when displaying incident",
+						"title": "Incident Text Color",
 						"type": "`$STRING`",
+						"short": "Color of status embed iframe text when displaying incident",
 					},
 					map[string]any{
 						"name": "maintenance_background_color",
-						"short": "Color of status embed iframe background when displaying maintenance",
+						"title": "Maintenance Background Color",
 						"type": "`$STRING`",
+						"short": "Color of status embed iframe background when displaying maintenance",
 					},
 					map[string]any{
 						"name": "maintenance_text_color",
-						"short": "Color of status embed iframe text when displaying maintenance",
+						"title": "Maintenance Text Color",
 						"type": "`$STRING`",
+						"short": "Color of status embed iframe text when displaying maintenance",
 					},
 					map[string]any{
 						"name": "page_id",
-						"short": "Page identifier",
+						"title": "Page Id",
 						"type": "`$STRING`",
+						"short": "Page identifier",
 					},
 					map[string]any{
 						"name": "position",
-						"short": "Corner where status embed iframe will appear on page",
+						"title": "Position",
 						"type": "`$STRING`",
+						"short": "Corner where status embed iframe will appear on page",
 					},
 					map[string]any{
 						"name": "status_embed_config",
+						"title": "Status Embed Config",
 						"type": "`$OBJECT`",
 					},
 				},
@@ -7147,17 +7278,6 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/status_embed_config",
@@ -7172,19 +7292,31 @@ func MakeConfig() map[string]any {
 										"lit": "status_embed_config",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"status_embed_config",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -7194,17 +7326,6 @@ func MakeConfig() map[string]any {
 						"name": "patch",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/status_embed_config",
@@ -7219,21 +7340,33 @@ func MakeConfig() map[string]any {
 										"lit": "status_embed_config",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"status_embed_config",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": map[string]any{
 										"status_embed_config": "`reqdata`",
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"status_embed_config",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -7243,17 +7376,6 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PUT",
 								"orig": "/pages/{page_id}/status_embed_config",
@@ -7268,21 +7390,33 @@ func MakeConfig() map[string]any {
 										"lit": "status_embed_config",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"status_embed_config",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": map[string]any{
 										"status_embed_config": "`reqdata`",
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"status_embed_config",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -7291,7 +7425,7 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 					},
 				},
@@ -7300,89 +7434,106 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "component_ids",
-						"short": "A list of component ids for which the subscriber should recieve updates for.",
+						"title": "Component Ids",
 						"type": "`$ARRAY`",
+						"short": "A list of component ids for which the subscriber should recieve updates for.",
 					},
 					map[string]any{
 						"name": "components",
-						"short": "The components for which the subscriber has elected to receive updates.",
+						"title": "Components",
 						"type": "`$STRING`",
+						"short": "The components for which the subscriber has elected to receive updates.",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "display_phone_number",
-						"short": "A formatted version of the phone_number and phone_country pair, nicely formatted for display.",
+						"title": "Display Phone Number",
 						"type": "`$STRING`",
+						"short": "A formatted version of the phone_number and phone_country pair, nicely formatted for display.",
 					},
 					map[string]any{
 						"name": "email",
-						"short": "The email address to use to contact the subscriber.",
+						"title": "Email",
 						"type": "`$STRING`",
+						"short": "The email address to use to contact the subscriber.",
 					},
 					map[string]any{
 						"name": "endpoint",
-						"short": "The URL where a webhook subscriber elects to receive updates.",
+						"title": "Endpoint",
 						"type": "`$STRING`",
+						"short": "The URL where a webhook subscriber elects to receive updates.",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Subscriber Identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Subscriber Identifier",
 					},
 					map[string]any{
 						"name": "mode",
-						"short": "The communication mode of the subscriber.",
+						"title": "Mode",
 						"type": "`$STRING`",
+						"short": "The communication mode of the subscriber.",
 					},
 					map[string]any{
 						"name": "obfuscated_channel_name",
-						"short": "Obfuscated slack channel name",
+						"title": "Obfuscated Channel Name",
 						"type": "`$STRING`",
+						"short": "Obfuscated slack channel name",
 					},
 					map[string]any{
 						"name": "page_access_user_id",
-						"short": "The Page Access user this subscriber belongs to (only for audience-specific pages).",
+						"title": "Page Access User Id",
 						"type": "`$STRING`",
+						"short": "The Page Access user this subscriber belongs to (only for audience-specific pages).",
 					},
 					map[string]any{
 						"name": "phone_country",
-						"short": "The two-character country code representing the country of which the phone_number is a part.",
+						"title": "Phone Country",
 						"type": "`$STRING`",
+						"short": "The two-character country code representing the country of which the phone_number is a part.",
 					},
 					map[string]any{
 						"name": "phone_number",
+						"title": "Phone Number",
+						"type": "`$STRING`",
 						"short": "The phone number used to contact an SMS subscriber",
-						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "purge_at",
-						"short": "The timestamp when a quarantined subscriber will be purged (unsubscribed).",
+						"title": "Purge At",
 						"type": "`$STRING`",
+						"short": "The timestamp when a quarantined subscriber will be purged (unsubscribed).",
+						"format": "date-time",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "quarantined_at",
-						"short": "The timestamp when the subscriber was quarantined due to an issue reaching them.",
+						"title": "Quarantined At",
 						"type": "`$STRING`",
+						"short": "The timestamp when the subscriber was quarantined due to an issue reaching them.",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "skip_confirmation_notification",
-						"short": "If this is true, do not notify the user with changes to their subscription.",
+						"title": "Skip Confirmation Notification",
 						"type": "`$BOOLEAN`",
+						"short": "If this is true, do not notify the user with changes to their subscription.",
 					},
 					map[string]any{
 						"name": "subscriber",
+						"title": "Subscriber",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "workspace_name",
-						"short": "The workspace name of the slack subscriber.",
+						"title": "Workspace Name",
 						"type": "`$STRING`",
+						"short": "The workspace name of the slack subscriber.",
 					},
 				},
 				"id": map[string]any{
@@ -7396,32 +7547,88 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "subscriber_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
-								"orig": "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation",
+								"orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation",
+								"segments": []any{
+									map[string]any{
+										"lit": "pages",
+									},
+									map[string]any{
+										"var": "page_id",
+									},
+									map[string]any{
+										"lit": "incidents",
+									},
+									map[string]any{
+										"var": "incident_id",
+									},
+									map[string]any{
+										"lit": "subscribers",
+									},
+									map[string]any{
+										"var": "id",
+									},
+									map[string]any{
+										"lit": "resend_confirmation",
+									},
+								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"{incident_id}",
+									"subscribers",
+									"{id}",
+									"resend_confirmation",
+								},
 								"rename": map[string]any{
 									"param": map[string]any{
 										"subscriber_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "subscriber_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "incident_id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "resend_confirmation",
+									"exist": []any{
+										"id",
+										"incident_id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "POST",
+								"orig": "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -7439,17 +7646,6 @@ func MakeConfig() map[string]any {
 										"lit": "resend_confirmation",
 									},
 								},
-								"select": map[string]any{
-									"$action": "resend_confirmation",
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -7457,26 +7653,42 @@ func MakeConfig() map[string]any {
 									"{id}",
 									"resend_confirmation",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{
+									"param": map[string]any{
+										"subscriber_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
-											"name": "incident_id",
-											"orig": "incident_id",
-											"reqd": true,
+											"name": "id",
+											"orig": "subscriber_id",
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 										map[string]any{
-											"kind": "param",
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"$action": "resend_confirmation",
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/subscribers",
@@ -7497,18 +7709,6 @@ func MakeConfig() map[string]any {
 										"lit": "subscribers",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"incident_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": map[string]any{
-										"subscriber": "`reqdata`",
-									},
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -7516,19 +7716,39 @@ func MakeConfig() map[string]any {
 									"{incident_id}",
 									"subscribers",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": map[string]any{
+										"subscriber": "`reqdata`",
+									},
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
+											"name": "incident_id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
 											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"exist": []any{
+										"incident_id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/subscribers",
@@ -7543,35 +7763,36 @@ func MakeConfig() map[string]any {
 										"lit": "subscribers",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"page_id",
-									},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"subscribers",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": map[string]any{
 										"subscriber": "`reqdata`",
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"subscribers",
-								},
-							},
-							map[string]any{
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"exist": []any{
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/subscribers/reactivate",
@@ -7589,35 +7810,36 @@ func MakeConfig() map[string]any {
 										"lit": "reactivate",
 									},
 								},
-								"select": map[string]any{
-									"$action": "reactivate",
-									"exist": []any{
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"subscribers",
 									"reactivate",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"$action": "reactivate",
+									"exist": []any{
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/subscribers/resend_confirmation",
@@ -7635,35 +7857,36 @@ func MakeConfig() map[string]any {
 										"lit": "resend_confirmation",
 									},
 								},
-								"select": map[string]any{
-									"$action": "resend_confirmation",
-									"exist": []any{
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"subscribers",
 									"resend_confirmation",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"kind": "param",
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"$action": "resend_confirmation",
+									"exist": []any{
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "POST",
 								"orig": "/pages/{page_id}/subscribers/unsubscribe",
@@ -7681,21 +7904,33 @@ func MakeConfig() map[string]any {
 										"lit": "unsubscribe",
 									},
 								},
-								"select": map[string]any{
-									"$action": "unsubscribe",
-									"exist": []any{
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"subscribers",
 									"unsubscribe",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "unsubscribe",
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -7705,65 +7940,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "limit",
-											"orig": "limit",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"example": 0,
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "q",
-											"orig": "q",
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"example": "asc",
-											"kind": "query",
-											"name": "sort_direction",
-											"orig": "sort_direction",
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"example": "primary",
-											"kind": "query",
-											"name": "sort_field",
-											"orig": "sort_field",
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"example": "active",
-											"kind": "query",
-											"name": "state",
-											"orig": "state",
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "type",
-											"orig": "type",
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/subscribers",
@@ -7778,6 +7954,75 @@ func MakeConfig() map[string]any {
 										"lit": "subscribers",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"subscribers",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "limit",
+											"orig": "limit",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 0,
+										},
+										map[string]any{
+											"name": "q",
+											"orig": "q",
+											"type": "`$STRING`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "sort_direction",
+											"orig": "sort_direction",
+											"type": "`$STRING`",
+											"kind": "query",
+											"example": "asc",
+										},
+										map[string]any{
+											"name": "sort_field",
+											"orig": "sort_field",
+											"type": "`$STRING`",
+											"kind": "query",
+											"example": "primary",
+										},
+										map[string]any{
+											"name": "state",
+											"orig": "state",
+											"type": "`$STRING`",
+											"kind": "query",
+											"example": "active",
+										},
+										map[string]any{
+											"name": "type",
+											"orig": "type",
+											"type": "`$STRING`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"limit",
@@ -7790,49 +8035,8 @@ func MakeConfig() map[string]any {
 										"type",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"subscribers",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "incident_id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/subscribers",
@@ -7853,6 +8057,50 @@ func MakeConfig() map[string]any {
 										"lit": "subscribers",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"incidents",
+									"{incident_id}",
+									"subscribers",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "incident_id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"incident_id",
@@ -7861,44 +8109,8 @@ func MakeConfig() map[string]any {
 										"per_page",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"incidents",
-									"{incident_id}",
-									"subscribers",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/subscribers/unsubscribed",
@@ -7916,6 +8128,42 @@ func MakeConfig() map[string]any {
 										"lit": "unsubscribed",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"subscribers",
+									"unsubscribed",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"$action": "unsubscribed",
 									"exist": []any{
@@ -7923,16 +8171,6 @@ func MakeConfig() map[string]any {
 										"page_id",
 										"per_page",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"subscribers",
-									"unsubscribed",
 								},
 							},
 						},
@@ -7942,39 +8180,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "subscriber_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "incident_id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"subscriber_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -7995,17 +8203,6 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"incident_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -8014,34 +8211,49 @@ func MakeConfig() map[string]any {
 									"subscribers",
 									"{id}",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{
+									"param": map[string]any{
+										"subscriber_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
+											"name": "id",
+											"orig": "subscriber_id",
+											"type": "`$STRING`",
 											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "incident_id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
 											"name": "page_id",
 											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
 											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"example": "active",
-											"kind": "query",
-											"name": "state",
-											"orig": "state",
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "type",
-											"orig": "type",
-											"type": "`$STRING`",
 										},
 									},
 								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"incident_id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/subscribers/count",
@@ -8059,6 +8271,43 @@ func MakeConfig() map[string]any {
 										"lit": "count",
 									},
 								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"subscribers",
+									"count",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "state",
+											"orig": "state",
+											"type": "`$STRING`",
+											"kind": "query",
+											"example": "active",
+										},
+										map[string]any{
+											"name": "type",
+											"orig": "type",
+											"type": "`$STRING`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"$action": "count",
 									"exist": []any{
@@ -8067,44 +8316,11 @@ func MakeConfig() map[string]any {
 										"type",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"subscribers",
-									"count",
-								},
 							},
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "subscriber_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/subscribers/{subscriber_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"subscriber_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -8119,35 +8335,47 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"subscribers",
 									"{id}",
 								},
-							},
-							map[string]any{
+								"rename": map[string]any{
+									"param": map[string]any{
+										"subscriber_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
+											"name": "id",
+											"orig": "subscriber_id",
+											"type": "`$STRING`",
 											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
 											"name": "page_id",
 											"orig": "page_id",
-											"reqd": true,
 											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
 										},
 									},
 								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "GET",
 								"orig": "/pages/{page_id}/subscribers/histogram_by_state",
@@ -8165,21 +8393,33 @@ func MakeConfig() map[string]any {
 										"lit": "histogram_by_state",
 									},
 								},
-								"select": map[string]any{
-									"$action": "histogram_by_state",
-									"exist": []any{
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
 									"subscribers",
 									"histogram_by_state",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"$action": "histogram_by_state",
+									"exist": []any{
+										"page_id",
+									},
 								},
 							},
 						},
@@ -8189,39 +8429,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "subscriber_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "incident_id",
-											"orig": "incident_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"subscriber_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -8242,17 +8452,6 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"incident_id",
-										"page_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"pages",
 									"{page_id}",
@@ -8261,42 +8460,52 @@ func MakeConfig() map[string]any {
 									"subscribers",
 									"{id}",
 								},
-							},
-							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "subscriber_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "skip_unsubscription_notification",
-											"orig": "skip_unsubscription_notification",
-											"type": "`$BOOLEAN`",
-										},
-									},
-								},
-								"kind": "http",
-								"method": "DELETE",
-								"orig": "/pages/{page_id}/subscribers/{subscriber_id}",
 								"rename": map[string]any{
 									"param": map[string]any{
 										"subscriber_id": "id",
 									},
 								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "subscriber_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "incident_id",
+											"orig": "incident_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"incident_id",
+										"page_id",
+									},
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "DELETE",
+								"orig": "/pages/{page_id}/subscribers/{subscriber_id}",
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -8309,6 +8518,47 @@ func MakeConfig() map[string]any {
 									},
 									map[string]any{
 										"var": "id",
+									},
+								},
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"subscribers",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"subscriber_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "subscriber_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "skip_unsubscription_notification",
+											"orig": "skip_unsubscription_notification",
+											"type": "`$BOOLEAN`",
+											"kind": "query",
+										},
 									},
 								},
 								"select": map[string]any{
@@ -8318,16 +8568,6 @@ func MakeConfig() map[string]any {
 										"skip_unsubscription_notification",
 									},
 								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"subscribers",
-									"{id}",
-								},
 							},
 						},
 					},
@@ -8336,32 +8576,9 @@ func MakeConfig() map[string]any {
 						"name": "update",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "subscriber_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "page_id",
-											"orig": "page_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "PATCH",
 								"orig": "/pages/{page_id}/subscribers/{subscriber_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"subscriber_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "pages",
@@ -8376,21 +8593,44 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"page_id",
+								"parts": []any{
+									"pages",
+									"{page_id}",
+									"subscribers",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"subscriber_id": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"pages",
-									"{page_id}",
-									"subscribers",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "subscriber_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "page_id",
+											"orig": "page_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"page_id",
+									},
 								},
 							},
 						},
@@ -8399,11 +8639,11 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"page",
+							"$.main.kit.entity.page",
 						},
 						[]any{
-							"page",
-							"incident",
+							"$.main.kit.entity.page",
+							"$.main.kit.entity.incident",
 						},
 					},
 				},
@@ -8411,42 +8651,50 @@ func MakeConfig() map[string]any {
 			"user": map[string]any{
 				"fields": []any{
 					map[string]any{
-						"format": "date-time",
 						"name": "created_at",
+						"title": "Created At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "email",
-						"short": "Email address for the team member",
+						"title": "Email",
 						"type": "`$STRING`",
+						"short": "Email address for the team member",
 					},
 					map[string]any{
 						"name": "first_name",
+						"title": "First Name",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "User identifier",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "User identifier",
 					},
 					map[string]any{
 						"name": "last_name",
+						"title": "Last Name",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "organization_id",
-						"short": "Organization identifier",
+						"title": "Organization Id",
 						"type": "`$STRING`",
+						"short": "Organization identifier",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "updated_at",
+						"title": "Updated At",
 						"type": "`$STRING`",
+						"format": "date-time",
 					},
 					map[string]any{
 						"name": "user",
-						"req": true,
+						"title": "User",
 						"type": "`$OBJECT`",
+						"req": true,
 					},
 				},
 				"id": map[string]any{
@@ -8460,17 +8708,6 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "organization_id",
-											"orig": "organization_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/organizations/{organization_id}/users",
@@ -8485,21 +8722,33 @@ func MakeConfig() map[string]any {
 										"lit": "users",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"organization_id",
-									},
+								"parts": []any{
+									"organizations",
+									"{organization_id}",
+									"users",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": map[string]any{
 										"user": "`reqdata`",
 									},
 									"res": "`body`",
 								},
-								"parts": []any{
-									"organizations",
-									"{organization_id}",
-									"users",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "organization_id",
+											"orig": "organization_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"organization_id",
+									},
 								},
 							},
 						},
@@ -8509,31 +8758,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "organization_id",
-											"orig": "organization_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "page",
-											"orig": "page",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "per_page",
-											"orig": "per_page",
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/organizations/{organization_id}/users",
@@ -8548,21 +8772,47 @@ func MakeConfig() map[string]any {
 										"lit": "users",
 									},
 								},
+								"parts": []any{
+									"organizations",
+									"{organization_id}",
+									"users",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "organization_id",
+											"orig": "organization_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+									"query": []any{
+										map[string]any{
+											"name": "page",
+											"orig": "page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "per_page",
+											"orig": "per_page",
+											"type": "`$INTEGER`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"organization_id",
 										"page",
 										"per_page",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"organizations",
-									"{organization_id}",
-									"users",
 								},
 							},
 						},
@@ -8572,32 +8822,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "user_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "organization_id",
-											"orig": "organization_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/organizations/{organization_id}/users/{user_id}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"user_id": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "organizations",
@@ -8612,32 +8839,51 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
-										"organization_id",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"organizations",
 									"{organization_id}",
 									"users",
 									"{id}",
 								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"user_id": "id",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "user_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "organization_id",
+											"orig": "organization_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+										"organization_id",
+									},
+								},
 							},
 						},
 					},
 				},
 				"relations": map[string]any{
-					"ancestors": []any{
-						[]any{
-							"organization",
-						},
-					},
+					"ancestors": []any{},
 				},
 			},
 		},

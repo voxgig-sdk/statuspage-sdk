@@ -19,19 +19,12 @@ const FEATURE_CLASS = {
     test: TestFeature_1.TestFeature,
     timeout: TimeoutFeature_1.TimeoutFeature,
 };
-// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
-// the model's active plugin groups. A feature that takes a `plugins` option
-// (secrets over sekreto) reads its own entry; a feature with no plugins has
-// none. Named imports above make each definition statically reachable, so
-// an SDK carries exactly the plugin modules its model selects — the same
-// leanness the old side-effect registry imports bought, without a registry.
 const FEATURE_PLUGINS = {};
 exports.FEATURE_PLUGINS = FEATURE_PLUGINS;
 class Config {
     makeFeature(fn) {
         const fc = FEATURE_CLASS[fn];
         const fi = new fc();
-        // TODO: errors etc
         return fi;
     }
     // False for a feature added at runtime via options.extend (station's
@@ -43,7 +36,7 @@ class Config {
     main = {
         name: 'Statuspage',
         slug: "statuspage",
-        version: "0.0.2",
+        version: "0.1.1",
         target: "ts",
     };
     feature = {
@@ -192,7 +185,6 @@ class Config {
             group_component: {},
             incident: {},
             incident_postmortem: {},
-            incident_subscriber: {},
             incident_template: {},
             incident_update: {},
             metric: {},
@@ -212,79 +204,94 @@ class Config {
             "fields": [
                 {
                     "name": "automation_email",
-                    "short": "Requires a special feature flag to be enabled",
-                    "type": "`$STRING`"
+                    "title": "Automation Email",
+                    "type": "`$STRING`",
+                    "short": "Requires a special feature flag to be enabled"
                 },
                 {
                     "name": "component",
+                    "title": "Component",
                     "type": "`$OBJECT`"
                 },
                 {
-                    "format": "date-time",
                     "name": "created_at",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "description",
-                    "short": "More detailed description for component",
-                    "type": "`$STRING`"
+                    "title": "Description",
+                    "type": "`$STRING`",
+                    "short": "More detailed description for component"
                 },
                 {
                     "name": "group",
-                    "short": "Is this component a group",
-                    "type": "`$BOOLEAN`"
+                    "title": "Group",
+                    "type": "`$BOOLEAN`",
+                    "short": "Is this component a group"
                 },
                 {
                     "name": "group_id",
-                    "short": "Component Group identifier",
-                    "type": "`$STRING`"
+                    "title": "Group Id",
+                    "type": "`$STRING`",
+                    "short": "Component Group identifier"
                 },
                 {
                     "name": "id",
-                    "short": "Identifier for component",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Identifier for component"
                 },
                 {
                     "name": "name",
-                    "short": "Display name for component",
-                    "type": "`$STRING`"
+                    "title": "Name",
+                    "type": "`$STRING`",
+                    "short": "Display name for component"
                 },
                 {
                     "name": "only_show_if_degraded",
-                    "short": "Requires a special feature flag to be enabled",
-                    "type": "`$BOOLEAN`"
+                    "title": "Only Show If Degraded",
+                    "type": "`$BOOLEAN`",
+                    "short": "Requires a special feature flag to be enabled"
                 },
                 {
                     "name": "page_id",
-                    "short": "Page identifier",
-                    "type": "`$STRING`"
+                    "title": "Page Id",
+                    "type": "`$STRING`",
+                    "short": "Page identifier"
                 },
                 {
-                    "format": "int32",
                     "name": "position",
+                    "title": "Position",
+                    "type": "`$INTEGER`",
                     "short": "Order the component will appear on the page",
-                    "type": "`$INTEGER`"
+                    "format": "int32"
                 },
                 {
                     "name": "showcase",
-                    "short": "Should this component be showcased",
-                    "type": "`$BOOLEAN`"
+                    "title": "Showcase",
+                    "type": "`$BOOLEAN`",
+                    "short": "Should this component be showcased"
                 },
                 {
-                    "format": "date",
                     "name": "start_date",
+                    "title": "Start Date",
+                    "type": "`$STRING`",
                     "short": "The date this component started being used",
-                    "type": "`$STRING`"
+                    "format": "date"
                 },
                 {
                     "name": "status",
-                    "short": "Status of component",
-                    "type": "`$STRING`"
+                    "title": "Status",
+                    "type": "`$STRING`",
+                    "short": "Status of component"
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 }
             ],
             "id": {
@@ -298,32 +305,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/components/{component_id}/page_access_groups",
-                            "rename": {
-                                "param": {
-                                    "component_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -341,52 +325,52 @@ class Config {
                                     "lit": "page_access_groups"
                                 }
                             ],
-                            "select": {
-                                "$action": "page_access_group",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "components",
                                 "{id}",
                                 "page_access_groups"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "POST",
-                            "orig": "/pages/{page_id}/components/{component_id}/page_access_users",
+                            ],
                             "rename": {
                                 "param": {
                                     "component_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "page_access_group",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "POST",
+                            "orig": "/pages/{page_id}/components/{component_id}/page_access_users",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -404,37 +388,49 @@ class Config {
                                     "lit": "page_access_users"
                                 }
                             ],
-                            "select": {
-                                "$action": "page_access_user",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "components",
                                 "{id}",
                                 "page_access_users"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {
+                                "param": {
+                                    "component_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
+                                        "name": "id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
                                         "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "$action": "page_access_user",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/components",
@@ -449,22 +445,34 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "components"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": {
                                     "component": "`reqdata`"
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "components"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -473,38 +481,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_access_group_id",
-                                        "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
@@ -525,6 +501,50 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "page_access_groups",
+                                "{page_access_group_id}",
+                                "components"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_access_group_id",
+                                        "orig": "page_access_group_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "page",
@@ -532,52 +552,9 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "page_access_groups",
-                                "{page_access_group_id}",
-                                "components"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_access_user_id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
@@ -598,6 +575,50 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "page_access_users",
+                                "{page_access_user_id}",
+                                "components"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_access_user_id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "page",
@@ -605,45 +626,9 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "page_access_users",
-                                "{page_access_user_id}",
-                                "components"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/components",
@@ -658,22 +643,48 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "components"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "page",
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "components"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -682,46 +693,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "end",
-                                        "orig": "end",
-                                        "type": "Any"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "start",
-                                        "orig": "start",
-                                        "type": "Any"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/components/{component_id}/uptime",
-                            "rename": {
-                                "param": {
-                                    "component_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -739,6 +713,54 @@ class Config {
                                     "lit": "uptime"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "components",
+                                "{id}",
+                                "uptime"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "component_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body.related_events`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "end",
+                                        "orig": "end",
+                                        "type": "Any",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "start",
+                                        "orig": "start",
+                                        "type": "Any",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "$action": "uptime",
                                 "exist": [
@@ -747,46 +769,12 @@ class Config {
                                     "page_id",
                                     "start"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body.related_events`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "components",
-                                "{id}",
-                                "uptime"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/components/{component_id}",
-                            "rename": {
-                                "param": {
-                                    "component_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -801,22 +789,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "components",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "component_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -825,32 +836,9 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/components/{component_id}",
-                            "rename": {
-                                "param": {
-                                    "component_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -865,11 +853,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "components",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "component_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -877,12 +870,30 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "components",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -891,32 +902,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/pages/{page_id}/components/{component_id}",
-                            "rename": {
-                                "param": {
-                                    "component_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -931,50 +919,50 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "components",
                                 "{id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/components/{component_id}/page_access_groups",
+                            ],
                             "rename": {
                                 "param": {
                                     "component_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/components/{component_id}/page_access_groups",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -992,52 +980,52 @@ class Config {
                                     "lit": "page_access_groups"
                                 }
                             ],
-                            "select": {
-                                "$action": "page_access_group",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "components",
                                 "{id}",
                                 "page_access_groups"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/components/{component_id}/page_access_users",
+                            ],
                             "rename": {
                                 "param": {
                                     "component_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "page_access_group",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/components/{component_id}/page_access_users",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -1055,24 +1043,47 @@ class Config {
                                     "lit": "page_access_users"
                                 }
                             ],
-                            "select": {
-                                "$action": "page_access_user",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "components",
                                 "{id}",
                                 "page_access_users"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "component_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "page_access_user",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1081,32 +1092,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/components/{component_id}",
-                            "rename": {
-                                "param": {
-                                    "component_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -1121,11 +1109,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "components",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "component_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -1133,12 +1126,30 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "components",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -1146,15 +1157,15 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ],
                     [
-                        "page",
-                        "page_access_group"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.page_access_group"
                     ],
                     [
-                        "page",
-                        "page_access_user"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.page_access_user"
                     ]
                 ]
             }
@@ -1163,17 +1174,20 @@ class Config {
             "fields": [
                 {
                     "name": "component_id",
-                    "short": "Component identifier",
-                    "type": "`$STRING`"
+                    "title": "Component Id",
+                    "type": "`$STRING`",
+                    "short": "Component identifier"
                 },
                 {
                     "name": "id",
+                    "title": "Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "incidents",
-                    "short": "Related incidents",
-                    "type": "`$OBJECT`"
+                    "title": "Incidents",
+                    "type": "`$OBJECT`",
+                    "short": "Related incidents"
                 }
             ],
             "id": {
@@ -1187,38 +1201,6 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "end",
-                                        "orig": "end",
-                                        "type": "Any"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "start",
-                                        "orig": "start",
-                                        "type": "Any"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/component-groups/{id}/uptime",
@@ -1239,6 +1221,50 @@ class Config {
                                     "lit": "uptime"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "component-groups",
+                                "{id}",
+                                "uptime"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body.related_events`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "end",
+                                        "orig": "end",
+                                        "type": "Any",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "start",
+                                        "orig": "start",
+                                        "type": "Any",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "end",
@@ -1246,18 +1272,7 @@ class Config {
                                     "page_id",
                                     "start"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body.related_events`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "component-groups",
-                                "{id}",
-                                "uptime"
-                            ]
+                            }
                         }
                     ]
                 }
@@ -1265,7 +1280,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ]
                 ]
             }
@@ -1274,44 +1289,53 @@ class Config {
             "fields": [
                 {
                     "name": "component_group",
-                    "req": true,
-                    "type": "`$OBJECT`"
+                    "title": "Component Group",
+                    "type": "`$OBJECT`",
+                    "req": true
                 },
                 {
                     "name": "components",
+                    "title": "Components",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "created_at",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "description",
-                    "short": "Description of the component group.",
-                    "type": "`$STRING`"
+                    "title": "Description",
+                    "type": "`$STRING`",
+                    "short": "Description of the component group."
                 },
                 {
                     "name": "id",
-                    "short": "Component Group Identifier",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Component Group Identifier"
                 },
                 {
                     "name": "name",
+                    "title": "Name",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "page_id",
+                    "title": "Page Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "position",
+                    "title": "Position",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 }
             ],
             "id": {
@@ -1325,17 +1349,6 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/component-groups",
@@ -1350,20 +1363,32 @@ class Config {
                                     "lit": "component-groups"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "component-groups"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1372,31 +1397,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/component-groups",
@@ -1411,22 +1411,48 @@ class Config {
                                     "lit": "component-groups"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "component-groups"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "page",
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "component-groups"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -1435,24 +1461,6 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/component-groups/{id}",
@@ -1470,22 +1478,41 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "component-groups",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1494,24 +1521,6 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/component-groups/{id}",
@@ -1529,22 +1538,41 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "component-groups",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1553,24 +1581,6 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/pages/{page_id}/component-groups/{id}",
@@ -1588,22 +1598,41 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "component-groups",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1612,24 +1641,6 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/component-groups/{id}",
@@ -1647,22 +1658,41 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "component-groups",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -1670,7 +1700,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ]
                 ]
             }
@@ -1679,52 +1709,64 @@ class Config {
             "fields": [
                 {
                     "name": "auto_transition_deliver_notifications_at_end",
-                    "short": "Controls whether send notification when scheduled maintenances auto transition to completed.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Auto Transition Deliver Notifications At End",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether send notification when scheduled maintenances auto transition to completed."
                 },
                 {
                     "name": "auto_transition_deliver_notifications_at_start",
-                    "short": "Controls whether send notification when scheduled maintenances auto transition to started.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Auto Transition Deliver Notifications At Start",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether send notification when scheduled maintenances auto transition to started."
                 },
                 {
                     "name": "auto_transition_to_maintenance_state",
-                    "short": "Controls whether change components status to under_maintenance once scheduled maintenance is in progress.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Auto Transition To Maintenance State",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether change components status to under_maintenance once scheduled maintenance is in progress."
                 },
                 {
                     "name": "auto_transition_to_operational_state",
-                    "short": "Controls whether change components status to operational once scheduled maintenance completes.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Auto Transition To Operational State",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether change components status to operational once scheduled maintenance completes."
                 },
                 {
                     "name": "components",
-                    "short": "Incident components",
-                    "type": "`$ARRAY`"
+                    "title": "Components",
+                    "type": "`$ARRAY`",
+                    "short": "Incident components"
                 },
                 {
-                    "format": "date-time",
                     "name": "created_at",
+                    "title": "Created At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when the incident was created at.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "id",
-                    "short": "Incident Identifier",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Incident Identifier"
                 },
                 {
                     "name": "impact",
-                    "short": "The impact of the incident.",
-                    "type": "`$STRING`"
+                    "title": "Impact",
+                    "type": "`$STRING`",
+                    "short": "The impact of the incident."
                 },
                 {
                     "name": "impact_override",
-                    "short": "value to override calculated impact value",
-                    "type": "`$STRING`"
+                    "title": "Impact Override",
+                    "type": "`$STRING`",
+                    "short": "value to override calculated impact value"
                 },
                 {
                     "name": "incident",
+                    "title": "Incident",
+                    "type": "`$OBJECT`",
+                    "req": true,
                     "op": {
                         "patch": {
                             "type": "`$OBJECT`"
@@ -1732,126 +1774,146 @@ class Config {
                         "update": {
                             "type": "`$OBJECT`"
                         }
-                    },
-                    "req": true,
-                    "type": "`$OBJECT`"
+                    }
                 },
                 {
                     "name": "incident_updates",
-                    "short": "The incident updates for incident.",
-                    "type": "`$ARRAY`"
+                    "title": "Incident Updates",
+                    "type": "`$ARRAY`",
+                    "short": "The incident updates for incident."
                 },
                 {
                     "name": "metadata",
-                    "short": "Metadata attached to the incident.",
-                    "type": "`$OBJECT`"
+                    "title": "Metadata",
+                    "type": "`$OBJECT`",
+                    "short": "Metadata attached to the incident."
                 },
                 {
-                    "format": "date-time",
                     "name": "monitoring_at",
+                    "title": "Monitoring At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when incident entered monitoring state.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "name",
-                    "short": "Incident Name.",
-                    "type": "`$STRING`"
+                    "title": "Name",
+                    "type": "`$STRING`",
+                    "short": "Incident Name."
                 },
                 {
                     "name": "page_id",
-                    "short": "Incident Page Identifier",
-                    "type": "`$STRING`"
+                    "title": "Page Id",
+                    "type": "`$STRING`",
+                    "short": "Incident Page Identifier"
                 },
                 {
                     "name": "postmortem_body",
-                    "short": "Body of the Postmortem.",
-                    "type": "`$STRING`"
+                    "title": "Postmortem Body",
+                    "type": "`$STRING`",
+                    "short": "Body of the Postmortem."
                 },
                 {
-                    "format": "date-time",
                     "name": "postmortem_body_last_updated_at",
+                    "title": "Postmortem Body Last Updated At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when the incident postmortem body was last updated at.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "postmortem_ignored",
-                    "short": "Controls whether the incident will have postmortem.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Postmortem Ignored",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether the incident will have postmortem."
                 },
                 {
                     "name": "postmortem_notified_subscribers",
-                    "short": "Indicates whether subscribers are already notificed about postmortem.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Postmortem Notified Subscribers",
+                    "type": "`$BOOLEAN`",
+                    "short": "Indicates whether subscribers are already notificed about postmortem."
                 },
                 {
                     "name": "postmortem_notified_twitter",
-                    "short": "Controls whether to decide if notify postmortem on twitter.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Postmortem Notified Twitter",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether to decide if notify postmortem on twitter."
                 },
                 {
                     "name": "postmortem_published_at",
-                    "short": "The timestamp when the postmortem was published.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Postmortem Published At",
+                    "type": "`$BOOLEAN`",
+                    "short": "The timestamp when the postmortem was published."
                 },
                 {
                     "name": "reminder_intervals",
-                    "short": "Custom reminder intervals for unresolved/open incidents.",
-                    "type": "`$STRING`"
+                    "title": "Reminder Intervals",
+                    "type": "`$STRING`",
+                    "short": "Custom reminder intervals for unresolved/open incidents."
                 },
                 {
-                    "format": "date-time",
                     "name": "resolved_at",
+                    "title": "Resolved At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when incident was resolved.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "scheduled_auto_completed",
-                    "short": "Controls whether the incident is scheduled to automatically change to complete.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Scheduled Auto Completed",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether the incident is scheduled to automatically change to complete."
                 },
                 {
                     "name": "scheduled_auto_in_progress",
-                    "short": "Controls whether the incident is scheduled to automatically change to in progress.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Scheduled Auto In Progress",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether the incident is scheduled to automatically change to in progress."
                 },
                 {
-                    "format": "date-time",
                     "name": "scheduled_for",
+                    "title": "Scheduled For",
+                    "type": "`$STRING`",
                     "short": "The timestamp the incident is scheduled for.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "scheduled_remind_prior",
-                    "short": "Controls whether to remind subscribers prior to scheduled incidents.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Scheduled Remind Prior",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether to remind subscribers prior to scheduled incidents."
                 },
                 {
-                    "format": "date-time",
                     "name": "scheduled_reminded_at",
+                    "title": "Scheduled Reminded At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when the scheduled incident reminder was sent at.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
-                    "format": "date-time",
                     "name": "scheduled_until",
+                    "title": "Scheduled Until",
+                    "type": "`$STRING`",
                     "short": "The timestamp the incident is scheduled until.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "shortlink",
-                    "short": "Incident Shortlink.",
-                    "type": "`$STRING`"
+                    "title": "Shortlink",
+                    "type": "`$STRING`",
+                    "short": "Incident Shortlink."
                 },
                 {
                     "name": "status",
-                    "short": "The incident status.",
-                    "type": "`$STRING`"
+                    "title": "Status",
+                    "type": "`$STRING`",
+                    "short": "The incident status."
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
+                    "title": "Updated At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when the incident was updated at.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 }
             ],
             "id": {
@@ -1865,17 +1927,6 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/incidents",
@@ -1890,22 +1941,34 @@ class Config {
                                     "lit": "incidents"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": {
                                     "incident": "`reqdata`"
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1914,37 +1977,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "limit",
-                                        "orig": "limit",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "q",
-                                        "orig": "q",
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incidents",
@@ -1959,6 +1991,47 @@ class Config {
                                     "lit": "incidents"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "limit",
+                                        "orig": "limit",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "q",
+                                        "orig": "q",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "limit",
@@ -1966,45 +2039,9 @@ class Config {
                                     "page_id",
                                     "q"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "example": 1,
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "example": 100,
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incidents/active_maintenance",
@@ -2022,6 +2059,44 @@ class Config {
                                     "lit": "active_maintenance"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents",
+                                "active_maintenance"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 1
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 100
+                                    }
+                                ]
+                            },
                             "select": {
                                 "$action": "active_maintenance",
                                 "exist": [
@@ -2029,46 +2104,9 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents",
-                                "active_maintenance"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "example": 1,
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "example": 100,
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incidents/scheduled",
@@ -2086,6 +2124,44 @@ class Config {
                                     "lit": "scheduled"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents",
+                                "scheduled"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 1
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 100
+                                    }
+                                ]
+                            },
                             "select": {
                                 "$action": "scheduled",
                                 "exist": [
@@ -2093,46 +2169,9 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents",
-                                "scheduled"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "example": 1,
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "example": 100,
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incidents/unresolved",
@@ -2150,6 +2189,44 @@ class Config {
                                     "lit": "unresolved"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents",
+                                "unresolved"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 1
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 100
+                                    }
+                                ]
+                            },
                             "select": {
                                 "$action": "unresolved",
                                 "exist": [
@@ -2157,46 +2234,9 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents",
-                                "unresolved"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "example": 1,
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "example": 100,
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incidents/upcoming",
@@ -2214,6 +2254,44 @@ class Config {
                                     "lit": "upcoming"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents",
+                                "upcoming"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 1
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 100
+                                    }
+                                ]
+                            },
                             "select": {
                                 "$action": "upcoming",
                                 "exist": [
@@ -2221,17 +2299,7 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents",
-                                "upcoming"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -2240,32 +2308,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incidents/{incident_id}",
-                            "rename": {
-                                "param": {
-                                    "incident_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -2280,22 +2325,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "incidents",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "incident_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -2304,32 +2372,9 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/incidents/{incident_id}",
-                            "rename": {
-                                "param": {
-                                    "incident_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -2344,11 +2389,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "incident_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -2356,12 +2406,30 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -2370,32 +2438,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/pages/{page_id}/incidents/{incident_id}",
-                            "rename": {
-                                "param": {
-                                    "incident_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -2410,22 +2455,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "incidents",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "incident_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -2434,32 +2502,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/incidents/{incident_id}",
-                            "rename": {
-                                "param": {
-                                    "incident_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -2474,11 +2519,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "incident_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -2486,12 +2536,30 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -2499,7 +2567,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ]
                 ]
             }
@@ -2508,6 +2576,7 @@ class Config {
             "fields": [
                 {
                     "name": "id",
+                    "title": "Id",
                     "type": "`$STRING`"
                 }
             ],
@@ -2522,32 +2591,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem",
-                            "rename": {
-                                "param": {
-                                    "incident_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -2565,115 +2611,46 @@ class Config {
                                     "lit": "postmortem"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "incidents",
                                 "{id}",
                                 "postmortem"
-                            ]
-                        }
-                    ]
-                }
-            },
-            "relations": {
-                "ancestors": [
-                    [
-                        "page"
-                    ]
-                ]
-            }
-        },
-        "incident_subscriber": {
-            "fields": [],
-            "name": "incident_subscriber",
-            "op": {
-                "create": {
-                    "input": "data",
-                    "name": "create",
-                    "points": [
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "incident_id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "subscriber_id",
-                                        "orig": "subscriber_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "POST",
-                            "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation",
-                            "segments": [
-                                {
-                                    "lit": "pages"
-                                },
-                                {
-                                    "var": "page_id"
-                                },
-                                {
-                                    "lit": "incidents"
-                                },
-                                {
-                                    "var": "incident_id"
-                                },
-                                {
-                                    "lit": "subscribers"
-                                },
-                                {
-                                    "var": "subscriber_id"
-                                },
-                                {
-                                    "lit": "resend_confirmation"
-                                }
                             ],
-                            "select": {
-                                "exist": [
-                                    "incident_id",
-                                    "page_id",
-                                    "subscriber_id"
-                                ]
+                            "rename": {
+                                "param": {
+                                    "incident_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents",
-                                "{incident_id}",
-                                "subscribers",
-                                "{subscriber_id}",
-                                "resend_confirmation"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -2681,9 +2658,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page",
-                        "incident",
-                        "subscriber"
+                        "$.main.kit.entity.page"
                     ]
                 ]
             }
@@ -2692,53 +2667,63 @@ class Config {
             "fields": [
                 {
                     "name": "body",
-                    "short": "Body of the incident or maintenance update to be applied when selecting this template",
-                    "type": "`$STRING`"
+                    "title": "Body",
+                    "type": "`$STRING`",
+                    "short": "Body of the incident or maintenance update to be applied when selecting this template"
                 },
                 {
                     "name": "components",
-                    "short": "Affected components",
-                    "type": "`$ARRAY`"
+                    "title": "Components",
+                    "type": "`$ARRAY`",
+                    "short": "Affected components"
                 },
                 {
                     "name": "group_id",
-                    "short": "Identifier of Template Group this template belongs to",
-                    "type": "`$STRING`"
+                    "title": "Group Id",
+                    "type": "`$STRING`",
+                    "short": "Identifier of Template Group this template belongs to"
                 },
                 {
                     "name": "id",
-                    "short": "Incident Template Identifier",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Incident Template Identifier"
                 },
                 {
                     "name": "name",
-                    "short": "Name of the template, as shown in the list on the \"Templates\" tab of the \"Incidents\" page",
-                    "type": "`$STRING`"
+                    "title": "Name",
+                    "type": "`$STRING`",
+                    "short": "Name of the template, as shown in the list on the \"Templates\" tab of the \"Incidents\" page"
                 },
                 {
                     "name": "should_send_notifications",
-                    "short": "Whether the \"deliver notifications\" checkbox should be selected when selecting this template",
-                    "type": "`$BOOLEAN`"
+                    "title": "Should Send Notifications",
+                    "type": "`$BOOLEAN`",
+                    "short": "Whether the \"deliver notifications\" checkbox should be selected when selecting this template"
                 },
                 {
                     "name": "should_tweet",
-                    "short": "Whether the \"tweet update\" checkbox should be selected when selecting this template",
-                    "type": "`$BOOLEAN`"
+                    "title": "Should Tweet",
+                    "type": "`$BOOLEAN`",
+                    "short": "Whether the \"tweet update\" checkbox should be selected when selecting this template"
                 },
                 {
                     "name": "template",
-                    "req": true,
-                    "type": "`$OBJECT`"
+                    "title": "Template",
+                    "type": "`$OBJECT`",
+                    "req": true
                 },
                 {
                     "name": "title",
-                    "short": "Title to be applied to the incident or maintenance when selecting this template",
-                    "type": "`$STRING`"
+                    "title": "Title",
+                    "type": "`$STRING`",
+                    "short": "Title to be applied to the incident or maintenance when selecting this template"
                 },
                 {
                     "name": "update_status",
-                    "short": "The status the incident or maintenance should transition to when selecting this template",
-                    "type": "`$STRING`"
+                    "title": "Update Status",
+                    "type": "`$STRING`",
+                    "short": "The status the incident or maintenance should transition to when selecting this template"
                 }
             ],
             "id": {
@@ -2752,17 +2737,6 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/incident_templates",
@@ -2777,20 +2751,32 @@ class Config {
                                     "lit": "incident_templates"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "incident_templates"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -2799,33 +2785,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "example": 1,
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "example": 100,
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incident_templates",
@@ -2840,22 +2799,50 @@ class Config {
                                     "lit": "incident_templates"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incident_templates"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 1
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 100
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "page",
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incident_templates"
-                            ]
+                            }
                         }
                     ]
                 }
@@ -2863,7 +2850,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ]
                 ]
             }
@@ -2872,76 +2859,90 @@ class Config {
             "fields": [
                 {
                     "name": "affected_components",
-                    "short": "Affected components associated with the incident update.",
-                    "type": "`$ARRAY`"
+                    "title": "Affected Components",
+                    "type": "`$ARRAY`",
+                    "short": "Affected components associated with the incident update."
                 },
                 {
                     "name": "body",
-                    "short": "Incident update body.",
-                    "type": "`$STRING`"
+                    "title": "Body",
+                    "type": "`$STRING`",
+                    "short": "Incident update body."
                 },
                 {
-                    "format": "date-time",
                     "name": "created_at",
+                    "title": "Created At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when the incident update was created at.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "custom_tweet",
-                    "short": "An optional customized tweet message for incident postmortem.",
-                    "type": "`$STRING`"
+                    "title": "Custom Tweet",
+                    "type": "`$STRING`",
+                    "short": "An optional customized tweet message for incident postmortem."
                 },
                 {
                     "name": "deliver_notifications",
-                    "short": "Controls whether to delivery notifications.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Deliver Notifications",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether to delivery notifications."
                 },
                 {
-                    "format": "date-time",
                     "name": "display_at",
+                    "title": "Display At",
+                    "type": "`$STRING`",
                     "short": "Timestamp when incident update is happened.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "id",
-                    "short": "Incident Update Identifier.",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Incident Update Identifier."
                 },
                 {
                     "name": "incident_id",
-                    "short": "Incident Identifier.",
-                    "type": "`$STRING`"
+                    "title": "Incident Id",
+                    "type": "`$STRING`",
+                    "short": "Incident Identifier."
                 },
                 {
                     "name": "incident_update",
+                    "title": "Incident Update",
                     "type": "`$OBJECT`"
                 },
                 {
                     "name": "status",
-                    "short": "The incident status.",
-                    "type": "`$STRING`"
+                    "title": "Status",
+                    "type": "`$STRING`",
+                    "short": "The incident status."
                 },
                 {
                     "name": "tweet_id",
-                    "short": "Tweet identifier associated to this incident update.",
-                    "type": "`$STRING`"
+                    "title": "Tweet Id",
+                    "type": "`$STRING`",
+                    "short": "Tweet identifier associated to this incident update."
                 },
                 {
-                    "format": "date-time",
                     "name": "twitter_updated_at",
+                    "title": "Twitter Updated At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when twitter updated at.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
+                    "title": "Updated At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when the incident update is updated.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "wants_twitter_update",
-                    "short": "Controls whether to create twitter update.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Wants Twitter Update",
+                    "type": "`$BOOLEAN`",
+                    "short": "Controls whether to create twitter update."
                 }
             ],
             "id": {
@@ -2955,39 +2956,9 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "incident_update_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "incident_id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
-                            "rename": {
-                                "param": {
-                                    "incident_update_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -3008,19 +2979,6 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "incident_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": {
-                                    "incident_update": "`reqdata`"
-                                },
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
@@ -3028,7 +2986,50 @@ class Config {
                                 "{incident_id}",
                                 "incident_updates",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "incident_update_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": {
+                                    "incident_update": "`reqdata`"
+                                },
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "incident_update_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "incident_id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -3037,39 +3038,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "incident_update_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "incident_id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/incident_updates/{incident_update_id}",
-                            "rename": {
-                                "param": {
-                                    "incident_update_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -3090,19 +3061,6 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "incident_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": {
-                                    "incident_update": "`reqdata`"
-                                },
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
@@ -3110,7 +3068,50 @@ class Config {
                                 "{incident_id}",
                                 "incident_updates",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "incident_update_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": {
+                                    "incident_update": "`reqdata`"
+                                },
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "incident_update_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "incident_id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -3118,8 +3119,8 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page",
-                        "incident"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.incident"
                     ]
                 ]
             }
@@ -3127,95 +3128,114 @@ class Config {
         "metric": {
             "fields": [
                 {
-                    "format": "int32",
                     "name": "backfill_percentage",
-                    "type": "`$INTEGER`"
+                    "title": "Backfill Percentage",
+                    "type": "`$INTEGER`",
+                    "format": "int32"
                 },
                 {
                     "name": "backfilled",
+                    "title": "Backfilled",
                     "type": "`$BOOLEAN`"
                 },
                 {
-                    "format": "date-time",
                     "name": "created_at",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
-                    "format": "int32",
                     "name": "decimal_places",
-                    "type": "`$INTEGER`"
+                    "title": "Decimal Places",
+                    "type": "`$INTEGER`",
+                    "format": "int32"
                 },
                 {
                     "name": "display",
-                    "short": "Should the metric be displayed",
-                    "type": "`$BOOLEAN`"
+                    "title": "Display",
+                    "type": "`$BOOLEAN`",
+                    "short": "Should the metric be displayed"
                 },
                 {
                     "name": "id",
-                    "short": "Metric identifier",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Metric identifier"
                 },
                 {
-                    "format": "date-time",
                     "name": "last_fetched_at",
-                    "type": "`$STRING`"
+                    "title": "Last Fetched At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "metric",
+                    "title": "Metric",
                     "type": "`$OBJECT`"
                 },
                 {
                     "name": "metric_identifier",
-                    "short": "Metric Display identifier used to look up the metric data from the provider",
-                    "type": "`$STRING`"
+                    "title": "Metric Identifier",
+                    "type": "`$STRING`",
+                    "short": "Metric Display identifier used to look up the metric data from the provider"
                 },
                 {
                     "name": "metrics_provider_id",
-                    "short": "Metric Provider identifier",
-                    "type": "`$STRING`"
+                    "title": "Metrics Provider Id",
+                    "type": "`$STRING`",
+                    "short": "Metric Provider identifier"
                 },
                 {
-                    "format": "date-time",
                     "name": "most_recent_data_at",
-                    "type": "`$STRING`"
+                    "title": "Most Recent Data At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "name",
-                    "short": "Name of metric",
-                    "type": "`$STRING`"
+                    "title": "Name",
+                    "type": "`$STRING`",
+                    "short": "Name of metric"
                 },
                 {
                     "name": "reference_name",
+                    "title": "Reference Name",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "suffix",
-                    "short": "Suffix to describe the units on the graph",
-                    "type": "`$STRING`"
+                    "title": "Suffix",
+                    "type": "`$STRING`",
+                    "short": "Suffix to describe the units on the graph"
                 },
                 {
                     "name": "tooltip_description",
+                    "title": "Tooltip Description",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "y_axis_hidden",
-                    "short": "Should the values on the y axis be hidden on render",
-                    "type": "`$BOOLEAN`"
+                    "title": "Y Axis Hidden",
+                    "type": "`$BOOLEAN`",
+                    "short": "Should the values on the y axis be hidden on render"
                 },
                 {
-                    "format": "float",
                     "name": "y_axis_max",
-                    "type": "`$NUMBER`"
+                    "title": "Y Axis Max",
+                    "type": "`$NUMBER`",
+                    "format": "float"
                 },
                 {
-                    "format": "float",
                     "name": "y_axis_min",
-                    "type": "`$NUMBER`"
+                    "title": "Y Axis Min",
+                    "type": "`$NUMBER`",
+                    "format": "float"
                 }
             ],
             "id": {
@@ -3229,32 +3249,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metric_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/metrics/{metric_id}/data",
-                            "rename": {
-                                "param": {
-                                    "metric_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -3272,44 +3269,49 @@ class Config {
                                     "lit": "data"
                                 }
                             ],
-                            "select": {
-                                "$action": "data",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body.data`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "metrics",
                                 "{id}",
                                 "data"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {
+                                "param": {
+                                    "metric_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body.data`"
+                            },
                             "args": {
                                 "params": [
                                     {
+                                        "name": "id",
+                                        "orig": "metric_id",
+                                        "type": "`$STRING`",
                                         "kind": "param",
-                                        "name": "metrics_provider_id",
-                                        "orig": "metrics_provider_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "reqd": true
                                     },
                                     {
-                                        "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "$action": "data",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
@@ -3330,38 +3332,46 @@ class Config {
                                     "lit": "metrics"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "metrics_provider_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": {
-                                    "metric": "`reqdata`"
-                                },
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "metrics_providers",
                                 "{metrics_provider_id}",
                                 "metrics"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": {
+                                    "metric": "`reqdata`"
+                                },
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
+                                        "name": "metrics_provider_id",
+                                        "orig": "metrics_provider_id",
+                                        "type": "`$STRING`",
                                         "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "exist": [
+                                    "metrics_provider_id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/metrics/data",
@@ -3379,22 +3389,34 @@ class Config {
                                     "lit": "data"
                                 }
                             ],
-                            "select": {
-                                "$action": "data",
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "metrics",
                                 "data"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "data",
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -3403,38 +3425,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_access_user_id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
@@ -3455,6 +3445,50 @@ class Config {
                                     "lit": "metrics"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "page_access_users",
+                                "{page_access_user_id}",
+                                "metrics"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_access_user_id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "page",
@@ -3462,18 +3496,7 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "page_access_users",
-                                "{page_access_user_id}",
-                                "metrics"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -3482,38 +3505,6 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "metrics_provider_id",
-                                        "orig": "metrics_provider_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics",
@@ -3534,6 +3525,50 @@ class Config {
                                     "lit": "metrics"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "metrics_providers",
+                                "{metrics_provider_id}",
+                                "metrics"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "metrics_provider_id",
+                                        "orig": "metrics_provider_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "metrics_provider_id",
@@ -3541,45 +3576,9 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "metrics_providers",
-                                "{metrics_provider_id}",
-                                "metrics"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/metrics",
@@ -3594,50 +3593,53 @@ class Config {
                                     "lit": "metrics"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "metrics"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "page",
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "metrics"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metric_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/metrics/{metric_id}",
-                            "rename": {
-                                "param": {
-                                    "metric_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -3652,22 +3654,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "metrics",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "metric_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "metric_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -3676,32 +3701,9 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metric_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/metrics/{metric_id}",
-                            "rename": {
-                                "param": {
-                                    "metric_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -3716,11 +3718,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "metrics",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "metric_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -3728,12 +3735,30 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "metrics",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "metric_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -3742,32 +3767,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metric_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/pages/{page_id}/metrics/{metric_id}",
-                            "rename": {
-                                "param": {
-                                    "metric_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -3782,50 +3784,50 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "metrics",
                                 "{id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metric_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/metrics/{metric_id}/data",
+                            ],
                             "rename": {
                                 "param": {
                                     "metric_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "metric_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/metrics/{metric_id}/data",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -3843,24 +3845,47 @@ class Config {
                                     "lit": "data"
                                 }
                             ],
-                            "select": {
-                                "$action": "data",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "metrics",
                                 "{id}",
                                 "data"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "metric_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "metric_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "data",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -3869,32 +3894,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metric_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/metrics/{metric_id}",
-                            "rename": {
-                                "param": {
-                                    "metric_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -3909,11 +3911,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "metrics",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "metric_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -3921,12 +3928,30 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "metrics",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "metric_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -3934,15 +3959,15 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ],
                     [
-                        "page",
-                        "metrics_provider"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.metrics_provider"
                     ],
                     [
-                        "page",
-                        "page_access_user"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.page_access_user"
                     ]
                 ]
             }
@@ -3950,45 +3975,54 @@ class Config {
         "metrics_provider": {
             "fields": [
                 {
-                    "format": "date-time",
                     "name": "created_at",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "disabled",
+                    "title": "Disabled",
                     "type": "`$BOOLEAN`"
                 },
                 {
                     "name": "id",
-                    "short": "Identifier for Metrics Provider",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Identifier for Metrics Provider"
                 },
                 {
-                    "format": "date-time",
                     "name": "last_revalidated_at",
-                    "type": "`$STRING`"
+                    "title": "Last Revalidated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "metric_base_uri",
+                    "title": "Metric Base Uri",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "metrics_provider",
+                    "title": "Metrics Provider",
                     "type": "`$OBJECT`"
                 },
                 {
-                    "format": "int32",
                     "name": "page_id",
-                    "type": "`$INTEGER`"
+                    "title": "Page Id",
+                    "type": "`$INTEGER`",
+                    "format": "int32"
                 },
                 {
                     "name": "type",
+                    "title": "Type",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 }
             ],
             "id": {
@@ -4002,17 +4036,6 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/metrics_providers",
@@ -4027,22 +4050,34 @@ class Config {
                                     "lit": "metrics_providers"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "metrics_providers"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": {
                                     "metrics_provider": "`reqdata`"
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "metrics_providers"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -4051,17 +4086,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/metrics_providers",
@@ -4076,20 +4100,32 @@ class Config {
                                     "lit": "metrics_providers"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "metrics_providers"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -4098,32 +4134,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metrics_provider_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                            "rename": {
-                                "param": {
-                                    "metrics_provider_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4138,22 +4151,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "metrics_providers",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "metrics_provider_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "metrics_provider_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -4162,32 +4198,9 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metrics_provider_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                            "rename": {
-                                "param": {
-                                    "metrics_provider_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4202,11 +4215,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "metrics_providers",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "metrics_provider_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -4214,12 +4232,30 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "metrics_providers",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "metrics_provider_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -4228,32 +4264,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metrics_provider_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                            "rename": {
-                                "param": {
-                                    "metrics_provider_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4268,22 +4281,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "metrics_providers",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "metrics_provider_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "metrics_provider_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -4292,32 +4328,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "metrics_provider_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/metrics_providers/{metrics_provider_id}",
-                            "rename": {
-                                "param": {
-                                    "metrics_provider_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4332,11 +4345,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "metrics_providers",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "metrics_provider_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -4344,12 +4362,30 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "metrics_providers",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "metrics_provider_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -4357,7 +4393,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ]
                 ]
             }
@@ -4365,220 +4401,266 @@ class Config {
         "page": {
             "fields": [
                 {
-                    "format": "float",
                     "name": "activity_score",
-                    "type": "`$NUMBER`"
+                    "title": "Activity Score",
+                    "type": "`$NUMBER`",
+                    "format": "float"
                 },
                 {
                     "name": "allow_email_subscribers",
-                    "short": "Can your users choose to receive notifications via email",
-                    "type": "`$BOOLEAN`"
+                    "title": "Allow Email Subscribers",
+                    "type": "`$BOOLEAN`",
+                    "short": "Can your users choose to receive notifications via email"
                 },
                 {
                     "name": "allow_incident_subscribers",
-                    "short": "Can your users subscribe to notifications for a single incident",
-                    "type": "`$BOOLEAN`"
+                    "title": "Allow Incident Subscribers",
+                    "type": "`$BOOLEAN`",
+                    "short": "Can your users subscribe to notifications for a single incident"
                 },
                 {
                     "name": "allow_page_subscribers",
-                    "short": "Can your users subscribe to all notifications on the page",
-                    "type": "`$BOOLEAN`"
+                    "title": "Allow Page Subscribers",
+                    "type": "`$BOOLEAN`",
+                    "short": "Can your users subscribe to all notifications on the page"
                 },
                 {
                     "name": "allow_rss_atom_feeds",
-                    "short": "Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages)",
-                    "type": "`$BOOLEAN`"
+                    "title": "Allow Rss Atom Feeds",
+                    "type": "`$BOOLEAN`",
+                    "short": "Can your users choose to access incident feeds via RSS/Atom (not functional on Audience-Specific pages)"
                 },
                 {
                     "name": "allow_sms_subscribers",
-                    "short": "Can your users choose to receive notifications via SMS",
-                    "type": "`$BOOLEAN`"
+                    "title": "Allow Sms Subscribers",
+                    "type": "`$BOOLEAN`",
+                    "short": "Can your users choose to receive notifications via SMS"
                 },
                 {
                     "name": "allow_webhook_subscribers",
-                    "short": "Can your users choose to receive notifications via Webhooks",
-                    "type": "`$BOOLEAN`"
+                    "title": "Allow Webhook Subscribers",
+                    "type": "`$BOOLEAN`",
+                    "short": "Can your users choose to receive notifications via Webhooks"
                 },
                 {
                     "name": "branding",
-                    "short": "The main template your statuspage will use",
-                    "type": "`$STRING`"
+                    "title": "Branding",
+                    "type": "`$STRING`",
+                    "short": "The main template your statuspage will use"
                 },
                 {
                     "name": "city",
+                    "title": "City",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "country",
+                    "title": "Country",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "created_at",
+                    "title": "Created At",
+                    "type": "`$STRING`",
                     "short": "Timestamp the record was created",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "css_blues",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Blues",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_body_background_color",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Body Background Color",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_border_color",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Border Color",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_font_color",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Font Color",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_graph_color",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Graph Color",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_greens",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Greens",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_light_font_color",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Light Font Color",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_link_color",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Link Color",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_no_data",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css No Data",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_oranges",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Oranges",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_reds",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Reds",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "css_yellows",
-                    "short": "CSS Color",
-                    "type": "`$STRING`"
+                    "title": "Css Yellows",
+                    "type": "`$STRING`",
+                    "short": "CSS Color"
                 },
                 {
                     "name": "domain",
-                    "short": "CNAME alias for your status page",
-                    "type": "`$STRING`"
+                    "title": "Domain",
+                    "type": "`$STRING`",
+                    "short": "CNAME alias for your status page"
                 },
                 {
                     "name": "email_logo",
+                    "title": "Email Logo",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "favicon_logo",
+                    "title": "Favicon Logo",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "headline",
+                    "title": "Headline",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "hero_cover",
+                    "title": "Hero Cover",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "hidden_from_search",
-                    "short": "Should your page hide itself from search engines",
-                    "type": "`$BOOLEAN`"
+                    "title": "Hidden From Search",
+                    "type": "`$BOOLEAN`",
+                    "short": "Should your page hide itself from search engines"
                 },
                 {
                     "name": "id",
-                    "short": "Page identifier",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Page identifier"
                 },
                 {
                     "name": "ip_restrictions",
+                    "title": "Ip Restrictions",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "name",
-                    "short": "Name of your page to be displayed",
-                    "type": "`$STRING`"
+                    "title": "Name",
+                    "type": "`$STRING`",
+                    "short": "Name of your page to be displayed"
                 },
                 {
                     "name": "notifications_email_footer",
-                    "short": "Allows you to customize the footer appearing on your notification emails.",
-                    "type": "`$STRING`"
+                    "title": "Notifications Email Footer",
+                    "type": "`$STRING`",
+                    "short": "Allows you to customize the footer appearing on your notification emails."
                 },
                 {
                     "name": "notifications_from_email",
-                    "short": "Allows you to customize the email address your page notifications come from",
-                    "type": "`$STRING`"
+                    "title": "Notifications From Email",
+                    "type": "`$STRING`",
+                    "short": "Allows you to customize the email address your page notifications come from"
                 },
                 {
                     "name": "page",
+                    "title": "Page",
                     "type": "`$OBJECT`"
                 },
                 {
                     "name": "page_description",
+                    "title": "Page Description",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "state",
+                    "title": "State",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "subdomain",
-                    "short": "Subdomain at which to access your status page",
-                    "type": "`$STRING`"
+                    "title": "Subdomain",
+                    "type": "`$STRING`",
+                    "short": "Subdomain at which to access your status page"
                 },
                 {
                     "name": "support_url",
+                    "title": "Support Url",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "time_zone",
-                    "short": "Timezone configured for your page",
-                    "type": "`$STRING`"
+                    "title": "Time Zone",
+                    "type": "`$STRING`",
+                    "short": "Timezone configured for your page"
                 },
                 {
                     "name": "transactional_logo",
+                    "title": "Transactional Logo",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "twitter_logo",
+                    "title": "Twitter Logo",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "twitter_username",
+                    "title": "Twitter Username",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
+                    "title": "Updated At",
+                    "type": "`$STRING`",
                     "short": "Timestamp the record was last updated",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "url",
-                    "short": "Website of your page.",
-                    "type": "`$STRING`"
+                    "title": "Url",
+                    "type": "`$STRING`",
+                    "short": "Website of your page."
                 },
                 {
                     "name": "viewers_must_be_team_members",
+                    "title": "Viewers Must Be Team Members",
                     "type": "`$BOOLEAN`"
                 }
             ],
@@ -4593,7 +4675,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages",
@@ -4602,14 +4683,16 @@ class Config {
                                     "lit": "pages"
                                 }
                             ],
-                            "select": {},
+                            "parts": [
+                                "pages"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages"
-                            ]
+                            "args": {},
+                            "select": {}
                         }
                     ]
                 },
@@ -4618,25 +4701,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}",
-                            "rename": {
-                                "param": {
-                                    "page_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4645,19 +4712,35 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -4666,25 +4749,9 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}",
-                            "rename": {
-                                "param": {
-                                    "page_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4693,10 +4760,14 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -4704,10 +4775,22 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -4716,25 +4799,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}",
-                            "rename": {
-                                "param": {
-                                    "page_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4743,10 +4810,14 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -4754,10 +4825,22 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -4770,49 +4853,59 @@ class Config {
             "fields": [
                 {
                     "name": "component_ids",
+                    "title": "Component Ids",
                     "type": "`$ARRAY`"
                 },
                 {
-                    "format": "date-time",
                     "name": "created_at",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "external_identifier",
-                    "short": "Associates group with external group.",
-                    "type": "`$STRING`"
+                    "title": "External Identifier",
+                    "type": "`$STRING`",
+                    "short": "Associates group with external group."
                 },
                 {
                     "name": "id",
-                    "short": "Page Access Group Identifier",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Page Access Group Identifier"
                 },
                 {
                     "name": "metric_ids",
+                    "title": "Metric Ids",
                     "type": "`$ARRAY`"
                 },
                 {
                     "name": "name",
-                    "short": "Name for this Group.",
-                    "type": "`$STRING`"
+                    "title": "Name",
+                    "type": "`$STRING`",
+                    "short": "Name for this Group."
                 },
                 {
                     "name": "page_access_group",
+                    "title": "Page Access Group",
                     "type": "`$OBJECT`"
                 },
                 {
                     "name": "page_access_user_ids",
+                    "title": "Page Access User Ids",
                     "type": "`$ARRAY`"
                 },
                 {
                     "name": "page_id",
-                    "short": "Page Identifier.",
-                    "type": "`$STRING`"
+                    "title": "Page Id",
+                    "type": "`$STRING`",
+                    "short": "Page Identifier."
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 }
             ],
             "id": {
@@ -4826,32 +4919,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                            "rename": {
-                                "param": {
-                                    "page_access_group_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4869,45 +4939,52 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
-                            "select": {
-                                "$action": "component",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_groups",
                                 "{id}",
                                 "components"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_group_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
-                                        "kind": "param",
                                         "name": "id",
+                                        "orig": "page_access_group_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "$action": "component",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/page_access_groups",
-                            "rename": {
-                                "param": {
-                                    "page_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4919,10 +4996,15 @@ class Config {
                                     "lit": "page_access_groups"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{id}",
+                                "page_access_groups"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -4930,11 +5012,22 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{id}",
-                                "page_access_groups"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -4943,39 +5036,9 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/page_access_groups",
-                            "rename": {
-                                "param": {
-                                    "page_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -4987,22 +5050,52 @@ class Config {
                                     "lit": "page_access_groups"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{id}",
+                                "page_access_groups"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "id",
                                     "page",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{id}",
-                                "page_access_groups"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -5011,32 +5104,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                            "rename": {
-                                "param": {
-                                    "page_access_group_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5051,22 +5121,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_groups",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_group_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_group_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -5075,32 +5168,9 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                            "rename": {
-                                "param": {
-                                    "page_access_group_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5115,11 +5185,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "page_access_groups",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_group_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -5127,40 +5202,35 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "page_access_groups",
-                                "{id}"
-                            ]
-                        },
-                        {
                             "args": {
                                 "params": [
                                     {
-                                        "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     },
                                     {
-                                        "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                            "rename": {
-                                "param": {
-                                    "page_access_group_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5178,24 +5248,47 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
-                            "select": {
-                                "$action": "component",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_groups",
                                 "{id}",
                                 "components"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_group_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_group_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "component",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -5204,39 +5297,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "component_id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components/{component_id}",
-                            "rename": {
-                                "param": {
-                                    "page_access_group_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5257,17 +5320,6 @@ class Config {
                                     "var": "component_id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "component_id",
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
@@ -5275,35 +5327,53 @@ class Config {
                                 "{id}",
                                 "components",
                                 "{component_id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_group_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "component_id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_group_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "component_id",
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5318,50 +5388,50 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_groups",
                                 "{id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_group_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_group_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5379,24 +5449,47 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
-                            "select": {
-                                "$action": "component",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_groups",
                                 "{id}",
                                 "components"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_group_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_group_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "component",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -5405,32 +5498,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}",
-                            "rename": {
-                                "param": {
-                                    "page_access_group_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5445,11 +5515,16 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "page_access_groups",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_group_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -5457,40 +5532,35 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "page_access_groups",
-                                "{id}"
-                            ]
-                        },
-                        {
                             "args": {
                                 "params": [
                                     {
-                                        "kind": "param",
                                         "name": "id",
                                         "orig": "page_access_group_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     },
                                     {
-                                        "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/page_access_groups/{page_access_group_id}/components",
-                            "rename": {
-                                "param": {
-                                    "page_access_group_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5508,24 +5578,47 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
-                            "select": {
-                                "$action": "component",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_groups",
                                 "{id}",
                                 "components"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_group_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_group_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "component",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -5533,11 +5626,11 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ],
                     [
-                        "page",
-                        "component"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.component"
                     ]
                 ]
             }
@@ -5545,44 +5638,53 @@ class Config {
         "page_access_user": {
             "fields": [
                 {
-                    "format": "date-time",
                     "name": "created_at",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "email",
+                    "title": "Email",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "external_login",
-                    "short": "IDP login user id.",
-                    "type": "`$STRING`"
+                    "title": "External Login",
+                    "type": "`$STRING`",
+                    "short": "IDP login user id."
                 },
                 {
                     "name": "id",
-                    "short": "Page Access User Identifier",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Page Access User Identifier"
                 },
                 {
                     "name": "page_access_group_id",
+                    "title": "Page Access Group Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "page_access_group_ids",
+                    "title": "Page Access Group Ids",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "page_access_user",
+                    "title": "Page Access User",
                     "type": "`$OBJECT`"
                 },
                 {
                     "name": "page_id",
+                    "title": "Page Id",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 }
             ],
             "id": {
@@ -5596,32 +5698,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
-                            "rename": {
-                                "param": {
-                                    "page_access_user_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5639,52 +5718,52 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
-                            "select": {
-                                "$action": "component",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}",
                                 "components"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "POST",
-                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_user_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "component",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "POST",
+                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5702,45 +5781,52 @@ class Config {
                                     "lit": "metrics"
                                 }
                             ],
-                            "select": {
-                                "$action": "metric",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}",
                                 "metrics"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_user_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
-                                        "kind": "param",
                                         "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "$action": "metric",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/page_access_users",
-                            "rename": {
-                                "param": {
-                                    "page_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5752,10 +5838,15 @@ class Config {
                                     "lit": "page_access_users"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "pages",
+                                "{id}",
+                                "page_access_users"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_id": "id"
+                                }
                             },
                             "transform": {
                                 "req": {
@@ -5763,11 +5854,22 @@ class Config {
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{id}",
-                                "page_access_users"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -5776,45 +5878,9 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "email",
-                                        "orig": "email",
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/page_access_users",
-                            "rename": {
-                                "param": {
-                                    "page_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5826,6 +5892,51 @@ class Config {
                                     "lit": "page_access_users"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{id}",
+                                "page_access_users"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "email",
+                                        "orig": "email",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "email",
@@ -5833,16 +5944,7 @@ class Config {
                                     "page",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{id}",
-                                "page_access_users"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -5851,32 +5953,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                            "rename": {
-                                "param": {
-                                    "page_access_user_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5891,22 +5970,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_user_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -5915,32 +6017,9 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                            "rename": {
-                                "param": {
-                                    "page_access_user_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -5955,50 +6034,50 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "PATCH",
-                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_user_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "PATCH",
+                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6016,52 +6095,52 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
-                            "select": {
-                                "$action": "component",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}",
                                 "components"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "PATCH",
-                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_user_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "component",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "PATCH",
+                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6079,24 +6158,47 @@ class Config {
                                     "lit": "metrics"
                                 }
                             ],
-                            "select": {
-                                "$action": "metric",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}",
                                 "metrics"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_user_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "metric",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -6105,39 +6207,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "component_id",
-                                        "orig": "component_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components/{component_id}",
-                            "rename": {
-                                "param": {
-                                    "page_access_user_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6158,17 +6230,6 @@ class Config {
                                     "var": "component_id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "component_id",
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
@@ -6176,42 +6237,53 @@ class Config {
                                 "{id}",
                                 "components",
                                 "{component_id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "metric_id",
-                                        "orig": "metric_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics/{metric_id}",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_user_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "component_id",
+                                        "orig": "component_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "component_id",
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics/{metric_id}",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6232,17 +6304,6 @@ class Config {
                                     "var": "metric_id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "metric_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
@@ -6250,35 +6311,53 @@ class Config {
                                 "{id}",
                                 "metrics",
                                 "{metric_id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_user_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "metric_id",
+                                        "orig": "metric_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "metric_id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6293,50 +6372,50 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_user_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6354,52 +6433,52 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
-                            "select": {
-                                "$action": "component",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}",
                                 "components"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_user_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "component",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6417,24 +6496,47 @@ class Config {
                                     "lit": "metrics"
                                 }
                             ],
-                            "select": {
-                                "$action": "metric",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}",
                                 "metrics"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_user_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "metric",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -6443,32 +6545,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}",
-                            "rename": {
-                                "param": {
-                                    "page_access_user_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6483,50 +6562,50 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "PUT",
-                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_user_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "PUT",
+                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/components",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6544,52 +6623,52 @@ class Config {
                                     "lit": "components"
                                 }
                             ],
-                            "select": {
-                                "$action": "component",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}",
                                 "components"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "page_access_user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "PUT",
-                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
+                            ],
                             "rename": {
                                 "param": {
                                     "page_access_user_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "component",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "PUT",
+                            "orig": "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -6607,24 +6686,47 @@ class Config {
                                     "lit": "metrics"
                                 }
                             ],
-                            "select": {
-                                "$action": "metric",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "page_access_users",
                                 "{id}",
                                 "metrics"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "page_access_user_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "page_access_user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "metric",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -6632,15 +6734,15 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ],
                     [
-                        "page",
-                        "component"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.component"
                     ],
                     [
-                        "page",
-                        "metric"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.metric"
                     ]
                 ]
             }
@@ -6649,17 +6751,20 @@ class Config {
             "fields": [
                 {
                     "name": "id",
+                    "title": "Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "pages",
-                    "short": "Pages accessible by the user.",
-                    "type": "`$OBJECT`"
+                    "title": "Pages",
+                    "type": "`$OBJECT`",
+                    "short": "Pages accessible by the user."
                 },
                 {
                     "name": "user_id",
-                    "short": "User identifier",
-                    "type": "`$STRING`"
+                    "title": "User Id",
+                    "type": "`$STRING`",
+                    "short": "User identifier"
                 }
             ],
             "id": {
@@ -6673,32 +6778,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "organization_id",
-                                        "orig": "organization_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/organizations/{organization_id}/permissions/{user_id}",
-                            "rename": {
-                                "param": {
-                                    "user_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "organizations"
@@ -6713,22 +6795,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "organization_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body.data`"
-                            },
                             "parts": [
                                 "organizations",
                                 "{organization_id}",
                                 "permissions",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "user_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body.data`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "organization_id",
+                                        "orig": "organization_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "organization_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -6737,32 +6842,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "organization_id",
-                                        "orig": "organization_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/organizations/{organization_id}/permissions/{user_id}",
-                            "rename": {
-                                "param": {
-                                    "user_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "organizations"
@@ -6777,95 +6859,126 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "organization_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body.data`"
-                            },
                             "parts": [
                                 "organizations",
                                 "{organization_id}",
                                 "permissions",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "user_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body.data`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "organization_id",
+                                        "orig": "organization_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "organization_id"
+                                ]
+                            }
                         }
                     ]
                 }
             },
             "relations": {
-                "ancestors": [
-                    [
-                        "organization"
-                    ]
-                ]
+                "ancestors": []
             }
         },
         "postmortem": {
             "fields": [
                 {
                     "name": "body",
-                    "short": "Postmortem body",
-                    "type": "`$STRING`"
+                    "title": "Body",
+                    "type": "`$STRING`",
+                    "short": "Postmortem body"
                 },
                 {
                     "name": "body_draft",
-                    "short": "Body draft",
-                    "type": "`$STRING`"
+                    "title": "Body Draft",
+                    "type": "`$STRING`",
+                    "short": "Body draft"
                 },
                 {
-                    "format": "date-time",
                     "name": "body_draft_updated_at",
-                    "type": "`$STRING`"
+                    "title": "Body Draft Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
-                    "format": "date-time",
                     "name": "body_updated_at",
-                    "type": "`$STRING`"
+                    "title": "Body Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
-                    "format": "date-time",
                     "name": "created_at",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "custom_tweet",
-                    "short": "Custom tweet for Incident Postmortem",
-                    "type": "`$STRING`"
+                    "title": "Custom Tweet",
+                    "type": "`$STRING`",
+                    "short": "Custom tweet for Incident Postmortem"
                 },
                 {
                     "name": "notify_subscribers",
-                    "short": "Should email subscribers be notified.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Notify Subscribers",
+                    "type": "`$BOOLEAN`",
+                    "short": "Should email subscribers be notified."
                 },
                 {
                     "name": "notify_twitter",
-                    "short": "Should Twitter followers be notified.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Notify Twitter",
+                    "type": "`$BOOLEAN`",
+                    "short": "Should Twitter followers be notified."
                 },
                 {
                     "name": "postmortem",
-                    "req": true,
-                    "type": "`$OBJECT`"
+                    "title": "Postmortem",
+                    "type": "`$OBJECT`",
+                    "req": true
                 },
                 {
                     "name": "preview_key",
-                    "short": "Preview Key",
-                    "type": "`$STRING`"
+                    "title": "Preview Key",
+                    "type": "`$STRING`",
+                    "short": "Preview Key"
                 },
                 {
-                    "format": "date-time",
                     "name": "published_at",
-                    "type": "`$STRING`"
+                    "title": "Published At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 }
             ],
             "name": "postmortem",
@@ -6875,24 +6988,6 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "incident_id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem",
@@ -6913,23 +7008,42 @@ class Config {
                                     "lit": "postmortem"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "incident_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "incidents",
                                 "{incident_id}",
                                 "postmortem"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "incident_id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -6938,24 +7052,6 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "incident_id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem",
@@ -6976,45 +7072,46 @@ class Config {
                                     "lit": "postmortem"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "incident_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": {
-                                    "postmortem": "`reqdata`"
-                                },
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "incidents",
                                 "{incident_id}",
                                 "postmortem"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": {
+                                    "postmortem": "`reqdata`"
+                                },
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
-                                        "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     },
                                     {
-                                        "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "exist": [
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem/publish",
@@ -7038,19 +7135,6 @@ class Config {
                                     "lit": "publish"
                                 }
                             ],
-                            "select": {
-                                "$action": "publish",
-                                "exist": [
-                                    "incident_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": {
-                                    "postmortem": "`reqdata`"
-                                },
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
@@ -7058,27 +7142,41 @@ class Config {
                                 "{incident_id}",
                                 "postmortem",
                                 "publish"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": {
+                                    "postmortem": "`reqdata`"
+                                },
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
-                                        "kind": "param",
                                         "name": "incident_id",
                                         "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     },
                                     {
-                                        "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "$action": "publish",
+                                "exist": [
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/postmortem/revert",
@@ -7102,17 +7200,6 @@ class Config {
                                     "lit": "revert"
                                 }
                             ],
-                            "select": {
-                                "$action": "revert",
-                                "exist": [
-                                    "incident_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
@@ -7120,7 +7207,37 @@ class Config {
                                 "{incident_id}",
                                 "postmortem",
                                 "revert"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "incident_id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "revert",
+                                "exist": [
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -7128,8 +7245,8 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page",
-                        "incident"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.incident"
                     ]
                 ]
             }
@@ -7138,36 +7255,43 @@ class Config {
             "fields": [
                 {
                     "name": "incident_background_color",
-                    "short": "Color of status embed iframe background when displaying incident",
-                    "type": "`$STRING`"
+                    "title": "Incident Background Color",
+                    "type": "`$STRING`",
+                    "short": "Color of status embed iframe background when displaying incident"
                 },
                 {
                     "name": "incident_text_color",
-                    "short": "Color of status embed iframe text when displaying incident",
-                    "type": "`$STRING`"
+                    "title": "Incident Text Color",
+                    "type": "`$STRING`",
+                    "short": "Color of status embed iframe text when displaying incident"
                 },
                 {
                     "name": "maintenance_background_color",
-                    "short": "Color of status embed iframe background when displaying maintenance",
-                    "type": "`$STRING`"
+                    "title": "Maintenance Background Color",
+                    "type": "`$STRING`",
+                    "short": "Color of status embed iframe background when displaying maintenance"
                 },
                 {
                     "name": "maintenance_text_color",
-                    "short": "Color of status embed iframe text when displaying maintenance",
-                    "type": "`$STRING`"
+                    "title": "Maintenance Text Color",
+                    "type": "`$STRING`",
+                    "short": "Color of status embed iframe text when displaying maintenance"
                 },
                 {
                     "name": "page_id",
-                    "short": "Page identifier",
-                    "type": "`$STRING`"
+                    "title": "Page Id",
+                    "type": "`$STRING`",
+                    "short": "Page identifier"
                 },
                 {
                     "name": "position",
-                    "short": "Corner where status embed iframe will appear on page",
-                    "type": "`$STRING`"
+                    "title": "Position",
+                    "type": "`$STRING`",
+                    "short": "Corner where status embed iframe will appear on page"
                 },
                 {
                     "name": "status_embed_config",
+                    "title": "Status Embed Config",
                     "type": "`$OBJECT`"
                 }
             ],
@@ -7178,17 +7302,6 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/status_embed_config",
@@ -7203,20 +7316,32 @@ class Config {
                                     "lit": "status_embed_config"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "status_embed_config"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -7225,17 +7350,6 @@ class Config {
                     "name": "patch",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/status_embed_config",
@@ -7250,22 +7364,34 @@ class Config {
                                     "lit": "status_embed_config"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "status_embed_config"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": {
                                     "status_embed_config": "`reqdata`"
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "status_embed_config"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -7274,17 +7400,6 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/pages/{page_id}/status_embed_config",
@@ -7299,22 +7414,34 @@ class Config {
                                     "lit": "status_embed_config"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "status_embed_config"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": {
                                     "status_embed_config": "`reqdata`"
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "status_embed_config"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -7322,7 +7449,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ]
                 ]
             }
@@ -7331,89 +7458,106 @@ class Config {
             "fields": [
                 {
                     "name": "component_ids",
-                    "short": "A list of component ids for which the subscriber should recieve updates for.",
-                    "type": "`$ARRAY`"
+                    "title": "Component Ids",
+                    "type": "`$ARRAY`",
+                    "short": "A list of component ids for which the subscriber should recieve updates for."
                 },
                 {
                     "name": "components",
-                    "short": "The components for which the subscriber has elected to receive updates.",
-                    "type": "`$STRING`"
+                    "title": "Components",
+                    "type": "`$STRING`",
+                    "short": "The components for which the subscriber has elected to receive updates."
                 },
                 {
-                    "format": "date-time",
                     "name": "created_at",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "display_phone_number",
-                    "short": "A formatted version of the phone_number and phone_country pair, nicely formatted for display.",
-                    "type": "`$STRING`"
+                    "title": "Display Phone Number",
+                    "type": "`$STRING`",
+                    "short": "A formatted version of the phone_number and phone_country pair, nicely formatted for display."
                 },
                 {
                     "name": "email",
-                    "short": "The email address to use to contact the subscriber.",
-                    "type": "`$STRING`"
+                    "title": "Email",
+                    "type": "`$STRING`",
+                    "short": "The email address to use to contact the subscriber."
                 },
                 {
                     "name": "endpoint",
-                    "short": "The URL where a webhook subscriber elects to receive updates.",
-                    "type": "`$STRING`"
+                    "title": "Endpoint",
+                    "type": "`$STRING`",
+                    "short": "The URL where a webhook subscriber elects to receive updates."
                 },
                 {
                     "name": "id",
-                    "short": "Subscriber Identifier",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Subscriber Identifier"
                 },
                 {
                     "name": "mode",
-                    "short": "The communication mode of the subscriber.",
-                    "type": "`$STRING`"
+                    "title": "Mode",
+                    "type": "`$STRING`",
+                    "short": "The communication mode of the subscriber."
                 },
                 {
                     "name": "obfuscated_channel_name",
-                    "short": "Obfuscated slack channel name",
-                    "type": "`$STRING`"
+                    "title": "Obfuscated Channel Name",
+                    "type": "`$STRING`",
+                    "short": "Obfuscated slack channel name"
                 },
                 {
                     "name": "page_access_user_id",
-                    "short": "The Page Access user this subscriber belongs to (only for audience-specific pages).",
-                    "type": "`$STRING`"
+                    "title": "Page Access User Id",
+                    "type": "`$STRING`",
+                    "short": "The Page Access user this subscriber belongs to (only for audience-specific pages)."
                 },
                 {
                     "name": "phone_country",
-                    "short": "The two-character country code representing the country of which the phone_number is a part.",
-                    "type": "`$STRING`"
+                    "title": "Phone Country",
+                    "type": "`$STRING`",
+                    "short": "The two-character country code representing the country of which the phone_number is a part."
                 },
                 {
                     "name": "phone_number",
-                    "short": "The phone number used to contact an SMS subscriber",
-                    "type": "`$STRING`"
+                    "title": "Phone Number",
+                    "type": "`$STRING`",
+                    "short": "The phone number used to contact an SMS subscriber"
                 },
                 {
-                    "format": "date-time",
                     "name": "purge_at",
+                    "title": "Purge At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when a quarantined subscriber will be purged (unsubscribed).",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
-                    "format": "date-time",
                     "name": "quarantined_at",
+                    "title": "Quarantined At",
+                    "type": "`$STRING`",
                     "short": "The timestamp when the subscriber was quarantined due to an issue reaching them.",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
                     "name": "skip_confirmation_notification",
-                    "short": "If this is true, do not notify the user with changes to their subscription.",
-                    "type": "`$BOOLEAN`"
+                    "title": "Skip Confirmation Notification",
+                    "type": "`$BOOLEAN`",
+                    "short": "If this is true, do not notify the user with changes to their subscription."
                 },
                 {
                     "name": "subscriber",
+                    "title": "Subscriber",
                     "type": "`$OBJECT`"
                 },
                 {
                     "name": "workspace_name",
-                    "short": "The workspace name of the slack subscriber.",
-                    "type": "`$STRING`"
+                    "title": "Workspace Name",
+                    "type": "`$STRING`",
+                    "short": "The workspace name of the slack subscriber."
                 }
             ],
             "id": {
@@ -7427,32 +7571,88 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "subscriber_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
-                            "orig": "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation",
+                            "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation",
+                            "segments": [
+                                {
+                                    "lit": "pages"
+                                },
+                                {
+                                    "var": "page_id"
+                                },
+                                {
+                                    "lit": "incidents"
+                                },
+                                {
+                                    "var": "incident_id"
+                                },
+                                {
+                                    "lit": "subscribers"
+                                },
+                                {
+                                    "var": "id"
+                                },
+                                {
+                                    "lit": "resend_confirmation"
+                                }
+                            ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents",
+                                "{incident_id}",
+                                "subscribers",
+                                "{id}",
+                                "resend_confirmation"
+                            ],
                             "rename": {
                                 "param": {
                                     "subscriber_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "subscriber_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "incident_id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "resend_confirmation",
+                                "exist": [
+                                    "id",
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "POST",
+                            "orig": "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -7470,44 +7670,49 @@ class Config {
                                     "lit": "resend_confirmation"
                                 }
                             ],
-                            "select": {
-                                "$action": "resend_confirmation",
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "subscribers",
                                 "{id}",
                                 "resend_confirmation"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {
+                                "param": {
+                                    "subscriber_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
+                                        "name": "id",
+                                        "orig": "subscriber_id",
+                                        "type": "`$STRING`",
                                         "kind": "param",
-                                        "name": "incident_id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "reqd": true
                                     },
                                     {
-                                        "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "$action": "resend_confirmation",
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers",
@@ -7528,38 +7733,46 @@ class Config {
                                     "lit": "subscribers"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "incident_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": {
-                                    "subscriber": "`reqdata`"
-                                },
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "incidents",
                                 "{incident_id}",
                                 "subscribers"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": {
+                                    "subscriber": "`reqdata`"
+                                },
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
+                                        "name": "incident_id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
                                         "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "exist": [
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/subscribers",
@@ -7574,35 +7787,36 @@ class Config {
                                     "lit": "subscribers"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "subscribers"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": {
                                     "subscriber": "`reqdata`"
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "subscribers"
-                            ]
-                        },
-                        {
                             "args": {
                                 "params": [
                                     {
-                                        "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/subscribers/reactivate",
@@ -7620,35 +7834,36 @@ class Config {
                                     "lit": "reactivate"
                                 }
                             ],
-                            "select": {
-                                "$action": "reactivate",
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "subscribers",
                                 "reactivate"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
-                                        "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "$action": "reactivate",
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/subscribers/resend_confirmation",
@@ -7666,35 +7881,36 @@ class Config {
                                     "lit": "resend_confirmation"
                                 }
                             ],
-                            "select": {
-                                "$action": "resend_confirmation",
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "subscribers",
                                 "resend_confirmation"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
-                                        "kind": "param",
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "$action": "resend_confirmation",
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "POST",
                             "orig": "/pages/{page_id}/subscribers/unsubscribe",
@@ -7712,22 +7928,34 @@ class Config {
                                     "lit": "unsubscribe"
                                 }
                             ],
-                            "select": {
-                                "$action": "unsubscribe",
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "subscribers",
                                 "unsubscribe"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "unsubscribe",
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -7736,65 +7964,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "limit",
-                                        "orig": "limit",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "example": 0,
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "q",
-                                        "orig": "q",
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "example": "asc",
-                                        "kind": "query",
-                                        "name": "sort_direction",
-                                        "orig": "sort_direction",
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "example": "primary",
-                                        "kind": "query",
-                                        "name": "sort_field",
-                                        "orig": "sort_field",
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "example": "active",
-                                        "kind": "query",
-                                        "name": "state",
-                                        "orig": "state",
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "type",
-                                        "orig": "type",
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/subscribers",
@@ -7809,6 +7978,75 @@ class Config {
                                     "lit": "subscribers"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "subscribers"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "limit",
+                                        "orig": "limit",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 0
+                                    },
+                                    {
+                                        "name": "q",
+                                        "orig": "q",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "sort_direction",
+                                        "orig": "sort_direction",
+                                        "type": "`$STRING`",
+                                        "kind": "query",
+                                        "example": "asc"
+                                    },
+                                    {
+                                        "name": "sort_field",
+                                        "orig": "sort_field",
+                                        "type": "`$STRING`",
+                                        "kind": "query",
+                                        "example": "primary"
+                                    },
+                                    {
+                                        "name": "state",
+                                        "orig": "state",
+                                        "type": "`$STRING`",
+                                        "kind": "query",
+                                        "example": "active"
+                                    },
+                                    {
+                                        "name": "type",
+                                        "orig": "type",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "limit",
@@ -7820,50 +8058,9 @@ class Config {
                                     "state",
                                     "type"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "subscribers"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "incident_id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers",
@@ -7884,6 +8081,50 @@ class Config {
                                     "lit": "subscribers"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "incidents",
+                                "{incident_id}",
+                                "subscribers"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "incident_id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "incident_id",
@@ -7891,45 +8132,9 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "incidents",
-                                "{incident_id}",
-                                "subscribers"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/subscribers/unsubscribed",
@@ -7947,6 +8152,42 @@ class Config {
                                     "lit": "unsubscribed"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "subscribers",
+                                "unsubscribed"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "$action": "unsubscribed",
                                 "exist": [
@@ -7954,17 +8195,7 @@ class Config {
                                     "page_id",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "subscribers",
-                                "unsubscribed"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -7973,39 +8204,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "subscriber_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "incident_id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
-                            "rename": {
-                                "param": {
-                                    "subscriber_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -8026,17 +8227,6 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "incident_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
@@ -8044,35 +8234,50 @@ class Config {
                                 "{incident_id}",
                                 "subscribers",
                                 "{id}"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {
+                                "param": {
+                                    "subscriber_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
+                                        "name": "id",
+                                        "orig": "subscriber_id",
+                                        "type": "`$STRING`",
                                         "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "example": "active",
-                                        "kind": "query",
-                                        "name": "state",
-                                        "orig": "state",
-                                        "type": "`$STRING`"
+                                        "reqd": true
                                     },
                                     {
-                                        "kind": "query",
-                                        "name": "type",
-                                        "orig": "type",
-                                        "type": "`$STRING`"
+                                        "name": "incident_id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/subscribers/count",
@@ -8090,6 +8295,43 @@ class Config {
                                     "lit": "count"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "subscribers",
+                                "count"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "state",
+                                        "orig": "state",
+                                        "type": "`$STRING`",
+                                        "kind": "query",
+                                        "example": "active"
+                                    },
+                                    {
+                                        "name": "type",
+                                        "orig": "type",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "$action": "count",
                                 "exist": [
@@ -8097,45 +8339,12 @@ class Config {
                                     "state",
                                     "type"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "subscribers",
-                                "count"
-                            ]
+                            }
                         },
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "subscriber_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/subscribers/{subscriber_id}",
-                            "rename": {
-                                "param": {
-                                    "subscriber_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -8150,35 +8359,47 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "subscribers",
                                 "{id}"
-                            ]
-                        },
-                        {
+                            ],
+                            "rename": {
+                                "param": {
+                                    "subscriber_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
                             "args": {
                                 "params": [
                                     {
+                                        "name": "id",
+                                        "orig": "subscriber_id",
+                                        "type": "`$STRING`",
                                         "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
                                         "name": "page_id",
                                         "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
                                     }
                                 ]
                             },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
                             "kind": "http",
                             "method": "GET",
                             "orig": "/pages/{page_id}/subscribers/histogram_by_state",
@@ -8196,22 +8417,34 @@ class Config {
                                     "lit": "histogram_by_state"
                                 }
                             ],
-                            "select": {
-                                "$action": "histogram_by_state",
-                                "exist": [
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "subscribers",
                                 "histogram_by_state"
-                            ]
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "histogram_by_state",
+                                "exist": [
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -8220,39 +8453,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "subscriber_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "incident_id",
-                                        "orig": "incident_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}",
-                            "rename": {
-                                "param": {
-                                    "subscriber_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -8273,17 +8476,6 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "incident_id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
@@ -8291,43 +8483,53 @@ class Config {
                                 "{incident_id}",
                                 "subscribers",
                                 "{id}"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "subscriber_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "skip_unsubscription_notification",
-                                        "orig": "skip_unsubscription_notification",
-                                        "type": "`$BOOLEAN`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "DELETE",
-                            "orig": "/pages/{page_id}/subscribers/{subscriber_id}",
+                            ],
                             "rename": {
                                 "param": {
                                     "subscriber_id": "id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "subscriber_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "incident_id",
+                                        "orig": "incident_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "incident_id",
+                                    "page_id"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "DELETE",
+                            "orig": "/pages/{page_id}/subscribers/{subscriber_id}",
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -8342,23 +8544,54 @@ class Config {
                                     "var": "id"
                                 }
                             ],
+                            "parts": [
+                                "pages",
+                                "{page_id}",
+                                "subscribers",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "subscriber_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "subscriber_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "skip_unsubscription_notification",
+                                        "orig": "skip_unsubscription_notification",
+                                        "type": "`$BOOLEAN`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "id",
                                     "page_id",
                                     "skip_unsubscription_notification"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "pages",
-                                "{page_id}",
-                                "subscribers",
-                                "{id}"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -8367,32 +8600,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "subscriber_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "page_id",
-                                        "orig": "page_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PATCH",
                             "orig": "/pages/{page_id}/subscribers/{subscriber_id}",
-                            "rename": {
-                                "param": {
-                                    "subscriber_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "pages"
@@ -8407,22 +8617,45 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "page_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "pages",
                                 "{page_id}",
                                 "subscribers",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "subscriber_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "subscriber_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "page_id",
+                                        "orig": "page_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "page_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -8430,11 +8663,11 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "page"
+                        "$.main.kit.entity.page"
                     ],
                     [
-                        "page",
-                        "incident"
+                        "$.main.kit.entity.page",
+                        "$.main.kit.entity.incident"
                     ]
                 ]
             }
@@ -8442,42 +8675,50 @@ class Config {
         "user": {
             "fields": [
                 {
-                    "format": "date-time",
                     "name": "created_at",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "email",
-                    "short": "Email address for the team member",
-                    "type": "`$STRING`"
+                    "title": "Email",
+                    "type": "`$STRING`",
+                    "short": "Email address for the team member"
                 },
                 {
                     "name": "first_name",
+                    "title": "First Name",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "id",
-                    "short": "User identifier",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "User identifier"
                 },
                 {
                     "name": "last_name",
+                    "title": "Last Name",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "organization_id",
-                    "short": "Organization identifier",
-                    "type": "`$STRING`"
+                    "title": "Organization Id",
+                    "type": "`$STRING`",
+                    "short": "Organization identifier"
                 },
                 {
-                    "format": "date-time",
                     "name": "updated_at",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "user",
-                    "req": true,
-                    "type": "`$OBJECT`"
+                    "title": "User",
+                    "type": "`$OBJECT`",
+                    "req": true
                 }
             ],
             "id": {
@@ -8491,17 +8732,6 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "organization_id",
-                                        "orig": "organization_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/organizations/{organization_id}/users",
@@ -8516,22 +8746,34 @@ class Config {
                                     "lit": "users"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "organization_id"
-                                ]
-                            },
+                            "parts": [
+                                "organizations",
+                                "{organization_id}",
+                                "users"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": {
                                     "user": "`reqdata`"
                                 },
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "organizations",
-                                "{organization_id}",
-                                "users"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "organization_id",
+                                        "orig": "organization_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "organization_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -8540,31 +8782,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "organization_id",
-                                        "orig": "organization_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "page",
-                                        "orig": "page",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "per_page",
-                                        "orig": "per_page",
-                                        "type": "`$INTEGER`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/organizations/{organization_id}/users",
@@ -8579,22 +8796,48 @@ class Config {
                                     "lit": "users"
                                 }
                             ],
+                            "parts": [
+                                "organizations",
+                                "{organization_id}",
+                                "users"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "organization_id",
+                                        "orig": "organization_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "page",
+                                        "orig": "page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "per_page",
+                                        "orig": "per_page",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "organization_id",
                                     "page",
                                     "per_page"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "organizations",
-                                "{organization_id}",
-                                "users"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -8603,32 +8846,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "organization_id",
-                                        "orig": "organization_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/organizations/{organization_id}/users/{user_id}",
-                            "rename": {
-                                "param": {
-                                    "user_id": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "organizations"
@@ -8643,32 +8863,51 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "organization_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "organizations",
                                 "{organization_id}",
                                 "users",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "user_id": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "organization_id",
+                                        "orig": "organization_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "organization_id"
+                                ]
+                            }
                         }
                     ]
                 }
             },
             "relations": {
-                "ancestors": [
-                    [
-                        "organization"
-                    ]
-                ]
+                "ancestors": []
             }
         }
     };

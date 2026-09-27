@@ -45,7 +45,7 @@ local components, err = client:Component():list()
 if err then error(err) end
 
 for _, item in ipairs(components) do
-  print(item["id"], item["automation_email"])
+  print(item["id"])
 end
 ```
 
@@ -224,7 +224,6 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `GroupComponent` | `(data) -> GroupComponentEntity` | Create a GroupComponent entity instance. |
 | `Incident` | `(data) -> IncidentEntity` | Create an Incident entity instance. |
 | `IncidentPostmortem` | `(data) -> IncidentPostmortemEntity` | Create an IncidentPostmortem entity instance. |
-| `IncidentSubscriber` | `(data) -> IncidentSubscriberEntity` | Create an IncidentSubscriber entity instance. |
 | `IncidentTemplate` | `(data) -> IncidentTemplateEntity` | Create an IncidentTemplate entity instance. |
 | `IncidentUpdate` | `(data) -> IncidentUpdateEntity` | Create an IncidentUpdate entity instance. |
 | `Metric` | `(data) -> MetricEntity` | Create a Metric entity instance. |
@@ -381,15 +380,6 @@ API path: `/pages/{page_id}/incidents`
 Operations: Remove.
 
 API path: `/pages/{page_id}/incidents/{incident_id}/postmortem`
-
-#### IncidentSubscriber
-
-| Field | Description |
-| --- | --- |
-
-Operations: Create.
-
-API path: `/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation`
 
 #### IncidentTemplate
 
@@ -644,7 +634,7 @@ API path: `/pages/{page_id}/status_embed_config`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation`
+API path: `/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation`
 
 #### User
 
@@ -886,27 +876,6 @@ Create an instance: `local incident_postmortem = client:IncidentPostmortem(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `id` | `string` |  |
-
-
-### IncidentSubscriber
-
-Create an instance: `local incident_subscriber = client:IncidentSubscriber(nil)`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `create(data)` | Create a new entity with the given data. |
-
-#### Example: Create
-
-```lua
-local incident_subscriber, err = client:IncidentSubscriber():create({
-  incident_id = "example_incident_id", -- string
-  page_id = "example_page_id", -- string
-  subscriber_id = "example_subscriber_id", -- string
-})
-```
 
 
 ### IncidentTemplate
@@ -1464,14 +1433,14 @@ above:
 
 | Feature | What it does |
 |---|---|
-| [`debug`](#debug) | Request/response capture ring buffer for debugging |
-| [`idempotency`](#idempotency) | Idempotency keys for safe retries of mutating operations |
-| [`metrics`](#metrics) | Statistics capture: per-operation counters and latency |
-| [`paging`](#paging) | Pagination signals for list operations |
-| [`ratelimit`](#ratelimit) | Client-side rate limiting via a token bucket |
-| [`retry`](#retry) | Automatic retry of transient failures with exponential backoff |
-| [`test`](#test) | In-memory mock transport for testing without a live server |
-| [`timeout`](#timeout) | Per-request timeout with transport abort |
+| [`debug`](#debug) | Debug capture |
+| [`idempotency`](#idempotency) | Idempotency |
+| [`metrics`](#metrics) | Metrics |
+| [`paging`](#paging) | Paging |
+| [`ratelimit`](#ratelimit) | Rate limiting |
+| [`retry`](#retry) | Retry |
+| [`test`](#test) | Test transport |
+| [`timeout`](#timeout) | Timeout |
 
 > **Order matters for `ratelimit`, `retry`, `timeout`.** These wrap the
 > transport, so each one wraps whatever is already installed: the order you
@@ -1480,7 +1449,7 @@ above:
 
 ### debug
 
-Request/response capture ring buffer for debugging.
+Debug capture.
 
 | Option | Default |
 |---|---|
@@ -1492,7 +1461,7 @@ Set `feature.debug.active` to enable it, then override any of the options above.
 
 ### idempotency
 
-Idempotency keys for safe retries of mutating operations.
+Idempotency.
 
 | Option | Default |
 |---|---|
@@ -1505,7 +1474,7 @@ Set `feature.idempotency.active` to enable it, then override any of the options 
 
 ### metrics
 
-Statistics capture: per-operation counters and latency.
+Metrics.
 
 | Option | Default |
 |---|---|
@@ -1515,7 +1484,7 @@ Set `feature.metrics.active` to enable it, then override any of the options abov
 
 ### paging
 
-Pagination signals for list operations.
+Paging.
 
 | Option | Default |
 |---|---|
@@ -1531,7 +1500,7 @@ Set `feature.paging.active` to enable it, then override any of the options above
 
 ### ratelimit
 
-Client-side rate limiting via a token bucket.
+Rate limiting.
 
 | Option | Default |
 |---|---|
@@ -1547,7 +1516,7 @@ activated earlier.
 
 ### retry
 
-Automatic retry of transient failures with exponential backoff.
+Retry.
 
 | Option | Default |
 |---|---|
@@ -1566,7 +1535,7 @@ activated earlier.
 
 ### test
 
-In-memory mock transport for testing without a live server.
+Test transport.
 
 | Option | Default |
 |---|---|
@@ -1576,7 +1545,7 @@ Set `feature.test.active` to enable it, then override any of the options above.
 
 ### timeout
 
-Per-request timeout with transport abort.
+Timeout.
 
 | Option | Default |
 |---|---|
@@ -1628,14 +1597,14 @@ with hook methods named after pipeline stages (e.g. `PrePoint`,
 
 The SDK ships with built-in features:
 
-- **DebugFeature**: Request/response capture ring buffer for debugging
-- **IdempotencyFeature**: Idempotency keys for safe retries of mutating operations
-- **MetricsFeature**: Statistics capture: per-operation counters and latency
-- **PagingFeature**: Pagination signals for list operations
-- **RatelimitFeature**: Client-side rate limiting via a token bucket
-- **RetryFeature**: Automatic retry of transient failures with exponential backoff
-- **TestFeature**: In-memory mock transport for testing without a live server
-- **TimeoutFeature**: Per-request timeout with transport abort
+- **DebugFeature**: Debug capture
+- **IdempotencyFeature**: Idempotency
+- **MetricsFeature**: Metrics
+- **PagingFeature**: Paging
+- **RatelimitFeature**: Rate limiting
+- **RetryFeature**: Retry
+- **TestFeature**: Test transport
+- **TimeoutFeature**: Timeout
 
 Features are initialized in order. Hooks fire in the order features
 were added, so later features can override earlier ones.
@@ -1655,6 +1624,7 @@ Use `helpers.to_map()` to safely validate that a value is a table.
 lua/
 ├── statuspage_sdk.lua    -- Main SDK module
 ├── config.lua               -- Configuration
+├── schema.lua               -- Generated option + entity specs
 ├── features.lua             -- Feature factory
 ├── core/                    -- Core types and context
 ├── entity/                  -- Entity implementations

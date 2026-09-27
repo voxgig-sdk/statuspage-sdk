@@ -1,0 +1,887 @@
+# Entity: incident
+
+main: kit: entity: incident: {
+
+  alias: field: {}
+
+  fields: {
+    auto_transition_deliver_notifications_at_end: {
+      h: "Auto Transition Deliver Notifications At End"
+      n: "auto_transition_deliver_notifications_at_end"
+      r: false
+      sh: "Controls whether send notification when scheduled maintenances auto transition to completed."
+      t: "`$BOOLEAN`"
+    }
+    auto_transition_deliver_notifications_at_start: {
+      h: "Auto Transition Deliver Notifications At Start"
+      n: "auto_transition_deliver_notifications_at_start"
+      r: false
+      sh: "Controls whether send notification when scheduled maintenances auto transition to started."
+      t: "`$BOOLEAN`"
+    }
+    auto_transition_to_maintenance_state: {
+      h: "Auto Transition To Maintenance State"
+      n: "auto_transition_to_maintenance_state"
+      r: false
+      sh: "Controls whether change components status to under_maintenance once scheduled maintenance is in progress."
+      t: "`$BOOLEAN`"
+    }
+    auto_transition_to_operational_state: {
+      h: "Auto Transition To Operational State"
+      n: "auto_transition_to_operational_state"
+      r: false
+      sh: "Controls whether change components status to operational once scheduled maintenance completes."
+      t: "`$BOOLEAN`"
+    }
+    components: {
+      h: "Components"
+      n: "components"
+      r: false
+      sh: "Incident components"
+      t: "`$ARRAY`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: false
+      sh: "The timestamp when the incident was created at."
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      sh: "Incident Identifier"
+      t: "`$STRING`"
+    }
+    impact: {
+      h: "Impact"
+      n: "impact"
+      r: false
+      sh: "The impact of the incident."
+      t: "`$STRING`"
+    }
+    impact_override: {
+      h: "Impact Override"
+      n: "impact_override"
+      r: false
+      sh: "value to override calculated impact value"
+      t: "`$STRING`"
+    }
+    incident: {
+      h: "Incident"
+      n: "incident"
+      op: {
+        patch: {
+          req: false
+          type: "`$OBJECT`"
+        }
+        update: {
+          req: false
+          type: "`$OBJECT`"
+        }
+      }
+      r: true
+      t: "`$OBJECT`"
+    }
+    incident_updates: {
+      h: "Incident Updates"
+      n: "incident_updates"
+      r: false
+      sh: "The incident updates for incident."
+      t: "`$ARRAY`"
+    }
+    metadata: {
+      h: "Metadata"
+      n: "metadata"
+      r: false
+      sh: "Metadata attached to the incident."
+      t: "`$OBJECT`"
+    }
+    monitoring_at: {
+      fo: "date-time"
+      h: "Monitoring At"
+      n: "monitoring_at"
+      r: false
+      sh: "The timestamp when incident entered monitoring state."
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: false
+      sh: "Incident Name."
+      t: "`$STRING`"
+    }
+    page_id: {
+      h: "Page Id"
+      n: "page_id"
+      r: false
+      sh: "Incident Page Identifier"
+      t: "`$STRING`"
+    }
+    postmortem_body: {
+      h: "Postmortem Body"
+      n: "postmortem_body"
+      r: false
+      sh: "Body of the Postmortem."
+      t: "`$STRING`"
+    }
+    postmortem_body_last_updated_at: {
+      fo: "date-time"
+      h: "Postmortem Body Last Updated At"
+      n: "postmortem_body_last_updated_at"
+      r: false
+      sh: "The timestamp when the incident postmortem body was last updated at."
+      t: "`$STRING`"
+    }
+    postmortem_ignored: {
+      h: "Postmortem Ignored"
+      n: "postmortem_ignored"
+      r: false
+      sh: "Controls whether the incident will have postmortem."
+      t: "`$BOOLEAN`"
+    }
+    postmortem_notified_subscribers: {
+      h: "Postmortem Notified Subscribers"
+      n: "postmortem_notified_subscribers"
+      r: false
+      sh: "Indicates whether subscribers are already notificed about postmortem."
+      t: "`$BOOLEAN`"
+    }
+    postmortem_notified_twitter: {
+      h: "Postmortem Notified Twitter"
+      n: "postmortem_notified_twitter"
+      r: false
+      sh: "Controls whether to decide if notify postmortem on twitter."
+      t: "`$BOOLEAN`"
+    }
+    postmortem_published_at: {
+      h: "Postmortem Published At"
+      n: "postmortem_published_at"
+      r: false
+      sh: "The timestamp when the postmortem was published."
+      t: "`$BOOLEAN`"
+    }
+    reminder_intervals: {
+      h: "Reminder Intervals"
+      n: "reminder_intervals"
+      r: false
+      sh: "Custom reminder intervals for unresolved/open incidents."
+      t: "`$STRING`"
+    }
+    resolved_at: {
+      fo: "date-time"
+      h: "Resolved At"
+      n: "resolved_at"
+      r: false
+      sh: "The timestamp when incident was resolved."
+      t: "`$STRING`"
+    }
+    scheduled_auto_completed: {
+      h: "Scheduled Auto Completed"
+      n: "scheduled_auto_completed"
+      r: false
+      sh: "Controls whether the incident is scheduled to automatically change to complete."
+      t: "`$BOOLEAN`"
+    }
+    scheduled_auto_in_progress: {
+      h: "Scheduled Auto In Progress"
+      n: "scheduled_auto_in_progress"
+      r: false
+      sh: "Controls whether the incident is scheduled to automatically change to in progress."
+      t: "`$BOOLEAN`"
+    }
+    scheduled_for: {
+      fo: "date-time"
+      h: "Scheduled For"
+      n: "scheduled_for"
+      r: false
+      sh: "The timestamp the incident is scheduled for."
+      t: "`$STRING`"
+    }
+    scheduled_remind_prior: {
+      h: "Scheduled Remind Prior"
+      n: "scheduled_remind_prior"
+      r: false
+      sh: "Controls whether to remind subscribers prior to scheduled incidents."
+      t: "`$BOOLEAN`"
+    }
+    scheduled_reminded_at: {
+      fo: "date-time"
+      h: "Scheduled Reminded At"
+      n: "scheduled_reminded_at"
+      r: false
+      sh: "The timestamp when the scheduled incident reminder was sent at."
+      t: "`$STRING`"
+    }
+    scheduled_until: {
+      fo: "date-time"
+      h: "Scheduled Until"
+      n: "scheduled_until"
+      r: false
+      sh: "The timestamp the incident is scheduled until."
+      t: "`$STRING`"
+    }
+    shortlink: {
+      h: "Shortlink"
+      n: "shortlink"
+      r: false
+      sh: "Incident Shortlink."
+      t: "`$STRING`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: false
+      sh: "The incident status."
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: false
+      sh: "The timestamp when the incident was updated at."
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "incident"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /pages/{page_id}/incidents"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/incidents"
+          q: {
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+          ]
+          t: {
+            req: {
+              incident: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/incidents"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "limit"
+                or: "limit"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "q"
+                or: "q"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/incidents"
+          q: {
+            exist: [
+              "limit"
+              "page"
+              "page_id"
+              "q"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/incidents/active_maintenance"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: 1
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: 100
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/incidents/active_maintenance"
+          q: {
+            "$action": "active_maintenance"
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              lit: "active_maintenance"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/incidents/scheduled"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: 1
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: 100
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/incidents/scheduled"
+          q: {
+            "$action": "scheduled"
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              lit: "scheduled"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/incidents/unresolved"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: 1
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: 100
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/incidents/unresolved"
+          q: {
+            "$action": "unresolved"
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              lit: "unresolved"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/incidents/upcoming"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: 1
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: 100
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/incidents/upcoming"
+          q: {
+            "$action": "upcoming"
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              lit: "upcoming"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/incidents/{incident_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/incidents/{incident_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              incident_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    patch: {
+      name: "patch"
+      points: [
+        {
+          co: {
+            id: "PATCH /pages/{page_id}/incidents/{incident_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PATCH"
+          o: "/pages/{page_id}/incidents/{incident_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              incident_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: {
+              incident: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /pages/{page_id}/incidents/{incident_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/pages/{page_id}/incidents/{incident_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              incident_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          co: {
+            id: "PUT /pages/{page_id}/incidents/{incident_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/pages/{page_id}/incidents/{incident_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              incident_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: {
+              incident: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.page")]
+  ]
+
+}

@@ -9,18 +9,6 @@ import (
 	sdk "github.com/voxgig-sdk/statuspage-sdk/go"
 )
 
-// registerSDKWords installs three native boru words bound to the SDK:
-// list / load / update. Each is declared with two overloads matching
-// the signature  [query?:(Node or Scalar) entity:atom]:
-//
-//   [entity:Atom]            — no query (e.g. `list book`)
-//   [query:Any entity:Atom]  — query is any Node or Scalar (e.g.
-//                              `load {id:1} book`, `load 1 book`)
-//
-// The entity slot is /q-quoted so a bareword `book` parses as the
-// Atom "book" rather than dispatching as an undefined word. Both
-// overloads are all-forward (BarrierAllForward), so args are collected
-// from the tokens following the word.
 func registerSDKWords(r *eng.Registry, client *sdk.StatuspageSDK) {
 	for _, op := range []string{"list", "load", "update"} {
 		op := op
@@ -99,8 +87,6 @@ func entityFor(client *sdk.StatuspageSDK, name string) (sdk.StatuspageEntity, er
 		return client.Incident(nil), nil
 	case "incident_postmortem":
 		return client.IncidentPostmortem(nil), nil
-	case "incident_subscriber":
-		return client.IncidentSubscriber(nil), nil
 	case "incident_template":
 		return client.IncidentTemplate(nil), nil
 	case "incident_update":

@@ -1,0 +1,952 @@
+# Entity: component
+
+main: kit: entity: component: {
+
+  alias: field: {}
+
+  fields: {
+    automation_email: {
+      h: "Automation Email"
+      n: "automation_email"
+      r: false
+      sh: "Requires a special feature flag to be enabled"
+      t: "`$STRING`"
+    }
+    component: {
+      h: "Component"
+      n: "component"
+      r: false
+      t: "`$OBJECT`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: false
+      t: "`$STRING`"
+    }
+    description: {
+      h: "Description"
+      n: "description"
+      r: false
+      sh: "More detailed description for component"
+      t: "`$STRING`"
+    }
+    group: {
+      h: "Group"
+      n: "group"
+      r: false
+      sh: "Is this component a group"
+      t: "`$BOOLEAN`"
+    }
+    group_id: {
+      h: "Group Id"
+      n: "group_id"
+      r: false
+      sh: "Component Group identifier"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      sh: "Identifier for component"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: false
+      sh: "Display name for component"
+      t: "`$STRING`"
+    }
+    only_show_if_degraded: {
+      h: "Only Show If Degraded"
+      n: "only_show_if_degraded"
+      r: false
+      sh: "Requires a special feature flag to be enabled"
+      t: "`$BOOLEAN`"
+    }
+    page_id: {
+      h: "Page Id"
+      n: "page_id"
+      r: false
+      sh: "Page identifier"
+      t: "`$STRING`"
+    }
+    position: {
+      fo: "int32"
+      h: "Position"
+      n: "position"
+      r: false
+      sh: "Order the component will appear on the page"
+      t: "`$INTEGER`"
+    }
+    showcase: {
+      h: "Showcase"
+      n: "showcase"
+      r: false
+      sh: "Should this component be showcased"
+      t: "`$BOOLEAN`"
+    }
+    start_date: {
+      fo: "date"
+      h: "Start Date"
+      n: "start_date"
+      r: false
+      sh: "The date this component started being used"
+      t: "`$STRING`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: false
+      sh: "Status of component"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: false
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "component"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /pages/{page_id}/components/{component_id}/page_access_groups"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "component_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/components/{component_id}/page_access_groups"
+          q: {
+            "$action": "page_access_group"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              component_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_groups"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/components/{component_id}/page_access_users"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "component_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/components/{component_id}/page_access_users"
+          q: {
+            "$action": "page_access_user"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              component_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_users"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/components"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/components"
+          q: {
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+          ]
+          t: {
+            req: {
+              component: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/page_access_groups/{page_access_group_id}/components"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_access_group_id"
+                or: "page_access_group_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/page_access_groups/{page_access_group_id}/components"
+          q: {
+            exist: [
+              "page"
+              "page_access_group_id"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_groups"
+            }
+            {
+              var: "page_access_group_id"
+            }
+            {
+              lit: "components"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/page_access_users/{page_access_user_id}/components"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_access_user_id"
+                or: "page_access_user_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/page_access_users/{page_access_user_id}/components"
+          q: {
+            exist: [
+              "page"
+              "page_access_user_id"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "page_access_user_id"
+            }
+            {
+              lit: "components"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/components"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/components"
+          q: {
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/components/{component_id}/uptime"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "component_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "end"
+                or: "end"
+                r: false
+                t: "Any"
+              }
+              {
+                k: "query"
+                n: "start"
+                or: "start"
+                r: false
+                t: "Any"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/components/{component_id}/uptime"
+          q: {
+            "$action": "uptime"
+            exist: [
+              "end"
+              "id"
+              "page_id"
+              "start"
+            ]
+          }
+          r: {
+            param: {
+              component_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "uptime"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.related_events`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/components/{component_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "component_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/components/{component_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              component_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    patch: {
+      name: "patch"
+      points: [
+        {
+          co: {
+            id: "PATCH /pages/{page_id}/components/{component_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "component_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PATCH"
+          o: "/pages/{page_id}/components/{component_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              component_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: {
+              component: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /pages/{page_id}/components/{component_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "component_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/pages/{page_id}/components/{component_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              component_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "DELETE /pages/{page_id}/components/{component_id}/page_access_groups"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "component_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/pages/{page_id}/components/{component_id}/page_access_groups"
+          q: {
+            "$action": "page_access_group"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              component_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_groups"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "DELETE /pages/{page_id}/components/{component_id}/page_access_users"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "component_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/pages/{page_id}/components/{component_id}/page_access_users"
+          q: {
+            "$action": "page_access_user"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              component_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "page_access_users"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          co: {
+            id: "PUT /pages/{page_id}/components/{component_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "component_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/pages/{page_id}/components/{component_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              component_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "components"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: {
+              component: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.page")]
+    [path("$.main.kit.entity.page") path("$.main.kit.entity.page_access_group")]
+    [path("$.main.kit.entity.page") path("$.main.kit.entity.page_access_user")]
+  ]
+
+}

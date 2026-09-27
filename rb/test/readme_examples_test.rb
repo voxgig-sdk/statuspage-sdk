@@ -48,7 +48,6 @@ class ReadmeExamplesTest < Minitest::Test
     "GroupComponent" => "group_component",
     "Incident" => "incident",
     "IncidentPostmortem" => "incident_postmortem",
-    "IncidentSubscriber" => "incident_subscriber",
     "IncidentTemplate" => "incident_template",
     "IncidentUpdate" => "incident_update",
     "Metric" => "metric",

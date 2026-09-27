@@ -1,0 +1,121 @@
+# BasicMetricFlow
+
+main: kit: flow: BasicMetricFlow:
+{
+  entity: "metric",
+  kind: "basic",
+  name: "BasicMetricFlow",
+  step: [
+    {
+      i: {
+        ref: "metric_ref01"
+      }
+
+      m: {
+        page_access_user_id: "page_access_user01",
+        page_id: "page01"
+      }
+
+      o: "create"
+    }
+
+    {
+      m: {
+        page_access_user_id: "page_access_user01",
+        page_id: "page01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "metric_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      d: {
+        page_id: "page01"
+      }
+
+      i: {
+        ref: "metric_ref01",
+        srcdatavar: "metric_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-metric_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "metric_ref01",
+        srcdatavar: "metric_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "metric01",
+        page_id: "page01"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-metric_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "metric_ref01",
+        suffix: "_rm0"
+      }
+
+      m: {
+        id: "metric01",
+        page_id: "page01"
+      }
+
+      o: "remove"
+    }
+
+    {
+      i: {
+        suffix: "_rt0"
+      }
+
+      m: {
+        page_access_user_id: "page_access_user01",
+        page_id: "page01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "metric_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicMetricFlow"
+}

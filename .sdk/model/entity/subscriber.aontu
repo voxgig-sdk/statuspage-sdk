@@ -1,0 +1,1195 @@
+# Entity: subscriber
+
+main: kit: entity: subscriber: {
+
+  alias: field: {}
+
+  fields: {
+    component_ids: {
+      h: "Component Ids"
+      n: "component_ids"
+      r: false
+      sh: "A list of component ids for which the subscriber should recieve updates for."
+      t: "`$ARRAY`"
+    }
+    components: {
+      h: "Components"
+      n: "components"
+      r: false
+      sh: "The components for which the subscriber has elected to receive updates."
+      t: "`$STRING`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: false
+      t: "`$STRING`"
+    }
+    display_phone_number: {
+      h: "Display Phone Number"
+      n: "display_phone_number"
+      r: false
+      sh: "A formatted version of the phone_number and phone_country pair, nicely formatted for display."
+      t: "`$STRING`"
+    }
+    email: {
+      h: "Email"
+      n: "email"
+      r: false
+      sh: "The email address to use to contact the subscriber."
+      t: "`$STRING`"
+    }
+    endpoint: {
+      h: "Endpoint"
+      n: "endpoint"
+      r: false
+      sh: "The URL where a webhook subscriber elects to receive updates."
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      sh: "Subscriber Identifier"
+      t: "`$STRING`"
+    }
+    mode: {
+      h: "Mode"
+      n: "mode"
+      r: false
+      sh: "The communication mode of the subscriber."
+      t: "`$STRING`"
+    }
+    obfuscated_channel_name: {
+      h: "Obfuscated Channel Name"
+      n: "obfuscated_channel_name"
+      r: false
+      sh: "Obfuscated slack channel name"
+      t: "`$STRING`"
+    }
+    page_access_user_id: {
+      h: "Page Access User Id"
+      n: "page_access_user_id"
+      r: false
+      sh: "The Page Access user this subscriber belongs to (only for audience-specific pages)."
+      t: "`$STRING`"
+    }
+    phone_country: {
+      h: "Phone Country"
+      n: "phone_country"
+      r: false
+      sh: "The two-character country code representing the country of which the phone_number is a part."
+      t: "`$STRING`"
+    }
+    phone_number: {
+      h: "Phone Number"
+      n: "phone_number"
+      r: false
+      sh: "The phone number used to contact an SMS subscriber"
+      t: "`$STRING`"
+    }
+    purge_at: {
+      fo: "date-time"
+      h: "Purge At"
+      n: "purge_at"
+      r: false
+      sh: "The timestamp when a quarantined subscriber will be purged (unsubscribed)."
+      t: "`$STRING`"
+    }
+    quarantined_at: {
+      fo: "date-time"
+      h: "Quarantined At"
+      n: "quarantined_at"
+      r: false
+      sh: "The timestamp when the subscriber was quarantined due to an issue reaching them."
+      t: "`$STRING`"
+    }
+    skip_confirmation_notification: {
+      h: "Skip Confirmation Notification"
+      n: "skip_confirmation_notification"
+      r: false
+      sh: "If this is true, do not notify the user with changes to their subscription."
+      t: "`$BOOLEAN`"
+    }
+    subscriber: {
+      h: "Subscriber"
+      n: "subscriber"
+      r: false
+      t: "`$OBJECT`"
+    }
+    workspace_name: {
+      h: "Workspace Name"
+      n: "workspace_name"
+      r: false
+      sh: "The workspace name of the slack subscriber."
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "subscriber"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "subscriber_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "incident_id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation"
+          q: {
+            "$action": "resend_confirmation"
+            exist: [
+              "id"
+              "incident_id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "incident_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "resend_confirmation"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "subscriber_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation"
+          q: {
+            "$action": "resend_confirmation"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "resend_confirmation"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/incidents/{incident_id}/subscribers"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "incident_id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/incidents/{incident_id}/subscribers"
+          q: {
+            exist: [
+              "incident_id"
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "incident_id"
+            }
+            {
+              lit: "subscribers"
+            }
+          ]
+          t: {
+            req: {
+              subscriber: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/subscribers"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/subscribers"
+          q: {
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+          ]
+          t: {
+            req: {
+              subscriber: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/subscribers/reactivate"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/subscribers/reactivate"
+          q: {
+            "$action": "reactivate"
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              lit: "reactivate"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/subscribers/resend_confirmation"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/subscribers/resend_confirmation"
+          q: {
+            "$action": "resend_confirmation"
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              lit: "resend_confirmation"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/subscribers/unsubscribe"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/subscribers/unsubscribe"
+          q: {
+            "$action": "unsubscribe"
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              lit: "unsubscribe"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/subscribers"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "limit"
+                or: "limit"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: 0
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "q"
+                or: "q"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "asc"
+                k: "query"
+                n: "sort_direction"
+                or: "sort_direction"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "primary"
+                k: "query"
+                n: "sort_field"
+                or: "sort_field"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "active"
+                k: "query"
+                n: "state"
+                or: "state"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "type"
+                or: "type"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/subscribers"
+          q: {
+            exist: [
+              "limit"
+              "page"
+              "page_id"
+              "q"
+              "sort_direction"
+              "sort_field"
+              "state"
+              "type"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/incidents/{incident_id}/subscribers"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "incident_id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/incidents/{incident_id}/subscribers"
+          q: {
+            exist: [
+              "incident_id"
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "incident_id"
+            }
+            {
+              lit: "subscribers"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/subscribers/unsubscribed"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/subscribers/unsubscribed"
+          q: {
+            "$action": "unsubscribed"
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              lit: "unsubscribed"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "subscriber_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "incident_id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}"
+          q: {
+            exist: [
+              "id"
+              "incident_id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "incident_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/subscribers/count"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: "active"
+                k: "query"
+                n: "state"
+                or: "state"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "type"
+                or: "type"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/subscribers/count"
+          q: {
+            "$action": "count"
+            exist: [
+              "page_id"
+              "state"
+              "type"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              lit: "count"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/subscribers/{subscriber_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "subscriber_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/subscribers/{subscriber_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/subscribers/histogram_by_state"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/subscribers/histogram_by_state"
+          q: {
+            "$action": "histogram_by_state"
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              lit: "histogram_by_state"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "subscriber_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "incident_id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}"
+          q: {
+            exist: [
+              "id"
+              "incident_id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "incident_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "DELETE /pages/{page_id}/subscribers/{subscriber_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "subscriber_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "skip_unsubscription_notification"
+                or: "skip_unsubscription_notification"
+                r: false
+                t: "`$BOOLEAN`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/pages/{page_id}/subscribers/{subscriber_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+              "skip_unsubscription_notification"
+            ]
+          }
+          r: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          co: {
+            id: "PATCH /pages/{page_id}/subscribers/{subscriber_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "subscriber_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PATCH"
+          o: "/pages/{page_id}/subscribers/{subscriber_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              subscriber_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "subscribers"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.page")]
+    [path("$.main.kit.entity.page") path("$.main.kit.entity.incident")]
+  ]
+
+}

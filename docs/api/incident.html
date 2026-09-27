@@ -20,7 +20,6 @@
 <a class="nav-section" href="#delete-pagespage_idincidentsincident_id">DELETE /pages/{page_id}/incidents/{incident_id}</a>
 <a class="nav-section" href="#put-pagespage_idincidentsincident_id">PUT /pages/{page_id}/incidents/{incident_id}</a></div>
 <a href="../api/incident_postmortem.html">IncidentPostmortem</a>
-<a href="../api/incident_subscriber.html">IncidentSubscriber</a>
 <a href="../api/incident_template.html">IncidentTemplate</a>
 <a href="../api/incident_update.html">IncidentUpdate</a>
 <a href="../api/metric.html">Metric</a>
@@ -45,14 +44,14 @@
 <a href="../sdks/ts.html">TypeScript</a></details>
 <details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
 <a href="../tools/go-mcp.html">Go MCP server</a></details>
-<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
-<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
-<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
-<a href="../features/paging.html">Pagination signals for list operations</a>
-<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
-<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
-<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
-<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="incident">Incident</h1>
+<details><summary>Features</summary><a href="../features/debug.html">Debug capture</a>
+<a href="../features/idempotency.html">Idempotency</a>
+<a href="../features/metrics.html">Metrics</a>
+<a href="../features/paging.html">Paging</a>
+<a href="../features/ratelimit.html">Rate limiting</a>
+<a href="../features/retry.html">Retry</a>
+<a href="../features/test.html">Test transport</a>
+<a href="../features/timeout.html">Timeout</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="incident">Incident</h1>
 <h2 id="operations">Operations</h2>
 <p>Every route this entity exposes. Each route links to its own reference on this page.</p>
 <table>
@@ -127,6 +126,76 @@
 </tr>
 </tbody>
 </table>
+<h2 id="examples">Examples</h2>
+<p>One example per SDK, generated from the API model. The argument names are the parameters and fields of this entity, and the values are placeholders. The examples are not compiled or executed.</p>
+<h3 id="golang">Golang</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/go.html#set-up-the-client">Golang setup</a>, then call the operations:</p>
+<pre><code class="language-go">incidents, err := client.Incident(nil).List(map[string]any{&quot;page_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(incidents)
+incident, err := client.Incident(nil).Load(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(incident)
+created, err := client.Incident(nil).Create(map[string]any{&quot;page_id&quot;: &quot;example&quot;, &quot;incident&quot;: map[string]any{}}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(created)
+updated, err := client.Incident(nil).Update(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;, &quot;auto_transition_deliver_notifications_at_end&quot;: true}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(updated)
+removed, err := client.Incident(nil).Remove(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(removed)
+</code></pre>
+<h3 id="lua">Lua</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/lua.html#set-up-the-client">Lua setup</a>, then call the operations:</p>
+<pre><code class="language-lua">local incidents, err = client:Incident():list({ page_id = &quot;example&quot; })
+local incident, err = client:Incident():load({ id = &quot;example_id&quot;, page_id = &quot;example&quot; })
+local created, err = client:Incident():create({ page_id = &quot;example&quot;, incident = {} })
+local updated, err = client:Incident():update({ id = &quot;example_id&quot;, page_id = &quot;example&quot;, auto_transition_deliver_notifications_at_end = true })
+local removed, err = client:Incident():remove({ id = &quot;example_id&quot;, page_id = &quot;example&quot; })
+</code></pre>
+<h3 id="php">PHP</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/php.html#set-up-the-client">PHP setup</a>, then call the operations:</p>
+<pre><code class="language-php">$incidents = $client-&gt;Incident()-&gt;list([&quot;page_id&quot; =&gt; &quot;example&quot;]);
+$incident = $client-&gt;Incident()-&gt;load([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;]);
+$created = $client-&gt;Incident()-&gt;create([&quot;page_id&quot; =&gt; &quot;example&quot;, &quot;incident&quot; =&gt; []]);
+$updated = $client-&gt;Incident()-&gt;update([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;, &quot;auto_transition_deliver_notifications_at_end&quot; =&gt; true]);
+$client-&gt;Incident()-&gt;remove([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;]);
+</code></pre>
+<h3 id="python">Python</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/py.html#set-up-the-client">Python setup</a>, then call the operations:</p>
+<pre><code class="language-py">incidents = client.Incident().list({&quot;page_id&quot;: &quot;example&quot;})
+incident = client.Incident().load({&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;})
+created = client.Incident().create({ &quot;page_id&quot;: &quot;example&quot;, &quot;incident&quot;: {} })
+updated = client.Incident().update({&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;, &quot;auto_transition_deliver_notifications_at_end&quot;: True})
+client.Incident().remove({&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;})
+</code></pre>
+<h3 id="ruby">Ruby</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/rb.html#set-up-the-client">Ruby setup</a>, then call the operations:</p>
+<pre><code class="language-rb">incidents = client.Incident.list({ &quot;page_id&quot; =&gt; &quot;example&quot; })
+incident = client.Incident.load({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot; })
+created = client.Incident.create({ &quot;page_id&quot; =&gt; &quot;example&quot;, &quot;incident&quot; =&gt; {} })
+updated = client.Incident.update({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;, &quot;auto_transition_deliver_notifications_at_end&quot; =&gt; true })
+client.Incident.remove({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot; })
+</code></pre>
+<h3 id="typescript">TypeScript</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/ts.html#set-up-the-client">TypeScript setup</a>, then call the operations:</p>
+<pre><code class="language-ts">const incidents = await client.Incident().list({ page_id: &quot;example&quot; })
+const incident = await client.Incident().load({ id: &quot;example_id&quot;, page_id: &quot;example&quot; })
+const created = await client.Incident().create({ page_id: &quot;example&quot;, incident: {} })
+const updated = await client.Incident().update({ id: &quot;example_id&quot;, page_id: &quot;example&quot;, auto_transition_deliver_notifications_at_end: true })
+await client.Incident().remove({ id: &quot;example_id&quot;, page_id: &quot;example&quot; })
+</code></pre>
 <h2 id="fields">Fields</h2>
 <table>
 <thead>
@@ -154,7 +223,7 @@
 <td><code>auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>auto_transition_to_operational_state</code></td>
@@ -196,7 +265,7 @@
 <td><code>incident</code></td>
 <td><code>object</code></td>
 <td>Yes</td>
-<td></td>
+<td>Incident</td>
 </tr>
 <tr>
 <td><code>incident_updates</code></td>
@@ -374,7 +443,7 @@
 <td><code>incident.auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>incident.auto_transition_to_operational_state</code></td>
@@ -428,7 +497,7 @@
 <td><code>incident.component_ids</code></td>
 <td><code>array of string</code></td>
 <td>No</td>
-<td>List of component_ids affected by this incident</td>
+<td>List of <code>component_ids</code> affected by this incident</td>
 </tr>
 <tr>
 <td><code>incident.components</code></td>
@@ -470,7 +539,7 @@
 <td><code>incident.reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>incident.scheduled_auto_completed</code></td>
@@ -488,7 +557,7 @@
 <td><code>incident.scheduled_auto_transition</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Same as :scheduled_auto_transition_in_progress. Controls whether the incident is scheduled to automatically change to in progress.</td>
+<td>Same as :<code>scheduled_auto_transition_in_progress</code>. Controls whether the incident is scheduled to automatically change to in progress.</td>
 </tr>
 <tr>
 <td><code>incident.scheduled_for</code></td>
@@ -512,7 +581,7 @@
 <td><code>incident.status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 </tbody>
 </table>
@@ -545,7 +614,7 @@
 <td><code>auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>auto_transition_to_operational_state</code></td>
@@ -725,7 +794,7 @@
 <td><code>incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>incident_updates[].tweet_id</code></td>
@@ -815,7 +884,7 @@
 <td><code>reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>resolved_at</code></td>
@@ -869,7 +938,7 @@
 <td><code>status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>updated_at</code></td>
@@ -967,7 +1036,7 @@
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
-| <code>q</code> | <code>query</code> | <code>string</code> | No | If this is specified, search for the text query string in the incidents' name, status, postmortem_body, and incident_updates fields. |
+| <code>q</code> | <code>query</code> | <code>string</code> | No | If this is specified, search for the text query string in the incidents' name, status, <code>postmortem_body</code>, and <code>incident_updates</code> fields. |
 | <code>limit</code> | <code>query</code> | <code>integer (int32)</code> | No | The maximum number of rows to return per page. The default and maximum limit is 100. |
 | <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. |</p>
 <h4 id="responses-1">Responses</h4>
@@ -999,7 +1068,7 @@
 <td><code>[].auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>[].auto_transition_to_operational_state</code></td>
@@ -1179,7 +1248,7 @@
 <td><code>[].incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].incident_updates[].tweet_id</code></td>
@@ -1269,7 +1338,7 @@
 <td><code>[].reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>[].resolved_at</code></td>
@@ -1323,7 +1392,7 @@
 <td><code>[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].updated_at</code></td>
@@ -1431,7 +1500,7 @@
 <td><code>[].auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>[].auto_transition_to_operational_state</code></td>
@@ -1611,7 +1680,7 @@
 <td><code>[].incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].incident_updates[].tweet_id</code></td>
@@ -1701,7 +1770,7 @@
 <td><code>[].reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>[].resolved_at</code></td>
@@ -1755,7 +1824,7 @@
 <td><code>[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].updated_at</code></td>
@@ -1843,7 +1912,7 @@
 <td><code>[].auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>[].auto_transition_to_operational_state</code></td>
@@ -2023,7 +2092,7 @@
 <td><code>[].incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].incident_updates[].tweet_id</code></td>
@@ -2113,7 +2182,7 @@
 <td><code>[].reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>[].resolved_at</code></td>
@@ -2167,7 +2236,7 @@
 <td><code>[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].updated_at</code></td>
@@ -2255,7 +2324,7 @@
 <td><code>[].auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>[].auto_transition_to_operational_state</code></td>
@@ -2435,7 +2504,7 @@
 <td><code>[].incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].incident_updates[].tweet_id</code></td>
@@ -2525,7 +2594,7 @@
 <td><code>[].reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>[].resolved_at</code></td>
@@ -2579,7 +2648,7 @@
 <td><code>[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].updated_at</code></td>
@@ -2667,7 +2736,7 @@
 <td><code>[].auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>[].auto_transition_to_operational_state</code></td>
@@ -2847,7 +2916,7 @@
 <td><code>[].incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].incident_updates[].tweet_id</code></td>
@@ -2937,7 +3006,7 @@
 <td><code>[].reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>[].resolved_at</code></td>
@@ -2991,7 +3060,7 @@
 <td><code>[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>[].updated_at</code></td>
@@ -3079,7 +3148,7 @@
 <td><code>auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>auto_transition_to_operational_state</code></td>
@@ -3259,7 +3328,7 @@
 <td><code>incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>incident_updates[].tweet_id</code></td>
@@ -3349,7 +3418,7 @@
 <td><code>reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>resolved_at</code></td>
@@ -3403,7 +3472,7 @@
 <td><code>status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>updated_at</code></td>
@@ -3456,7 +3525,7 @@
 <td><code>incident.auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>incident.auto_transition_to_operational_state</code></td>
@@ -3510,7 +3579,7 @@
 <td><code>incident.component_ids</code></td>
 <td><code>array of string</code></td>
 <td>No</td>
-<td>List of component_ids affected by this incident</td>
+<td>List of <code>component_ids</code> affected by this incident</td>
 </tr>
 <tr>
 <td><code>incident.components</code></td>
@@ -3552,7 +3621,7 @@
 <td><code>incident.reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>incident.scheduled_auto_completed</code></td>
@@ -3570,7 +3639,7 @@
 <td><code>incident.scheduled_auto_transition</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Same as :scheduled_auto_transition_in_progress. Controls whether the incident is scheduled to automatically change to in progress.</td>
+<td>Same as :<code>scheduled_auto_transition_in_progress</code>. Controls whether the incident is scheduled to automatically change to in progress.</td>
 </tr>
 <tr>
 <td><code>incident.scheduled_for</code></td>
@@ -3594,7 +3663,7 @@
 <td><code>incident.status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 </tbody>
 </table>
@@ -3627,7 +3696,7 @@
 <td><code>auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>auto_transition_to_operational_state</code></td>
@@ -3807,7 +3876,7 @@
 <td><code>incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>incident_updates[].tweet_id</code></td>
@@ -3897,7 +3966,7 @@
 <td><code>reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>resolved_at</code></td>
@@ -3951,7 +4020,7 @@
 <td><code>status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>updated_at</code></td>
@@ -3999,7 +4068,7 @@
 <td><code>auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>auto_transition_to_operational_state</code></td>
@@ -4179,7 +4248,7 @@
 <td><code>incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>incident_updates[].tweet_id</code></td>
@@ -4269,7 +4338,7 @@
 <td><code>reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>resolved_at</code></td>
@@ -4323,7 +4392,7 @@
 <td><code>status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>updated_at</code></td>
@@ -4376,7 +4445,7 @@
 <td><code>incident.auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>incident.auto_transition_to_operational_state</code></td>
@@ -4430,7 +4499,7 @@
 <td><code>incident.component_ids</code></td>
 <td><code>array of string</code></td>
 <td>No</td>
-<td>List of component_ids affected by this incident</td>
+<td>List of <code>component_ids</code> affected by this incident</td>
 </tr>
 <tr>
 <td><code>incident.components</code></td>
@@ -4472,7 +4541,7 @@
 <td><code>incident.reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>incident.scheduled_auto_completed</code></td>
@@ -4490,7 +4559,7 @@
 <td><code>incident.scheduled_auto_transition</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Same as :scheduled_auto_transition_in_progress. Controls whether the incident is scheduled to automatically change to in progress.</td>
+<td>Same as :<code>scheduled_auto_transition_in_progress</code>. Controls whether the incident is scheduled to automatically change to in progress.</td>
 </tr>
 <tr>
 <td><code>incident.scheduled_for</code></td>
@@ -4514,7 +4583,7 @@
 <td><code>incident.status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 </tbody>
 </table>
@@ -4547,7 +4616,7 @@
 <td><code>auto_transition_to_maintenance_state</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>Controls whether change components status to under_maintenance once scheduled maintenance is in progress.</td>
+<td>Controls whether change components status to <code>under_maintenance</code> once scheduled maintenance is in progress.</td>
 </tr>
 <tr>
 <td><code>auto_transition_to_operational_state</code></td>
@@ -4727,7 +4796,7 @@
 <td><code>incident_updates[].status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>incident_updates[].tweet_id</code></td>
@@ -4817,7 +4886,7 @@
 <td><code>reminder_intervals</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for reminder_intervals: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
+<td>Custom reminder intervals for unresolved/open incidents. Not applicable for &lt;strong&gt;Scheduled maintenance&lt;/strong&gt; There are 4 possible states for <code>reminder_intervals</code>: &lt;strong&gt;DEFAULT:&lt;/strong&gt; NULL, representing a default behavior with intervals [3, 6, 12, 24]. &lt;strong&gt;AFTER:&lt;/strong&gt; A serialized array of strictly increasing intervals, each integer ranges from [1-24] (inclusive). Ex &quot;[1, 5, 7, 10]&quot; &lt;strong&gt;EVERY:&lt;/strong&gt; An integer in the range [1-24] as a string, representing equal intervals. Ex &quot;4&quot; for [4, 8, 12, 16, 20, 24] &lt;strong&gt;OFF:&lt;/strong&gt; A serialized empty array, for example, &quot;[]&quot;, meaning no reminder notifications will be sent.</td>
 </tr>
 <tr>
 <td><code>resolved_at</code></td>
@@ -4871,7 +4940,7 @@
 <td><code>status</code></td>
 <td><code>enum: investigating, identified, monitoring, resolved, scheduled, in_progress, ...</code></td>
 <td>No</td>
-<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed.</td>
+<td>The incident status. For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, <code>in_progress</code>, verifying, and completed.</td>
 </tr>
 <tr>
 <td><code>updated_at</code></td>

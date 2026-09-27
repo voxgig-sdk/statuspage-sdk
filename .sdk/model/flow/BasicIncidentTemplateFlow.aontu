@@ -1,0 +1,38 @@
+# BasicIncidentTemplateFlow
+
+main: kit: flow: BasicIncidentTemplateFlow:
+{
+  entity: "incident_template",
+  kind: "basic",
+  name: "BasicIncidentTemplateFlow",
+  step: [
+    {
+      i: {
+        ref: "incident_template_ref01"
+      }
+
+      m: {
+        page_id: "page01"
+      }
+
+      o: "create"
+    }
+
+    {
+      m: {
+        page_id: "page01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_template_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentTemplateFlow"
+}

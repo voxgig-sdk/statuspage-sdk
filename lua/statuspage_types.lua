@@ -1,7 +1,7 @@
 -- Typed models for the Statuspage SDK (LuaLS annotations).
 --
--- GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
--- params (op.<name>.points[].args.params[]). Field/param types come from the
+-- GENERATED from the API model: main.kit.entity.<e>.fields{} and per-op
+-- params (op.<name>.points[].g.params[]). Field/param types come from the
 -- canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 -- @voxgig/apidef VALID_CANON). Annotations only — no runtime effect. Do not
 -- edit by hand.
@@ -251,13 +251,6 @@
 ---@class IncidentPostmortemRemoveMatch
 ---@field id string
 ---@field page_id string
-
----@class IncidentSubscriber
-
----@class IncidentSubscriberCreateData
----@field incident_id string
----@field page_id string
----@field subscriber_id string
 
 ---@class IncidentTemplate
 ---@field body? string

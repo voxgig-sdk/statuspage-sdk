@@ -1,0 +1,835 @@
+# Entity: metric
+
+main: kit: entity: metric: {
+
+  alias: field: {}
+
+  fields: {
+    backfill_percentage: {
+      fo: "int32"
+      h: "Backfill Percentage"
+      n: "backfill_percentage"
+      r: false
+      t: "`$INTEGER`"
+    }
+    backfilled: {
+      h: "Backfilled"
+      n: "backfilled"
+      r: false
+      t: "`$BOOLEAN`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: false
+      t: "`$STRING`"
+    }
+    decimal_places: {
+      fo: "int32"
+      h: "Decimal Places"
+      n: "decimal_places"
+      r: false
+      t: "`$INTEGER`"
+    }
+    display: {
+      h: "Display"
+      n: "display"
+      r: false
+      sh: "Should the metric be displayed"
+      t: "`$BOOLEAN`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      sh: "Metric identifier"
+      t: "`$STRING`"
+    }
+    last_fetched_at: {
+      fo: "date-time"
+      h: "Last Fetched At"
+      n: "last_fetched_at"
+      r: false
+      t: "`$STRING`"
+    }
+    metric: {
+      h: "Metric"
+      n: "metric"
+      r: false
+      t: "`$OBJECT`"
+    }
+    metric_identifier: {
+      h: "Metric Identifier"
+      n: "metric_identifier"
+      r: false
+      sh: "Metric Display identifier used to look up the metric data from the provider"
+      t: "`$STRING`"
+    }
+    metrics_provider_id: {
+      h: "Metrics Provider Id"
+      n: "metrics_provider_id"
+      r: false
+      sh: "Metric Provider identifier"
+      t: "`$STRING`"
+    }
+    most_recent_data_at: {
+      fo: "date-time"
+      h: "Most Recent Data At"
+      n: "most_recent_data_at"
+      r: false
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: false
+      sh: "Name of metric"
+      t: "`$STRING`"
+    }
+    reference_name: {
+      h: "Reference Name"
+      n: "reference_name"
+      r: false
+      t: "`$STRING`"
+    }
+    suffix: {
+      h: "Suffix"
+      n: "suffix"
+      r: false
+      sh: "Suffix to describe the units on the graph"
+      t: "`$STRING`"
+    }
+    tooltip_description: {
+      h: "Tooltip Description"
+      n: "tooltip_description"
+      r: false
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: false
+      t: "`$STRING`"
+    }
+    y_axis_hidden: {
+      h: "Y Axis Hidden"
+      n: "y_axis_hidden"
+      r: false
+      sh: "Should the values on the y axis be hidden on render"
+      t: "`$BOOLEAN`"
+    }
+    y_axis_max: {
+      fo: "float"
+      h: "Y Axis Max"
+      n: "y_axis_max"
+      r: false
+      t: "`$NUMBER`"
+    }
+    y_axis_min: {
+      fo: "float"
+      h: "Y Axis Min"
+      n: "y_axis_min"
+      r: false
+      t: "`$NUMBER`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "metric"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /pages/{page_id}/metrics/{metric_id}/data"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "metric_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/metrics/{metric_id}/data"
+          q: {
+            "$action": "data"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "data"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.data`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "metrics_provider_id"
+                or: "metrics_provider_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics"
+          q: {
+            exist: [
+              "metrics_provider_id"
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics_providers"
+            }
+            {
+              var: "metrics_provider_id"
+            }
+            {
+              lit: "metrics"
+            }
+          ]
+          t: {
+            req: {
+              metric: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /pages/{page_id}/metrics/data"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/pages/{page_id}/metrics/data"
+          q: {
+            "$action": "data"
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics"
+            }
+            {
+              lit: "data"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/page_access_users/{page_access_user_id}/metrics"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_access_user_id"
+                or: "page_access_user_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/page_access_users/{page_access_user_id}/metrics"
+          q: {
+            exist: [
+              "page"
+              "page_access_user_id"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "page_access_users"
+            }
+            {
+              var: "page_access_user_id"
+            }
+            {
+              lit: "metrics"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "metrics_provider_id"
+                or: "metrics_provider_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/metrics_providers/{metrics_provider_id}/metrics"
+          q: {
+            exist: [
+              "metrics_provider_id"
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics_providers"
+            }
+            {
+              var: "metrics_provider_id"
+            }
+            {
+              lit: "metrics"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/metrics"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "page"
+                or: "page"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "per_page"
+                or: "per_page"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/metrics"
+          q: {
+            exist: [
+              "page"
+              "page_id"
+              "per_page"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /pages/{page_id}/metrics/{metric_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "metric_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/metrics/{metric_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    patch: {
+      name: "patch"
+      points: [
+        {
+          co: {
+            id: "PATCH /pages/{page_id}/metrics/{metric_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "metric_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PATCH"
+          o: "/pages/{page_id}/metrics/{metric_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: {
+              metric: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /pages/{page_id}/metrics/{metric_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "metric_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/pages/{page_id}/metrics/{metric_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "DELETE /pages/{page_id}/metrics/{metric_id}/data"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "metric_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/pages/{page_id}/metrics/{metric_id}/data"
+          q: {
+            "$action": "data"
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "data"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          co: {
+            id: "PUT /pages/{page_id}/metrics/{metric_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "metric_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/pages/{page_id}/metrics/{metric_id}"
+          q: {
+            exist: [
+              "id"
+              "page_id"
+            ]
+          }
+          r: {
+            param: {
+              metric_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "metrics"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: {
+              metric: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.page")]
+    [path("$.main.kit.entity.page") path("$.main.kit.entity.metrics_provider")]
+    [path("$.main.kit.entity.page") path("$.main.kit.entity.page_access_user")]
+  ]
+
+}

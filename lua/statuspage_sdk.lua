@@ -423,20 +423,6 @@ function StatuspageSDK:IncidentPostmortem(data)
 end
 
 
--- Idiomatic facade: client:IncidentSubscriber():list() / client:IncidentSubscriber():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function StatuspageSDK:IncidentSubscriber(data)
-  local EntityMod = require("entity.incident_subscriber_entity")
-  if data == nil then
-    if self._incident_subscriber == nil then
-      self._incident_subscriber = EntityMod.new(self, nil)
-    end
-    return self._incident_subscriber
-  end
-  return EntityMod.new(self, data)
-end
-
-
 -- Idiomatic facade: client:IncidentTemplate():list() / client:IncidentTemplate():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function StatuspageSDK:IncidentTemplate(data)

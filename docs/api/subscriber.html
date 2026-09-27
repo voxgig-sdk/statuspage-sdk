@@ -11,7 +11,6 @@
 <a href="../api/group_component.html">GroupComponent</a>
 <a href="../api/incident.html">Incident</a>
 <a href="../api/incident_postmortem.html">IncidentPostmortem</a>
-<a href="../api/incident_subscriber.html">IncidentSubscriber</a>
 <a href="../api/incident_template.html">IncidentTemplate</a>
 <a href="../api/incident_update.html">IncidentUpdate</a>
 <a href="../api/metric.html">Metric</a>
@@ -22,7 +21,8 @@
 <a href="../api/permission.html">Permission</a>
 <a href="../api/postmortem.html">Postmortem</a>
 <a href="../api/status_embed_config.html">StatusEmbedConfig</a>
-<a aria-current="page" href="../api/subscriber.html">Subscriber</a><div class="nav-sections"><a class="nav-section" href="#post-pagespage_idsubscriberssubscriber_idresend_confirmation">POST /pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation</a>
+<a aria-current="page" href="../api/subscriber.html">Subscriber</a><div class="nav-sections"><a class="nav-section" href="#post-pagespage_idincidentsincident_idsubscriberssubscriber_idresend_confirmation">POST /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation</a>
+<a class="nav-section" href="#post-pagespage_idsubscriberssubscriber_idresend_confirmation">POST /pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation</a>
 <a class="nav-section" href="#post-pagespage_idincidentsincident_idsubscribers">POST /pages/{page_id}/incidents/{incident_id}/subscribers</a>
 <a class="nav-section" href="#post-pagespage_idsubscribers">POST /pages/{page_id}/subscribers</a>
 <a class="nav-section" href="#post-pagespage_idsubscribersreactivate">POST /pages/{page_id}/subscribers/reactivate</a>
@@ -51,14 +51,14 @@
 <a href="../sdks/ts.html">TypeScript</a></details>
 <details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
 <a href="../tools/go-mcp.html">Go MCP server</a></details>
-<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
-<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
-<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
-<a href="../features/paging.html">Pagination signals for list operations</a>
-<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
-<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
-<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
-<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="subscriber">Subscriber</h1>
+<details><summary>Features</summary><a href="../features/debug.html">Debug capture</a>
+<a href="../features/idempotency.html">Idempotency</a>
+<a href="../features/metrics.html">Metrics</a>
+<a href="../features/paging.html">Paging</a>
+<a href="../features/ratelimit.html">Rate limiting</a>
+<a href="../features/retry.html">Retry</a>
+<a href="../features/test.html">Test transport</a>
+<a href="../features/timeout.html">Timeout</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="subscriber">Subscriber</h1>
 <h2 id="operations">Operations</h2>
 <p>Every route this entity exposes. Each route links to its own reference on this page.</p>
 <table>
@@ -71,6 +71,12 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-pagespage_idincidentsincident_idsubscriberssubscriber_idresend_confirmation"><code>/pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation</code></a></td>
+<td><code>create</code></td>
+<td>Resend confirmation to an incident subscriber</td>
+</tr>
 <tr>
 <td><code>POST</code></td>
 <td><a href="#post-pagespage_idsubscriberssubscriber_idresend_confirmation"><code>/pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation</code></a></td>
@@ -169,6 +175,76 @@
 </tr>
 </tbody>
 </table>
+<h2 id="examples">Examples</h2>
+<p>One example per SDK, generated from the API model. The argument names are the parameters and fields of this entity, and the values are placeholders. The examples are not compiled or executed.</p>
+<h3 id="golang">Golang</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/go.html#set-up-the-client">Golang setup</a>, then call the operations:</p>
+<pre><code class="language-go">subscribers, err := client.Subscriber(nil).List(map[string]any{&quot;page_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(subscribers)
+subscriber, err := client.Subscriber(nil).Load(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(subscriber)
+created, err := client.Subscriber(nil).Create(map[string]any{&quot;page_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(created)
+updated, err := client.Subscriber(nil).Update(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;, &quot;component_ids&quot;: []any{}}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(updated)
+removed, err := client.Subscriber(nil).Remove(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(removed)
+</code></pre>
+<h3 id="lua">Lua</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/lua.html#set-up-the-client">Lua setup</a>, then call the operations:</p>
+<pre><code class="language-lua">local subscribers, err = client:Subscriber():list({ page_id = &quot;example&quot; })
+local subscriber, err = client:Subscriber():load({ id = &quot;example_id&quot;, page_id = &quot;example&quot; })
+local created, err = client:Subscriber():create({ page_id = &quot;example&quot; })
+local updated, err = client:Subscriber():update({ id = &quot;example_id&quot;, page_id = &quot;example&quot;, component_ids = {} })
+local removed, err = client:Subscriber():remove({ id = &quot;example_id&quot;, page_id = &quot;example&quot; })
+</code></pre>
+<h3 id="php">PHP</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/php.html#set-up-the-client">PHP setup</a>, then call the operations:</p>
+<pre><code class="language-php">$subscribers = $client-&gt;Subscriber()-&gt;list([&quot;page_id&quot; =&gt; &quot;example&quot;]);
+$subscriber = $client-&gt;Subscriber()-&gt;load([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;]);
+$created = $client-&gt;Subscriber()-&gt;create([&quot;page_id&quot; =&gt; &quot;example&quot;]);
+$updated = $client-&gt;Subscriber()-&gt;update([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;, &quot;component_ids&quot; =&gt; []]);
+$client-&gt;Subscriber()-&gt;remove([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;]);
+</code></pre>
+<h3 id="python">Python</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/py.html#set-up-the-client">Python setup</a>, then call the operations:</p>
+<pre><code class="language-py">subscribers = client.Subscriber().list({&quot;page_id&quot;: &quot;example&quot;})
+subscriber = client.Subscriber().load({&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;})
+created = client.Subscriber().create({ &quot;page_id&quot;: &quot;example&quot; })
+updated = client.Subscriber().update({&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;, &quot;component_ids&quot;: []})
+client.Subscriber().remove({&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;})
+</code></pre>
+<h3 id="ruby">Ruby</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/rb.html#set-up-the-client">Ruby setup</a>, then call the operations:</p>
+<pre><code class="language-rb">subscribers = client.Subscriber.list({ &quot;page_id&quot; =&gt; &quot;example&quot; })
+subscriber = client.Subscriber.load({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot; })
+created = client.Subscriber.create({ &quot;page_id&quot; =&gt; &quot;example&quot; })
+updated = client.Subscriber.update({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;, &quot;component_ids&quot; =&gt; [] })
+client.Subscriber.remove({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot; })
+</code></pre>
+<h3 id="typescript">TypeScript</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/ts.html#set-up-the-client">TypeScript setup</a>, then call the operations:</p>
+<pre><code class="language-ts">const subscribers = await client.Subscriber().list({ page_id: &quot;example&quot; })
+const subscriber = await client.Subscriber().load({ id: &quot;example_id&quot;, page_id: &quot;example&quot; })
+const created = await client.Subscriber().create({ page_id: &quot;example&quot; })
+const updated = await client.Subscriber().update({ id: &quot;example_id&quot;, page_id: &quot;example&quot;, component_ids: [] })
+await client.Subscriber().remove({ id: &quot;example_id&quot;, page_id: &quot;example&quot; })
+</code></pre>
 <h2 id="fields">Fields</h2>
 <table>
 <thead>
@@ -196,13 +272,13 @@
 <td><code>created_at</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td></td>
+<td>Created At</td>
 </tr>
 <tr>
 <td><code>display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>email</code></td>
@@ -244,7 +320,7 @@
 <td><code>phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>phone_number</code></td>
@@ -274,7 +350,7 @@
 <td><code>subscriber</code></td>
 <td><code>object</code></td>
 <td>No</td>
-<td></td>
+<td>Subscriber</td>
 </tr>
 <tr>
 <td><code>workspace_name</code></td>
@@ -285,15 +361,26 @@
 </tbody>
 </table>
 <h2 id="create">create</h2>
-<h3 id="post-pagespage_idsubscriberssubscriber_idresend_confirmation" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation</h3>
-<p>Operation ID: <code>postPagesPageIdSubscribersSubscriberIdResendConfirmation</code>.</p>
+<h3 id="post-pagespage_idincidentsincident_idsubscriberssubscriber_idresend_confirmation" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}/resend_confirmation</h3>
+<p>Operation ID: <code>postPagesPageIdIncidentsIncidentIdSubscribersSubscriberIdResendConfirmation</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
 <h4 id="parameters">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |
 | <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
 <h4 id="responses">Responses</h4>
+<h5 id="201-resend-confirmation-to-an-incident-subscriber" class="status" data-status="2xx">201: Resend confirmation to an incident subscriber</h5>
+<h3 id="post-pagespage_idsubscriberssubscriber_idresend_confirmation" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers/{subscriber_id}/resend_confirmation</h3>
+<p>Operation ID: <code>postPagesPageIdSubscribersSubscriberIdResendConfirmation</code>.</p>
+<p>Authentication: API key in the header (<code>api_key</code>).</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
+| <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
+<h4 id="responses-1">Responses</h4>
 <h5 id="201-resend-confirmation-to-a-subscriber" class="status" data-status="2xx">201: Resend confirmation to a subscriber</h5>
 <h5 id="401-could-not-authenticate" class="status" data-status="4xx">401: Could not authenticate</h5>
 <p><code>application/json</code></p>
@@ -338,7 +425,7 @@
 <h3 id="post-pagespage_idincidentsincident_idsubscribers" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/incidents/{incident_id}/subscribers</h3>
 <p>Operation ID: <code>postPagesPageIdIncidentsIncidentIdSubscribers</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-1">Parameters</h4>
+<h4 id="parameters-2">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
@@ -377,17 +464,17 @@
 <td><code>subscriber.phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The phone number (as you would dial from the phone_country) to use for the new SMS subscriber.</td>
+<td>The phone number (as you would dial from the <code>phone_country</code>) to use for the new SMS subscriber.</td>
 </tr>
 <tr>
 <td><code>subscriber.skip_confirmation_notification</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>If skip_confirmation_notification is true, the subscriber does not receive any notifications when their subscription changes. Email subscribers will be automatically opted in. This option is only available for paid pages. This option has no effect for trial customers.</td>
+<td>If <code>skip_confirmation_notification</code> is true, the subscriber does not receive any notifications when their subscription changes. Email subscribers will be automatically opted in. This option is only available for paid pages. This option has no effect for trial customers.</td>
 </tr>
 </tbody>
 </table>
-<h4 id="responses-1">Responses</h4>
+<h4 id="responses-2">Responses</h4>
 <h5 id="201-create-an-incident-subscriber" class="status" data-status="2xx">201: Create an incident subscriber</h5>
 <p><code>application/json</code></p>
 <table>
@@ -416,7 +503,7 @@
 <td><code>display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>email</code></td>
@@ -458,7 +545,7 @@
 <td><code>phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>phone_number</code></td>
@@ -555,7 +642,7 @@
 <h3 id="post-pagespage_idsubscribers" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers</h3>
 <p>Operation ID: <code>postPagesPageIdSubscribers</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-2">Parameters</h4>
+<h4 id="parameters-3">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
@@ -611,17 +698,17 @@
 <td><code>subscriber.phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The phone number (as you would dial from the phone_country) to use for the new SMS subscriber.</td>
+<td>The phone number (as you would dial from the <code>phone_country</code>) to use for the new SMS subscriber.</td>
 </tr>
 <tr>
 <td><code>subscriber.skip_confirmation_notification</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>If skip_confirmation_notification is true, the subscriber does not receive any notifications when their subscription changes. Email subscribers will be automatically opted in. This option is only available for paid pages. This option has no effect for trial customers.</td>
+<td>If <code>skip_confirmation_notification</code> is true, the subscriber does not receive any notifications when their subscription changes. Email subscribers will be automatically opted in. This option is only available for paid pages. This option has no effect for trial customers.</td>
 </tr>
 </tbody>
 </table>
-<h4 id="responses-2">Responses</h4>
+<h4 id="responses-3">Responses</h4>
 <h5 id="201-create-a-subscriber-not-applicable-for-slack-subscribers" class="status" data-status="2xx">201: Create a subscriber. Not applicable for Slack subscribers</h5>
 <p><code>application/json</code></p>
 <table>
@@ -650,7 +737,7 @@
 <td><code>display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>email</code></td>
@@ -692,7 +779,7 @@
 <td><code>phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>phone_number</code></td>
@@ -829,7 +916,7 @@
 <h3 id="post-pagespage_idsubscribersreactivate" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers/reactivate</h3>
 <p>Operation ID: <code>postPagesPageIdSubscribersReactivate</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-3">Parameters</h4>
+<h4 id="parameters-4">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
@@ -859,7 +946,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="responses-3">Responses</h4>
+<h4 id="responses-4">Responses</h4>
 <h5 id="201-reactivate-a-list-of-quarantined-subscribers" class="status" data-status="2xx">201: Reactivate a list of quarantined subscribers</h5>
 <h5 id="400-bad-request-2" class="status" data-status="4xx">400: Bad request</h5>
 <p><code>application/json</code></p>
@@ -944,7 +1031,7 @@
 <h3 id="post-pagespage_idsubscribersresend_confirmation" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers/resend_confirmation</h3>
 <p>Operation ID: <code>postPagesPageIdSubscribersResendConfirmation</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-4">Parameters</h4>
+<h4 id="parameters-5">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
@@ -968,7 +1055,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="responses-4">Responses</h4>
+<h4 id="responses-5">Responses</h4>
 <h5 id="201-resend-confirmations-to-a-list-of-subscribers" class="status" data-status="2xx">201: Resend confirmations to a list of subscribers</h5>
 <h5 id="400-bad-request-3" class="status" data-status="4xx">400: Bad request</h5>
 <p><code>application/json</code></p>
@@ -1053,7 +1140,7 @@
 <h3 id="post-pagespage_idsubscribersunsubscribe" class="operation" data-method="post"><code>POST</code> /pages/{page_id}/subscribers/unsubscribe</h3>
 <p>Operation ID: <code>postPagesPageIdSubscribersUnsubscribe</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-5">Parameters</h4>
+<h4 id="parameters-6">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
@@ -1073,7 +1160,7 @@
 <td><code>skip_unsubscription_notification</code></td>
 <td><code>boolean</code></td>
 <td>No</td>
-<td>If skip_unsubscription_notification is true, the subscribers do not receive any notifications when they are unsubscribed.</td>
+<td>If <code>skip_unsubscription_notification</code> is true, the subscribers do not receive any notifications when they are unsubscribed.</td>
 </tr>
 <tr>
 <td><code>state</code></td>
@@ -1095,7 +1182,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="responses-5">Responses</h4>
+<h4 id="responses-6">Responses</h4>
 <h5 id="201-unsubscribe-a-list-of-subscribers" class="status" data-status="2xx">201: Unsubscribe a list of subscribers</h5>
 <h5 id="400-bad-request-4" class="status" data-status="4xx">400: Bad request</h5>
 <p><code>application/json</code></p>
@@ -1181,7 +1268,7 @@
 <h3 id="get-pagespage_idsubscribers" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers</h3>
 <p>Operation ID: <code>getPagesPageIdSubscribers</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-6">Parameters</h4>
+<h4 id="parameters-7">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
@@ -1190,9 +1277,9 @@
 | <code>state</code> | <code>query</code> | <code>enum: active, unconfirmed, quarantined, all</code> | No | If this is present, only return subscribers in this state. Specify state &quot;all&quot; to find subscribers in any states. |
 | <code>limit</code> | <code>query</code> | <code>integer (int32)</code> | No | The maximum number of rows to return. If a text query string is specified (q=), the default and maximum limit is 100. If the text query string is not specified, the default and maximum limit are not set, and not providing a limit will return all the subscribers. Beginning February 28, 2023, a default limit of 100 will be imposed and this endpoint will return paginated data (that is will no longer return all subscribers) even if this query parameter is not provided. |
 | <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | The page offset of subscribers. The first page is page 0, the second page 1, etc. This skips page * limit subscribers. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
-| <code>sort_field</code> | <code>query</code> | <code>enum: primary, created_at, quarantined_at, relevance</code> | No | The field on which to sort: 'primary' to indicate sorting by the identifying field, 'created_at' for sorting by creation timestamp, 'quarantined_at' for sorting by quarantine timestamp, and 'relevance' which sorts by the relevancy of the search text. 'relevance' is not a valid parameter if no search text is supplied. |
+| <code>sort_field</code> | <code>query</code> | <code>enum: primary, created_at, quarantined_at, relevance</code> | No | The field on which to sort: 'primary' to indicate sorting by the identifying field, '<code>created_at</code>' for sorting by creation timestamp, '<code>quarantined_at</code>' for sorting by quarantine timestamp, and 'relevance' which sorts by the relevancy of the search text. 'relevance' is not a valid parameter if no search text is supplied. |
 | <code>sort_direction</code> | <code>query</code> | <code>enum: asc, desc</code> | No | The sort direction of the listing. |</p>
-<h4 id="responses-6">Responses</h4>
+<h4 id="responses-7">Responses</h4>
 <h5 id="200-get-a-list-of-subscribers" class="status" data-status="2xx">200: Get a list of subscribers</h5>
 <p><code>application/json</code></p>
 <table>
@@ -1221,7 +1308,7 @@
 <td><code>[].display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>[].email</code></td>
@@ -1263,7 +1350,7 @@
 <td><code>[].phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>[].phone_number</code></td>
@@ -1400,14 +1487,14 @@
 <h3 id="get-pagespage_idincidentsincident_idsubscribers" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents/{incident_id}/subscribers</h3>
 <p>Operation ID: <code>getPagesPageIdIncidentsIncidentIdSubscribers</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-7">Parameters</h4>
+<h4 id="parameters-8">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
 | <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |
 | <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
 | <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
-<h4 id="responses-7">Responses</h4>
+<h4 id="responses-8">Responses</h4>
 <h5 id="200-get-a-list-of-incident-subscribers" class="status" data-status="2xx">200: Get a list of incident subscribers</h5>
 <p><code>application/json</code></p>
 <table>
@@ -1436,7 +1523,7 @@
 <td><code>[].display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>[].email</code></td>
@@ -1478,7 +1565,7 @@
 <td><code>[].phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>[].phone_number</code></td>
@@ -1555,13 +1642,13 @@
 <h3 id="get-pagespage_idsubscribersunsubscribed" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers/unsubscribed</h3>
 <p>Operation ID: <code>getPagesPageIdSubscribersUnsubscribed</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-8">Parameters</h4>
+<h4 id="parameters-9">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
 | <code>page</code> | <code>query</code> | <code>integer (int32)</code> | No | Page offset to fetch. Beginning February 28, 2023, this endpoint will return paginated data even if this query parameter is not provided. |
 | <code>per_page</code> | <code>query</code> | <code>integer (int32)</code> | No | Number of results to return per page. Beginning February 28, 2023, a default and maximum limit of 100 will be imposed and this endpoint will return paginated data even if this query parameter is not provided. |</p>
-<h4 id="responses-8">Responses</h4>
+<h4 id="responses-9">Responses</h4>
 <h5 id="200-get-a-list-of-unsubscribed-subscribers" class="status" data-status="2xx">200: Get a list of unsubscribed subscribers</h5>
 <p><code>application/json</code></p>
 <table>
@@ -1590,7 +1677,7 @@
 <td><code>[].display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>[].email</code></td>
@@ -1632,7 +1719,7 @@
 <td><code>[].phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>[].phone_number</code></td>
@@ -1710,13 +1797,13 @@
 <h3 id="get-pagespage_idincidentsincident_idsubscriberssubscriber_id" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}</h3>
 <p>Operation ID: <code>getPagesPageIdIncidentsIncidentIdSubscribersSubscriberId</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-9">Parameters</h4>
+<h4 id="parameters-10">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
 | <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |
 | <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
-<h4 id="responses-9">Responses</h4>
+<h4 id="responses-10">Responses</h4>
 <h5 id="200-get-an-incident-subscriber" class="status" data-status="2xx">200: Get an incident subscriber</h5>
 <p><code>application/json</code></p>
 <table>
@@ -1745,7 +1832,7 @@
 <td><code>display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>email</code></td>
@@ -1787,7 +1874,7 @@
 <td><code>phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>phone_number</code></td>
@@ -1824,13 +1911,13 @@
 <h3 id="get-pagespage_idsubscriberscount" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers/count</h3>
 <p>Operation ID: <code>getPagesPageIdSubscribersCount</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-10">Parameters</h4>
+<h4 id="parameters-11">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
 | <code>type</code> | <code>query</code> | <code>enum: email, sms, slack, webhook, teams, integration_partner</code> | No | If this is present, only count subscribers of this type. |
 | <code>state</code> | <code>query</code> | <code>enum: active, unconfirmed, quarantined, all</code> | No | If this is present, only count subscribers in this state. Specify state &quot;all&quot; to count subscribers in any states. |</p>
-<h4 id="responses-10">Responses</h4>
+<h4 id="responses-11">Responses</h4>
 <h5 id="200-get-a-count-of-subscribers-by-type" class="status" data-status="2xx">200: Get a count of subscribers by type</h5>
 <p><code>application/json</code></p>
 <table>
@@ -1944,12 +2031,12 @@
 <h3 id="get-pagespage_idsubscriberssubscriber_id" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers/{subscriber_id}</h3>
 <p>Operation ID: <code>getPagesPageIdSubscribersSubscriberId</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-11">Parameters</h4>
+<h4 id="parameters-12">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
 | <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
-<h4 id="responses-11">Responses</h4>
+<h4 id="responses-12">Responses</h4>
 <h5 id="200-get-a-subscriber" class="status" data-status="2xx">200: Get a subscriber</h5>
 <p><code>application/json</code></p>
 <table>
@@ -1978,7 +2065,7 @@
 <td><code>display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>email</code></td>
@@ -2020,7 +2107,7 @@
 <td><code>phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>phone_number</code></td>
@@ -2097,11 +2184,11 @@
 <h3 id="get-pagespage_idsubscribershistogram_by_state" class="operation" data-method="get"><code>GET</code> /pages/{page_id}/subscribers/histogram_by_state</h3>
 <p>Operation ID: <code>getPagesPageIdSubscribersHistogramByState</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-12">Parameters</h4>
+<h4 id="parameters-13">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |</p>
-<h4 id="responses-12">Responses</h4>
+<h4 id="responses-13">Responses</h4>
 <h5 id="200-get-a-histogram-of-subscribers-by-type-and-then-state" class="status" data-status="2xx">200: Get a histogram of subscribers by type and then state</h5>
 <p><code>application/json</code></p>
 <table>
@@ -2360,13 +2447,13 @@
 <h3 id="delete-pagespage_idincidentsincident_idsubscriberssubscriber_id" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/incidents/{incident_id}/subscribers/{subscriber_id}</h3>
 <p>Operation ID: <code>deletePagesPageIdIncidentsIncidentIdSubscribersSubscriberId</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-13">Parameters</h4>
+<h4 id="parameters-14">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
 | <code>incident_id</code> | <code>path</code> | <code>string</code> | Yes | Incident Identifier |
 | <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |</p>
-<h4 id="responses-13">Responses</h4>
+<h4 id="responses-14">Responses</h4>
 <h5 id="200-unsubscribe-an-incident-subscriber" class="status" data-status="2xx">200: Unsubscribe an incident subscriber</h5>
 <p><code>application/json</code></p>
 <table>
@@ -2395,7 +2482,7 @@
 <td><code>display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>email</code></td>
@@ -2437,7 +2524,7 @@
 <td><code>phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>phone_number</code></td>
@@ -2474,13 +2561,13 @@
 <h3 id="delete-pagespage_idsubscriberssubscriber_id" class="operation" data-method="delete"><code>DELETE</code> /pages/{page_id}/subscribers/{subscriber_id}</h3>
 <p>Operation ID: <code>deletePagesPageIdSubscribersSubscriberId</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-14">Parameters</h4>
+<h4 id="parameters-15">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
 | <code>subscriber_id</code> | <code>path</code> | <code>string</code> | Yes | Subscriber Identifier |
-| <code>skip_unsubscription_notification</code> | <code>query</code> | <code>boolean</code> | No | If skip_unsubscription_notification is true, the subscriber does not receive any notifications when they are unsubscribed. |</p>
-<h4 id="responses-14">Responses</h4>
+| <code>skip_unsubscription_notification</code> | <code>query</code> | <code>boolean</code> | No | If <code>skip_unsubscription_notification</code> is true, the subscriber does not receive any notifications when they are unsubscribed. |</p>
+<h4 id="responses-15">Responses</h4>
 <h5 id="200-unsubscribe-a-subscriber" class="status" data-status="2xx">200: Unsubscribe a subscriber</h5>
 <p><code>application/json</code></p>
 <table>
@@ -2509,7 +2596,7 @@
 <td><code>display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>email</code></td>
@@ -2551,7 +2638,7 @@
 <td><code>phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>phone_number</code></td>
@@ -2629,7 +2716,7 @@
 <h3 id="patch-pagespage_idsubscriberssubscriber_id" class="operation" data-method="patch"><code>PATCH</code> /pages/{page_id}/subscribers/{subscriber_id}</h3>
 <p>Operation ID: <code>patchPagesPageIdSubscribersSubscriberId</code>.</p>
 <p>Authentication: API key in the header (<code>api_key</code>).</p>
-<h4 id="parameters-15">Parameters</h4>
+<h4 id="parameters-16">Parameters</h4>
 <p>| Parameter | In | Type | Required | Description |
 | --- | --- | --- | --- |
 | <code>page_id</code> | <code>path</code> | <code>string</code> | Yes | Page identifier |
@@ -2654,7 +2741,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="responses-15">Responses</h4>
+<h4 id="responses-16">Responses</h4>
 <h5 id="200-update-a-subscriber" class="status" data-status="2xx">200: Update a subscriber</h5>
 <p><code>application/json</code></p>
 <table>
@@ -2683,7 +2770,7 @@
 <td><code>display_phone_number</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>A formatted version of the phone_number and phone_country pair, nicely formatted for display.</td>
+<td>A formatted version of the <code>phone_number</code> and <code>phone_country</code> pair, nicely formatted for display.</td>
 </tr>
 <tr>
 <td><code>email</code></td>
@@ -2725,7 +2812,7 @@
 <td><code>phone_country</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td>The two-character country code representing the country of which the phone_number is a part.</td>
+<td>The two-character country code representing the country of which the <code>phone_number</code> is a part.</td>
 </tr>
 <tr>
 <td><code>phone_number</code></td>

@@ -3,7 +3,6 @@ import { ComponentGroupUptimeEntity } from './entity/ComponentGroupUptimeEntity'
 import { GroupComponentEntity } from './entity/GroupComponentEntity';
 import { IncidentEntity } from './entity/IncidentEntity';
 import { IncidentPostmortemEntity } from './entity/IncidentPostmortemEntity';
-import { IncidentSubscriberEntity } from './entity/IncidentSubscriberEntity';
 import { IncidentTemplateEntity } from './entity/IncidentTemplateEntity';
 import { IncidentUpdateEntity } from './entity/IncidentUpdateEntity';
 import { MetricEntity } from './entity/MetricEntity';
@@ -66,7 +65,6 @@ declare class StatuspageSDK {
     GroupComponent(entopts?: Record<string, any>): GroupComponentEntity;
     Incident(entopts?: Record<string, any>): IncidentEntity;
     IncidentPostmortem(entopts?: Record<string, any>): IncidentPostmortemEntity;
-    IncidentSubscriber(entopts?: Record<string, any>): IncidentSubscriberEntity;
     IncidentTemplate(entopts?: Record<string, any>): IncidentTemplateEntity;
     IncidentUpdate(entopts?: Record<string, any>): IncidentUpdateEntity;
     Metric(entopts?: Record<string, any>): MetricEntity;

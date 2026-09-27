@@ -11,7 +11,6 @@
 <a href="../api/group_component.html">GroupComponent</a>
 <a href="../api/incident.html">Incident</a>
 <a href="../api/incident_postmortem.html">IncidentPostmortem</a>
-<a href="../api/incident_subscriber.html">IncidentSubscriber</a>
 <a href="../api/incident_template.html">IncidentTemplate</a>
 <a href="../api/incident_update.html">IncidentUpdate</a>
 <a href="../api/metric.html">Metric</a>
@@ -46,14 +45,14 @@
 <a href="../sdks/ts.html">TypeScript</a></details>
 <details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
 <a href="../tools/go-mcp.html">Go MCP server</a></details>
-<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
-<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
-<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
-<a href="../features/paging.html">Pagination signals for list operations</a>
-<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
-<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
-<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
-<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="pageaccessgroup">PageAccessGroup</h1>
+<details><summary>Features</summary><a href="../features/debug.html">Debug capture</a>
+<a href="../features/idempotency.html">Idempotency</a>
+<a href="../features/metrics.html">Metrics</a>
+<a href="../features/paging.html">Paging</a>
+<a href="../features/ratelimit.html">Rate limiting</a>
+<a href="../features/retry.html">Retry</a>
+<a href="../features/test.html">Test transport</a>
+<a href="../features/timeout.html">Timeout</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="pageaccessgroup">PageAccessGroup</h1>
 <h2 id="operations">Operations</h2>
 <p>Every route this entity exposes. Each route links to its own reference on this page.</p>
 <table>
@@ -134,6 +133,76 @@
 </tr>
 </tbody>
 </table>
+<h2 id="examples">Examples</h2>
+<p>One example per SDK, generated from the API model. The argument names are the parameters and fields of this entity, and the values are placeholders. The examples are not compiled or executed.</p>
+<h3 id="golang">Golang</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/go.html#set-up-the-client">Golang setup</a>, then call the operations:</p>
+<pre><code class="language-go">page_access_groups, err := client.PageAccessGroup(nil).List(map[string]any{&quot;id&quot;: &quot;example_id&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(page_access_groups)
+page_access_group, err := client.PageAccessGroup(nil).Load(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(page_access_group)
+created, err := client.PageAccessGroup(nil).Create(map[string]any{&quot;id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(created)
+updated, err := client.PageAccessGroup(nil).Update(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;, &quot;component_ids&quot;: []any{}}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(updated)
+removed, err := client.PageAccessGroup(nil).Remove(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(removed)
+</code></pre>
+<h3 id="lua">Lua</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/lua.html#set-up-the-client">Lua setup</a>, then call the operations:</p>
+<pre><code class="language-lua">local page_access_groups, err = client:PageAccessGroup():list({ id = &quot;example_id&quot; })
+local page_access_group, err = client:PageAccessGroup():load({ id = &quot;example_id&quot;, page_id = &quot;example&quot; })
+local created, err = client:PageAccessGroup():create({ id = &quot;example&quot; })
+local updated, err = client:PageAccessGroup():update({ id = &quot;example_id&quot;, page_id = &quot;example&quot;, component_ids = {} })
+local removed, err = client:PageAccessGroup():remove({ id = &quot;example_id&quot;, page_id = &quot;example&quot; })
+</code></pre>
+<h3 id="php">PHP</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/php.html#set-up-the-client">PHP setup</a>, then call the operations:</p>
+<pre><code class="language-php">$page_access_groups = $client-&gt;PageAccessGroup()-&gt;list([&quot;id&quot; =&gt; &quot;example_id&quot;]);
+$page_access_group = $client-&gt;PageAccessGroup()-&gt;load([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;]);
+$created = $client-&gt;PageAccessGroup()-&gt;create([&quot;id&quot; =&gt; &quot;example&quot;]);
+$updated = $client-&gt;PageAccessGroup()-&gt;update([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;, &quot;component_ids&quot; =&gt; []]);
+$client-&gt;PageAccessGroup()-&gt;remove([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;]);
+</code></pre>
+<h3 id="python">Python</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/py.html#set-up-the-client">Python setup</a>, then call the operations:</p>
+<pre><code class="language-py">page_access_groups = client.PageAccessGroup().list({&quot;id&quot;: &quot;example_id&quot;})
+page_access_group = client.PageAccessGroup().load({&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;})
+created = client.PageAccessGroup().create({ &quot;id&quot;: &quot;example&quot; })
+updated = client.PageAccessGroup().update({&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;, &quot;component_ids&quot;: []})
+client.PageAccessGroup().remove({&quot;id&quot;: &quot;example_id&quot;, &quot;page_id&quot;: &quot;example&quot;})
+</code></pre>
+<h3 id="ruby">Ruby</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/rb.html#set-up-the-client">Ruby setup</a>, then call the operations:</p>
+<pre><code class="language-rb">page_access_groups = client.PageAccessGroup.list({ &quot;id&quot; =&gt; &quot;example_id&quot; })
+page_access_group = client.PageAccessGroup.load({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot; })
+created = client.PageAccessGroup.create({ &quot;id&quot; =&gt; &quot;example&quot; })
+updated = client.PageAccessGroup.update({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot;, &quot;component_ids&quot; =&gt; [] })
+client.PageAccessGroup.remove({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;page_id&quot; =&gt; &quot;example&quot; })
+</code></pre>
+<h3 id="typescript">TypeScript</h3>
+<p>Construct <code>client</code> as shown in the <a href="../sdks/ts.html#set-up-the-client">TypeScript setup</a>, then call the operations:</p>
+<pre><code class="language-ts">const page_access_groups = await client.PageAccessGroup().list({ id: &quot;example_id&quot; })
+const page_access_group = await client.PageAccessGroup().load({ id: &quot;example_id&quot;, page_id: &quot;example&quot; })
+const created = await client.PageAccessGroup().create({ id: &quot;example&quot; })
+const updated = await client.PageAccessGroup().update({ id: &quot;example_id&quot;, page_id: &quot;example&quot;, component_ids: [] })
+await client.PageAccessGroup().remove({ id: &quot;example_id&quot;, page_id: &quot;example&quot; })
+</code></pre>
 <h2 id="fields">Fields</h2>
 <table>
 <thead>
@@ -149,13 +218,13 @@
 <td><code>component_ids</code></td>
 <td><code>array</code></td>
 <td>No</td>
-<td></td>
+<td>Component Ids</td>
 </tr>
 <tr>
 <td><code>created_at</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td></td>
+<td>Created At</td>
 </tr>
 <tr>
 <td><code>external_identifier</code></td>
@@ -173,7 +242,7 @@
 <td><code>metric_ids</code></td>
 <td><code>array</code></td>
 <td>No</td>
-<td></td>
+<td>Metric Ids</td>
 </tr>
 <tr>
 <td><code>name</code></td>
@@ -185,13 +254,13 @@
 <td><code>page_access_group</code></td>
 <td><code>object</code></td>
 <td>No</td>
-<td></td>
+<td>Page Access Group</td>
 </tr>
 <tr>
 <td><code>page_access_user_ids</code></td>
 <td><code>array</code></td>
 <td>No</td>
-<td></td>
+<td>Page Access User Ids</td>
 </tr>
 <tr>
 <td><code>page_id</code></td>
@@ -203,7 +272,7 @@
 <td><code>updated_at</code></td>
 <td><code>string</code></td>
 <td>No</td>
-<td></td>
+<td>Updated At</td>
 </tr>
 </tbody>
 </table>

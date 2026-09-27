@@ -337,12 +337,6 @@ class StatuspageSDK:
         return IncidentPostmortemEntity(self, data)
 
 
-    def IncidentSubscriber(self, data=None) -> "IncidentSubscriberEntity":
-        """Entity factory: client.IncidentSubscriber().list() / client.IncidentSubscriber().load({"id": ...})."""
-        from statuspage_sdk.entity.incident_subscriber_entity import IncidentSubscriberEntity
-        return IncidentSubscriberEntity(self, data)
-
-
     def IncidentTemplate(self, data=None) -> "IncidentTemplateEntity":
         """Entity factory: client.IncidentTemplate().list() / client.IncidentTemplate().load({"id": ...})."""
         from statuspage_sdk.entity.incident_template_entity import IncidentTemplateEntity
@@ -447,7 +441,6 @@ if TYPE_CHECKING:
     from statuspage_sdk.entity.group_component_entity import GroupComponentEntity
     from statuspage_sdk.entity.incident_entity import IncidentEntity
     from statuspage_sdk.entity.incident_postmortem_entity import IncidentPostmortemEntity
-    from statuspage_sdk.entity.incident_subscriber_entity import IncidentSubscriberEntity
     from statuspage_sdk.entity.incident_template_entity import IncidentTemplateEntity
     from statuspage_sdk.entity.incident_update_entity import IncidentUpdateEntity
     from statuspage_sdk.entity.metric_entity import MetricEntity

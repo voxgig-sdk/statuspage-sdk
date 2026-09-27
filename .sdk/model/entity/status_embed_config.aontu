@@ -1,0 +1,206 @@
+# Entity: status_embed_config
+
+main: kit: entity: status_embed_config: {
+
+  alias: field: {}
+
+  fields: {
+    incident_background_color: {
+      h: "Incident Background Color"
+      n: "incident_background_color"
+      r: false
+      sh: "Color of status embed iframe background when displaying incident"
+      t: "`$STRING`"
+    }
+    incident_text_color: {
+      h: "Incident Text Color"
+      n: "incident_text_color"
+      r: false
+      sh: "Color of status embed iframe text when displaying incident"
+      t: "`$STRING`"
+    }
+    maintenance_background_color: {
+      h: "Maintenance Background Color"
+      n: "maintenance_background_color"
+      r: false
+      sh: "Color of status embed iframe background when displaying maintenance"
+      t: "`$STRING`"
+    }
+    maintenance_text_color: {
+      h: "Maintenance Text Color"
+      n: "maintenance_text_color"
+      r: false
+      sh: "Color of status embed iframe text when displaying maintenance"
+      t: "`$STRING`"
+    }
+    page_id: {
+      h: "Page Id"
+      n: "page_id"
+      r: false
+      sh: "Page identifier"
+      t: "`$STRING`"
+    }
+    position: {
+      h: "Position"
+      n: "position"
+      r: false
+      sh: "Corner where status embed iframe will appear on page"
+      t: "`$STRING`"
+    }
+    status_embed_config: {
+      h: "Status Embed Config"
+      n: "status_embed_config"
+      r: false
+      t: "`$OBJECT`"
+    }
+  }
+
+  name: "status_embed_config"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/status_embed_config"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/status_embed_config"
+          q: {
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "status_embed_config"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    patch: {
+      name: "patch"
+      points: [
+        {
+          co: {
+            id: "PATCH /pages/{page_id}/status_embed_config"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PATCH"
+          o: "/pages/{page_id}/status_embed_config"
+          q: {
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "status_embed_config"
+            }
+          ]
+          t: {
+            req: {
+              status_embed_config: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          co: {
+            id: "PUT /pages/{page_id}/status_embed_config"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/pages/{page_id}/status_embed_config"
+          q: {
+            exist: [
+              "page_id"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "status_embed_config"
+            }
+          ]
+          t: {
+            req: {
+              status_embed_config: "`reqdata`"
+            }
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.page")]
+  ]
+
+}

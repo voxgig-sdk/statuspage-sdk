@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 // Typed models for the Statuspage SDK.
 //
-// GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
-// params (op.<name>.points[].args.params[]). Field/param types come from the
+// GENERATED from the API model: main.kit.entity.<e>.fields{} and per-op
+// params (op.<name>.points[].g.params[]). Field/param types come from the
 // canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 //
@@ -322,19 +322,6 @@ class IncidentPostmortemRemoveMatch
 {
     public string $id;
     public string $page_id;
-}
-
-/** IncidentSubscriber entity data model. */
-class IncidentSubscriber
-{
-}
-
-/** Request payload for IncidentSubscriber#create. */
-class IncidentSubscriberCreateData
-{
-    public string $incident_id;
-    public string $page_id;
-    public string $subscriber_id;
 }
 
 /** IncidentTemplate entity data model. */

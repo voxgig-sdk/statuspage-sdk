@@ -128,7 +128,7 @@ make build-all   # linux/darwin/windows x amd64/arm64, under dist/<os>-<arch>/
 ### Discover the available entities
 
 `/help` in the REPL prints the full entity list, or see [Entities](#entities)
-below — this SDK exposes 18 entities.
+below — this SDK exposes 17 entities.
 
 ## Reference
 
@@ -183,9 +183,9 @@ Meta-commands use the `/` prefix (everything else on a line is evaluated as boru
 
 ### Entities
 
-The 18 entities this SDK exposes (any is valid as `<entity>`):
+The 17 entities this SDK exposes (any is valid as `<entity>`):
 
-component component_group_uptime group_component incident incident_postmortem incident_subscriber incident_template incident_update metric metrics_provider page page_access_group page_access_user permission postmortem status_embed_config subscriber user
+component component_group_uptime group_component incident incident_postmortem incident_template incident_update metric metrics_provider page page_access_group page_access_user permission postmortem status_embed_config subscriber user
 
 ## Explanation
 

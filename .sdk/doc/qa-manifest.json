@@ -6,7 +6,6 @@
     "docs/api/group_component.html",
     "docs/api/incident.html",
     "docs/api/incident_postmortem.html",
-    "docs/api/incident_subscriber.html",
     "docs/api/incident_template.html",
     "docs/api/incident_update.html",
     "docs/api/index.html",

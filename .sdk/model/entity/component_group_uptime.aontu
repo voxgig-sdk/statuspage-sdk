@@ -1,0 +1,121 @@
+# Entity: component_group_uptime
+
+main: kit: entity: component_group_uptime: {
+
+  alias: field: {}
+
+  fields: {
+    component_id: {
+      h: "Component Id"
+      n: "component_id"
+      r: false
+      sh: "Component identifier"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      t: "`$STRING`"
+    }
+    incidents: {
+      h: "Incidents"
+      n: "incidents"
+      r: false
+      sh: "Related incidents"
+      t: "`$OBJECT`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "component_group_uptime"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /pages/{page_id}/component-groups/{id}/uptime"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "page_id"
+                or: "page_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "end"
+                or: "end"
+                r: false
+                t: "Any"
+              }
+              {
+                k: "query"
+                n: "start"
+                or: "start"
+                r: false
+                t: "Any"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/pages/{page_id}/component-groups/{id}/uptime"
+          q: {
+            exist: [
+              "end"
+              "id"
+              "page_id"
+              "start"
+            ]
+          }
+          s: [
+            {
+              lit: "pages"
+            }
+            {
+              var: "page_id"
+            }
+            {
+              lit: "component-groups"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "uptime"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.related_events`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.page")]
+  ]
+
+}

@@ -20,7 +20,7 @@ import (
 const prompt = "statuspage"
 
 // entitiesHelp is the space-separated entity list shown by /help.
-const entitiesHelp = "component component_group_uptime group_component incident incident_postmortem incident_subscriber incident_template incident_update metric metrics_provider page page_access_group page_access_user permission postmortem status_embed_config subscriber user"
+const entitiesHelp = "component component_group_uptime group_component incident incident_postmortem incident_template incident_update metric metrics_provider page page_access_group page_access_user permission postmortem status_embed_config subscriber user"
 
 func main() {
 	os.Exit(run(os.Args[1:], os.Stdin, os.Stdout, os.Stderr))

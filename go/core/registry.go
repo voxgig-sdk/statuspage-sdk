@@ -30,8 +30,6 @@ var NewIncidentEntityFunc func(client *StatuspageSDK, entopts map[string]any) St
 
 var NewIncidentPostmortemEntityFunc func(client *StatuspageSDK, entopts map[string]any) StatuspageEntity
 
-var NewIncidentSubscriberEntityFunc func(client *StatuspageSDK, entopts map[string]any) StatuspageEntity
-
 var NewIncidentTemplateEntityFunc func(client *StatuspageSDK, entopts map[string]any) StatuspageEntity
 
 var NewIncidentUpdateEntityFunc func(client *StatuspageSDK, entopts map[string]any) StatuspageEntity

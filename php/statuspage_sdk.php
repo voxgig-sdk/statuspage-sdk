@@ -431,24 +431,6 @@ class StatuspageSDK
     }
 
 
-    private $_incident_subscriber = null;
-
-    // Canonical facade: $client->IncidentSubscriber()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->incident_subscriber()
-    // resolves here too.
-    public function IncidentSubscriber($data = null)
-    {
-        require_once __DIR__ . '/entity/incident_subscriber_entity.php';
-        if ($data === null) {
-            if ($this->_incident_subscriber === null) {
-                $this->_incident_subscriber = new IncidentSubscriberEntity($this, null);
-            }
-            return $this->_incident_subscriber;
-        }
-        return new IncidentSubscriberEntity($this, $data);
-    }
-
-
     private $_incident_template = null;
 
     // Canonical facade: $client->IncidentTemplate()->list() / ->load(["id" => ...]).

@@ -7,7 +7,6 @@ const ComponentGroupUptimeEntity_1 = require("./entity/ComponentGroupUptimeEntit
 const GroupComponentEntity_1 = require("./entity/GroupComponentEntity");
 const IncidentEntity_1 = require("./entity/IncidentEntity");
 const IncidentPostmortemEntity_1 = require("./entity/IncidentPostmortemEntity");
-const IncidentSubscriberEntity_1 = require("./entity/IncidentSubscriberEntity");
 const IncidentTemplateEntity_1 = require("./entity/IncidentTemplateEntity");
 const IncidentUpdateEntity_1 = require("./entity/IncidentUpdateEntity");
 const MetricEntity_1 = require("./entity/MetricEntity");
@@ -101,7 +100,6 @@ class StatuspageSDK {
             ctrl: fetchargs.ctrl || {},
         }, this._rootctx);
         const options = this._options;
-        // Build spec directly from SDK options + user-provided fetch args.
         const spec = {
             base: options.base,
             prefix: options.prefix,
@@ -115,14 +113,12 @@ class StatuspageSDK {
             step: 'start',
         };
         ctx.spec = spec;
-        // Merge user-provided headers over SDK defaults.
         if (fetchargs.headers) {
             const uheaders = fetchargs.headers;
             for (let key in uheaders) {
                 spec.headers[key] = uheaders[key];
             }
         }
-        // Apply SDK auth (apikey, auth prefix, etc.)
         const authResult = prepareAuth(ctx);
         if (authResult instanceof Error) {
             return authResult;
@@ -197,18 +193,6 @@ class StatuspageSDK {
             return { ok: false, err };
         }
     }
-    // Raw GraphQL access: the pressure valve that makes the generated
-    // surface's deliberate omissions (per-call selection sets, typed filter
-    // builders, batching, subscriptions) livable — the whole schema stays
-    // reachable.
-    //
-    // Thin wrapper over the same prepare/fetch path `direct` uses, with the
-    // one thing raw `direct` cannot do for GraphQL: a GraphQL failure rides
-    // HTTP 200 as a top-level `errors` array, so status alone would report a
-    // failed query as ok.
-    //
-    // NOTE: like `direct`, this bypasses the feature pipeline — no retry,
-    // ratelimit or paging features apply.
     async graphql(query, variables, ctrl) {
         const options = this._options;
         if (!options.allow.op.includes('graphql')) {
@@ -276,13 +260,6 @@ class StatuspageSDK {
     IncidentPostmortem(entopts) {
         const self = this;
         return new IncidentPostmortemEntity_1.IncidentPostmortemEntity(self, entopts);
-    }
-    // Entity access: `client.IncidentSubscriber().list()` / `client.IncidentSubscriber().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    IncidentSubscriber(entopts) {
-        const self = this;
-        return new IncidentSubscriberEntity_1.IncidentSubscriberEntity(self, entopts);
     }
     // Entity access: `client.IncidentTemplate().list()` / `client.IncidentTemplate().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity

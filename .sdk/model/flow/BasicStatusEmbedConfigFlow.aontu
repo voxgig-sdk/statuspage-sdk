@@ -1,0 +1,51 @@
+# BasicStatusEmbedConfigFlow
+
+main: kit: flow: BasicStatusEmbedConfigFlow:
+{
+  entity: "status_embed_config",
+  kind: "basic",
+  name: "BasicStatusEmbedConfigFlow",
+  step: [
+    {
+      i: {
+        ref: "status_embed_config_ref01",
+        srcdatavar: "status_embed_config_ref01_data",
+        suffix: "_up0",
+        textfield: "incident_background_color"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_embed_config_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "status_embed_config_ref01",
+        srcdatavar: "status_embed_config_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "status_embed_config01"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_embed_config_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusEmbedConfigFlow"
+}
